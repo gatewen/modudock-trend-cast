@@ -1,0 +1,60 @@
+{
+  "observed_at": "2026-09-26T22:43:47+08:00",
+  "symbol": "2330",
+  "start": "2023-05-23",
+  "end": "2023-05-24",
+  "minute_http_status": 200,
+  "daily_http_status": 200,
+  "minute_count": 532,
+  "daily_count": 2,
+  "before_documented_start": {
+    "day": "2023-05-22",
+    "http_status": 404,
+    "count": 0
+  },
+  "days": [
+    {
+      "day": "2023-05-23",
+      "bars": 266,
+      "first_raw_time": "09:00",
+      "last_regular_raw_time": "13:24",
+      "last_raw_time": "13:30",
+      "grid_matches_0900_1324_plus_1330": true,
+      "first_open_equals_daily_open": true,
+      "minute_volume_sum": "19555",
+      "daily_volume": "20126817",
+      "minute_sum_over_daily": "0.0009715892979997781069902906157",
+      "minute_sum_times_1000_over_daily": "0.9715892979997781069902906157"
+    },
+    {
+      "day": "2023-05-24",
+      "bars": 266,
+      "first_raw_time": "09:00",
+      "last_regular_raw_time": "13:24",
+      "last_raw_time": "13:30",
+      "grid_matches_0900_1324_plus_1330": true,
+      "first_open_equals_daily_open": true,
+      "minute_volume_sum": "19034",
+      "daily_volume": "22621221",
+      "minute_sum_over_daily": "0.0008414223087250683771667320699",
+      "minute_sum_times_1000_over_daily": "0.8414223087250683771667320699"
+    }
+  ],
+  "corp_query": {
+    "start": "2023-05-01",
+    "end": "2023-05-31"
+  },
+  "stored_bars": 532,
+  "corp_states": {
+    "2023-05-23": "none",
+    "2023-05-24": "none"
+  },
+  "quality_sections": [
+    "1_calendar",
+    "2_timestamps",
+    "3_minutes",
+    "4_validation",
+    "5_volume",
+    "6_corporate_actions"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "split": "dev",
+  "n": 2688,
+  "best_baseline": "majority",
+  "checks": [
+    "accuracy",
+    "Wilson quadratic inversion",
+    "confusion matrix",
+    "precision/recall",
+    "Decimal multiclass Brier",
+    "common intersection",
+    "baseline selection",
+    "paired day bootstrap with materialized points"
+  ],
+  "database_writes": false
+}

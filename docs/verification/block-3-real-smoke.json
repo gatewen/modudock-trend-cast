@@ -1,0 +1,56 @@
+{
+  "experiment_id": 1,
+  "data_digest": "37b17282925d9a5cebbf3ef83401a423f735e17e6e32e54f57290db3994df585",
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "split": "dev",
+  "selected_points": 6,
+  "attempts_total": 6,
+  "current_run": {
+    "run_id": 1,
+    "status": "complete",
+    "n_ok": 6,
+    "n_fail": 0,
+    "skipped": 0,
+    "unpredictable": 0
+  },
+  "choice_counts": {
+    "up": 0,
+    "flat": 3,
+    "down": 3
+  },
+  "probabilities": {
+    "up": {
+      "n": 6,
+      "min": 0.08,
+      "median": 0.16499999999999998,
+      "mean": 0.16166666666666668,
+      "max": 0.23
+    },
+    "flat": {
+      "n": 6,
+      "min": 0.22,
+      "median": 0.425,
+      "mean": 0.42,
+      "max": 0.58
+    },
+    "down": {
+      "n": 6,
+      "min": 0.19,
+      "median": 0.43,
+      "mean": 0.41833333333333333,
+      "max": 0.63
+    }
+  },
+  "latency_seconds": {
+    "n": 6,
+    "min": 0.2669392079114914,
+    "median": 0.3074054999742657,
+    "mean": 0.3063808816174666,
+    "max": 0.330445165745914
+  },
+  "errors": {},
+  "model_reported_counts": {
+    "jev-1.13.0": 6
+  }
+}

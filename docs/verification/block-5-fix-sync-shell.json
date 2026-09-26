@@ -1,0 +1,152 @@
+{
+  "url": "http://127.0.0.1:55542",
+  "catalog": [
+    {
+      "protocol": 1,
+      "id": "trend-cast",
+      "name": "走勢推演",
+      "version": "0.1.0",
+      "frontend": {
+        "entry": "front/front.js",
+        "public": "front"
+      },
+      "backend": {
+        "command": [
+          "python3",
+          "back/trendcast.py"
+        ]
+      },
+      "placements": [
+        {
+          "slot": "main",
+          "title": "走勢推演"
+        }
+      ]
+    }
+  ],
+  "states": [
+    "loading",
+    "running"
+  ],
+  "sync": [
+    {
+      "status": "running",
+      "generation": 1
+    },
+    {
+      "generation": 1,
+      "status": "running",
+      "n_ok": 1,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 1,
+      "status": "running",
+      "n_ok": 2,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 1,
+      "status": "running",
+      "n_ok": 3,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 1,
+      "status": "running",
+      "n_ok": 4,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 1,
+      "status": "running",
+      "n_ok": 5,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 1,
+      "status": "complete",
+      "n_ok": 6,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "status": "running",
+      "generation": 2
+    },
+    {
+      "generation": 2,
+      "status": "running",
+      "n_ok": 1,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 2,
+      "status": "running",
+      "n_ok": 2,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 2,
+      "status": "running",
+      "n_ok": 3,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 2,
+      "status": "running",
+      "n_ok": 4,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 2,
+      "status": "running",
+      "n_ok": 5,
+      "n_fail": 0,
+      "reasons": []
+    },
+    {
+      "generation": 2,
+      "status": "complete",
+      "n_ok": 6,
+      "n_fail": 0,
+      "reasons": []
+    }
+  ],
+  "requests": [
+    "status",
+    "report",
+    "report",
+    "day",
+    "sync"
+  ],
+  "page_errors": [],
+  "keys": {
+    "fugle": "available",
+    "typesafe": "available"
+  },
+  "automatic": {
+    "generation": 1,
+    "status": "complete",
+    "n_ok": 6,
+    "n_fail": 0,
+    "reasons": []
+  },
+  "manual": {
+    "generation": 2,
+    "status": "complete",
+    "n_ok": 6,
+    "n_fail": 0,
+    "reasons": []
+  },
+  "visible_status": "富果：已設定 · TypeSafe：已設定\n資料 2024-07-26～2026-09-24\n開發段 2024-09-05～2026-01-21\n同步：完成 · 回放：待命"
+}

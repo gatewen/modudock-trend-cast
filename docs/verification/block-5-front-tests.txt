@@ -1,0 +1,33 @@
+
+> modudock-trend-cast@0.1.0 test
+> node --test tests/front.test.mjs
+
+✔ mount synchronous; ready after registration; no sending before up (11.162ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (16.81675ms)
+✔ hover and keyboard focus show probabilities and realized return (5.158291ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (2.699625ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (5.316708ms)
+✔ date picker refuses unknown and locked days without requests (3.233042ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.418584ms)
+✔ locked day discards any supplied data and clears a previous visible chart (3.51975ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (4.435917ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (4.321375ms)
+✔ development progress can show counts but locked holdout progress cannot (3.1ms)
+✔ untrusted strings become text, never HTML or handlers (3.755917ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (3.170208ms)
+✔ new experiment uses a second confirmation and validates threshold (3.096125ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (4.718667ms)
+✔ experiment change invalidates old report and pending reveal confirmation (2.516667ms)
+✔ missing key disables jev but baseline replay stays usable (3.707334ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (2.919833ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (1.264292ms)
+✔ error renders local explanation and never reflects upstream secret text (2.397458ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.247833ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223.081667

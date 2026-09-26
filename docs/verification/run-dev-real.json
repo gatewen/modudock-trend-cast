@@ -1,0 +1,71 @@
+{
+  "experiment_id": 1,
+  "split": "dev",
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "candidates": 2688,
+  "predictable": 2688,
+  "scorable": 2688,
+  "predictable_and_scorable": 2688,
+  "elapsed_seconds": 135.72768358374014,
+  "all_methods_intersection": {
+    "jev": {
+      "n": 2687,
+      "correct": 1182,
+      "accuracy": 0.43989579456643096
+    },
+    "always_flat": {
+      "n": 2687,
+      "correct": 1360,
+      "accuracy": 0.5061406773353182
+    },
+    "majority": {
+      "n": 2687,
+      "correct": 1360,
+      "accuracy": 0.5061406773353182
+    },
+    "momentum": {
+      "n": 2687,
+      "correct": 1018,
+      "accuracy": 0.3788611834759955
+    },
+    "reversal": {
+      "n": 2687,
+      "correct": 1281,
+      "accuracy": 0.47673985857834017
+    }
+  },
+  "baseline_new_predictions": {
+    "always_flat": 2688,
+    "majority": 2688,
+    "momentum": 2688,
+    "reversal": 2688
+  },
+  "baseline_failures": {
+    "always_flat": 0,
+    "majority": 0,
+    "momentum": 0,
+    "reversal": 0
+  },
+  "jev": {
+    "run_status": "complete",
+    "committed_this_run": 2681,
+    "failed_this_run": 1,
+    "existing_skipped": 6,
+    "http_calls": 2682,
+    "retries": 0,
+    "max_calls": 3500,
+    "quota_blocked_before_first_http": 0,
+    "errors": {
+      "choice_not_maximum": 1
+    },
+    "successful_total": 2687,
+    "missing_predictable_points": 1,
+    "choice_counts": {
+      "up": 45,
+      "flat": 1681,
+      "down": 961
+    }
+  },
+  "complete": false
+}

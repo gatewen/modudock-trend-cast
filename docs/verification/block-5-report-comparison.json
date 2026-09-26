@@ -1,0 +1,7 @@
+{
+  "metrics_unchanged": true,
+  "database_unchanged": true,
+  "score_version": "s2",
+  "statement": "jev 比 majority 差",
+  "only_development": true
+}

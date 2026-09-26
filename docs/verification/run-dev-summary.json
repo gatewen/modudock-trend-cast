@@ -1,0 +1,70 @@
+{
+  "experiment_id": 1,
+  "split": "dev",
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "predictable_and_scorable": 2688,
+  "jev": {
+    "successful_total": 2688,
+    "preexisting_successes": 6,
+    "new_successful_commits": 2682,
+    "rejected_responses": 1,
+    "final_missing_points": 0,
+    "http_calls": 2683,
+    "automatic_http_retries": 0,
+    "supplemental_points_retried": 1,
+    "choice_counts": {
+      "up": 45,
+      "flat": 1682,
+      "down": 961
+    },
+    "initial_errors": {
+      "choice_not_maximum": 1
+    }
+  },
+  "execution_elapsed_seconds": 153.62558908341452,
+  "all_methods_intersection": {
+    "jev": {
+      "n": 2688,
+      "correct": 1183,
+      "accuracy": 0.4401041666666667
+    },
+    "always_flat": {
+      "n": 2688,
+      "correct": 1361,
+      "accuracy": 0.5063244047619048
+    },
+    "majority": {
+      "n": 2688,
+      "correct": 1361,
+      "accuracy": 0.5063244047619048
+    },
+    "momentum": {
+      "n": 2688,
+      "correct": 1019,
+      "accuracy": 0.3790922619047619
+    },
+    "reversal": {
+      "n": 2688,
+      "correct": 1282,
+      "accuracy": 0.47693452380952384
+    }
+  },
+  "verification": {
+    "zero_http_rerun_calls": 0,
+    "zero_http_rerun_skipped": 2688,
+    "zero_http_rerun_elapsed_seconds": 17.700342082884163,
+    "statistics_unchanged_on_rerun": true,
+    "dev_outcomes": 2688,
+    "dev_predictions_per_method": {
+      "always_flat": 2688,
+      "jev": 2688,
+      "majority": 2688,
+      "momentum": 2688,
+      "reversal": 2688
+    },
+    "all_method_input_hashes_match": true,
+    "credential_files_scanned": 116,
+    "credentials_found": false
+  }
+}

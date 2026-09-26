@@ -1,0 +1,40 @@
+{"phase": "baselines", "dev_candidates_processed": 200}
+{"phase": "baselines", "dev_candidates_processed": 400}
+{"phase": "baselines", "dev_candidates_processed": 600}
+{"phase": "baselines", "dev_candidates_processed": 800}
+{"phase": "baselines", "dev_candidates_processed": 1000}
+{"phase": "baselines", "dev_candidates_processed": 1200}
+{"phase": "baselines", "dev_candidates_processed": 1400}
+{"phase": "baselines", "dev_candidates_processed": 1600}
+{"phase": "baselines", "dev_candidates_processed": 1800}
+{"phase": "baselines", "dev_candidates_processed": 2000}
+{"phase": "baselines", "dev_candidates_processed": 2200}
+{"phase": "baselines", "dev_candidates_processed": 2400}
+{"phase": "baselines", "dev_candidates_processed": 2600}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 100, "n_fail": 0, "skipped": 1, "unpredictable": 0, "http_calls": 104}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 200, "n_fail": 0, "skipped": 1, "unpredictable": 0, "http_calls": 204}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 300, "n_fail": 0, "skipped": 1, "unpredictable": 0, "http_calls": 304}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 400, "n_fail": 0, "skipped": 1, "unpredictable": 0, "http_calls": 404}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 500, "n_fail": 0, "skipped": 1, "unpredictable": 0, "http_calls": 504}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 600, "n_fail": 0, "skipped": 2, "unpredictable": 0, "http_calls": 604}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 700, "n_fail": 0, "skipped": 2, "unpredictable": 0, "http_calls": 704}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 800, "n_fail": 0, "skipped": 2, "unpredictable": 0, "http_calls": 805}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 900, "n_fail": 0, "skipped": 2, "unpredictable": 0, "http_calls": 905}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1000, "n_fail": 0, "skipped": 2, "unpredictable": 0, "http_calls": 1005}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1100, "n_fail": 0, "skipped": 3, "unpredictable": 0, "http_calls": 1104}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1200, "n_fail": 0, "skipped": 3, "unpredictable": 0, "http_calls": 1205}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1300, "n_fail": 0, "skipped": 3, "unpredictable": 0, "http_calls": 1305}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1399, "n_fail": 1, "skipped": 3, "unpredictable": 0, "http_calls": 1404}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1499, "n_fail": 1, "skipped": 3, "unpredictable": 0, "http_calls": 1505}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1599, "n_fail": 1, "skipped": 3, "unpredictable": 0, "http_calls": 1605}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1699, "n_fail": 1, "skipped": 4, "unpredictable": 0, "http_calls": 1704}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1799, "n_fail": 1, "skipped": 4, "unpredictable": 0, "http_calls": 1804}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1899, "n_fail": 1, "skipped": 4, "unpredictable": 0, "http_calls": 1904}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 1999, "n_fail": 1, "skipped": 4, "unpredictable": 0, "http_calls": 2005}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2099, "n_fail": 1, "skipped": 4, "unpredictable": 0, "http_calls": 2104}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2199, "n_fail": 1, "skipped": 5, "unpredictable": 0, "http_calls": 2204}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2299, "n_fail": 1, "skipped": 5, "unpredictable": 0, "http_calls": 2304}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2399, "n_fail": 1, "skipped": 5, "unpredictable": 0, "http_calls": 2404}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2499, "n_fail": 1, "skipped": 5, "unpredictable": 0, "http_calls": 2505}
+{"phase": "jev", "run_id": 7, "status": "running", "n_ok": 2599, "n_fail": 1, "skipped": 5, "unpredictable": 0, "http_calls": 2604}
+{"phase": "jev", "run_id": 7, "status": "complete", "n_ok": 2681, "n_fail": 1, "skipped": 6, "unpredictable": 0, "http_calls": 2682}

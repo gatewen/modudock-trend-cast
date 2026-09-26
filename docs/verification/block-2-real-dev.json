@@ -1,0 +1,32 @@
+{
+  "scope": "dev_only",
+  "mode": "temporary_split_not_frozen_experiment",
+  "split_rule": "first floor(70% of trading days); initial warmup days retained as candidates",
+  "feature_version": "f1",
+  "threshold_permille": 3,
+  "dev_start": "2024-07-26",
+  "dev_end": "2026-01-27",
+  "dev_trading_days": 369,
+  "candidate_points": 2952,
+  "predictable_points": 2752,
+  "scorable_points": 2952,
+  "predictable_and_scorable_points": 2752,
+  "unpredictable_reasons": {
+    "insufficient_warmup": 200
+  },
+  "label_cohort": "predictable AND scorable development points only",
+  "labels": {
+    "up": {
+      "count": 670,
+      "percent": 24.3459
+    },
+    "flat": {
+      "count": 1409,
+      "percent": 51.1991
+    },
+    "down": {
+      "count": 673,
+      "percent": 24.4549
+    }
+  }
+}

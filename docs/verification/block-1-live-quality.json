@@ -1,0 +1,217 @@
+{
+  "1_calendar": {
+    "first_day": "2023-05-23",
+    "last_day": "2023-05-24",
+    "trading_days": 2,
+    "missing_bar_days": [],
+    "bars_without_daily": [],
+    "fetch_issues": [],
+    "frozen_warnings": []
+  },
+  "2_timestamps": {
+    "mapping": "raw-start-plus-one-minute-auction-1330-v1",
+    "semantics_proven": false,
+    "first_raw_time_counts": {
+      "09:00": 2
+    },
+    "last_regular_raw_time_counts": {
+      "13:24": 2
+    },
+    "days_with_1330": 2,
+    "first_open_matches_daily": {
+      "match": 2
+    }
+  },
+  "3_minutes": {
+    "bar_count_distribution": {
+      "266": 2
+    },
+    "expected_raw_grid": "09:00..13:24 + 13:30 (start-label assumption; no gap filling)",
+    "missing_minutes_by_day": {
+      "2023-05-23": 0,
+      "2023-05-24": 0
+    }
+  },
+  "4_validation": {
+    "duplicate_timestamps": 0,
+    "invalid_ohlc": 0,
+    "nonpositive_prices": 0,
+    "invalid_timestamps": 0,
+    "invalid_daily_ohlc": 0,
+    "nonpositive_daily_prices": 0
+  },
+  "5_volume": {
+    "minute_sum_over_daily": {
+      "count": 2,
+      "min": "0.0008414223087250683771667320699",
+      "median": "0.000906505803362423242078511343",
+      "max": "0.0009715892979997781069902906157"
+    },
+    "documented_units": "minute=lots; daily=shares; nominal ratio=0.001 (sessions may differ)"
+  },
+  "6_corporate_actions": {
+    "events": [],
+    "coverage": [
+      {
+        "start_day": "2023-05-01",
+        "end_day": "2023-05-01",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-02",
+        "end_day": "2023-05-02",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-03",
+        "end_day": "2023-05-03",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-04",
+        "end_day": "2023-05-04",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-05",
+        "end_day": "2023-05-05",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-06",
+        "end_day": "2023-05-06",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-07",
+        "end_day": "2023-05-07",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-08",
+        "end_day": "2023-05-08",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-09",
+        "end_day": "2023-05-09",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-10",
+        "end_day": "2023-05-10",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-11",
+        "end_day": "2023-05-11",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-12",
+        "end_day": "2023-05-12",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-13",
+        "end_day": "2023-05-13",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-14",
+        "end_day": "2023-05-14",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-15",
+        "end_day": "2023-05-15",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-16",
+        "end_day": "2023-05-16",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-17",
+        "end_day": "2023-05-17",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-18",
+        "end_day": "2023-05-18",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-19",
+        "end_day": "2023-05-19",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-20",
+        "end_day": "2023-05-20",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-21",
+        "end_day": "2023-05-21",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-22",
+        "end_day": "2023-05-22",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-23",
+        "end_day": "2023-05-23",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-24",
+        "end_day": "2023-05-24",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-25",
+        "end_day": "2023-05-25",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-26",
+        "end_day": "2023-05-26",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-27",
+        "end_day": "2023-05-27",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-28",
+        "end_day": "2023-05-28",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-29",
+        "end_day": "2023-05-29",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-30",
+        "end_day": "2023-05-30",
+        "source": "TWSE:TWT49U"
+      },
+      {
+        "start_day": "2023-05-31",
+        "end_day": "2023-05-31",
+        "source": "TWSE:TWT49U"
+      }
+    ],
+    "states": {
+      "event": 0,
+      "none": 2,
+      "unknown": 0
+    }
+  }
+}

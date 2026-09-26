@@ -1,0 +1,1 @@
+{"python": "/usr/local/bin/python3", "ssl_cert_file_present": false, "default_ca": 0, "fallback_ca": 128, "verify_required": true, "check_hostname": true, "fugle_key_present": true, "typesafe_key_present": true}

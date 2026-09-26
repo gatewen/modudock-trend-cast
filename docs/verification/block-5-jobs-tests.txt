@@ -1,0 +1,23 @@
+test_all_baselines_persist_outcomes_after_commit_and_resume_only_missing (tests.test_jobs.JobTests.test_all_baselines_persist_outcomes_after_commit_and_resume_only_missing) ... ok
+test_cancel_during_point_discards_it_and_new_generation_resumes (tests.test_jobs.JobTests.test_cancel_during_point_discards_it_and_new_generation_resumes) ... ok
+test_holdout_majority_uses_all_eligible_development_labels_but_never_holdout_labels (tests.test_jobs.JobTests.test_holdout_majority_uses_all_eligible_development_labels_but_never_holdout_labels) ... ok
+test_outcome_write_failure_rolls_back_prediction_and_success_counter (tests.test_jobs.JobTests.test_outcome_write_failure_rolls_back_prediction_and_success_counter) ... ok
+test_sync_and_replay_have_independent_generations_cancel_only_replay_and_busy_creation (tests.test_jobs.JobTests.test_sync_and_replay_have_independent_generations_cancel_only_replay_and_busy_creation) ... ok
+test_sync_network_off_writer_commits_on_writer_and_late_cancelled_result_discarded (tests.test_jobs.JobTests.test_sync_network_off_writer_commits_on_writer_and_late_cancelled_result_discarded) ... ok
+test_sync_progress_is_after_commit_and_failed_commit_not_reported_success (tests.test_jobs.JobTests.test_sync_progress_is_after_commit_and_failed_commit_not_reported_success) ... FAIL
+
+======================================================================
+FAIL: test_sync_progress_is_after_commit_and_failed_commit_not_reported_success (tests.test_jobs.JobTests.test_sync_progress_is_after_commit_and_failed_commit_not_reported_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/tests/test_jobs.py", line 177, in test_sync_progress_is_after_commit_and_failed_commit_not_reported_success
+    self.assertEqual(second['status'], 'failed')
+AssertionError: 'partial' != 'failed'
+- partial
++ failed
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 6.004s
+
+FAILED (failures=1)

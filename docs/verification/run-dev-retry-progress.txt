@@ -1,0 +1,14 @@
+{"phase": "baselines", "dev_candidates_processed": 200}
+{"phase": "baselines", "dev_candidates_processed": 400}
+{"phase": "baselines", "dev_candidates_processed": 600}
+{"phase": "baselines", "dev_candidates_processed": 800}
+{"phase": "baselines", "dev_candidates_processed": 1000}
+{"phase": "baselines", "dev_candidates_processed": 1200}
+{"phase": "baselines", "dev_candidates_processed": 1400}
+{"phase": "baselines", "dev_candidates_processed": 1600}
+{"phase": "baselines", "dev_candidates_processed": 1800}
+{"phase": "baselines", "dev_candidates_processed": 2000}
+{"phase": "baselines", "dev_candidates_processed": 2200}
+{"phase": "baselines", "dev_candidates_processed": 2400}
+{"phase": "baselines", "dev_candidates_processed": 2600}
+{"phase": "jev", "run_id": 8, "status": "complete", "n_ok": 1, "n_fail": 0, "skipped": 2687, "unpredictable": 0, "http_calls": 1}

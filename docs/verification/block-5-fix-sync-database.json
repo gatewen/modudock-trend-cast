@@ -1,0 +1,78 @@
+{
+  "database": "data/trendcast.sqlite3",
+  "fetches": [
+    {
+      "month": "2026-09",
+      "kind": "daily",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2026-09",
+      "kind": "corp",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2026-09",
+      "kind": "bars",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "daily",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "corp",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "bars",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2026-09",
+      "kind": "daily",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2026-09",
+      "kind": "corp",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2026-09",
+      "kind": "bars",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "daily",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "corp",
+      "http_status": 200,
+      "note": "written"
+    },
+    {
+      "month": "2024-07",
+      "kind": "bars",
+      "http_status": 200,
+      "note": "written"
+    }
+  ],
+  "all_http_200_and_written": true
+}

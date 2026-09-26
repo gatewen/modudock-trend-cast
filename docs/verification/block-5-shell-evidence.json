@@ -1,0 +1,70 @@
+{
+  "url": "http://127.0.0.1:60704",
+  "catalog": [
+    {
+      "protocol": 1,
+      "id": "trend-cast",
+      "name": "走勢推演",
+      "version": "0.1.0",
+      "frontend": {
+        "entry": "front/front.js",
+        "public": "front"
+      },
+      "backend": {
+        "command": [
+          "/usr/local/bin/python3",
+          "back/trendcast.py"
+        ]
+      },
+      "placements": [
+        {
+          "slot": "main",
+          "title": "走勢推演"
+        }
+      ]
+    }
+  ],
+  "states": [
+    "loading",
+    "running"
+  ],
+  "requests": [
+    "status",
+    "report",
+    "report",
+    "day",
+    "day",
+    "day"
+  ],
+  "page_errors": [],
+  "themes": {
+    "light": {
+      "color": "rgb(36, 36, 36)",
+      "background": "rgb(255, 255, 255)",
+      "width": 928,
+      "scrollWidth": 928,
+      "chart_points": 8,
+      "chart_visible": true,
+      "method_rows": 5
+    },
+    "dark": {
+      "color": "rgb(222, 222, 222)",
+      "background": "rgb(30, 30, 30)",
+      "width": 928,
+      "scrollWidth": 928,
+      "chart_points": 8,
+      "chart_visible": true,
+      "method_rows": 5
+    }
+  },
+  "development": {
+    "n": 2688,
+    "statement": "jev 比 majority 差",
+    "baseline": "majority",
+    "brier_difference": 0.048165172985324925
+  },
+  "initial_day": "2024-09-05",
+  "private_routes": "404",
+  "points": 8,
+  "reveal_sent": false
+}

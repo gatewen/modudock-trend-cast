@@ -1,0 +1,7 @@
+{
+  "method": "sqlite3.Connection.backup",
+  "source_unchanged": true,
+  "destination": "data/trendcast.sqlite3",
+  "development_experiment": 1,
+  "development_points": 2688
+}

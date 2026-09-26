@@ -1,0 +1,1 @@
+{"catalog":["trend-cast"],"running":true,"development":{"n":2688,"statement":"jev 比 majority 差","baseline":"majority","brier_difference":0.048165172985324925},"points":8,"themes":["light","dark"],"read_only_commands":true,"page_errors":[]}

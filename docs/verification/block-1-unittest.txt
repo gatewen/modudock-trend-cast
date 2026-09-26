@@ -1,0 +1,47 @@
+test_cli_readonly_and_missing_database (tests.test_check_data.CheckDataTests.test_cli_readonly_and_missing_database) ... ok
+test_corrupt_numeric_rows_reported_without_crashing_or_showing_prices (tests.test_check_data.CheckDataTests.test_corrupt_numeric_rows_reported_without_crashing_or_showing_prices) ... ok
+test_dev_only_then_explicit_reveal_persists_before_report (tests.test_check_data.CheckDataTests.test_dev_only_then_explicit_reveal_persists_before_report) ... ok
+test_frozen_difference_warning_without_prices (tests.test_check_data.CheckDataTests.test_frozen_difference_warning_without_prices) ... ok
+test_no_experiment_only_quality_no_prices_or_labels (tests.test_check_data.CheckDataTests.test_no_experiment_only_quality_no_prices_or_labels) ... ok
+test_401_403_disable_process_including_new_clients (tests.test_clients.ClientTests.test_401_403_disable_process_including_new_clients) ... ok
+test_404_and_empty_data (tests.test_clients.ClientTests.test_404_and_empty_data) ... ok
+test_429_backoff_and_retry_limit (tests.test_clients.ClientTests.test_429_backoff_and_retry_limit) ... ok
+test_bad_json_duplicate_keys_nonfinite_and_encoding (tests.test_clients.ClientTests.test_bad_json_duplicate_keys_nonfinite_and_encoding) ... ok
+test_calendar_year_limit_accepts_documented_leap_year_example (tests.test_clients.ClientTests.test_calendar_year_limit_accepts_documented_leap_year_example) ... ok
+test_default_limiter_shared_across_clients (tests.test_clients.ClientTests.test_default_limiter_shared_across_clients) ... ok
+test_envelope_and_candle_validation (tests.test_clients.ClientTests.test_envelope_and_candle_validation) ... ok
+test_errors_never_leak_key_or_upstream_exception_context (tests.test_clients.ClientTests.test_errors_never_leak_key_or_upstream_exception_context) ... ok
+test_fixed_hosts_no_proxies_and_verified_tls (tests.test_clients.ClientTests.test_fixed_hosts_no_proxies_and_verified_tls) ... ok
+test_missing_key_and_invalid_query_do_not_connect (tests.test_clients.ClientTests.test_missing_key_and_invalid_query_do_not_connect) ... ok
+test_month_and_daily_query_decimal_precision (tests.test_clients.ClientTests.test_month_and_daily_query_decimal_precision) ... ok
+test_oversize_declared_and_streamed_body (tests.test_clients.ClientTests.test_oversize_declared_and_streamed_body) ... ok
+test_rate_limit_shared_across_requests (tests.test_clients.ClientTests.test_rate_limit_shared_across_requests) ... ok
+test_redirect_not_followed_or_key_forwarded (tests.test_clients.ClientTests.test_redirect_not_followed_or_key_forwarded) ... ok
+test_tls_setup_failure_refuses_connection (tests.test_clients.ClientTests.test_tls_setup_failure_refuses_connection) ... ok
+test_truncated_body_rejected (tests.test_clients.ClientTests.test_truncated_body_rejected) ... ok
+test_twse_fixture_fields_and_three_state_prerequisites (tests.test_clients.ClientTests.test_twse_fixture_fields_and_three_state_prerequisites) ... ok
+test_404_empty_preserves_existing_and_records_only_log (tests.test_store.StoreTests.test_404_empty_preserves_existing_and_records_only_log) ... ok
+test_all_tables_wal_and_persistent_exact_prices (tests.test_store.StoreTests.test_all_tables_wal_and_persistent_exact_prices) ... ok
+test_auction_timezone_and_day_isolation (tests.test_store.StoreTests.test_auction_timezone_and_day_isolation) ... ok
+test_available_bars_boundary_raw_at_t_excluded_end_at_t_included (tests.test_store.StoreTests.test_available_bars_boundary_raw_at_t_excluded_end_at_t_included) ... ok
+test_available_bars_midminute_catches_plus_60_seconds_mutation (tests.test_store.StoreTests.test_available_bars_midminute_catches_plus_60_seconds_mutation) ... ok
+test_bad_corp_does_not_establish_coverage (tests.test_store.StoreTests.test_bad_corp_does_not_establish_coverage) ... ok
+test_bad_month_and_duplicate_rejected_without_partial_write (tests.test_store.StoreTests.test_bad_month_and_duplicate_rejected_without_partial_write) ... ok
+test_corp_event_and_coverage_atomic (tests.test_store.StoreTests.test_corp_event_and_coverage_atomic) ... ok
+test_corp_three_states_and_no_stale_event_after_replacement (tests.test_store.StoreTests.test_corp_three_states_and_no_stale_event_after_replacement) ... ok
+test_decimal_conversion_does_not_round_to_context_precision (tests.test_store.StoreTests.test_decimal_conversion_does_not_round_to_context_precision) ... ok
+test_finalized_month_skipped_current_and_recent_seven_refetched (tests.test_store.StoreTests.test_finalized_month_skipped_current_and_recent_seven_refetched) ... ok
+test_frozen_bars_protect_updates_deletes_and_insertions (tests.test_store.StoreTests.test_frozen_bars_protect_updates_deletes_and_insertions) ... ok
+test_frozen_warmup_daily_corp_and_coverage (tests.test_store.StoreTests.test_frozen_warmup_daily_corp_and_coverage) ... ok
+test_mid_transaction_failure_rolls_back_deletes_inserts_and_log (tests.test_store.StoreTests.test_mid_transaction_failure_rolls_back_deletes_inserts_and_log) ... ok
+test_missing_day_unknown_corp_partial_month_not_final (tests.test_store.StoreTests.test_missing_day_unknown_corp_partial_month_not_final) ... ok
+test_same_month_replaced_without_duplicates_and_removed_rows (tests.test_store.StoreTests.test_same_month_replaced_without_duplicates_and_removed_rows) ... ok
+test_unfrozen_new_dates_can_extend_frozen_history (tests.test_store.StoreTests.test_unfrozen_new_dates_can_extend_frozen_history) ... ok
+test_calendar_month_ranges_and_history_start (tests.test_sync.SyncTests.test_calendar_month_ranges_and_history_start) ... ok
+test_failure_does_not_create_corp_coverage (tests.test_sync.SyncTests.test_failure_does_not_create_corp_coverage) ... ok
+test_middle_404_keeps_older_month_and_unfinalized_is_refetched (tests.test_sync.SyncTests.test_middle_404_keeps_older_month_and_unfinalized_is_refetched) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 1.681s
+
+OK

@@ -1,0 +1,7 @@
+2026/09/27 01:41:58.495571 settings: /Users/gatewenlee/Code/modudock/shell/modudock.settings.toml
+2026/09/27 01:41:58.495677 settings: 檔案不存在，使用預設 system
+2026/09/27 01:41:58.496214 modudock: listening on 127.0.0.1:55542, modules from /Users/gatewenlee/Code/modudock-modules
+2026/09/27 01:41:58.496226 modudock: module news (0.7.0)
+2026/09/27 01:41:58.496229 modudock: module trend-cast (0.1.0)
+2026/09/27 01:43:21.710811 ws: read: failed to get reader: received close frame: status = StatusGoingAway and reason = ""
+2026/09/27 01:47:00.266101 modudock: shutting down
