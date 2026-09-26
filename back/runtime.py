@@ -20,6 +20,7 @@ ERRORS = {'busy', 'confirmation_required', 'experiment_required', 'stale_experim
     'unfinalized_month', 'insufficient_warmup', 'unknown_corporate_action',
     'missing_warmup', 'incomplete_trading_day', 'range_outside_calendar',
     'insufficient_calendar_for_split',
+    'unsupported_prompt_version',
     'incomplete_data', 'invalid_experiment_range', 'invalid_threshold', 'packet_too_large'}
 SYMBOL = '2330'
 
@@ -233,7 +234,7 @@ class Application:
             raise DataError('insufficient_warmup')
         return create_experiment(store, self.gate, symbol=self.symbol, start=body.get('start', usable[25]),
             end=body.get('end', usable[-1]), threshold_permille=body.get('threshold_permille', 3),
-            today=today, reservation=reservation)
+            today=today, reservation=reservation, prompt_version=body.get('prompt_version', 'p1'))
 
     def _changed(self, future, request_id):
         if future.exception() is not None:

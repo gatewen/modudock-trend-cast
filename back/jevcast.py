@@ -24,6 +24,7 @@ from .experiment import (MODEL, PROMPT_VERSION, canonical, experiment_row,
 from .http_client import (ClientError, Response, _invalid_constant, _pairs,
                           secure_opener, transport_error_code)
 from .replay import LABELS, Replay, persist_outcome, threshold_value
+from .prompts import PROMPT_VERSIONS, instructions
 from .store import now_string
 
 URL = 'https://api.typesafe.ai/v1/systemone'
@@ -33,7 +34,7 @@ _AUTH_DISABLED = threading.Event()
 _HTTP_SLOTS = threading.BoundedSemaphore(MAX_WORKERS)
 
 
-def request_payload(point, model=MODEL):
+def request_payload(point, model=MODEL, *, prompt_version=PROMPT_VERSION):
     if not point.predictable or point.input_json is None:
         raise DataError('point_not_predictable')
     k = threshold_value(point.threshold_permille)
@@ -43,7 +44,7 @@ def request_payload(point, model=MODEL):
         raise DataError('invalid_feature_input')
     return {'state': state, 'model': model, 'questions': {'direction': {
         'type': 'choice',
-        'instructions': '根據 state，這檔股票從現在到 30 分鐘後，價格變化最可能落在哪一類？',
+        'instructions': instructions(prompt_version),
         'criteria': {'up': f'上漲 {k}‰ 或更多', 'flat': f'漲跌都小於 {k}‰',
                      'down': f'下跌 {k}‰ 或更多'}}}}
 
@@ -101,9 +102,9 @@ class JevClient:
         if _AUTH_DISABLED.is_set():
             raise ClientError('auth_disabled')
 
-    def predict(self, point, *, model=MODEL, cancel=None):
+    def predict(self, point, *, model=MODEL, cancel=None, prompt_version=PROMPT_VERSION):
         cancel = cancel if cancel is not None else threading.Event()
-        payload = canonical(request_payload(point, model)).encode()
+        payload = canonical(request_payload(point, model, prompt_version=prompt_version)).encode()
         key = os.environ.get('TYPESAFE_API_KEY', '')
         if not key:
             raise ClientError('missing_key')
@@ -295,12 +296,13 @@ class JevRunner:
     def _begin(self, store, handle, times):
         with store.transaction():
             row = experiment_row(store, handle.experiment_id)
-            if row['model'] != MODEL or row['prompt_version'] != PROMPT_VERSION:
+            if row['model'] != MODEL or row['prompt_version'] not in PROMPT_VERSIONS:
                 raise DataError('unsupported_experiment_version')
             verify_digest(store, row)
             plan = load_plan(store, handle.experiment_id)
             handle.replay = Replay(store, plan)
             handle.model = row['model']
+            handle.prompt_version = row['prompt_version']
             if times is None:
                 points = handle.replay.candidates(handle.split)
             else:
@@ -361,7 +363,8 @@ class JevRunner:
             answer = None
             if not handle.cancel_event.is_set():
                 try:
-                    answer = self.client.predict(point, model=handle.model, cancel=handle.cancel_event)
+                    answer = self.client.predict(point, model=handle.model, cancel=handle.cancel_event,
+                                                 prompt_version=handle.prompt_version)
                 except Exception:
                     pass  # No upstream response/error text is persisted or emitted.
             future = self.writer.submit(lambda store, h=handle, p=point, a=answer:

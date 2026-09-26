@@ -103,6 +103,33 @@ def dev_predictions(store, experiment_id, start, end):
         AND substr(t,1,10) BETWEEN ? AND ?''', (experiment_id, start, end))]
 
 
+def check_reference_settings(store, experiment_id, reference_id):
+    row, reference = experiment_row(store, experiment_id), experiment_row(store, reference_id)
+    fields = ('dev_start', 'dev_end', 'hold_start', 'hold_end', 'threshold_permille',
+              'feature_version', 'model', 'config_json')
+    if experiment_id == reference_id or any(row[key] != reference[key] for key in fields):
+        raise DataError('reference_settings_mismatch')
+    verify_digest(store, row)
+    verify_digest(store, reference)
+
+
+def compare_baselines(store, dev, reference_id):
+    """Fail before any HTTP if development baseline answers/inputs differ."""
+    check_reference_settings(store, dev.experiment_id, reference_id)
+    def values(experiment_id, method):
+        return {row['t']: (row['input_hash'], row['input_json'], row['answer'],
+                           json.loads(row['probs_json']))
+                for row in dev_predictions(store, experiment_id, dev.dev_start, dev.dev_end)
+                if row['method'] == method}
+    compared = {}
+    for method in METHODS:
+        current, prior = values(dev.experiment_id, method), values(reference_id, method)
+        if not current or current != prior:
+            raise DataError('baseline_reference_mismatch')
+        compared[method] = {'n': len(current), 'identical': True}
+    return {'experiment_id': reference_id, 'methods': compared}
+
+
 def prepare_development(store, experiment_id, progress=None):
     """Compute chronologically, then atomically persist all local methods/outcomes.
 
@@ -226,7 +253,8 @@ def exclusive_run(path):
         yield
 
 
-def run_development(path, *, experiment_id=1, max_calls=3500, client=None, progress=None):
+def run_development(path, *, experiment_id=1, max_calls=3500, client=None, progress=None,
+                    reference_experiment=None):
     """Programmatic execution; the public CLI requires --execute before calling."""
     path = Path(path).resolve()
     if not path.is_file():
@@ -241,7 +269,12 @@ def run_development(path, *, experiment_id=1, max_calls=3500, client=None, progr
         writer, gate = DBWriter(path), ActivityGate()
         runner = None
         try:
+            if reference_experiment is not None:
+                writer.submit(lambda store: check_reference_settings(
+                    store, experiment_id, reference_experiment)).result()
             dev = writer.submit(lambda store: prepare_development(store, experiment_id, progress)).result()
+            comparison = None if reference_experiment is None else writer.submit(
+                lambda store: compare_baselines(store, dev, reference_experiment)).result()
             def pending(store):
                 known = {r['t'] for r in dev_predictions(store, experiment_id, dev.dev_start, dev.dev_end)
                          if r['method'] == 'jev'}
@@ -255,8 +288,11 @@ def run_development(path, *, experiment_id=1, max_calls=3500, client=None, progr
             runner = JevRunner(writer, gate, client=client, on_progress=notify,
                                stop_dispatch=client.budget.stopped)
             run = runner.start(experiment_id, split='dev').done.result()
-            return writer.submit(lambda store: raw_report(
+            result = writer.submit(lambda store: raw_report(
                 store, dev, run, client, time.monotonic() - started)).result()
+            if comparison is not None:
+                result['baseline_reference'] = comparison
+            return result
         finally:
             if runner is not None:
                 runner.close().result()
@@ -271,6 +307,8 @@ def main(argv=None):
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--db', type=Path, default=DEFAULT_DB)
     parser.add_argument('--experiment', type=int, default=1)
+    parser.add_argument('--reference-experiment', type=int,
+                        help='Require identical split/settings and development baselines before HTTP')
     parser.add_argument('--max-calls', type=int, default=3500,
                         help='Maximum HTTP attempts this invocation, including retries; 0 disables HTTP')
     parser.add_argument('--report', type=Path, help='Save the same development-only JSON printed to stdout')
@@ -281,6 +319,7 @@ def main(argv=None):
         parser.error('--max-calls must be nonnegative')
     try:
         result = run_development(args.db, experiment_id=args.experiment, max_calls=args.max_calls,
+            reference_experiment=args.reference_experiment,
             progress=lambda value: print(json.dumps(value), file=sys.stderr, flush=True))
         text = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False)
         key = os.environ.get('TYPESAFE_API_KEY')

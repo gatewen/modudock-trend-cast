@@ -1,0 +1,42 @@
+{
+  "experiment_2": {
+    "id": 2,
+    "created_at": "2026-09-27T02:21:57+08:00",
+    "data_digest": "fa692b8121d2e1b7c20f3fae2f59739a2cbb959f511bc8e9476e3c9627bbdb8d",
+    "dev_start": "2024-09-05",
+    "dev_end": "2026-01-21",
+    "hold_start": "2026-01-22",
+    "hold_end": "2026-08-31",
+    "threshold_permille": 3,
+    "feature_version": "f1",
+    "prompt_version": "p2",
+    "model": "jev-1.13.0",
+    "config_json": "{\"mapping\":\"raw-start-plus-one-minute-auction-1330-v1\",\"symbol\":\"2330\",\"warmup_start\":\"2024-08-01\"}"
+  },
+  "same_settings_except_prompt": true,
+  "same_warmup_days": true,
+  "same_split_trading_days": true,
+  "warmup_days": 25,
+  "baselines": {
+    "experiment_id": 1,
+    "methods": {
+      "always_flat": {
+        "n": 2688,
+        "identical": true
+      },
+      "majority": {
+        "n": 2688,
+        "identical": true
+      },
+      "momentum": {
+        "n": 2688,
+        "identical": true
+      },
+      "reversal": {
+        "n": 2688,
+        "identical": true
+      }
+    }
+  },
+  "dev_predictable_and_scorable": 2688
+}

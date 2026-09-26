@@ -1,0 +1,90 @@
+{
+  "experiment_id": 2,
+  "prompt_version": "p2",
+  "split": "dev",
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "common_n": 2688,
+  "methods": {
+    "jev": {
+      "n": 2688,
+      "correct": 1332,
+      "accuracy": 0.4955357142857143,
+      "brier": 0.6856722842261904
+    },
+    "always_flat": {
+      "n": 2688,
+      "correct": 1361,
+      "accuracy": 0.5063244047619048,
+      "brier": 0.9873511904761905
+    },
+    "majority": {
+      "n": 2688,
+      "correct": 1361,
+      "accuracy": 0.5063244047619048,
+      "brier": 0.6232414118361036
+    },
+    "momentum": {
+      "n": 2688,
+      "correct": 1019,
+      "accuracy": 0.3790922619047619,
+      "brier": 1.2418154761904763
+    },
+    "reversal": {
+      "n": 2688,
+      "correct": 1282,
+      "accuracy": 0.47693452380952384,
+      "brier": 1.0461309523809523
+    }
+  },
+  "jev_choice": {
+    "up": {
+      "n": 2,
+      "share": 0.000744047619047619
+    },
+    "flat": {
+      "n": 2547,
+      "share": 0.9475446428571429
+    },
+    "down": {
+      "n": 139,
+      "share": 0.05171130952380952
+    }
+  },
+  "baseline_comparison_with_experiment_1": {
+    "always_flat": {
+      "identical": true,
+      "n": 2688
+    },
+    "majority": {
+      "identical": true,
+      "n": 2688
+    },
+    "momentum": {
+      "identical": true,
+      "n": 2688
+    },
+    "reversal": {
+      "identical": true,
+      "n": 2688
+    }
+  },
+  "p1_p2_common_development": {
+    "p1": {
+      "n": 2688,
+      "correct": 1183,
+      "accuracy": 0.4401041666666667,
+      "brier": 0.6714065848214286
+    },
+    "p2": {
+      "n": 2688,
+      "correct": 1332,
+      "accuracy": 0.4955357142857143,
+      "brier": 0.6856722842261904
+    }
+  },
+  "p1_development_unchanged": true,
+  "development_outcomes_identical": true,
+  "same_split_and_settings_except_prompt": true,
+  "holdout_not_run_or_revealed": true
+}

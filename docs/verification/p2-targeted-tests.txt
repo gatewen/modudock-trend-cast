@@ -1,0 +1,25 @@
+test_p1_actual_http_body_byte_for_byte_matches_pre_p2_golden (tests.test_prompts.PromptTests.test_p1_actual_http_body_byte_for_byte_matches_pre_p2_golden) ... ok
+test_p2_http_payload_only_changes_instructions_and_preserves_privacy_and_threshold (tests.test_prompts.PromptTests.test_p2_http_payload_only_changes_instructions_and_preserves_privacy_and_threshold) ... ok
+test_p2_percent_constants_are_frozen_rounded_source_outcomes (tests.test_prompts.PromptTests.test_p2_percent_constants_are_frozen_rounded_source_outcomes) ... ok
+test_prompt_frozen_into_digest_with_identical_split_and_f1_inputs (tests.test_prompts.PromptTests.test_prompt_frozen_into_digest_with_identical_split_and_f1_inputs) ... ok
+test_unsupported_prompt_refused_before_http_and_experiment_write (tests.test_prompts.PromptTests.test_unsupported_prompt_refused_before_http_and_experiment_write) ... ok
+test_all_five_methods_share_exact_same_intersection (tests.test_run_dev.RunDevTests.test_all_five_methods_share_exact_same_intersection) ... ok
+test_atomic_call_limit_with_concurrent_permits (tests.test_run_dev.RunDevTests.test_atomic_call_limit_with_concurrent_permits) ... ok
+test_cli_explicit_execution_defaults_to_3500_calls (tests.test_run_dev.RunDevTests.test_cli_explicit_execution_defaults_to_3500_calls) ... ok
+test_cli_selected_p2_experiment_routes_prompt_and_checks_reference_before_http (tests.test_run_dev.RunDevTests.test_cli_selected_p2_experiment_routes_prompt_and_checks_reference_before_http) ... ok
+test_cli_without_execute_no_request_no_writer_no_changes (tests.test_run_dev.RunDevTests.test_cli_without_execute_no_request_no_writer_no_changes) ... ok
+test_competing_process_lock_refuses_run_before_dispatch (tests.test_run_dev.RunDevTests.test_competing_process_lock_refuses_run_before_dispatch) ... ok
+test_majority_uses_only_matured_eligible_labels (tests.test_run_dev.RunDevTests.test_majority_uses_only_matured_eligible_labels) ... ok
+test_max_calls_caps_six_workers_and_drains_successful_requests (tests.test_run_dev.RunDevTests.test_max_calls_caps_six_workers_and_drains_successful_requests) ... ok
+test_only_dev_methods_outcomes_and_report_and_restart_zero_http (tests.test_run_dev.RunDevTests.test_only_dev_methods_outcomes_and_report_and_restart_zero_http) ... ok
+test_outcomes_baselines_and_runs_commit_atomically (tests.test_run_dev.RunDevTests.test_outcomes_baselines_and_runs_commit_atomically) ... ok
+test_reference_baseline_mismatch_stops_before_any_http (tests.test_run_dev.RunDevTests.test_reference_baseline_mismatch_stops_before_any_http) ... ok
+test_reference_split_mismatch_stops_before_preparation_or_http (tests.test_run_dev.RunDevTests.test_reference_split_mismatch_stops_before_preparation_or_http) ... ok
+test_retries_consume_quota_and_terminal_failures_are_distinct (tests.test_run_dev.RunDevTests.test_retries_consume_quota_and_terminal_failures_are_distinct) ... ok
+test_unpredictable_but_scorable_label_excluded_from_majority_and_cohort (tests.test_run_dev.RunDevTests.test_unpredictable_but_scorable_label_excluded_from_majority_and_cohort) ... ok
+test_zero_max_calls_preserves_local_work_without_http (tests.test_run_dev.RunDevTests.test_zero_max_calls_preserves_local_work_without_http) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 7.121s
+
+OK

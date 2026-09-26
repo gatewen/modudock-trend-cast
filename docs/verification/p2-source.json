@@ -1,0 +1,29 @@
+{
+  "source_experiment": {
+    "id": 1,
+    "created_at": "2026-09-26T23:37:01+08:00",
+    "data_digest": "37b17282925d9a5cebbf3ef83401a423f735e17e6e32e54f57290db3994df585",
+    "dev_start": "2024-09-05",
+    "dev_end": "2026-01-21",
+    "hold_start": "2026-01-22",
+    "hold_end": "2026-08-31",
+    "threshold_permille": 3,
+    "feature_version": "f1",
+    "prompt_version": "p1",
+    "model": "jev-1.13.0",
+    "config_json": "{\"mapping\":\"raw-start-plus-one-minute-auction-1330-v1\",\"symbol\":\"2330\",\"warmup_start\":\"2024-08-01\"}"
+  },
+  "source_dev_outcomes": {
+    "down": 665,
+    "flat": 1361,
+    "up": 662
+  },
+  "source_dev_eligible": 2688,
+  "rounded_percent": {
+    "down": 25,
+    "flat": 51,
+    "up": 25
+  },
+  "p1_dev_records_sha256": "40be269be68b6def4242fd4e6e0c6352c3ea6cf2e17f34ee207c37f9188d2d34",
+  "warmup_days": 25
+}

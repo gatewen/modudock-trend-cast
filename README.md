@@ -25,6 +25,18 @@ go run ./cmd/modudock -modules /Users/gatewenlee/Code/modudock-modules
 
 ## 開發與驗證
 
+§13 的 p2 只更換問法，f1 state 與 criteria 不變。`create_experiment(..., prompt_version='p2')` 可明確建立 p2 實驗；未指定仍為 p1。p2 的 51%／25%／25% 來自實驗 1 開發段 outcomes，已固定在 `back/prompts.py`，不從新實驗或保留段重新估計。
+
+對指定實驗跑開發段可使用下列命令。`--reference-experiment` 會先核對暖機／切點與其他設定，再核對四個基準的全部答案、機率與 f1 輸入；不同即停止，不發 API 請求。
+
+```sh
+/usr/local/bin/python3 scripts/run_dev.py --execute \
+  --db data/trendcast.sqlite3 --experiment 2 --reference-experiment 1 \
+  --max-calls 3500 --report data/p2-development.json
+```
+
+`--max-calls` 計入 HTTP 重試；重跑只補缺答。如須分次補跑，後續上限應使用總額度扣除已用次數。此命令只處理開發段，不跑或揭露保留段。
+
 happy-dom 只作為測試用 devDependency，執行前半不需要 node_modules。測試環境使用 Node 23.10.0。
 
 ```sh
@@ -36,6 +48,7 @@ npm test
 /usr/local/bin/python3 scripts/mutation_score.py
 /usr/local/bin/python3 scripts/mutation_front.py
 /usr/local/bin/python3 scripts/mutation_tls_sync.py
+/usr/local/bin/python3 scripts/mutation_p2.py
 ```
 
 變異測試在 `data/` 暫存副本中移除守衛，不修改工作來源或真資料。後半整合測試用假服務、可控制的執行緒關卡與合成資料庫，涵蓋外部 SQLite 鎖、網路未返回、stdout 不讀取時的退出，以及重啟後只補未提交的點。

@@ -9,6 +9,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
+from back.data import DataError
 from back.experiment import load_plan
 from back.http_client import ClientError
 from back.jevcast import _AUTH_DISABLED
@@ -75,6 +76,45 @@ class RunDevTests(unittest.TestCase):
             self.assertEqual(main(['--execute', '--db', str(self.path)]), 0)
         self.assertEqual(execute.call_args.kwargs['max_calls'], 3500)
         self.assertNotIn('split', execute.call_args.kwargs)
+
+    def test_cli_selected_p2_experiment_routes_prompt_and_checks_reference_before_http(self):
+        p1 = self.freeze()
+        prepare_development(self.store, p1)
+        p2 = frozen_experiment(self.store, self.days, end=self.days[28], prompt_version='p2')['id']
+        self.queue()
+        output = io.StringIO()
+        with patch('scripts.run_dev.DevClient', return_value=self.client()), \
+             redirect_stdout(output), redirect_stderr(io.StringIO()):
+            self.assertEqual(main(['--execute', '--db', str(self.path), '--experiment', str(p2),
+                                  '--reference-experiment', str(p1)]), 0)
+        result = json.loads(output.getvalue())
+        self.assertEqual(result['experiment_id'], p2)
+        self.assertEqual(result['baseline_reference']['experiment_id'], p1)
+        self.assertTrue(all(v == {'n': 16, 'identical': True} for v in result['baseline_reference']['methods'].values()))
+        self.assertEqual(len(self.server.bodies), 16)
+        for body in self.server.bodies:
+            self.assertIn('51% 屬於 flat', json.loads(body)['questions']['direction']['instructions'])
+        self.assertEqual(self.store.db.execute("SELECT count(*) FROM predictions WHERE experiment_id=? AND method='jev'", (p1,)).fetchone()[0], 0)
+        self.assertEqual(set(r[0] for r in self.store.db.execute('SELECT DISTINCT split FROM runs')), {'dev'})
+        again = run_development(self.path, experiment_id=p2, reference_experiment=p1, client=self.client())
+        self.assertEqual(again['jev']['http_calls'], 0)
+
+    def test_reference_baseline_mismatch_stops_before_any_http(self):
+        p1 = self.freeze(); prepare_development(self.store, p1)
+        p2 = frozen_experiment(self.store, self.days, end=self.days[28], prompt_version='p2')['id']
+        self.store.db.execute("UPDATE predictions SET answer='down' WHERE experiment_id=? AND method='majority'", (p1,))
+        self.store.db.commit()
+        with self.assertRaisesRegex(DataError, '^baseline_reference_mismatch$'):
+            run_development(self.path, experiment_id=p2, reference_experiment=p1, client=self.client())
+        self.assertEqual(self.server.requests, [])
+
+    def test_reference_split_mismatch_stops_before_preparation_or_http(self):
+        p1 = self.freeze()
+        p2 = frozen_experiment(self.store, self.days, end=self.days[29], prompt_version='p2')['id']
+        with self.assertRaisesRegex(DataError, '^reference_settings_mismatch$'):
+            run_development(self.path, experiment_id=p2, reference_experiment=p1, client=self.client())
+        self.assertEqual(self.server.requests, [])
+        self.assertEqual(self.store.db.execute('SELECT count(*) FROM outcomes').fetchone()[0], 0)
 
     def test_only_dev_methods_outcomes_and_report_and_restart_zero_http(self):
         experiment = self.freeze()

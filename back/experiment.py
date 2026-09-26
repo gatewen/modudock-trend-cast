@@ -11,10 +11,10 @@ import threading
 
 from .data import DataError, MAPPING, TAIPEI, day_value, symbol_value
 from .replay import FEATURE_VERSION, ReplayPlan, threshold_value
+from .prompts import PROMPT_VERSION, instructions
 from .store import now_string
 
 MODEL = 'jev-1.13.0'
-PROMPT_VERSION = 'p1'
 # Already shown to the user before experiments existed; explicitly grandfathered
 # by the block-3 task. This is an exposure record, not a fabricated experiment.
 BLOCK2_EXPOSURE = ('2330', '2024-07-26', '2026-01-27', 'block-2-real-dev-audit')
@@ -133,7 +133,7 @@ def record_exposure(store, symbol, first_day, last_day, source):
 
 
 def create_experiment(store, gate, *, start, end, symbol='2330', threshold_permille=3,
-                      today=None, reservation=None):
+                      today=None, reservation=None, prompt_version=PROMPT_VERSION):
     """Explicit inclusive evaluation range; exactly 25 prior days are warmed up.
 
     floor(70% * evaluation trading days) is development. No silent shortening
@@ -141,6 +141,7 @@ def create_experiment(store, gate, *, start, end, symbol='2330', threshold_permi
     """
     symbol_value(symbol)
     threshold_value(threshold_permille)
+    instructions(prompt_version)  # Reject unsupported versions before any write.
     if day_value(start) > day_value(end):
         raise DataError('invalid_experiment_range')
     today = today or datetime.now(TAIPEI).date()
@@ -173,7 +174,7 @@ def create_experiment(store, gate, *, start, end, symbol='2330', threshold_permi
         config = {'symbol': symbol, 'warmup_start': warmup, 'mapping': MAPPING}
         settings = dict(dev_start=days[0], dev_end=days[cut - 1], hold_start=days[cut],
                         hold_end=days[-1], threshold_permille=threshold_permille,
-                        feature_version=FEATURE_VERSION, prompt_version=PROMPT_VERSION,
+                        feature_version=FEATURE_VERSION, prompt_version=prompt_version,
                         model=MODEL, config_json=canonical(config))
         digest = data_digest(store, settings)
         cursor = store.db.execute('''INSERT INTO experiments

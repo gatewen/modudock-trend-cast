@@ -1,0 +1,40 @@
+{"phase": "baselines", "dev_candidates_processed": 200}
+{"phase": "baselines", "dev_candidates_processed": 400}
+{"phase": "baselines", "dev_candidates_processed": 600}
+{"phase": "baselines", "dev_candidates_processed": 800}
+{"phase": "baselines", "dev_candidates_processed": 1000}
+{"phase": "baselines", "dev_candidates_processed": 1200}
+{"phase": "baselines", "dev_candidates_processed": 1400}
+{"phase": "baselines", "dev_candidates_processed": 1600}
+{"phase": "baselines", "dev_candidates_processed": 1800}
+{"phase": "baselines", "dev_candidates_processed": 2000}
+{"phase": "baselines", "dev_candidates_processed": 2200}
+{"phase": "baselines", "dev_candidates_processed": 2400}
+{"phase": "baselines", "dev_candidates_processed": 2600}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 100, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 104}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 200, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 204}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 300, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 305}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 400, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 405}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 500, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 504}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 600, "n_fail": 0, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 605}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 699, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 704}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 799, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 804}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 899, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 904}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 999, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1005}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1099, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1104}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1199, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1205}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1299, "n_fail": 1, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1305}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1398, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1405}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1498, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1504}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1598, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1604}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1698, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1705}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1798, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1805}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1898, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 1904}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 1998, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2005}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2098, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2105}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2198, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2204}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2298, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2304}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2398, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2405}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2498, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2504}
+{"phase": "jev", "run_id": 14, "status": "running", "n_ok": 2598, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2605}
+{"phase": "jev", "run_id": 14, "status": "complete", "n_ok": 2686, "n_fail": 2, "skipped": 0, "unpredictable": 0, "experiment_id": 2, "generation": 1, "method": "jev", "split": "dev", "http_calls": 2688}

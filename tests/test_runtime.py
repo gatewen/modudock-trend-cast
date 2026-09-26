@@ -137,11 +137,12 @@ class RuntimeTests(unittest.TestCase):
         with patch('back.runtime.build_report', side_effect=blocked):
             self.app.request({'op': 'report'}); self.assertTrue(entered.wait(3))
             self.app.request({'op': 'new_experiment', 'confirmed': True, 'threshold_permille': 5,
-                              'start': self.row['dev_start'], 'end': self.row['hold_end']})
+                              'start': self.row['dev_start'], 'end': self.row['hold_end'], 'prompt_version': 'p2'})
             self.writer.submit(lambda db: None).result(3)
             self.assertGreater(self.app._view_generation, 0)
             release.set()
             self.sink.wait(lambda b: b.get('op') == 'status' and b.get('experiment_id') == 2)
+            self.assertEqual(self.query('SELECT prompt_version FROM experiments WHERE id=2')[0]['prompt_version'], 'p2')
         self.assertEqual(self.query('SELECT threshold_permille FROM experiments WHERE id=2')[0]['threshold_permille'], 5)
         self.assertNotIn('PRIVATE-OLD', json.dumps(self.sink.values))
 
