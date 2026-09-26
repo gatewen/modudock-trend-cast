@@ -14,7 +14,7 @@
 
 ```sh
 cd ~/Code/modudock/shell
-go run ./cmd/modudock -modules /Users/gatewenlee/Code/modudock-modules
+go run ./cmd/modudock -modules <模組目錄>
 ```
 
 在 catalog 載入「走勢推演」。若預設連接埠被其他殼佔用，加上 `-addr 127.0.0.1:0`，使用 log 中分配的網址。
@@ -54,7 +54,7 @@ go run ./cmd/modudock -modules /Users/gatewenlee/Code/modudock-modules
 happy-dom 只作為測試用 devDependency，執行前半不需要 node_modules。測試環境使用 Node 23.10.0。
 
 ```sh
-cd /Users/gatewenlee/Code/modudock-modules/trend-cast
+cd <模組目錄>/trend-cast
 /usr/local/bin/python3 -m unittest discover -v
 npm ci --ignore-scripts
 npm test
