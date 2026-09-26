@@ -7,7 +7,7 @@ import threading
 
 from .baselines import Baselines, METHODS
 from .data import DataError, TAIPEI
-from .experiment import canonical, experiment_row, load_plan, verify_digest
+from .experiment import canonical, experiment_row, load_plan, require_final_holdout, verify_digest
 from .fugle import FugleClient
 from .http_client import ClientError
 from .replay import Replay, observation, persist_outcome
@@ -42,6 +42,8 @@ class BaselineRunner:
     def start(self, experiment_id, *, method, split='dev'):
         if method not in METHODS or split not in ('dev', 'holdout'):
             raise DataError('invalid_run')
+        if split == 'holdout':
+            require_final_holdout(experiment_id)
         with self._lock:
             if self._closed:
                 raise DataError('runner_closed')
@@ -83,6 +85,8 @@ class BaselineRunner:
             return self._finish(store, handle, 'cancelled')
         with store.transaction():
             row = experiment_row(store, handle.experiment_id)
+            if handle.split == 'holdout':
+                require_final_holdout(handle.experiment_id, row['prompt_version'])
             verify_digest(store, row)
             handle.engine = Replay(store, load_plan(store, handle.experiment_id))
             handle.points = iter(handle.engine.candidates(handle.split))

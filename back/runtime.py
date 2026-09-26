@@ -20,7 +20,7 @@ ERRORS = {'busy', 'confirmation_required', 'experiment_required', 'stale_experim
     'unfinalized_month', 'insufficient_warmup', 'unknown_corporate_action',
     'missing_warmup', 'incomplete_trading_day', 'range_outside_calendar',
     'insufficient_calendar_for_split',
-    'unsupported_prompt_version',
+    'unsupported_prompt_version', 'holdout_experiment_forbidden',
     'incomplete_data', 'invalid_experiment_range', 'invalid_threshold', 'packet_too_large'}
 SYMBOL = '2330'
 

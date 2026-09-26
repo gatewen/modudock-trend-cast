@@ -1,0 +1,11 @@
+{
+  "experiment_id": 1,
+  "split": "holdout",
+  "complete": true,
+  "revealed": true,
+  "http_calls": 0,
+  "retries": 0,
+  "max_calls": 0,
+  "errors": {},
+  "elapsed_seconds": 13.67809845879674
+}

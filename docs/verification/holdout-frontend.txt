@@ -1,0 +1,34 @@
+
+> modudock-trend-cast@0.1.0 test
+> node --test tests/front.test.mjs
+
+✔ mount synchronous; ready after registration; no sending before up (11.340209ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (17.371125ms)
+✔ hover and keyboard focus show probabilities and realized return (4.302333ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (2.864083ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (5.004667ms)
+✔ date picker refuses unknown and locked days without requests (3.172417ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.473875ms)
+✔ locked day discards any supplied data and clears a previous visible chart (3.814ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (3.351709ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (4.058583ms)
+✔ development progress can show counts but locked holdout progress cannot (2.774958ms)
+✔ untrusted strings become text, never HTML or handlers (3.4465ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (3.065833ms)
+✔ new experiment uses a second confirmation and validates threshold (3.075125ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (4.520667ms)
+✔ experiment change invalidates old report and pending reveal confirmation (1.717625ms)
+✔ missing key disables jev but baseline replay stays usable (1.985ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (2.005833ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (4.139ms)
+✔ error renders local explanation and never reflects upstream secret text (2.806ms)
+✔ sync distinguishes total and partial failure with safe reasons and clears them after success (2.724833ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.27525ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 241.927375

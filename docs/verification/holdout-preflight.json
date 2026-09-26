@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "prompt_version": "p1",
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "hold_start": "2026-01-22",
+  "hold_end": "2026-08-31",
+  "data_digest": "37b17282925d9a5cebbf3ef83401a423f735e17e6e32e54f57290db3994df585",
+  "selected_baseline": "majority",
+  "prior_overlap_days": 4,
+  "frozen_digest_verified": true,
+  "existing_holdout_work": false
+}

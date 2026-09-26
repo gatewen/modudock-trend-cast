@@ -63,6 +63,10 @@ def build_report(store, *, experiment_id=None, dev_only=False):
                          and len(development.common) * 100 >= len(development.eligible) * 95)
                 held = load_split(store, row, 'holdout')
                 result['holdout'] = {'state': 'revealed', **split_report(held, baseline, development_ready=ready)}
+                context = None
+                if store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='reveal_context'").fetchone():
+                    context = store.db.execute('SELECT prior_overlap_days FROM reveal_context WHERE experiment_id=?', (row['id'],)).fetchone()
+                result['holdout']['prior_overlap_days'] = context[0] if context is not None else None
                 result['frozen_warnings'] = frozen_warnings(store, row, row['hold_end'])
         return result
 
@@ -155,6 +159,10 @@ def markdown_report(report):
             continue
         comparison = data['comparison']
         boot = comparison['bootstrap']
+        if split == 'holdout':
+            overlap = data.get('prior_overlap_days')
+            lines.extend([f'保留段已使用（解鎖前 {overlap} 日重疊）。' if overlap else
+                          '解鎖前無已曝光日期重疊。' if overlap == 0 else '解鎖前重疊日數未記錄。', ''])
         lines.extend([f'## {title}：{data["first_day"]}～{data["last_day"]}', '',
             comparison['statement'] + '。', '',
             f'候選 {data["candidates"]}；可預測 {data["predictable"]}；可評分 {data["scorable"]}；'

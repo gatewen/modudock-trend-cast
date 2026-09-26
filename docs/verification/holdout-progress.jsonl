@@ -1,0 +1,8 @@
+{"phase": "baselines", "method": null, "experiment_id": 1}
+{"phase": "baseline", "method": "always_flat", "experiment_id": 1}
+{"phase": "baseline", "method": "majority", "experiment_id": 1}
+{"phase": "baseline", "method": "momentum", "experiment_id": 1}
+{"phase": "baseline", "method": "reversal", "experiment_id": 1}
+{"phase": "jev", "method": null, "experiment_id": 1}
+{"phase": "jev", "method": null, "experiment_id": 1}
+{"phase": "verify_then_reveal", "method": null, "experiment_id": 1}

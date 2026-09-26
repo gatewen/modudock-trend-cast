@@ -1,0 +1,84 @@
+{
+  "experiment_id": 1,
+  "prompt_version": "p1",
+  "split": "holdout",
+  "first_day": "2026-01-22",
+  "last_day": "2026-08-31",
+  "common_n": 1160,
+  "methods": {
+    "jev": {
+      "n": 1160,
+      "correct": 577,
+      "accuracy": 0.4974137931034483,
+      "brier": 0.6129183620689655,
+      "wilson95": [
+        0.4686969750866825,
+        0.5261476835611717
+      ]
+    },
+    "always_flat": {
+      "n": 1160,
+      "correct": 783,
+      "accuracy": 0.675,
+      "brier": 0.65,
+      "wilson95": [
+        0.6475073579076402,
+        0.7013374069208913
+      ]
+    },
+    "majority": {
+      "n": 1160,
+      "correct": 783,
+      "accuracy": 0.675,
+      "brier": 0.534333146435958,
+      "wilson95": [
+        0.6475073579076402,
+        0.7013374069208913
+      ]
+    },
+    "momentum": {
+      "n": 1160,
+      "correct": 628,
+      "accuracy": 0.5413793103448276,
+      "brier": 0.9172413793103448,
+      "wilson95": [
+        0.5126152079252719,
+        0.5698702537090605
+      ]
+    },
+    "reversal": {
+      "n": 1160,
+      "correct": 655,
+      "accuracy": 0.5646551724137931,
+      "brier": 0.8706896551724138,
+      "wilson95": [
+        0.5359564066028475,
+        0.5929271272007972
+      ]
+    }
+  },
+  "jev_choices": {
+    "flat": 717,
+    "up": 15,
+    "down": 428
+  },
+  "trading_days": 145,
+  "prior_overlap_days": 4,
+  "brier_difference": 0.07858521563300759,
+  "brier_difference_ci95": [
+    0.05913211571421698,
+    0.09667726139378104
+  ],
+  "repetitions": 2000,
+  "seed": 20260927,
+  "http_calls": 1164,
+  "retries": 0,
+  "errors": {
+    "choice_not_maximum": 4
+  },
+  "all_development_unchanged": true,
+  "experiment_2_unchanged": true,
+  "full_reveal_count": 1,
+  "revealed_after_all_runs": true,
+  "statement": "jev 比 majority 差"
+}

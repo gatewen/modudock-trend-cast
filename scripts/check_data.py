@@ -74,6 +74,9 @@ def _build_report(store, symbol, experiment_id, include_holdout):
         raise DataError('experiment_symbol_mismatch')
     if include_holdout and experiment is None:
         raise DataError('experiment_required')
+    if include_holdout:
+        from back.experiment import require_final_holdout
+        require_final_holdout(experiment['id'], experiment['prompt_version'])
     grouped = defaultdict(list)
     daily = {r['day']: dict(r) for r in store.db.execute('SELECT * FROM daily WHERE symbol=? ORDER BY day', (symbol,))}
     invalid_ohlc = nonpositive = invalid_time = 0

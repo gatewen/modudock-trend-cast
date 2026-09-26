@@ -15,6 +15,14 @@ from .prompts import PROMPT_VERSION, instructions
 from .store import now_string
 
 MODEL = 'jev-1.13.0'
+FINAL_EXPERIMENT = 1  # SPEC 13.4: chosen from development Brier, p1 < p2.
+
+
+def require_final_holdout(experiment_id, prompt_version='p1'):
+    if type(experiment_id) is not int or experiment_id != FINAL_EXPERIMENT or prompt_version != 'p1':
+        raise DataError('holdout_experiment_forbidden')
+
+
 # Already shown to the user before experiments existed; explicitly grandfathered
 # by the block-3 task. This is an exposure record, not a fabricated experiment.
 BLOCK2_EXPOSURE = ('2330', '2024-07-26', '2026-01-27', 'block-2-real-dev-audit')
@@ -207,10 +215,18 @@ def holdout_overlap(store, experiment_id):
     return len(exposed_days(store, plan.symbol, plan.days_for('holdout')))
 
 
-def reveal_holdout(store, experiment_id):
-    """Invoke only after the future UI has received explicit confirmation."""
+def reveal_holdout(store, experiment_id, *, check=None):
+    """Explicitly authorized reveal; optional completion check shares its commit."""
+    require_final_holdout(experiment_id)
     with store.transaction():
         row = experiment_row(store, experiment_id)
+        require_final_holdout(experiment_id, row['prompt_version'])
+        if check is not None:
+            check(store, row)
+        if holdout_revealed(store, row):
+            return
+        overlap = holdout_overlap(store, experiment_id)
+        store.db.execute('INSERT OR IGNORE INTO reveal_context VALUES (?,?)', (experiment_id, overlap))
         store.db.execute('INSERT INTO reveals VALUES (?,?,?,?,?)',
             (experiment_id, now_string(), row['hold_start'], row['hold_end'], 'all'))
 

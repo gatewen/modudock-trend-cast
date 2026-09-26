@@ -11,6 +11,7 @@ const SYNC_REASONS = {tls_certificate_error: '無法驗證 TLS 憑證', tls_erro
   invalid_response: '資料格式不符', database_operation_failed: '資料庫寫入失敗', operation_failed: '同步作業失敗'};
 const KEYS = {available: '已設定', missing: '未設定', invalid: '金鑰無效'};
 const ERRORS = {busy: '目前有工作進行中，請稍後再試。', missing_key: '尚未設定所需的金鑰。',
+  holdout_experiment_forbidden: '期末考只允許實驗 1（p1），其他實驗的保留段不開放。',
   auth_disabled: '金鑰無效，此次執行已停用對應功能。', stale_experiment: '實驗已變更，請重新選擇。',
   confirmation_required: '請先確認此操作。', insufficient_warmup: '定稿資料不足，尚不能建立實驗。',
   unfinalized_month: '資料含未定稿月份，請先完成同步。', unknown_corporate_action: '除權息資料尚未確認。',

@@ -24,7 +24,7 @@ class StoreTests(unittest.TestCase):
 
     def test_all_tables_wal_and_persistent_exact_prices(self):
         tables = {r[0] for r in self.store.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-        self.assertEqual(tables, {'bars', 'daily', 'corp_events', 'corp_coverage', 'fetch_log',
+        self.assertEqual(tables, {'bars', 'daily', 'corp_events', 'corp_coverage', 'fetch_log', 'reveal_context',
                                  'experiments', 'runs', 'predictions', 'outcomes', 'reveals',
                                  'prior_exposures', 'run_scopes'})
         self.assertEqual(self.store.db.execute('PRAGMA journal_mode').fetchone()[0], 'wal')

@@ -58,6 +58,9 @@ CREATE TABLE IF NOT EXISTS outcomes (
 CREATE TABLE IF NOT EXISTS reveals (
  experiment_id INTEGER NOT NULL REFERENCES experiments(id), revealed_at TEXT NOT NULL,
  first_day TEXT NOT NULL, last_day TEXT NOT NULL, what TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS reveal_context (
+ experiment_id INTEGER PRIMARY KEY REFERENCES experiments(id),
+ prior_overlap_days INTEGER NOT NULL CHECK(prior_overlap_days>=0));
 CREATE TABLE IF NOT EXISTS prior_exposures (
  symbol TEXT NOT NULL, first_day TEXT NOT NULL, last_day TEXT NOT NULL,
  source TEXT NOT NULL, created_at TEXT NOT NULL,

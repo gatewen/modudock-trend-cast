@@ -20,7 +20,7 @@ import urllib.request
 
 from .data import DataError
 from .experiment import (MODEL, PROMPT_VERSION, canonical, experiment_row,
-                         load_plan, verify_digest)
+                         load_plan, require_final_holdout, verify_digest)
 from .http_client import (ClientError, Response, _invalid_constant, _pairs,
                           secure_opener, transport_error_code)
 from .replay import LABELS, Replay, persist_outcome, threshold_value
@@ -236,6 +236,8 @@ class JevRunner:
     def start(self, experiment_id, *, split='dev', times=None):
         if split not in ('dev', 'holdout'):
             raise DataError('invalid_split_name')
+        if split == 'holdout':
+            require_final_holdout(experiment_id)
         with self._lock:
             if self._closed:
                 raise DataError('runner_closed')
@@ -296,6 +298,8 @@ class JevRunner:
     def _begin(self, store, handle, times):
         with store.transaction():
             row = experiment_row(store, handle.experiment_id)
+            if handle.split == 'holdout':
+                require_final_holdout(handle.experiment_id, row['prompt_version'])
             if row['model'] != MODEL or row['prompt_version'] not in PROMPT_VERSIONS:
                 raise DataError('unsupported_experiment_version')
             verify_digest(store, row)
@@ -324,10 +328,6 @@ class JevRunner:
         while handle.pending < MAX_WORKERS and not handle.exhausted:
             if not self._current(handle):
                 return self._cancel(store, handle)
-            if self.stop_dispatch is not None and self.stop_dispatch.is_set():
-                handle.exhausted = True
-                handle.stop_reason = 'call_limit'
-                break
             t = next(handle.points, None)
             if t is None:
                 handle.exhausted = True
@@ -349,6 +349,12 @@ class JevRunner:
             if not point.predictable:
                 handle.unpredictable += 1
                 continue
+            # A quota stops new HTTP work, not the final traversal of already
+            # committed/unpredictable points. The last permit can finish a run.
+            if self.stop_dispatch is not None and self.stop_dispatch.is_set():
+                handle.exhausted = True
+                handle.stop_reason = 'call_limit'
+                break
             handle.pending += 1
             self._jobs.put((handle, point))
         if handle.exhausted and handle.pending == 0:
