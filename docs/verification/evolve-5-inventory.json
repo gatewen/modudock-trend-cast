@@ -1,0 +1,23 @@
+{
+  "start": "2010-01-04",
+  "end": "2026-09-24",
+  "trading_days": 4101,
+  "candle_days": 4101,
+  "missing_days": [],
+  "unexpected_days": [],
+  "corporate_events": 39,
+  "unknown_corporate_days": [],
+  "chips": {
+    "d_institutional": {
+      "first_day": "2012-05-02",
+      "last_day": "2026-09-24",
+      "trading_days": 3525
+    },
+    "d_margin": {
+      "first_day": "2010-01-04",
+      "last_day": "2026-09-24",
+      "trading_days": 4101
+    }
+  },
+  "jev_http_calls": 0
+}

@@ -11,7 +11,7 @@ import urllib.parse
 import urllib.request
 
 MAX_BYTES = 16 * 1024 * 1024
-HOSTS = frozenset({'api.fugle.tw', 'www.twse.com.tw'})
+HOSTS = frozenset({'api.fugle.tw', 'www.twse.com.tw', 'api.finmindtrade.com'})
 _DISABLED = set()
 _AUTH_LOCK = threading.Lock()
 
@@ -75,7 +75,7 @@ class RateLimiter:
             self._last = self.clock()
 
 
-_LIMITERS = {host: RateLimiter() for host in HOSTS}
+_LIMITERS = {host: RateLimiter(12.0 if host == 'api.finmindtrade.com' else 2.0) for host in HOSTS}
 
 
 def _pairs(items):

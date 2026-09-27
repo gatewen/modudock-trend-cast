@@ -1,0 +1,64 @@
+{
+  "start": "2010-01-04",
+  "end": "2026-09-24",
+  "trading_days": 4101,
+  "candle_days": 4101,
+  "missing_days": [],
+  "unexpected_days": [],
+  "corporate_events": 39,
+  "unknown_corporate_days": [],
+  "chips": {
+    "d_institutional": {
+      "first_day": "2012-05-02",
+      "last_day": "2026-09-24",
+      "trading_days": 3525
+    },
+    "d_margin": {
+      "first_day": "2010-01-04",
+      "last_day": "2026-09-24",
+      "trading_days": 4101
+    }
+  },
+  "development": {
+    "3": {
+      "k_numerator": 1,
+      "k_denominator": 100,
+      "k_percent": 1.0,
+      "n": 2891,
+      "first_point": "2010-04-07",
+      "last_point": "2021-12-27",
+      "labels": {
+        "up": 1055,
+        "flat": 1020,
+        "down": 816
+      }
+    },
+    "7": {
+      "k_numerator": 1,
+      "k_denominator": 50,
+      "k_percent": 2.0,
+      "n": 2887,
+      "first_point": "2010-04-07",
+      "last_point": "2021-12-21",
+      "labels": {
+        "up": 940,
+        "flat": 1378,
+        "down": 569
+      }
+    },
+    "14": {
+      "k_numerator": 1,
+      "k_denominator": 40,
+      "k_percent": 2.5,
+      "n": 2880,
+      "first_point": "2010-04-07",
+      "last_point": "2021-12-10",
+      "labels": {
+        "up": 1153,
+        "flat": 1184,
+        "down": 543
+      }
+    }
+  },
+  "jev_http_calls": 0
+}

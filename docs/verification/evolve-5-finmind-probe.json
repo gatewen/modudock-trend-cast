@@ -1,0 +1,32 @@
+[
+  {
+    "dataset": "TaiwanStockTradingDate",
+    "http_status": 200,
+    "token_used": false,
+    "requests": 1,
+    "rows": 4101,
+    "first_day": "2010-01-04",
+    "last_day": "2026-09-24",
+    "payload_sha256": "1dc83fb296f78851a0803c5ff60209463b5d63dd7eec2a88eccada5617a16728"
+  },
+  {
+    "dataset": "TaiwanStockInstitutionalInvestorsBuySell",
+    "http_status": 200,
+    "token_used": false,
+    "requests": 1,
+    "rows": 15593,
+    "first_day": "2012-05-02",
+    "last_day": "2026-09-24",
+    "payload_sha256": "b13c36b31226c7fc19166f750d6eecefeaeb9f32d1a88eab7382457a3b58db67"
+  },
+  {
+    "dataset": "TaiwanStockMarginPurchaseShortSale",
+    "http_status": 200,
+    "token_used": false,
+    "requests": 1,
+    "rows": 4101,
+    "first_day": "2010-01-04",
+    "last_day": "2026-09-24",
+    "payload_sha256": "f8e30bf1ce9a2f31a3884b979c275bc0d4e8da933d54a0c4e163359bdb0c4ccc"
+  }
+]

@@ -22,7 +22,7 @@ class CorpBatch:
 def roc_day(value):
     if not isinstance(value, str):
         raise DataError('invalid_twse_day')
-    match = re.fullmatch(r'(\d{3})年(\d{2})月(\d{2})日', value)
+    match = re.fullmatch(r'(\d{2,3})年(\d{2})月(\d{2})日', value)
     if not match:
         raise DataError('invalid_twse_day')
     try:
