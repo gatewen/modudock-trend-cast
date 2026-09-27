@@ -26,7 +26,7 @@ class StoreTests(unittest.TestCase):
         tables = {r[0] for r in self.store.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         self.assertEqual(tables, {'bars', 'daily', 'corp_events', 'corp_coverage', 'fetch_log', 'reveal_context',
                                  'experiments', 'runs', 'predictions', 'outcomes', 'reveals',
-                                 'prior_exposures', 'run_scopes'})
+                                 'prior_exposures', 'run_scopes', 'forward_days', 'forward_exclusions', 'forward_attempts'})
         self.assertEqual(self.store.db.execute('PRAGMA journal_mode').fetchone()[0], 'wal')
         self.assertEqual(self.store.db.execute('PRAGMA busy_timeout').fetchone()[0], 1000)
         self.store.write_candles(batch([dict(candle(), close='100.123456789')]))

@@ -11,10 +11,14 @@ from .experiment import ActivityGate, create_experiment, experiment_row, reveal_
 from .http_client import _AUTH_LOCK, _DISABLED
 from .jevcast import JevRunner, JevClient, _AUTH_DISABLED
 from .jobs import BaselineRunner, SyncRunner
+from .forward_runner import ForwardRunner
+from .forward import reveal_forward
 from .report import build_report, current_experiment, day_view, status_view
 from .store import Store
 
 ERRORS = {'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
+    'forward_settings_changed', 'forward_empty', 'forward_incomplete', 'forward_exposure_changed',
+    'evolution_budget_exhausted', 'evolution_budget_unavailable',
     'invalid_request', 'invalid_run', 'missing_key', 'auth_disabled', 'unknown_operation',
     'database_operation_failed', 'database_open_failed', 'frozen_data_changed',
     'unfinalized_month', 'insufficient_warmup', 'unknown_corporate_action',
@@ -50,6 +54,7 @@ class Application:
         self.jev = JevRunner(writer, self.gate, client=jev_client, on_progress=self._on_replay)
         self.baselines = BaselineRunner(writer, self.gate, on_progress=self._on_replay)
         self.sync = SyncRunner(writer, self.gate, fugle=fugle, twse=twse, on_progress=self._on_sync)
+        self.forward = ForwardRunner(writer, self.gate, client=jev_client, on_progress=self._on_replay)
 
     def emit(self, body):
         if self.closed:
@@ -70,6 +75,10 @@ class Application:
             # Running a holdout never grants permission to display its results,
             # including successes, failures, skipped points or completion totals.
             if progress.get('split') == 'holdout' and self._metadata.get('holdout', {}).get('state') != 'revealed':
+                progress = {k: progress[k] for k in ('status', 'method', 'split') if k in progress}
+            if progress.get('split') == 'forward':
+                # Even after an earlier reveal, a growing cohort can contain
+                # new unopened days. Never publish forward run counters.
                 progress = {k: progress[k] for k in ('status', 'method', 'split') if k in progress}
             body = {**self._metadata, 'op': 'status', 'keys': key_state(),
                     'sync': dict(self._sync), 'replay': progress,
@@ -112,6 +121,8 @@ class Application:
             self.error(DataError('busy'), body.get('request_id'))
 
     def _read_status(self, store, experiment_id):
+        if experiment_id is None and store.db.execute('SELECT 1 FROM experiments WHERE id=1').fetchone():
+            experiment_id = 1  # Default shell view is the finalized p1 experiment.
         result = status_view(store, experiment_id=experiment_id)
         result['data_range'] = dict(store.db.execute('''SELECT min(day) first_day,max(day) last_day
             FROM daily WHERE symbol=?''', (self.symbol,)).fetchone())
@@ -122,6 +133,10 @@ class Application:
             last = row['hold_end'] if result['holdout']['state'] == 'revealed' else row['dev_end']
             result['days'] = [r[0] for r in store.db.execute('''SELECT day FROM daily
                 WHERE symbol=? AND day BETWEEN ? AND ? ORDER BY day''', (symbol, row['dev_start'], last))]
+            result['days'].extend(result['forward'].get('days', []))
+            last = max(result['days'])
+            result['data_range'] = dict(store.db.execute('''SELECT min(day) first_day,max(day) last_day
+                FROM daily WHERE symbol=? AND day<=?''', (symbol, last)).fetchone())
             result['threshold_permille'] = row['threshold_permille']
         return result
 
@@ -171,12 +186,32 @@ class Application:
                 handle = self.sync.start(symbol=self.symbol)
                 self._on_sync({'status': 'running', 'generation': handle.generation})
             elif op == 'cancel':
+                self.forward.cancel()
                 self.jev.cancel()
                 self.baselines.cancel()
                 with self._lock:
                     if self.gate.busy('replay'):
                         self._replay = {**self._replay, 'status': 'cancelling'}
                 self._status(request_id)
+            elif op in ('run_forward', 'reveal_forward'):
+                if set(body) - {'op', 'experiment_id', 'confirmed', 'request_id'}:
+                    raise DataError('forward_settings_changed')
+                experiment_id = self._bound_experiment(body)
+                if type(experiment_id) is not int or experiment_id != 1:
+                    raise DataError('forward_settings_changed')
+                if body.get('confirmed') is not True:
+                    raise DataError('confirmation_required')
+                if op == 'run_forward':
+                    state = key_state()['typesafe']
+                    if state != 'available':
+                        raise DataError('auth_disabled' if state == 'invalid' else 'missing_key')
+                    handle = self.forward.start(experiment_id)
+                    handle.done.add_done_callback(self._run_done)
+                else:
+                    reservation = self.gate.claim('create')
+                    result = self.writer.submit(lambda store: reveal_forward(store, experiment_id))
+                    result.add_done_callback(lambda future: self.gate.release('create', reservation))
+                    result.add_done_callback(lambda future: self._changed(future, request_id))
             elif op == 'run':
                 experiment_id = self._bound_experiment(body)
                 method, split = body.get('method'), body.get('split')
@@ -258,6 +293,7 @@ class Application:
 
     def close(self):
         self.closed = True
+        self.forward.close()
         self.jev.close()
         self.baselines.close()
         self.sync.close()

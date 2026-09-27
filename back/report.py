@@ -68,6 +68,15 @@ def build_report(store, *, experiment_id=None, dev_only=False):
                     context = store.db.execute('SELECT prior_overlap_days FROM reveal_context WHERE experiment_id=?', (row['id'],)).fetchone()
                 result['holdout']['prior_overlap_days'] = context[0] if context is not None else None
                 result['frozen_warnings'] = frozen_warnings(store, row, row['hold_end'])
+            from .forward import LOCKED, revealed_days
+            forward_days = revealed_days(store, row['id'])
+            result['forward'] = dict(LOCKED)
+            if forward_days:
+                forward = load_split(store, row, 'forward')
+                result['forward'] = {'state': 'revealed', 'cumulative_days': len(forward_days),
+                    **split_report(forward, baseline, development_ready=(development.complete
+                        and len(development.eligible) > 0
+                        and len(development.common) * 100 >= len(development.eligible) * 95))}
         return result
 
 
@@ -91,6 +100,9 @@ def status_view(store, *, experiment_id=None):
                         'overlap_days': overlap,
                         'message': f'保留段已使用（{overlap} 日重疊）' if overlap else '保留段尚未使用'},
             'frozen_warnings': frozen_warnings(store, row, row['dev_end'])}
+        from .forward import LOCKED, revealed_days
+        days = revealed_days(store, row['id'])
+        result['forward'] = {'state': 'revealed', 'days': list(days), 'cumulative_days': len(days)} if days else dict(LOCKED)
         return result
 
 
@@ -102,8 +114,11 @@ def day_view(store, day, *, experiment_id=None):
             return {'status': 'experiment_required', 'message': '尚未建立實驗'}
         access = day_access(store, row['id'], day)
         if access != 'allowed':
-            return {'status': access, 'message': '保留段未解鎖' if access == 'holdout_locked' else '日期不在實驗範圍'}
+            return {'status': access, 'message': '前瞻段未揭露' if access == 'forward_locked' else '保留段未解鎖' if access == 'holdout_locked' else '日期不在實驗範圍'}
         plan = load_plan(store, row['id'])
+        if day > row['hold_end']:
+            from .forward import plan_for, revealed_days
+            plan = plan_for(store, row['id'], days=revealed_days(store, row['id']), verify=True)
         engine = Replay(store, plan)
         stored = {}
         for prediction in store.db.execute('''SELECT * FROM predictions WHERE experiment_id=?
@@ -150,15 +165,17 @@ def markdown_report(report):
         return '—' if bounds is None else f'[{formatter(bounds[0])}, {formatter(bounds[1])}]'
     lines = [f'# 實驗 {report["experiment_id"]} 計分報告', '',
              'Brier＝三類機率平方誤差加總後取平均；混淆矩陣列為真實、欄為預測。', '']
-    for split, title in (('dev', '開發段'), ('holdout', '保留段')):
+    for split, title in (('dev', '開發段'), ('holdout', '保留段'), ('forward', '前瞻段')):
         if split not in report:
             continue
         data = report[split]
         if data.get('state') == 'locked':
-            lines.extend(['保留段未解鎖。', ''])
+            lines.extend(['前瞻段未揭露。' if split == 'forward' else '保留段未解鎖。', ''])
             continue
         comparison = data['comparison']
         boot = comparison['bootstrap']
+        if split == 'forward':
+            lines.extend([f'前瞻段累積 {data["cumulative_days"]} 個交易日、{data["predictable_and_scorable"]} 點（僅已揭露範圍）。', ''])
         if split == 'holdout':
             overlap = data.get('prior_overlap_days')
             lines.extend([f'保留段已使用（解鎖前 {overlap} 日重疊）。' if overlap else

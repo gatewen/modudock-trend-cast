@@ -1,0 +1,28 @@
+sync_all_failed_wording_hidden: KILLED -> sync distinguishes total and partial failure
+sync_safe_reasons_hidden: KILLED -> sync distinguishes total and partial failure
+ready_before_callbacks: KILLED -> mount synchronous
+pre_up_send_guards_removed: KILLED -> mount synchronous
+untrusted_text_becomes_html: KILLED -> untrusted strings
+correct_and_incorrect_swapped: KILLED -> status initializes authorized date
+unpredictable_and_unscorable_color_guard_removed: KILLED -> unpredictable unscorable
+arrow_up_down_reversed: KILLED -> status initializes authorized date
+plot_retained_during_date_change: KILLED -> day navigation clears old plot
+old_report_request_guard_removed: KILLED -> older report for the same experiment
+locked_day_plot_guard_removed: KILLED -> locked day discards
+locked_report_guard_removed: KILLED -> locked metadata refuses
+reveal_confirmation_bypassed: KILLED -> reveal requires second explicit confirmation
+new_experiment_confirmation_bypassed: KILLED -> new experiment uses a second confirmation
+threshold_validation_removed: KILLED -> new experiment uses a second confirmation
+jev_missing_key_guard_removed: KILLED -> missing key disables jev
+dev_button_runs_holdout: KILLED -> missing key disables jev
+unmount_leaves_ui: KILLED -> no experiment shows no chart
+locked_holdout_progress_counts_shown: KILLED -> development progress can show counts
+experiment_change_keeps_old_confirmation: KILLED -> experiment change invalidates old report
+reveal_does_not_reload_cleared_chart: KILLED -> successful reveal refreshes the cleared day
+forward_run_confirmation_bypassed: KILLED -> forward run and reveal each require
+forward_reveal_confirmation_bypassed: KILLED -> forward run and reveal each require
+forward_locked_metadata_ignored: KILLED -> locked forward report and growing
+forward_growth_progress_counts_shown: KILLED -> locked forward report and growing
+forward_cumulative_points_wrong: KILLED -> revealed forward shows cumulative
+forward_rerun_report_not_refreshed: KILLED -> each forward rerun refreshes
+27/27 front behavior mutations killed

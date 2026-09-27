@@ -31,6 +31,18 @@ go run ./cmd/modudock -modules <模組目錄>
 
 ## 開發與驗證
 
+§14 前瞻段固定使用實驗 1／p1 與原有四基準；殼初次載入預設顯示已定案的實驗 1。成績區有「前瞻段」與「跑前瞻段」「看前瞻段結果」按鈕，兩者各需確認。回放會凍結尚未曝光的收盤日期，只補缺答；全部方法與 outcomes 驗證完整後，才接受另一次明確揭露。已揭露部分累積顯示天數、可預測且可評分點數與 §7.2 指標；新日未揭露前，不出現其數字。保留段永久標示已使用。
+
+只預覽日期、不回放或揭露：
+
+```sh
+/usr/local/bin/python3 scripts/forward_dates.py --db data/trendcast.sqlite3
+```
+
+自主進化所有真正的 jev HTTP（含既有 CLI 與 429／529 重試）共用 `data/evolve-2026-09-27-budget.sqlite3` 的 **3,000 次**硬上限。額度帳本獨立於實驗 DB，跨程序／重啟累積，複製實驗 DB 不會重置額度；不要刪除或重設該檔。假服務測試使用各自的暫存帳本。未發出真 HTTP 前不建立正式帳本。
+
+第一輪實作、日期清單及驗證輸出見 [前瞻段交件](docs/HANDOFF-EVOLVE-1.md)。
+
 §13 的 p2 只更換問法，f1 state 與 criteria 不變。`create_experiment(..., prompt_version='p2')` 可明確建立 p2 實驗；未指定仍為 p1。p2 的 51%／25%／25% 來自實驗 1 開發段 outcomes，已固定在 `back/prompts.py`，不從新實驗或保留段重新估計。
 
 對指定實驗跑開發段可使用下列命令。`--reference-experiment` 會先核對暖機／切點與其他設定，再核對四個基準的全部答案、機率與 f1 輸入；不同即停止，不發 API 請求。
@@ -64,6 +76,7 @@ npm test
 /usr/local/bin/python3 scripts/mutation_tls_sync.py
 /usr/local/bin/python3 scripts/mutation_p2.py
 /usr/local/bin/python3 scripts/mutation_holdout.py
+/usr/local/bin/python3 scripts/mutation_forward.py
 ```
 
 變異測試在 `data/` 暫存副本中移除守衛，不修改工作來源或真資料。後半整合測試用假服務、可控制的執行緒關卡與合成資料庫，涵蓋外部 SQLite 鎖、網路未返回、stdout 不讀取時的退出，以及重啟後只補未提交的點。

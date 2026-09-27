@@ -11,6 +11,9 @@ const SYNC_REASONS = {tls_certificate_error: '無法驗證 TLS 憑證', tls_erro
   invalid_response: '資料格式不符', database_operation_failed: '資料庫寫入失敗', operation_failed: '同步作業失敗'};
 const KEYS = {available: '已設定', missing: '未設定', invalid: '金鑰無效'};
 const ERRORS = {busy: '目前有工作進行中，請稍後再試。', missing_key: '尚未設定所需的金鑰。',
+  forward_settings_changed: '前瞻段只能使用實驗 1 已定案的設定。', forward_empty: '目前沒有可用的前瞻日期。',
+  forward_incomplete: '前瞻段尚有缺答或未完成，不能揭露。', forward_exposure_changed: '有日期已曝光，請重新檢查前瞻範圍。',
+  evolution_budget_exhausted: '本次自主進化額度已用完。', evolution_budget_unavailable: '無法確認剩餘額度，已停止呼叫。',
   holdout_experiment_forbidden: '期末考只允許實驗 1（p1），其他實驗的保留段不開放。',
   auth_disabled: '金鑰無效，此次執行已停用對應功能。', stale_experiment: '實驗已變更，請重新選擇。',
   confirmation_required: '請先確認此操作。', insufficient_warmup: '定稿資料不足，尚不能建立實驗。',
@@ -86,6 +89,7 @@ export default function mount(ctx) {
     if (!dialogState) return;
     if (dialogState.experiment_id !== metadata.experiment_id) { closeDialog(); return; }
     const state = dialogState;
+    if (state.op === 'run_forward') lastCompletion = '';
     const fields = {confirmed: true, experiment_id: state.experiment_id};
     if (state.op === 'new_experiment') {
       const value = Number(threshold.value);
@@ -102,12 +106,14 @@ export default function mount(ctx) {
   dialog.append(dialogTitle, dialogText, thresholdLabel, actions);
   function confirm(op) {
     dialogState = {op, experiment_id: metadata.experiment_id};
-    dialogTitle.textContent = op === 'reveal' ? '確認解鎖保留段？' : '確認建立新實驗？';
+    dialogTitle.textContent = op === 'run_forward' ? '確認跑前瞻段？' : op === 'reveal_forward' ? '確認揭露前瞻段？' : op === 'reveal' ? '確認解鎖保留段？' : '確認建立新實驗？';
     dialogText.textContent = op === 'reveal'
       ? '解鎖後會顯示走勢、標籤與成績，並永久記錄為已使用。開新實驗也不會清除已曝光日期。'
       : '使用目前已定稿的資料建立新切分。開發段可能增加；已曝光日期會跨實驗保留，原實驗不會被刪除。';
+    if (op === 'run_forward') dialogText.textContent = '使用實驗 1 的 jev p1 與四個基準，沿用已定案設定；呼叫計入本次自主進化總額度。跑完仍需另行揭露。';
+    if (op === 'reveal_forward') dialogText.textContent = '所有方法完成且零缺答後才能揭露。這些日期將永久記錄為已曝光；尚未跑的新日期維持隱藏。';
     thresholdLabel.hidden = op !== 'new_experiment'; threshold.value = String(metadata.threshold_permille || 3);
-    accept.textContent = op === 'reveal' ? '確認解鎖' : '確認建立';
+    accept.textContent = op === 'run_forward' ? '確認執行' : op === 'reveal_forward' ? '確認揭露' : op === 'reveal' ? '確認解鎖' : '確認建立';
     dialog.hidden = false; updateButtons(); dismiss.focus();
   }
   function closeDialog() { dialogState = null; dialog.hidden = true; updateButtons(); }
@@ -196,11 +202,19 @@ export default function mount(ctx) {
     if (body.status !== 'ok' || !body.dev) { clearReport(text(body.message) || '尚未建立實驗'); return; }
     if (body.experiment_id !== metadata.experiment_id) return;
     reportContent.replaceChildren();
-    for (const [split, title] of [['dev', '開發段'], ['holdout', '保留段']]) {
+    for (const [split, title] of [['dev', '開發段'], ['holdout', '保留段已使用'], ['forward', '前瞻段']]) {
+      if (split === 'forward') {
+        reportContent.append(element('h2', title));
+        if (body.forward?.state !== 'revealed' || metadata.forward?.state !== 'revealed') {
+          reportContent.append(element('p', '前瞻段未揭露；累積天數與點數維持隱藏。', 'tc-note'));
+          continue;
+        }
+      }
       const data = body[split]; if (!data || data.state === 'locked') continue;
       if (split === 'holdout' && metadata.holdout?.state !== 'revealed') continue;
       const comparison = data.comparison || {}, boot = comparison.bootstrap || {};
       if (split === 'holdout') reportContent.append(element('h2', title));
+      if (split === 'forward') reportContent.append(element('p', `累積 ${count(data.cumulative_days)} 日／${count(data.predictable_and_scorable)} 點（僅已揭露範圍）`, 'tc-note'));
       const summary = element('div', '', 'tc-summary');
       for (const [label, value] of [['共同交集', count(comparison.n)], ['交集覆蓋率', percent(comparison.coverage)], ['最佳基準', text(comparison.baseline) || '—']]) {
         const item = element('div'); item.append(element('div', value, 'tc-value'), element('div', label, 'tc-label')); summary.append(item);
@@ -223,7 +237,13 @@ export default function mount(ctx) {
   const lockCard = element('section', '', 'tc-card tc-lock');
   const lockText = element('p', '保留段未解鎖；行情與成績維持隱藏。');
   const reveal = button('看保留段結果', () => confirm('reveal')); lockCard.append(lockText, reveal);
-  root.append(head, status, toolbar, errors, dialog, chartCard, reportCard, lockCard);
+  const forwardCard = element('section', '', 'tc-card');
+  forwardCard.append(element('h2', '前瞻段'), element('p', '固定實驗 1／jev p1 與四個基準。新日期先回放、零缺答後再揭露。', 'tc-note'));
+  const runForward = button('跑前瞻段', () => confirm('run_forward'));
+  const revealForward = button('看前瞻段結果', () => confirm('reveal_forward'));
+  const forwardActions = element('div', '', 'tc-toolbar');
+  forwardActions.append(runForward, revealForward); forwardCard.append(forwardActions);
+  root.append(head, status, toolbar, errors, dialog, chartCard, reportCard, lockCard, forwardCard);
 
   function updateButtons() {
     const active = live && !disposed, hasExperiment = Number.isSafeInteger(metadata.experiment_id);
@@ -235,6 +255,8 @@ export default function mount(ctx) {
     refresh.disabled = !active || !hasExperiment;
     newExperiment.disabled = !active || pendingAction || Boolean(busy.replay || busy.sync);
     reveal.disabled = !active || pendingAction || !hasExperiment || metadata.holdout?.state === 'revealed';
+    revealForward.disabled = !active || pendingAction || metadata.experiment_id !== 1 || Boolean(busy.replay || busy.sync);
+    runForward.disabled = revealForward.disabled || metadata.keys?.typesafe !== 'available';
     previous.disabled = !active || days.indexOf(selected) <= 0;
     next.disabled = !active || days.indexOf(selected) < 0 || days.indexOf(selected) >= days.length - 1;
     date.disabled = !active || !days.length;
@@ -257,10 +279,10 @@ export default function mount(ctx) {
       const syncReason = ['failed', 'partial'].includes(body.sync?.status)
         ? `（${syncReasons.join('、') || '同步作業失敗'}）` : '';
       work.textContent = `同步：${SYNC_PHASES[body.sync?.status] || '待命'}${syncReason} · 回放：${PHASES[body.replay?.status] || '待命'}`;
-      if ((body.replay?.split === 'dev' || body.holdout?.state === 'revealed') && Number.isSafeInteger(body.replay?.n_ok)) {
+      if ((body.replay?.split === 'dev' || (body.replay?.split === 'holdout' && body.holdout?.state === 'revealed')) && Number.isSafeInteger(body.replay?.n_ok)) {
         work.textContent += `（完成 ${count(body.replay.n_ok)}／失敗 ${count(body.replay.n_fail)}／略過 ${count(body.replay.skipped)}）`;
       }
-      lockText.textContent = body.holdout?.state === 'revealed' ? '保留段已解鎖，已永久記錄為使用過。' : `${text(body.holdout?.message) || '保留段未解鎖'}；行情與成績維持隱藏。`;
+      lockText.textContent = body.holdout?.state === 'revealed' ? '保留段已使用；結果只作歷史描述，不能用於宣稱新方法變好。' : `${text(body.holdout?.message) || '保留段未解鎖'}；行情與成績維持隱藏。`;
       days = Array.isArray(body.days) ? body.days.filter(isDate) : [];
       if (days.length) { date.min = days[0]; date.max = days.at(-1); }
       if (old !== body.experiment_id) {
@@ -277,7 +299,7 @@ export default function mount(ctx) {
     else if (op === 'error') {
       errors.textContent = ERRORS[body.code] || '操作未完成，請更新狀態後重試。'; errors.hidden = false;
       pendingAction = false; updateButtons();
-      if (body.request_id != null && (body.request_id === requests.reveal || body.request_id === requests.new_experiment)) {
+      if (body.request_id != null && (body.request_id === requests.reveal || body.request_id === requests.new_experiment || body.request_id === requests.reveal_forward || body.request_id === requests.run_forward)) {
         send('status'); send('report');
       }
     }

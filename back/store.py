@@ -65,6 +65,16 @@ CREATE TABLE IF NOT EXISTS prior_exposures (
  symbol TEXT NOT NULL, first_day TEXT NOT NULL, last_day TEXT NOT NULL,
  source TEXT NOT NULL, created_at TEXT NOT NULL,
  PRIMARY KEY(symbol, first_day, last_day, source));
+CREATE TABLE IF NOT EXISTS forward_days (
+ experiment_id INTEGER NOT NULL REFERENCES experiments(id), day TEXT NOT NULL,
+ warmup_start TEXT NOT NULL, data_digest TEXT NOT NULL, settings_json TEXT NOT NULL,
+ admitted_at TEXT NOT NULL, PRIMARY KEY(experiment_id,day));
+CREATE TABLE IF NOT EXISTS forward_exclusions (
+ experiment_id INTEGER NOT NULL REFERENCES experiments(id), day TEXT NOT NULL,
+ reason TEXT NOT NULL, recorded_at TEXT NOT NULL, PRIMARY KEY(experiment_id,day));
+CREATE TABLE IF NOT EXISTS forward_attempts (
+ run_id INTEGER NOT NULL REFERENCES runs(id), day TEXT NOT NULL, failed INTEGER NOT NULL,
+ PRIMARY KEY(run_id,day));
 '''
 COLUMNS = {
     'bars': ('symbol', 'day', 'ts_raw', 'bar_end', 'open', 'high', 'low', 'close', 'volume'),
@@ -93,6 +103,9 @@ class Store:
         if not readonly:
             self.db.execute('PRAGMA journal_mode=WAL')
             self.db.executescript(SCHEMA)
+            # Keep legacy DBs readable; existing reveal rows are holdout records.
+            if 'segment' not in {r[1] for r in self.db.execute('PRAGMA table_info(reveals)')}:
+                self.db.execute("ALTER TABLE reveals ADD COLUMN segment TEXT NOT NULL DEFAULT 'holdout'")
 
     def close(self):
         self.db.close()
@@ -143,6 +156,9 @@ class Store:
             if warmup > row['dev_start']:
                 raise DataError('invalid_frozen_range')
             ranges.append((warmup, row['hold_end']))
+        ranges.extend((r[0], r[1]) for r in self.db.execute('''SELECT f.warmup_start,f.day
+            FROM forward_days f JOIN experiments e ON e.id=f.experiment_id
+            WHERE json_extract(e.config_json,'$.symbol')=?''', (symbol,)))
         return ranges
 
     @staticmethod

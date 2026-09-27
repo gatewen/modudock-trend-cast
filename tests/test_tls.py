@@ -1,7 +1,9 @@
 import io
 import json
 import os
+from pathlib import Path
 import ssl
+import tempfile
 import traceback
 import unittest
 from unittest.mock import Mock, patch
@@ -42,6 +44,8 @@ class Reply(io.BytesIO):
 
 class TLSTests(unittest.TestCase):
     def setUp(self):
+        temporary = tempfile.TemporaryDirectory(); self.addCleanup(temporary.cleanup)
+        budget = Path(temporary.name) / 'mock-budget.sqlite3'
         env = patch.dict(os.environ, {'FUGLE_API_KEY': KEY}, clear=True)
         env.start(); self.addCleanup(env.stop)
         http_client._DISABLED.clear()
@@ -50,7 +54,7 @@ class TLSTests(unittest.TestCase):
         self.requests = [
             lambda: FugleClient(limiter=limiter).candles('2330', '2024-09-01', '2024-09-30'),
             lambda: TwseClient(limiter=limiter).events('2330', '2024-09-01', '2024-09-30'),
-            lambda: JevClient()._request(b'{}', KEY)]
+            lambda: JevClient(campaign_budget=budget)._request(b'{}', KEY)]
 
     @staticmethod
     def reply(request, timeout):

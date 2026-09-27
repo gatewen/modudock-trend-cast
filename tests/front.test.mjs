@@ -227,3 +227,52 @@ test('theme rules inherit shell tokens and define both color schemes', t => {
   assert.match(css, /data-theme="dark"/); assert.match(css, /data-theme="light"/);
   assert.match(css, /\.tc-point\[data-result="correct"\]/); assert.match(css, /\.tc-point\[data-result="incorrect"\]/);
 });
+
+test('forward run and reveal each require confirmation and send fixed experiment only', t => {
+  const h = setup(t); ready(h);
+  for (const [label, accept, op] of [['跑前瞻段', '確認執行', 'run_forward'], ['看前瞻段結果', '確認揭露', 'reveal_forward']]) {
+    const before = h.sent.length;
+    h.button(label).click(); assert.equal(h.sent.length, before);
+    h.button('取消').click(); assert.equal(h.sent.length, before);
+    h.button(label).click(); h.button(accept).click();
+    assert.deepEqual(h.latest(op), {op, confirmed: true, experiment_id: 1, request_id: h.latest(op).request_id});
+    h.message(status());
+  }
+  h.message(status({experiment_id: 2}));
+  assert.equal(h.button('跑前瞻段').disabled, true);
+  assert.equal(h.button('看前瞻段結果').disabled, true);
+});
+
+test('locked forward report and growing forward progress hide all counts even with revealed holdout', t => {
+  const h = setup(t); ready(h, {holdout: {state: 'revealed'}, forward: {state: 'locked'},
+    replay: {status: 'running', split: 'forward', n_ok: 998877, n_fail: 887766, skipped: 776655}});
+  const hidden = structuredClone(report().dev);
+  hidden.state = 'revealed'; hidden.cumulative_days = 112233; hidden.predictable_and_scorable = 223344;
+  hidden.comparison.statement = 'PRIVATE-FORWARD'; hidden.comparison.n = 998877;
+  h.message(report({forward: hidden}));
+  assert.match(h.container.textContent, /前瞻段未揭露/);
+  assert.doesNotMatch(h.container.textContent, /PRIVATE-FORWARD|998,877|887,766|776,655|112,233|223,344/);
+  h.message(status({forward: {state: 'revealed'}, holdout: {state: 'revealed'},
+    replay: {status: 'running', split: 'forward', n_ok: 998877, n_fail: 887766, skipped: 776655}}));
+  assert.doesNotMatch(h.container.textContent, /998,877|887,766|776,655/);
+});
+
+test('revealed forward shows cumulative days points and permanent used-holdout label', t => {
+  const h = setup(t); ready(h, {forward: {state: 'revealed'}, holdout: {state: 'revealed'}});
+  const forward = {...structuredClone(report().dev), state: 'revealed', cumulative_days: 2, predictable_and_scorable: 16};
+  h.message(report({forward}));
+  assert.match(h.container.textContent, /累積 2 日／16 點/);
+  assert.match(h.container.textContent, /保留段已使用/);
+  assert.equal(h.container.querySelectorAll('tr[data-method=jev]').length, 2);
+});
+
+test('each forward rerun refreshes its cleared report without exposing generation counts', t => {
+  const h = setup(t); ready(h);
+  for (let i = 0; i < 2; i++) {
+    h.button('跑前瞻段').click(); h.button('確認執行').click();
+    h.message(status({replay: {status: 'running', split: 'forward', method: 'all'}}));
+    const before = h.sent.filter(v => v.op === 'report').length;
+    h.message(status({replay: {status: 'complete', split: 'forward', method: 'all'}}));
+    assert.equal(h.sent.filter(v => v.op === 'report').length, before + 1);
+  }
+});

@@ -1,0 +1,38 @@
+
+> modudock-trend-cast@0.2.0 test
+> node --test tests/front.test.mjs
+
+✔ mount synchronous; ready after registration; no sending before up (11.359209ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (16.603916ms)
+✔ hover and keyboard focus show probabilities and realized return (4.878708ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (3.912208ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (4.950791ms)
+✔ date picker refuses unknown and locked days without requests (3.208833ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.07225ms)
+✔ locked day discards any supplied data and clears a previous visible chart (3.780541ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (4.5105ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (4.321125ms)
+✔ development progress can show counts but locked holdout progress cannot (1.728292ms)
+✔ untrusted strings become text, never HTML or handlers (3.440083ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (3.028625ms)
+✔ new experiment uses a second confirmation and validates threshold (2.986167ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (4.353ms)
+✔ experiment change invalidates old report and pending reveal confirmation (2.143542ms)
+✔ missing key disables jev but baseline replay stays usable (2.934833ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (3.8745ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (3.0035ms)
+✔ error renders local explanation and never reflects upstream secret text (2.5355ms)
+✔ sync distinguishes total and partial failure with safe reasons and clears them after success (2.675083ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.305459ms)
+✔ forward run and reveal each require confirmation and send fixed experiment only (3.09275ms)
+✔ locked forward report and growing forward progress hide all counts even with revealed holdout (3.192875ms)
+✔ revealed forward shows cumulative days points and permanent used-holdout label (3.658292ms)
+✔ each forward rerun refreshes its cleared report without exposing generation counts (2.486709ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 236.13475

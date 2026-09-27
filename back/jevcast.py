@@ -87,9 +87,10 @@ def validate_response(payload, model=MODEL):
 
 
 class JevClient:
-    def __init__(self, *, opener=None, sleep=None, clock=time.monotonic, before_request=None):
+    def __init__(self, *, opener=None, sleep=None, clock=time.monotonic, before_request=None, campaign_budget=None):
         self._opener, self._sleep, self._clock = opener, sleep, clock
         self._before_request = before_request  # Offline tests / durable smoke quota.
+        self._campaign_budget = campaign_budget
 
     @staticmethod
     def enabled():
@@ -148,6 +149,12 @@ class JevClient:
             started = self._clock()
             if self._before_request is not None:
                 self._before_request()
+            if self._opener is None or self._campaign_budget is not None:
+                from .evolution_budget import consume
+                if self._campaign_budget is None:
+                    consume()
+                else:
+                    consume(self._campaign_budget)
             try:
                 response = opener.open(request, timeout=15)
             except urllib.error.HTTPError as exc:
@@ -234,7 +241,7 @@ class JevRunner:
             worker.start()
 
     def start(self, experiment_id, *, split='dev', times=None):
-        if split not in ('dev', 'holdout'):
+        if split not in ('dev', 'holdout', 'forward'):
             raise DataError('invalid_split_name')
         if split == 'holdout':
             require_final_holdout(experiment_id)
@@ -304,6 +311,9 @@ class JevRunner:
                 raise DataError('unsupported_experiment_version')
             verify_digest(store, row)
             plan = load_plan(store, handle.experiment_id)
+            if handle.split == 'forward':
+                from .forward import plan_for
+                plan = plan_for(store, handle.experiment_id, verify=True)
             handle.replay = Replay(store, plan)
             handle.model = row['model']
             handle.prompt_version = row['prompt_version']
@@ -394,6 +404,9 @@ class JevRunner:
             if not self._current(handle):
                 return
             persist_outcome(store, point, handle.replay.outcome(point))
+            if handle.split == 'forward':
+                from .forward import record_attempt
+                record_attempt(store, handle.run_id, point.t.date().isoformat(), answer is None)
             if answer is not None:
                 store.db.execute('''INSERT INTO predictions VALUES (?,?,?,?,?,?,?,?,?,?)''',
                     (handle.experiment_id, 'jev', point.t.isoformat(), handle.run_id,

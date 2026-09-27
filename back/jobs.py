@@ -40,7 +40,7 @@ class BaselineRunner:
         self._closed = False
 
     def start(self, experiment_id, *, method, split='dev'):
-        if method not in METHODS or split not in ('dev', 'holdout'):
+        if method not in METHODS or split not in ('dev', 'holdout', 'forward'):
             raise DataError('invalid_run')
         if split == 'holdout':
             require_final_holdout(experiment_id)
@@ -89,9 +89,12 @@ class BaselineRunner:
                 require_final_holdout(handle.experiment_id, row['prompt_version'])
             verify_digest(store, row)
             handle.engine = Replay(store, load_plan(store, handle.experiment_id))
+            if handle.split == 'forward':
+                from .forward import plan_for
+                handle.engine = Replay(store, plan_for(store, handle.experiment_id, verify=True))
             handle.points = iter(handle.engine.candidates(handle.split))
             handle.history = []
-            handle.warmup = iter(handle.engine.candidates('dev')) if handle.split == 'holdout' else iter(())
+            handle.warmup = iter(handle.engine.candidates('dev')) if handle.split in ('holdout', 'forward') else iter(())
             handle.run_id = store.db.execute('''INSERT INTO runs
                 (experiment_id,method,split,started_at,status) VALUES (?,?,?,?,?)''',
                 (handle.experiment_id, handle.method, handle.split, now_string(), 'running')).lastrowid
@@ -128,6 +131,9 @@ class BaselineRunner:
             if not self._current(handle):
                 return
             persist_outcome(store, point, outcome)
+            if handle.split == 'forward':
+                from .forward import record_attempt
+                record_attempt(store, handle.run_id, point.t.date().isoformat(), failed)
             if success:
                 store.db.execute('INSERT INTO predictions VALUES (?,?,?,?,?,?,?,?,?,?)',
                     (handle.experiment_id, handle.method, t.isoformat(), handle.run_id,

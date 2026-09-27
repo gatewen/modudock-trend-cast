@@ -182,17 +182,24 @@ def load_split(store, row, split):
     """Read an authorized split; report.py supplies a consistent read snapshot."""
     if split == 'holdout' and not holdout_revealed(store, row):
         raise DataError('holdout_locked')
-    plan = load_plan(store, row['id'])
+    if split == 'forward':
+        from .forward import plan_for, revealed_days
+        authorized = revealed_days(store, row['id'])
+        if not authorized:
+            raise DataError('forward_locked')
+        plan = plan_for(store, row['id'], days=authorized, verify=True)
+    else:
+        plan = load_plan(store, row['id'])
     days = plan.days_for(split)
     first, last = days[0], days[-1]
     args = (row['id'], first, last)
     stored = {method: {} for method in ALL_METHODS}
     for record in store.db.execute('''SELECT * FROM predictions WHERE experiment_id=?
         AND substr(t,1,10) BETWEEN ? AND ? ORDER BY t''', args):
-        if record['method'] in stored:
+        if record['method'] in stored and record['t'][:10] in days:
             stored[record['method']][record['t']] = record
     outcomes = {record['t']: record for record in store.db.execute('''SELECT * FROM outcomes
-        WHERE experiment_id=? AND substr(t,1,10) BETWEEN ? AND ?''', args)}
+        WHERE experiment_id=? AND substr(t,1,10) BETWEEN ? AND ?''', args) if record['t'][:10] in days}
     runs = {method: [] for method in ALL_METHODS}
     for run in store.db.execute('''SELECT * FROM runs WHERE experiment_id=? AND split=? ORDER BY id''',
                                 (row['id'], split)):
@@ -245,11 +252,20 @@ def load_split(store, row, split):
         traversed = any(run['id'] in scopes for run in runs[method])
         complete = (latest is not None and latest['status'] == 'complete' and not invalid[method]
                     and (traversed or valid[method] == predictable))
+        failures = sum(run['n_fail'] for run in runs[method])
+        if split == 'forward':
+            # New, unopened work must not change even the failure/completion
+            # metadata of the previously revealed cumulative report.
+            complete = not invalid[method] and valid[method] == predictable
+            failures = sum(r['failed'] for r in store.db.execute('''SELECT a.day,a.failed
+                FROM forward_attempts a JOIN runs r ON r.id=a.run_id
+                WHERE r.experiment_id=? AND r.method=? AND r.split='forward' ''', (row['id'], method))
+                if r['day'] in days)
         methods[method] = {**metrics(scored[method].values()),
             'coverage': len(scored[method]) / len(eligible) if eligible else None,
             'eligible_missing': len(eligible) - len(scored[method]),
             'predictable_missing': predictable - valid[method], 'invalid_predictions': invalid[method],
-            'failure_attempts': sum(run['n_fail'] for run in runs[method]),
+            'failure_attempts': failures,
             'replay_complete': complete}
     return SplitScores(split, first, last, candidates, predictable, scorable, eligible,
                        scored, methods, tuple(sorted(common)), all(m['replay_complete'] for m in methods.values()))

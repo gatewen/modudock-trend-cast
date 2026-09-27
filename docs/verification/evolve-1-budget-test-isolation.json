@@ -1,0 +1,10 @@
+{
+  "mocked_transport_attempts_archived": 18,
+  "real_http_calls": 0,
+  "sources": [
+    "tests.test_tls.TLSTests",
+    "tests.test_jev_client.JevClientTests.test_secure_defaults_require_ca_and_disable_proxy"
+  ],
+  "fix": "Explicit temporary campaign_budget paths for mocked default transports",
+  "archive": "data/evolve-1-mocked-transport-budget.sqlite3"
+}

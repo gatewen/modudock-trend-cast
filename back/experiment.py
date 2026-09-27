@@ -227,7 +227,7 @@ def reveal_holdout(store, experiment_id, *, check=None):
             return
         overlap = holdout_overlap(store, experiment_id)
         store.db.execute('INSERT OR IGNORE INTO reveal_context VALUES (?,?)', (experiment_id, overlap))
-        store.db.execute('INSERT INTO reveals VALUES (?,?,?,?,?)',
+        store.db.execute('INSERT INTO reveals (experiment_id,revealed_at,first_day,last_day,what) VALUES (?,?,?,?,?)',
             (experiment_id, now_string(), row['hold_start'], row['hold_end'], 'all'))
 
 
@@ -248,6 +248,9 @@ def day_access(store, experiment_id, day):
     if experiment_id is None:
         return 'experiment_required'
     plan = load_plan(store, experiment_id)
+    if day > plan.hold_end:
+        from .forward import revealed_days
+        return 'allowed' if day in revealed_days(store, experiment_id) else 'forward_locked'
     split = plan.split_of(day) if day in plan.trading_days else None
     if split == 'dev':
         return 'allowed'

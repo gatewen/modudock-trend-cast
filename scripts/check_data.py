@@ -77,10 +77,13 @@ def _build_report(store, symbol, experiment_id, include_holdout):
     if include_holdout:
         from back.experiment import require_final_holdout
         require_final_holdout(experiment['id'], experiment['prompt_version'])
+    # Prospective data is absent from this legacy quality report, even after
+    # a forward reveal. Its dedicated report is the only scoring exit.
+    cutoff = experiment['hold_end'] if experiment is not None else '9999-12-31'
     grouped = defaultdict(list)
-    daily = {r['day']: dict(r) for r in store.db.execute('SELECT * FROM daily WHERE symbol=? ORDER BY day', (symbol,))}
+    daily = {r['day']: dict(r) for r in store.db.execute('SELECT * FROM daily WHERE symbol=? AND day<=? ORDER BY day', (symbol, cutoff))}
     invalid_ohlc = nonpositive = invalid_time = 0
-    for r in store.db.execute('SELECT * FROM bars WHERE symbol=? ORDER BY day,bar_end', (symbol,)):
+    for r in store.db.execute('SELECT * FROM bars WHERE symbol=? AND day<=? ORDER BY day,bar_end', (symbol, cutoff)):
         row = dict(r)
         grouped[row['day']].append(row)
         invalid_ohlc += int(not _valid_prices(row))
@@ -115,13 +118,13 @@ def _build_report(store, symbol, experiment_id, include_holdout):
             if volume > 0:
                 ratios.append(sum(Decimal(r['volume']) for r in rows) / volume)
     duplicate_count = store.db.execute('''SELECT coalesce(sum(n-1),0) FROM
-        (SELECT count(*) n FROM bars WHERE symbol=? GROUP BY ts_raw HAVING count(*)>1)''', (symbol,)).fetchone()[0]
+        (SELECT count(*) n FROM bars WHERE symbol=? AND day<=? GROUP BY ts_raw HAVING count(*)>1)''', (symbol, cutoff)).fetchone()[0]
     warnings = [dict(r) for r in store.db.execute('''SELECT month,kind,count(*) AS count
-        FROM fetch_log WHERE symbol=? AND note='frozen_difference' GROUP BY month,kind''', (symbol,))]
+        FROM fetch_log WHERE symbol=? AND range_end<=? AND note='frozen_difference' GROUP BY month,kind''', (symbol, cutoff))]
     failures = [dict(r) for r in store.db.execute('''SELECT month,kind,note,count(*) AS count
-        FROM fetch_log WHERE symbol=? AND note IN ('empty','fetch_failed') GROUP BY month,kind,note''', (symbol,))]
+        FROM fetch_log WHERE symbol=? AND range_end<=? AND note IN ('empty','fetch_failed') GROUP BY month,kind,note''', (symbol, cutoff))]
     coverage = [dict(r) for r in store.db.execute('''SELECT start_day,end_day,source FROM corp_coverage
-        WHERE symbol=? ORDER BY start_day,end_day''', (symbol,))]
+        WHERE symbol=? AND end_day<=? ORDER BY start_day,end_day''', (symbol, cutoff))]
     states = Counter(store.corp_state(symbol, day)['state'] for day in daily)
     result = {
         '1_calendar': {'first_day': all_days[0] if all_days else None,
@@ -142,13 +145,13 @@ def _build_report(store, symbol, experiment_id, include_holdout):
         '5_volume': {'minute_sum_over_daily': _distribution(ratios),
             'documented_units': 'minute=lots; daily=shares; nominal ratio=0.001 (sessions may differ)'},
         '6_corporate_actions': {'events': [dict(r) for r in store.db.execute(
-            'SELECT day,source FROM corp_events WHERE symbol=? ORDER BY day', (symbol,))],
+            'SELECT day,source FROM corp_events WHERE symbol=? AND day<=? ORDER BY day', (symbol, cutoff))],
             'coverage': coverage, 'states': {s: states[s] for s in ('event', 'none', 'unknown')}},
     }
     if experiment is not None:
         result['7_dev_labels'] = _labels(store, experiment['id'], experiment['dev_start'], experiment['dev_end'])
     if include_holdout:
-        store.db.execute('INSERT INTO reveals VALUES (?,?,?,?,?)',
+        store.db.execute('INSERT INTO reveals (experiment_id,revealed_at,first_day,last_day,what) VALUES (?,?,?,?,?)',
             (experiment['id'], now_string(), experiment['hold_start'], experiment['hold_end'], 'check_data_labels'))
         result['8_holdout_labels'] = _labels(store, experiment['id'], experiment['hold_start'], experiment['hold_end'])
     return result

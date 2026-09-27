@@ -71,6 +71,7 @@ class ReplayPlan:
     feature_version: str = FEATURE_VERSION
     experiment_id: int | None = None
     warmup_start: str | None = None
+    forward_days: tuple[str, ...] = field(default=(), repr=False)
 
     def __post_init__(self):
         symbol_value(self.symbol)
@@ -92,6 +93,9 @@ class ReplayPlan:
             raise DataError('invalid_warmup_start')
         object.__setattr__(self, 'trading_days', days)
         object.__setattr__(self, 'warmup_start', warmup)
+        if (self.forward_days != tuple(sorted(set(self.forward_days)))
+                or any(day <= self.hold_end or day not in days for day in self.forward_days)):
+            raise DataError('invalid_forward_calendar')
 
     @classmethod
     def from_experiment(cls, row, trading_days):
@@ -106,6 +110,8 @@ class ReplayPlan:
                    experiment_id=row['id'], warmup_start=config.get('warmup_start'))
 
     def split_of(self, day):
+        if day in self.forward_days:
+            return 'forward'
         if self.dev_start <= day <= self.dev_end:
             return 'dev'
         if self.hold_start <= day <= self.hold_end:
@@ -113,7 +119,7 @@ class ReplayPlan:
         return None
 
     def days_for(self, split):
-        if split not in ('dev', 'holdout'):
+        if split not in ('dev', 'holdout', 'forward'):
             raise DataError('invalid_split_name')
         return tuple(day for day in self.trading_days if self.split_of(day) == split)
 

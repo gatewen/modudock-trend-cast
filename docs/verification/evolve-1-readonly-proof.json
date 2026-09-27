@@ -1,0 +1,7 @@
+{
+  "date_preview_only": true,
+  "real_database_not_migrated": true,
+  "forward_not_run_or_revealed": true,
+  "real_http_calls": 0,
+  "formal_campaign_ledger_absent_after_full_suite": true
+}

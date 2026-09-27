@@ -226,14 +226,15 @@ class JevClientTests(unittest.TestCase):
             self.fail('transport failure was accepted')
 
     def test_secure_defaults_require_ca_and_disable_proxy(self):
+        budget = Path(self.temp.name) / 'mock-budget.sqlite3'
         with patch('back.http_client.ssl.create_default_context', side_effect=OSError(KEY)):
             with self.assertRaisesRegex(ClientError, '^network_error$'):
-                JevClient().predict(self.point)
+                JevClient(campaign_budget=budget).predict(self.point)
         fake_opener = self.server
         with patch('back.http_client.ssl.create_default_context') as context, \
              patch('back.http_client.urllib.request.build_opener', return_value=fake_opener) as build:
             self.server.queue(response())
-            JevClient().predict(self.point)
+            JevClient(campaign_budget=budget).predict(self.point)
             handlers = build.call_args.args
             self.assertEqual(handlers[0].proxies, {})
             self.assertIsInstance(handlers[1], NoRedirect)
