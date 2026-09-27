@@ -1,0 +1,177 @@
+{
+  "experiment_id": 1,
+  "database": "data/trendcast.sqlite3",
+  "backup": "data/forward-reveal-before-20260927.sqlite3",
+  "reveal_function_calls": 1,
+  "inserted_reveal_records": 18,
+  "new_exposed_dates": [
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03",
+    "2026-09-04",
+    "2026-09-07",
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24"
+  ],
+  "records": [
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-01",
+      "last_day": "2026-09-01",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-02",
+      "last_day": "2026-09-02",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-03",
+      "last_day": "2026-09-03",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-04",
+      "last_day": "2026-09-04",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-07",
+      "last_day": "2026-09-07",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-08",
+      "last_day": "2026-09-08",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-09",
+      "last_day": "2026-09-09",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-10",
+      "last_day": "2026-09-10",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-11",
+      "last_day": "2026-09-11",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-14",
+      "last_day": "2026-09-14",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-15",
+      "last_day": "2026-09-15",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-16",
+      "last_day": "2026-09-16",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-17",
+      "last_day": "2026-09-17",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-18",
+      "last_day": "2026-09-18",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-21",
+      "last_day": "2026-09-21",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-22",
+      "last_day": "2026-09-22",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-23",
+      "last_day": "2026-09-23",
+      "what": "all",
+      "segment": "forward"
+    },
+    {
+      "experiment_id": 1,
+      "revealed_at": "2026-09-27T18:08:20+08:00",
+      "first_day": "2026-09-24",
+      "last_day": "2026-09-24",
+      "what": "all",
+      "segment": "forward"
+    }
+  ],
+  "write_guard": "INSERT reveals only; all other INSERT/UPDATE/DELETE denied",
+  "http_calls": 0,
+  "ledger_before": 1222,
+  "ledger_after": 1222
+}

@@ -1,0 +1,1648 @@
+{
+  "status": "ok",
+  "experiment_id": 1,
+  "score_version": "s2",
+  "brier_definition": "mean(sum((p_class - actual_class)^2)); unscaled multiclass",
+  "forward": {
+    "state": "revealed",
+    "cumulative_days": 18,
+    "first_day": "2026-09-01",
+    "last_day": "2026-09-24",
+    "candidates": 144,
+    "predictable": 144,
+    "scorable": 144,
+    "predictable_and_scorable": 144,
+    "methods": {
+      "jev": {
+        "n": 144,
+        "correct": 82,
+        "accuracy": 0.5694444444444444,
+        "accuracy_wilson95": [
+          0.48780357786706985,
+          0.6474764725297305
+        ],
+        "brier": 0.5329812500000001,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 2,
+            "correct": 0,
+            "precision": 0.0,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 93,
+            "correct": 78,
+            "precision": 0.8387096774193549,
+            "recall": 0.65
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 49,
+            "correct": 4,
+            "precision": 0.08163265306122448,
+            "recall": 0.36363636363636365
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 9,
+            "down": 4
+          },
+          "flat": {
+            "up": 1,
+            "flat": 78,
+            "down": 41
+          },
+          "down": {
+            "up": 1,
+            "flat": 6,
+            "down": 4
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      },
+      "always_flat": {
+        "n": 144,
+        "correct": 120,
+        "accuracy": 0.8333333333333334,
+        "accuracy_wilson95": [
+          0.7639773510623427,
+          0.8853668908422996
+        ],
+        "brier": 0.3333333333333333,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 144,
+            "correct": 120,
+            "precision": 0.8333333333333334,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 13,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 120,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 11,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      },
+      "majority": {
+        "n": 144,
+        "correct": 120,
+        "accuracy": 0.8333333333333334,
+        "accuracy_wilson95": [
+          0.7639773510623427,
+          0.8853668908422996
+        ],
+        "brier": 0.45227428270543,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 144,
+            "correct": 120,
+            "precision": 0.8333333333333334,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 13,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 120,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 11,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      },
+      "momentum": {
+        "n": 144,
+        "correct": 99,
+        "accuracy": 0.6875,
+        "accuracy_wilson95": [
+          0.6077537883161784,
+          0.7575023477551829
+        ],
+        "brier": 0.625,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 16,
+            "correct": 2,
+            "precision": 0.125,
+            "recall": 0.15384615384615385
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 114,
+            "correct": 97,
+            "precision": 0.8508771929824561,
+            "recall": 0.8083333333333333
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 14,
+            "correct": 0,
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 2,
+            "flat": 10,
+            "down": 1
+          },
+          "flat": {
+            "up": 10,
+            "flat": 97,
+            "down": 13
+          },
+          "down": {
+            "up": 4,
+            "flat": 7,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      },
+      "reversal": {
+        "n": 144,
+        "correct": 102,
+        "accuracy": 0.7083333333333334,
+        "accuracy_wilson95": [
+          0.6294527317183394,
+          0.7763874194720621
+        ],
+        "brier": 0.5833333333333334,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 14,
+            "correct": 1,
+            "precision": 0.07142857142857142,
+            "recall": 0.07692307692307693
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 114,
+            "correct": 97,
+            "precision": 0.8508771929824561,
+            "recall": 0.8083333333333333
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 16,
+            "correct": 4,
+            "precision": 0.25,
+            "recall": 0.36363636363636365
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 1,
+            "flat": 10,
+            "down": 2
+          },
+          "flat": {
+            "up": 13,
+            "flat": 97,
+            "down": 10
+          },
+          "down": {
+            "up": 0,
+            "flat": 7,
+            "down": 4
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      },
+      "vol_prior": {
+        "n": 144,
+        "correct": 120,
+        "accuracy": 0.8333333333333334,
+        "accuracy_wilson95": [
+          0.7639773510623427,
+          0.8853668908422996
+        ],
+        "brier": 0.3460591108455006,
+        "per_class": {
+          "up": {
+            "true_count": 13,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 120,
+            "predicted_count": 144,
+            "correct": 120,
+            "precision": 0.8333333333333334,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 11,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 13,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 120,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 11,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "eligible_missing": 0,
+        "predictable_missing": 0,
+        "invalid_predictions": 0,
+        "failure_attempts": 0,
+        "replay_complete": true
+      }
+    },
+    "comparison": {
+      "n": 144,
+      "eligible_n": 144,
+      "coverage": 1.0,
+      "baseline": "majority",
+      "baseline_selection": "development_five_method_intersection_brier",
+      "intersection_metrics": {
+        "jev": {
+          "n": 144,
+          "correct": 82,
+          "accuracy": 0.5694444444444444,
+          "accuracy_wilson95": [
+            0.48780357786706985,
+            0.6474764725297305
+          ],
+          "brier": 0.5329812500000001,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 2,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 93,
+              "correct": 78,
+              "precision": 0.8387096774193549,
+              "recall": 0.65
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 49,
+              "correct": 4,
+              "precision": 0.08163265306122448,
+              "recall": 0.36363636363636365
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 9,
+              "down": 4
+            },
+            "flat": {
+              "up": 1,
+              "flat": 78,
+              "down": 41
+            },
+            "down": {
+              "up": 1,
+              "flat": 6,
+              "down": 4
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "always_flat": {
+          "n": 144,
+          "correct": 120,
+          "accuracy": 0.8333333333333334,
+          "accuracy_wilson95": [
+            0.7639773510623427,
+            0.8853668908422996
+          ],
+          "brier": 0.3333333333333333,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 144,
+              "correct": 120,
+              "precision": 0.8333333333333334,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 13,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 120,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 11,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 144,
+          "correct": 120,
+          "accuracy": 0.8333333333333334,
+          "accuracy_wilson95": [
+            0.7639773510623427,
+            0.8853668908422996
+          ],
+          "brier": 0.45227428270543,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 144,
+              "correct": 120,
+              "precision": 0.8333333333333334,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 13,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 120,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 11,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "momentum": {
+          "n": 144,
+          "correct": 99,
+          "accuracy": 0.6875,
+          "accuracy_wilson95": [
+            0.6077537883161784,
+            0.7575023477551829
+          ],
+          "brier": 0.625,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 16,
+              "correct": 2,
+              "precision": 0.125,
+              "recall": 0.15384615384615385
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 114,
+              "correct": 97,
+              "precision": 0.8508771929824561,
+              "recall": 0.8083333333333333
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 14,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 2,
+              "flat": 10,
+              "down": 1
+            },
+            "flat": {
+              "up": 10,
+              "flat": 97,
+              "down": 13
+            },
+            "down": {
+              "up": 4,
+              "flat": 7,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "reversal": {
+          "n": 144,
+          "correct": 102,
+          "accuracy": 0.7083333333333334,
+          "accuracy_wilson95": [
+            0.6294527317183394,
+            0.7763874194720621
+          ],
+          "brier": 0.5833333333333334,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 14,
+              "correct": 1,
+              "precision": 0.07142857142857142,
+              "recall": 0.07692307692307693
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 114,
+              "correct": 97,
+              "precision": 0.8508771929824561,
+              "recall": 0.8083333333333333
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 16,
+              "correct": 4,
+              "precision": 0.25,
+              "recall": 0.36363636363636365
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 1,
+              "flat": 10,
+              "down": 2
+            },
+            "flat": {
+              "up": 13,
+              "flat": 97,
+              "down": 10
+            },
+            "down": {
+              "up": 0,
+              "flat": 7,
+              "down": 4
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "vol_prior": {
+          "n": 144,
+          "correct": 120,
+          "accuracy": 0.8333333333333334,
+          "accuracy_wilson95": [
+            0.7639773510623427,
+            0.8853668908422996
+          ],
+          "brier": 0.3460591108455006,
+          "per_class": {
+            "up": {
+              "true_count": 13,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 120,
+              "predicted_count": 144,
+              "correct": 120,
+              "precision": 0.8333333333333334,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 11,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 13,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 120,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 11,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        }
+      },
+      "brier_difference": 0.08070696729457,
+      "accuracy_difference": -0.2638888888888889,
+      "bootstrap": {
+        "repetitions": 2000,
+        "seed": 20260927,
+        "trading_days": 18,
+        "unit": "trading_day",
+        "interval": "percentile_95_linear",
+        "brier_difference_ci95": [
+          0.02052650971219665,
+          0.1473615792921235
+        ],
+        "accuracy_difference_ci95": [
+          -0.375,
+          -0.1527777777777778
+        ]
+      },
+      "replay_complete": true,
+      "statement": "jev 比 majority 差"
+    },
+    "jev_description": {
+      "cohort": "jev_valid_predictable_and_scorable",
+      "n": 144,
+      "classes": {
+        "up": {
+          "choice_count": 2,
+          "correct": 0,
+          "hit_rate": 0.0,
+          "choice_share": 0.013888888888888888,
+          "true_count": 13,
+          "true_share": 0.09027777777777778,
+          "share_difference": -0.0763888888888889
+        },
+        "flat": {
+          "choice_count": 93,
+          "correct": 78,
+          "hit_rate": 0.8387096774193549,
+          "choice_share": 0.6458333333333334,
+          "true_count": 120,
+          "true_share": 0.8333333333333334,
+          "share_difference": -0.1875
+        },
+        "down": {
+          "choice_count": 49,
+          "correct": 4,
+          "hit_rate": 0.08163265306122448,
+          "choice_share": 0.3402777777777778,
+          "true_count": 11,
+          "true_share": 0.0763888888888889,
+          "share_difference": 0.2638888888888889
+        }
+      },
+      "affects_conclusion": false
+    },
+    "comparisons": {
+      "jev": {
+        "n": 144,
+        "eligible_n": 144,
+        "coverage": 1.0,
+        "baseline": "majority",
+        "baseline_selection": "development_five_method_intersection_brier",
+        "intersection_metrics": {
+          "jev": {
+            "n": 144,
+            "correct": 82,
+            "accuracy": 0.5694444444444444,
+            "accuracy_wilson95": [
+              0.48780357786706985,
+              0.6474764725297305
+            ],
+            "brier": 0.5329812500000001,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 2,
+                "correct": 0,
+                "precision": 0.0,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 93,
+                "correct": 78,
+                "precision": 0.8387096774193549,
+                "recall": 0.65
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 49,
+                "correct": 4,
+                "precision": 0.08163265306122448,
+                "recall": 0.36363636363636365
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 9,
+                "down": 4
+              },
+              "flat": {
+                "up": 1,
+                "flat": 78,
+                "down": 41
+              },
+              "down": {
+                "up": 1,
+                "flat": 6,
+                "down": 4
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "always_flat": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.3333333333333333,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "majority": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.45227428270543,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "momentum": {
+            "n": 144,
+            "correct": 99,
+            "accuracy": 0.6875,
+            "accuracy_wilson95": [
+              0.6077537883161784,
+              0.7575023477551829
+            ],
+            "brier": 0.625,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 16,
+                "correct": 2,
+                "precision": 0.125,
+                "recall": 0.15384615384615385
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 114,
+                "correct": 97,
+                "precision": 0.8508771929824561,
+                "recall": 0.8083333333333333
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 14,
+                "correct": 0,
+                "precision": 0.0,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 2,
+                "flat": 10,
+                "down": 1
+              },
+              "flat": {
+                "up": 10,
+                "flat": 97,
+                "down": 13
+              },
+              "down": {
+                "up": 4,
+                "flat": 7,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "reversal": {
+            "n": 144,
+            "correct": 102,
+            "accuracy": 0.7083333333333334,
+            "accuracy_wilson95": [
+              0.6294527317183394,
+              0.7763874194720621
+            ],
+            "brier": 0.5833333333333334,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 14,
+                "correct": 1,
+                "precision": 0.07142857142857142,
+                "recall": 0.07692307692307693
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 114,
+                "correct": 97,
+                "precision": 0.8508771929824561,
+                "recall": 0.8083333333333333
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 16,
+                "correct": 4,
+                "precision": 0.25,
+                "recall": 0.36363636363636365
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 1,
+                "flat": 10,
+                "down": 2
+              },
+              "flat": {
+                "up": 13,
+                "flat": 97,
+                "down": 10
+              },
+              "down": {
+                "up": 0,
+                "flat": 7,
+                "down": 4
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "vol_prior": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.3460591108455006,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          }
+        },
+        "brier_difference": 0.08070696729457,
+        "accuracy_difference": -0.2638888888888889,
+        "bootstrap": {
+          "repetitions": 2000,
+          "seed": 20260927,
+          "trading_days": 18,
+          "unit": "trading_day",
+          "interval": "percentile_95_linear",
+          "brier_difference_ci95": [
+            0.02052650971219665,
+            0.1473615792921235
+          ],
+          "accuracy_difference_ci95": [
+            -0.375,
+            -0.1527777777777778
+          ]
+        },
+        "replay_complete": true,
+        "statement": "jev 比 majority 差"
+      },
+      "vol_prior": {
+        "n": 144,
+        "eligible_n": 144,
+        "coverage": 1.0,
+        "baseline": "majority",
+        "baseline_selection": "development_five_method_intersection_brier",
+        "intersection_metrics": {
+          "jev": {
+            "n": 144,
+            "correct": 82,
+            "accuracy": 0.5694444444444444,
+            "accuracy_wilson95": [
+              0.48780357786706985,
+              0.6474764725297305
+            ],
+            "brier": 0.5329812500000001,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 2,
+                "correct": 0,
+                "precision": 0.0,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 93,
+                "correct": 78,
+                "precision": 0.8387096774193549,
+                "recall": 0.65
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 49,
+                "correct": 4,
+                "precision": 0.08163265306122448,
+                "recall": 0.36363636363636365
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 9,
+                "down": 4
+              },
+              "flat": {
+                "up": 1,
+                "flat": 78,
+                "down": 41
+              },
+              "down": {
+                "up": 1,
+                "flat": 6,
+                "down": 4
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "always_flat": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.3333333333333333,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "majority": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.45227428270543,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "momentum": {
+            "n": 144,
+            "correct": 99,
+            "accuracy": 0.6875,
+            "accuracy_wilson95": [
+              0.6077537883161784,
+              0.7575023477551829
+            ],
+            "brier": 0.625,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 16,
+                "correct": 2,
+                "precision": 0.125,
+                "recall": 0.15384615384615385
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 114,
+                "correct": 97,
+                "precision": 0.8508771929824561,
+                "recall": 0.8083333333333333
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 14,
+                "correct": 0,
+                "precision": 0.0,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 2,
+                "flat": 10,
+                "down": 1
+              },
+              "flat": {
+                "up": 10,
+                "flat": 97,
+                "down": 13
+              },
+              "down": {
+                "up": 4,
+                "flat": 7,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "reversal": {
+            "n": 144,
+            "correct": 102,
+            "accuracy": 0.7083333333333334,
+            "accuracy_wilson95": [
+              0.6294527317183394,
+              0.7763874194720621
+            ],
+            "brier": 0.5833333333333334,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 14,
+                "correct": 1,
+                "precision": 0.07142857142857142,
+                "recall": 0.07692307692307693
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 114,
+                "correct": 97,
+                "precision": 0.8508771929824561,
+                "recall": 0.8083333333333333
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 16,
+                "correct": 4,
+                "precision": 0.25,
+                "recall": 0.36363636363636365
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 1,
+                "flat": 10,
+                "down": 2
+              },
+              "flat": {
+                "up": 13,
+                "flat": 97,
+                "down": 10
+              },
+              "down": {
+                "up": 0,
+                "flat": 7,
+                "down": 4
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          },
+          "vol_prior": {
+            "n": 144,
+            "correct": 120,
+            "accuracy": 0.8333333333333334,
+            "accuracy_wilson95": [
+              0.7639773510623427,
+              0.8853668908422996
+            ],
+            "brier": 0.3460591108455006,
+            "per_class": {
+              "up": {
+                "true_count": 13,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              },
+              "flat": {
+                "true_count": 120,
+                "predicted_count": 144,
+                "correct": 120,
+                "precision": 0.8333333333333334,
+                "recall": 1.0
+              },
+              "down": {
+                "true_count": 11,
+                "predicted_count": 0,
+                "correct": 0,
+                "precision": null,
+                "recall": 0.0
+              }
+            },
+            "confusion_matrix": {
+              "up": {
+                "up": 0,
+                "flat": 13,
+                "down": 0
+              },
+              "flat": {
+                "up": 0,
+                "flat": 120,
+                "down": 0
+              },
+              "down": {
+                "up": 0,
+                "flat": 11,
+                "down": 0
+              }
+            },
+            "confusion_axes": {
+              "rows": "truth",
+              "columns": "choice",
+              "order": [
+                "up",
+                "flat",
+                "down"
+              ]
+            }
+          }
+        },
+        "brier_difference": -0.1062151718599294,
+        "accuracy_difference": 0.0,
+        "bootstrap": {
+          "repetitions": 2000,
+          "seed": 20260927,
+          "trading_days": 18,
+          "unit": "trading_day",
+          "interval": "percentile_95_linear",
+          "brier_difference_ci95": [
+            -0.13186606642918738,
+            -0.0777142574081396
+          ],
+          "accuracy_difference_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "replay_complete": true,
+        "statement": "vol_prior 比 majority 好"
+      }
+    }
+  },
+  "label_distribution": {
+    "up": {
+      "count": 13,
+      "share": 0.09027777777777778
+    },
+    "flat": {
+      "count": 120,
+      "share": 0.8333333333333334
+    },
+    "down": {
+      "count": 11,
+      "share": 0.0763888888888889
+    }
+  },
+  "frozen_warnings": [],
+  "verification": {
+    "http_calls": 0,
+    "ledger_used": 1222,
+    "sql_metrics_match": true,
+    "sql_metrics": {
+      "always_flat": {
+        "method": "always_flat",
+        "n": 144,
+        "correct": 120,
+        "brier": 0.3333333333333333
+      },
+      "jev": {
+        "method": "jev",
+        "n": 144,
+        "correct": 82,
+        "brier": 0.5329812500000001
+      },
+      "majority": {
+        "method": "majority",
+        "n": 144,
+        "correct": 120,
+        "brier": 0.45227428270543
+      },
+      "momentum": {
+        "method": "momentum",
+        "n": 144,
+        "correct": 99,
+        "brier": 0.625
+      },
+      "reversal": {
+        "method": "reversal",
+        "n": 144,
+        "correct": 102,
+        "brier": 0.5833333333333334
+      },
+      "vol_prior": {
+        "method": "vol_prior",
+        "n": 144,
+        "correct": 120,
+        "brier": 0.3460591108455006
+      }
+    }
+  }
+}
