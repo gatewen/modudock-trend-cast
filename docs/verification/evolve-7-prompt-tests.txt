@@ -1,0 +1,14 @@
+test_bias_cutoffs_per_horizon_maturity_boundary_and_future_invariance (tests.test_daily_prompt.DailyPromptTests.test_bias_cutoffs_per_horizon_maturity_boundary_and_future_invariance) ... ok
+test_chips_only_percent_missing_units_and_previous_20_volume (tests.test_daily_prompt.DailyPromptTests.test_chips_only_percent_missing_units_and_previous_20_volume) ... ok
+test_fail_closed_for_unpredictable_and_outside_development (tests.test_daily_prompt.DailyPromptTests.test_fail_closed_for_unpredictable_and_outside_development) ... ok
+test_future_prices_corp_labels_and_same_day_chips_do_not_change_bytes (tests.test_daily_prompt.DailyPromptTests.test_future_prices_corp_labels_and_same_day_chips_do_not_change_bytes) ... ok
+test_payload_bytes_whitelist_no_dates_symbol_absolute_prices (tests.test_daily_prompt.DailyPromptTests.test_payload_bytes_whitelist_no_dates_symbol_absolute_prices) ... ok
+test_preview_no_network_readonly_canonical_body_and_exact_document (tests.test_daily_prompt.DailyPromptTests.test_preview_no_network_readonly_canonical_body_and_exact_document) ... ok
+test_reuses_frozen_indicator_text_and_missing_is_not_zero (tests.test_daily_prompt.DailyPromptTests.test_reuses_frozen_indicator_text_and_missing_is_not_zero) ... ok
+test_sample_calendar_only_fixed_grid_and_common_endpoints (tests.test_daily_prompt.DailyPromptTests.test_sample_calendar_only_fixed_grid_and_common_endpoints) ... ok
+test_three_questions_thresholds_exact_inclusive_from_config (tests.test_daily_prompt.DailyPromptTests.test_three_questions_thresholds_exact_inclusive_from_config) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.284s
+
+OK

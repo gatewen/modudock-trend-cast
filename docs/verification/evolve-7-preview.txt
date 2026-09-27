@@ -1,0 +1,21 @@
+{
+  "experiment": 4,
+  "method": "jev_ind",
+  "prompt_version": "p6",
+  "model": "jev-1.13.0",
+  "approved_to_run": true,
+  "selection": "common_H14_endpoint_in_dev",
+  "step": 5,
+  "date_grid_count": 579,
+  "sample_count": 576,
+  "tail_excluded": 3,
+  "sample_sha256": "c97a1e113f8669095cd96fa04cd9c8bd86c41676ca8601897ca90f3bd52dd24f",
+  "experiment_data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "questions_sha256": "f8f2f1d5b23d2eff1b4c00b204111fef05cd79a0dfe8ef92cc36ebf793284b19",
+  "example_body_sha256": "b5cf11d61614790c90f0ce4a3bf7f2bd1d44a336f6ddc7f97860fac2981ffe3c",
+  "example_body_bytes": 12875,
+  "example_selection": "first_sample_day_only",
+  "round_max_calls": 650,
+  "http_calls": 0,
+  "network_attempts": 0
+}

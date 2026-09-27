@@ -57,7 +57,7 @@ def run_horizon(store, experiment_id=4, H=3, *, split='dev', progress=None):
     record_by_day={r.frame.day:r for r in records}
     expected={(f.day,m) for f in points for m in METHODS}
     existing={(r['day'],r['method']) for r in store.db.execute(
-        'SELECT day,method FROM d_predictions WHERE experiment_id=? AND H=?',(experiment_id,H))}
+        "SELECT day,method FROM d_predictions WHERE experiment_id=? AND H=? AND method!='jev_ind'",(experiment_id,H))}
     # A complete rerun validates stored outputs via report; no refit or network.
     if existing==expected:
         for f in points:
@@ -65,7 +65,7 @@ def run_horizon(store, experiment_id=4, H=3, *, split='dev', progress=None):
             if saved is None or saved['input_hash']!=f.digest or saved['input_json']!=f.serialized():
                 raise DataError('daily_existing_result_changed')
         by_day={p.day:p for p in points}
-        for saved in store.db.execute('SELECT * FROM d_predictions WHERE experiment_id=? AND H=?',(experiment_id,H)):
+        for saved in store.db.execute("SELECT * FROM d_predictions WHERE experiment_id=? AND H=? AND method!='jev_ind'",(experiment_id,H)):
             valid=prediction(saved['method'],json.loads(saved['probabilities_json']))
             if saved['choice']!=valid.answer or saved['input_hash']!=by_day[saved['day']].digest:
                 raise DataError('daily_existing_result_changed')

@@ -1,0 +1,7 @@
+{"phase": "prepare", "done": 1, "total": 576}
+{"phase": "prepare", "done": 101, "total": 576}
+{"phase": "prepare", "done": 201, "total": 576}
+{"phase": "prepare", "done": 301, "total": 576}
+{"phase": "prepare", "done": 401, "total": 576}
+{"phase": "prepare", "done": 501, "total": 576}
+{"frozen": 576, "plan_hash": "4c0500438f8385af5ce980367d9a2d8aa620b068dc9444ae0ecce072ff5cb53e", "http_calls": 0}

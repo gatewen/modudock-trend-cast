@@ -1,0 +1,24 @@
+test_bias_cutoffs_per_horizon_maturity_boundary_and_future_invariance (tests.test_daily_prompt.DailyPromptTests.test_bias_cutoffs_per_horizon_maturity_boundary_and_future_invariance) ... ok
+test_chips_only_percent_missing_units_and_previous_20_volume (tests.test_daily_prompt.DailyPromptTests.test_chips_only_percent_missing_units_and_previous_20_volume) ... ok
+test_fail_closed_for_unpredictable_and_outside_development (tests.test_daily_prompt.DailyPromptTests.test_fail_closed_for_unpredictable_and_outside_development) ... ok
+test_future_prices_corp_labels_and_same_day_chips_do_not_change_bytes (tests.test_daily_prompt.DailyPromptTests.test_future_prices_corp_labels_and_same_day_chips_do_not_change_bytes) ... ok
+test_payload_bytes_whitelist_no_dates_symbol_absolute_prices (tests.test_daily_prompt.DailyPromptTests.test_payload_bytes_whitelist_no_dates_symbol_absolute_prices) ... ok
+test_preview_no_network_readonly_canonical_body_and_exact_document (tests.test_daily_prompt.DailyPromptTests.test_preview_no_network_readonly_canonical_body_and_exact_document) ... ok
+test_reuses_frozen_indicator_text_and_missing_is_not_zero (tests.test_daily_prompt.DailyPromptTests.test_reuses_frozen_indicator_text_and_missing_is_not_zero) ... ok
+test_sample_calendar_only_fixed_grid_and_common_endpoints (tests.test_daily_prompt.DailyPromptTests.test_sample_calendar_only_fixed_grid_and_common_endpoints) ... ok
+test_three_questions_thresholds_exact_inclusive_from_config (tests.test_daily_prompt.DailyPromptTests.test_three_questions_thresholds_exact_inclusive_from_config) ... ok
+test_650_round_and_3000_campaign_limits_are_atomic (tests.test_daily_jev.DailyClientTests.test_650_round_and_3000_campaign_limits_are_atomic) ... ok
+test_actual_http_three_questions_and_no_absolute_chip_units (tests.test_daily_jev.DailyClientTests.test_actual_http_three_questions_and_no_absolute_chip_units) ... ok
+test_all_three_validate_model_shape_probabilities_choice_and_sum (tests.test_daily_jev.DailyClientTests.test_all_three_validate_model_shape_probabilities_choice_and_sum) ... ok
+test_auth_closes_client_cancel_zero_http_invalid_answer_not_complete (tests.test_daily_jev.DailyClientTests.test_auth_closes_client_cancel_zero_http_invalid_answer_not_complete) ... ok
+test_retry_quota_durable_and_no_double_campaign_charge (tests.test_daily_jev.DailyClientTests.test_retry_quota_durable_and_no_double_campaign_charge) ... ok
+test_atomic_three_answer_commit_cancel_and_rollback (tests.test_daily_jev.DailyRunnerTests.test_atomic_three_answer_commit_cancel_and_rollback) ... ok
+test_cli_no_execute_never_opens_database_or_network (tests.test_daily_jev.DailyRunnerTests.test_cli_no_execute_never_opens_database_or_network) ... ok
+test_missing_answer_stops_first_probe_and_report_is_incomplete (tests.test_daily_jev.DailyRunnerTests.test_missing_answer_stops_first_probe_and_report_is_incomplete) ... ok
+test_plan_body_is_immutable_and_only_dev (tests.test_daily_jev.DailyRunnerTests.test_plan_body_is_immutable_and_only_dev) ... ok
+test_run_resume_zero_http_and_baseline_runner_unchanged (tests.test_daily_jev.DailyRunnerTests.test_run_resume_zero_http_and_baseline_runner_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 5.148s
+
+OK

@@ -49,7 +49,7 @@ def development_report(store, experiment_id=4, *, split='dev'):
         if any(r['label']!=expected[d].truth or r['end_day']!=expected[d].end_day for d,r in outcomes.items()):
             raise DataError('daily_outcome_mismatch')
         by_method={m:{} for m in METHODS};states={}
-        for r in store.db.execute('''SELECT * FROM d_predictions WHERE experiment_id=? AND H=? AND day BETWEEN ? AND ?''',(experiment_id,H,first,last)):
+        for r in store.db.execute('''SELECT * FROM d_predictions WHERE experiment_id=? AND H=? AND day BETWEEN ? AND ? AND method!='jev_ind' ''',(experiment_id,H,first,last)):
             if r['method'] not in by_method: raise DataError('daily_unknown_method')
             probs=json.loads(r['probabilities_json']);valid=prediction(r['method'],probs)
             if valid.answer!=r['choice']: raise DataError('daily_invalid_choice')

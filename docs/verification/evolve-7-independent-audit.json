@@ -1,0 +1,16 @@
+{
+  "n": 576,
+  "metric_rows_checked": 9,
+  "intervals_checked": 6,
+  "legacy_unchanged": true,
+  "references_unchanged": true,
+  "all_chips_relative": true,
+  "campaign_used": 1222,
+  "http_calls": 578,
+  "http_statuses": {
+    "200": 578
+  },
+  "errors": {
+    "choice_not_maximum": 2
+  }
+}

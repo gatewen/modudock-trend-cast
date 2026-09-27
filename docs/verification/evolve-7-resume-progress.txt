@@ -1,0 +1,6 @@
+{"phase": "prepare", "done": 1, "total": 576}
+{"phase": "prepare", "done": 101, "total": 576}
+{"phase": "prepare", "done": 201, "total": 576}
+{"phase": "prepare", "done": 301, "total": 576}
+{"phase": "prepare", "done": 401, "total": 576}
+{"phase": "prepare", "done": 501, "total": 576}
