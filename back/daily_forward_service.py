@@ -17,6 +17,7 @@ from .fugle import FugleClient
 from .twse import TwseClient
 from .http_client import ClientError
 from .jobs import sync_reason
+from .news_digest import record_input as record_news_input
 
 SAFE={'forward_frozen_settings_changed','forward_missing_p6_plan','daily_source_digest_changed',
     'daily_frozen_settings_changed','forward_not_predictable','daily_source_revision',
@@ -141,6 +142,7 @@ class DailyForwardService:
                     if str(e)=='forward_not_predictable':continue
                     raise
                 self._write(lambda s:save_baselines(s,prepared,self.now))
+            self._write(lambda s:record_news_input(s,day,self.now()))
             # Missing key does not reserve a network attempt. The baselines remain available.
             if self.client is None and not os.environ.get('TYPESAFE_API_KEY'):continue
             self._ensure_client()

@@ -14,6 +14,7 @@ from back.db_writer import DBWriter
 from back.protocol import MAX_INPUT, Outbox, shutdown, valid_seq
 from back.runtime import Application
 from back.store import DEFAULT_DB
+from back.news_digest import decode_packet
 
 
 def preflight(python_version=None, expat_version=None):
@@ -65,7 +66,7 @@ def main(argv=None, *, app_factory=Application, writer_factory=DBWriter, outbox_
             print('discard: oversized input', file=sys.stderr, flush=True)
             return finish()
         try:
-            packet = json.loads(line)
+            packet, body_size = decode_packet(line)
         except (ValueError, UnicodeError, RecursionError):
             print('discard: invalid JSON', file=sys.stderr, flush=True)
             continue
@@ -91,8 +92,8 @@ def main(argv=None, *, app_factory=Application, writer_factory=DBWriter, outbox_
             app.start()
         elif kind == 'msg' and running:
             app.request(packet.get('body'))
-        elif kind == 'event':
-            pass
+        elif kind == 'event' and running:
+            app.event(packet.get('topic'), packet.get('body'), wire_size=body_size)
         else:
             print('discard: unexpected message', file=sys.stderr, flush=True)
 

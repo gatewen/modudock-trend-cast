@@ -30,10 +30,40 @@ function report(h,extra={}) {h.answer('daily_report',{methods:methods.map(method
 test('daily default seven days registers before ready and sends only reads after up',t=>{
   const h=setup(t);assert.deepEqual(h.reports,['ready']);assert.equal(h.find('預測天期').value,'7');
   assert.equal(h.sent.length,0);h.up();h.up();
-  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report','daily_forward']);
+  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report','daily_forward','news_status']);
   assert.ok(h.sent.every(b=>b.H===7));assert.equal(h.container.querySelectorAll('.tc-forward').length,0);
   assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用（沒有入圍者，保留給未來）/);
   assert.equal(h.container.querySelector('.tc-daily-holdout button'),null);
+});
+
+test('news status absent publisher remains usable and timestamp refresh is text only',t=>{
+  const h=setup(t);ready(h);chart(h);
+  assert.ok(h.latest('news_status'));
+  assert.equal(h.container.querySelector('.tc-news').textContent,'新聞廣播：未收到');
+  h.answer('news_status',{received_at:null,jev_news_enabled:false});
+  assert.ok(h.container.querySelector('.tc-price'));
+  h.message({op:'news_changed'});
+  h.answer('news_status',{received_at:'2026-09-29T13:29:00.000000+08:00',jev_news_enabled:false});
+  const line=h.container.querySelector('.tc-news');
+  assert.match(line.textContent,/最後收到時間 2026-09-29 13:29:00（台北）.*jev_news 未啟用/);
+  assert.doesNotMatch(h.container.querySelector('.tc-daily-chart').textContent,/2026-09-29/);
+  const saved=line.textContent;
+  h.message({op:'news_changed'});h.answer('news_status',{received_at:'<img src=x onerror=alert(1)>',jev_news_enabled:false});
+  assert.equal(line.textContent,saved);assert.equal(line.querySelector('img'),null);
+  assert.ok(h.sent.every(p=>!p.op.startsWith('run')));
+});
+
+test('news status rejects late epoch replies and mismatched operation',t=>{
+  const h=setup(t);ready(h);const old=h.latest('news_status');
+  h.change('預測天期','3');const current=h.latest('news_status');
+  const body={op:'news_status',status:'ok',received_at:'2026-09-29T13:29:00+08:00',jev_news_enabled:false};
+  h.message({...body,request_id:old.request_id});
+  assert.equal(h.container.querySelector('.tc-news').textContent,'新聞廣播：未收到');
+  h.message({...body,request_id:h.latest('daily_chart').request_id});
+  assert.equal(h.container.querySelector('.tc-news').textContent,'新聞廣播：未收到');
+  h.message({...body,request_id:current.request_id});
+  assert.match(h.container.querySelector('.tc-news').textContent,/最後收到時間/);
+  h.change('預測天期','30m');const n=h.sent.length;h.message({op:'news_changed'});assert.equal(h.sent.length,n);
 });
 
 test('daily chart shape and exact boolean colors show both sampled methods',t=>{

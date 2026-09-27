@@ -34,6 +34,7 @@ export default function mountDaily(ctx) {
     el('p', '2330 台積電 · 開發段歷史檢驗', 'tc-sub'));
   const refresh = button('重新整理', () => load()); head.append(title, refresh);
   const status = el('div', '正在讀取多日實驗…', 'tc-status'); status.setAttribute('role', 'status');
+  const news = el('p', '新聞廣播：未收到', 'tc-news tc-sub'); news.setAttribute('role', 'status');
   const error = el('p', '', 'tc-error'); error.hidden = true;
   const card = (heading, cls) => { const n = el('section', '', `tc-card ${cls}`); n.append(el('h2', heading)); return n; };
   const chartCard = card('日線走勢與抽樣預測', 'tc-daily-chart');
@@ -69,7 +70,7 @@ export default function mountDaily(ctx) {
   const hold = card('多日保留段', 'tc-daily-holdout');
   hold.append(el('p','未使用（沒有入圍者，保留給未來）','tc-note'));
   const forward = prospective(doc,H);
-  root.append(head,status,error,forward.root,chartCard,indicatorsCard,reportCard,claimsCard,hold);
+  root.append(head,status,news,error,forward.root,chartCard,indicatorsCard,reportCard,claimsCard,hold);
   function controls() {
     refresh.disabled = !live; span.disabled = !live;
     date.disabled = !live || !days.length; previous.disabled = !live || days.indexOf(selected)<=0;
@@ -83,7 +84,7 @@ export default function mountDaily(ctx) {
   }
   function load() {
     error.hidden=true; clearChart(); report.replaceChildren(el('p','正在計算開發段成績與區間…','tc-note'));
-    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report'); send('daily_forward');
+    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report'); send('daily_forward'); send('news_status');
   }
   on(date,'change',()=>choose(date.value));
   on(span,'change',()=>{clearChart();send('daily_chart',{range:span.value});});
@@ -131,6 +132,15 @@ export default function mountDaily(ctx) {
   }
   ctx.channel.onMessage(body=>{
     if(disposed||!body||typeof body!=='object')return;
+    if(body.op==='news_changed'){send('news_status');return;}
+    if(body.op==='news_status') {
+      if(body.request_id!==requests.news_status||body.status!=='ok'||body.jev_news_enabled!==false)return;
+      const at=body.received_at;
+      if(at===null)news.textContent='新聞廣播：未收到';
+      else if(typeof at==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+08:00$/.test(at)&&Number.isFinite(Date.parse(at)))
+        news.textContent=`新聞廣播：最後收到時間 ${at.slice(0,19).replace('T',' ')}（台北） · jev_news 未啟用`;
+      return;
+    }
     if(body.op==='daily_forward_changed'){send('daily_forward');return;}
     if(body.op==='daily_forward'){if(body.request_id===requests.daily_forward)forward.render(body);return;}
     if(forbiddenDate(body))return;

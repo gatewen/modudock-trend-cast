@@ -19,6 +19,7 @@ from .daily_store import DailyStore
 from .daily_view import DailyViews, OPS as DAILY_OPS
 from .daily_forward_service import DailyForwardService
 from .daily_forward_view import forward_view
+from . import news_digest
 
 ERRORS = {'daily_view_dev_only', 'daily_view_invalid_date', 'daily_view_invalid_range',
     'daily_experiment_missing', 'daily_view_incomplete', 'invalid_daily_horizon', 'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
@@ -49,6 +50,7 @@ class Application:
         self.symbol = symbol
         self.closed = False
         self._lock = threading.RLock()
+        self._news_slots = threading.BoundedSemaphore(64)
         self._view_generation = 0
         self._experiment = None
         self._metadata = {'status': 'loading'}
@@ -64,6 +66,17 @@ class Application:
         self.daily_forward = DailyForwardService(writer, self.gate,
             on_change=lambda: self.emit({'op':'daily_forward_changed'}))
         self.forward = ForwardRunner(writer, self.gate, client=jev_client, on_progress=self._on_replay)
+
+    def event(self, topic, body, *, wire_size=None):
+        if self.closed or topic != news_digest.TOPIC:return
+        value = news_digest.validate(body, news_digest.now(), wire_size=wire_size)
+        if value is None or not self._news_slots.acquire(blocking=False):return
+        # Local receipt time is stamped before queueing, never supplied by the publisher.
+        future = self.writer.submit(lambda store: news_digest.receive(store, value))
+        def done(result):
+            self._news_slots.release()
+            if result.exception() is None and result.result():self.emit({'op':'news_changed'})
+        future.add_done_callback(done)
 
     def emit(self, body):
         if self.closed:
@@ -163,7 +176,9 @@ class Application:
             try:
                 with (DailyStore if body['op'] in (*DAILY_OPS, 'daily_forward') else Store)(self.writer.path, readonly=True) as store:
                     op = body['op']
-                    if op == 'daily_forward':
+                    if op == 'news_status':
+                        value = news_digest.status_view(store)
+                    elif op == 'daily_forward':
                         value = forward_view(store, body)
                         value['service'] = dict(self.daily_forward.state)
                     elif op in DAILY_OPS:
@@ -194,7 +209,7 @@ class Application:
             return self.error(DataError('invalid_request'))
         op = body.get('op')
         try:
-            if op in ('status', 'day', 'report', 'daily_forward', *DAILY_OPS):
+            if op in ('status', 'day', 'report', 'daily_forward', 'news_status', *DAILY_OPS):
                 self._queue_read(body)
             elif op == 'sync':
                 state = key_state()['fugle']

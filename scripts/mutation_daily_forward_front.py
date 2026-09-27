@@ -8,7 +8,7 @@ MUTATIONS=[
  ('probabilities_swapped','prospective.js',[("percent(p.probabilities?.up)", "percent(p.probabilities?.flat)")], 'forward displays all'),
  ('disclaimer_removed','prospective.js',[("el('p',DISCLAIMER,'tc-note')", "el('p','','tc-note')")], 'forward empty latest'),
  ('forward_push_ignored','front.js',[("isDaily && body.op === 'daily_forward_changed'", "false && body.op === 'daily_forward_changed'")], 'forward unsolicited refresh'),
- ('forward_request_removed','daily.js',[("send('daily_forward');\n  }", "\n  }")], 'daily default seven'),
+ ('forward_request_removed','daily.js',[("send('daily_forward'); send('news_status');\n  }", "send('news_status');\n  }")], 'daily default seven'),
 ]
 if __name__=='__main__':
     base.MUTATIONS=MUTATIONS

@@ -1,0 +1,6 @@
+news_request_removed: KILLED -> news status absent publisher
+news_push_ignored: KILLED -> news status absent publisher
+news_timestamp_replaced_with_empty: KILLED -> news status absent publisher
+news_timestamp_render_unchecked: KILLED -> news status absent publisher
+news_epoch_guard_removed: KILLED -> news status rejects late
+5/5 front behavior mutations killed

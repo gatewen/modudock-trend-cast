@@ -122,21 +122,19 @@ cd /Users/gatewenlee/Code/modudock-modules/trend-cast
 
 stdout 只有一行 JSON：`new_predictions` 是新提交的預測資料列數（一天四方法 × 三天期＝12 筆）；`scored_outcomes` 是新計分起點／天期數（一天三天期＝3 筆）；`jev_http_calls` 包含重試；`ledger_used` 是共用 3,000 次帳本的累計。另列 `missing_jev_days`。既有答案會跳過，完成後重跑為 0 次 jev。錯誤、缺答或未建實驗會回非零退出碼；`busy` 與 `missing_keys` 是可恢復的略過，退出碼為 0。
 
-兩把金鑰只從 `FUGLE_API_KEY`、`TYPESAFE_API_KEY` 環境變數讀。腳本不讀 `.zshrc`、不接收金鑰命令列參數；缺任一把時列出缺少的**變數名稱**後結束，不開 writer、不同步、不發 jev。摘要不包含金鑰或原始例外。
+兩把金鑰優先從 `FUGLE_API_KEY`、`TYPESAFE_API_KEY` 環境變數讀；缺少時，macOS 以 `/usr/bin/security` 讀登入使用者（`$USER`）的 `trendcast-fugle`／`trendcast-typesafe` 鑰匙圈項目。每筆最多等 5 秒；非 macOS、鑰匙圈鎖定或讀取失敗就略過。備援金鑰只在本次程序記憶體中使用，結束即移除。腳本不讀 `.zshrc`、不接收金鑰命令列參數；缺任一把時列出缺少的**變數名稱**後結束，不開 writer、不同步、不發 jev。摘要不包含金鑰或原始例外。
 
 排程範本：[com.gatewen.trendcast.daily.plist.example](docs/launchd/com.gatewen.trendcast.daily.plist.example)。以下是使用者決定安裝時才要做的步驟，本輪沒有實際安裝或載入：
 
 1. 確認 Mac 系統時區為台北，並修改範本中的 Python（須 ≥ 3.12）、模組、DB、工作目錄及日誌**絕對路徑**；plist 不會展開 `~` 或 shell 變數。確認 `data/` 存在且已有實驗 4。
-2. launchd 不讀互動式 shell 的 `.zshrc`。在已載入兩把金鑰的終端機中，把環境傳給目前使用者的 launchd（不要把金鑰寫進 plist 或版控）：
+2. launchd 不讀互動式 shell 的 `.zshrc`。先在登入使用者的終端機建立兩筆鑰匙圈項目（可重開機保留）：
 
    ```sh
-   test -n "$FUGLE_API_KEY" && test -n "$TYPESAFE_API_KEY" && {
-     launchctl setenv FUGLE_API_KEY "$FUGLE_API_KEY"
-     launchctl setenv TYPESAFE_API_KEY "$TYPESAFE_API_KEY"
-   }
+   /usr/bin/security add-generic-password -U -s trendcast-fugle -a "$USER" -w
+   /usr/bin/security add-generic-password -U -s trendcast-typesafe -a "$USER" -w
    ```
 
-   這個環境設定不保證跨登出／重新開機保存；重新登入後須重新提供，再檢查日誌不是 `missing_keys`。
+   `-w` 放在最後且不帶值，由 `security` 互動詢問密碼（Apple 隨系統附的 `man security` 所建議用法），輸入各 API 金鑰。不要把金鑰接在命令後、放進 plist 或版控。若系統詢問鑰匙圈存取權，由使用者確認；先在終端機執行一次腳本確認讀取成功。登入鑰匙圈未解鎖或權限不足時，排程仍會安全略過，請查看日誌中的 `missing_keys`；不要以顯示密碼的命令測試。
 
 3. 自行決定安裝後，再複製、驗證並載入：
 
@@ -161,3 +159,6 @@ launchctl bootout "gui/$(id -u)" \
 ```
 
 第 10 輪真資料驗證、測試與變異對照見 [交件說明](docs/HANDOFF-EVOLVE-10.md)。
+
+
+新聞廣播接收（尚未啟用 jev_news）：多日畫面顯示「未收到／最後收到時間」。只訂閱 `news.market_digest`，不要求安裝 news；摘要嚴格限制 8 KiB，另存每日 13:30 前快照，前瞻只讀當日快照，缺少就記「無新聞資料」。`jev_news` 的 p5 輸入預備紀錄與既有 p6 分開，旗標關閉、沒有新增 API 呼叫。欄位、時間規則與尚待 news 實作的發布方式見 [news.market_digest 提案](docs/PROPOSAL-news-market-digest.md)。獨立排程不會接收殼廣播，只能用殼先前已存的快照。
