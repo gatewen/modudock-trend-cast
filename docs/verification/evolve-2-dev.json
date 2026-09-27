@@ -1,0 +1,326 @@
+{
+  "experiment_id": 1,
+  "split": "dev",
+  "first_day": "2024-09-05",
+  "last_day": "2026-01-21",
+  "source_digest": "4cba1ee4745bc627ab5238a13ef611b9b60ce9b0746adf530e52bdb1104494ee",
+  "http_calls": 0,
+  "new_predictions": {
+    "clock_prior": 2688,
+    "vol_prior": 2688,
+    "jev_calibrated": 2688
+  },
+  "missing_predictions": {
+    "clock_prior": 0,
+    "vol_prior": 0,
+    "jev_calibrated": 0
+  },
+  "comparison": {
+    "n": 2688,
+    "eligible_n": 2688,
+    "coverage": 1.0,
+    "baseline": "majority",
+    "methods": {
+      "majority": {
+        "n": 2688,
+        "correct": 1361,
+        "accuracy": 0.5063244047619048,
+        "accuracy_wilson95": [
+          0.48742856718765454,
+          0.5252021915401999
+        ],
+        "brier": 0.6232414118361037,
+        "per_class": {
+          "up": {
+            "true_count": 662,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 1361,
+            "predicted_count": 2688,
+            "correct": 1361,
+            "precision": 0.5063244047619048,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 665,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 662,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 1361,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 665,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "clock_prior": {
+        "n": 2688,
+        "correct": 1347,
+        "accuracy": 0.5011160714285714,
+        "accuracy_wilson95": [
+          0.4822262046253721,
+          0.5200027527971904
+        ],
+        "brier": 0.6174600669083232,
+        "per_class": {
+          "up": {
+            "true_count": 662,
+            "predicted_count": 46,
+            "correct": 8,
+            "precision": 0.17391304347826086,
+            "recall": 0.012084592145015106
+          },
+          "flat": {
+            "true_count": 1361,
+            "predicted_count": 2528,
+            "correct": 1299,
+            "precision": 0.5138449367088608,
+            "recall": 0.9544452608376194
+          },
+          "down": {
+            "true_count": 665,
+            "predicted_count": 114,
+            "correct": 40,
+            "precision": 0.3508771929824561,
+            "recall": 0.06015037593984962
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 8,
+            "flat": 618,
+            "down": 36
+          },
+          "flat": {
+            "up": 24,
+            "flat": 1299,
+            "down": 38
+          },
+          "down": {
+            "up": 14,
+            "flat": 611,
+            "down": 40
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "vol_prior": {
+        "n": 2688,
+        "correct": 1359,
+        "accuracy": 0.5055803571428571,
+        "accuracy_wilson95": [
+          0.4866852472193835,
+          0.5244595398934292
+        ],
+        "brier": 0.6099845671608056,
+        "per_class": {
+          "up": {
+            "true_count": 662,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 1361,
+            "predicted_count": 2686,
+            "correct": 1359,
+            "precision": 0.5059568131049889,
+            "recall": 0.9985304922850845
+          },
+          "down": {
+            "true_count": 665,
+            "predicted_count": 2,
+            "correct": 0,
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 662,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 1359,
+            "down": 2
+          },
+          "down": {
+            "up": 0,
+            "flat": 665,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "jev_calibrated": {
+        "n": 2688,
+        "correct": 1361,
+        "accuracy": 0.5063244047619048,
+        "accuracy_wilson95": [
+          0.48742856718765454,
+          0.5252021915401999
+        ],
+        "brier": 0.6213267895955722,
+        "per_class": {
+          "up": {
+            "true_count": 662,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 1361,
+            "predicted_count": 2688,
+            "correct": 1361,
+            "precision": 0.5063244047619048,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 665,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 662,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 1361,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 665,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      }
+    },
+    "comparisons": {
+      "clock_prior": {
+        "brier_difference": -0.005781344927780386,
+        "bootstrap": {
+          "repetitions": 2000,
+          "seed": 20260927,
+          "trading_days": 336,
+          "unit": "trading_day",
+          "interval": "percentile_95_linear",
+          "brier_difference_ci95": [
+            -0.010075096973839189,
+            -0.0015688262300395347
+          ],
+          "accuracy_difference_ci95": [
+            -0.012648809523809524,
+            0.0026041666666666665
+          ]
+        },
+        "statement": "值得前瞻驗證",
+        "qualifies": true
+      },
+      "vol_prior": {
+        "brier_difference": -0.013256844675298066,
+        "bootstrap": {
+          "repetitions": 2000,
+          "seed": 20260927,
+          "trading_days": 336,
+          "unit": "trading_day",
+          "interval": "percentile_95_linear",
+          "brier_difference_ci95": [
+            -0.02037515645953479,
+            -0.006377448535630828
+          ],
+          "accuracy_difference_ci95": [
+            -0.0018601190476190475,
+            0.0
+          ]
+        },
+        "statement": "值得前瞻驗證",
+        "qualifies": true
+      },
+      "jev_calibrated": {
+        "brier_difference": -0.001914622240531511,
+        "bootstrap": {
+          "repetitions": 2000,
+          "seed": 20260927,
+          "trading_days": 336,
+          "unit": "trading_day",
+          "interval": "percentile_95_linear",
+          "brier_difference_ci95": [
+            -0.005155520436046447,
+            0.0010957473612117174
+          ],
+          "accuracy_difference_ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "statement": "沒有改善",
+        "qualifies": false
+      }
+    },
+    "promoted": "vol_prior",
+    "selection": "lowest_development_intersection_brier_among_qualifying_methods"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "experiment_id": 1,
+  "split": "dev",
+  "http_calls": 0,
+  "api_keys_absent": true,
+  "campaign_before": 144,
+  "campaign_after": 144,
+  "prediction_inserts": {
+    "clock_prior": 2688,
+    "vol_prior": 2688,
+    "jev_calibrated": 2688
+  },
+  "nondev_inserts_blocked_by_triggers": true,
+  "all_updates_deletes_blocked": true,
+  "reveal_and_forward_result_reads_blocked": true,
+  "foreign_key_id_check_allowed": true,
+  "forbidden_access_attempts": 0
+}

@@ -329,3 +329,9 @@ reveals(experiment_id, revealed_at, first_day, last_day, what)  -- 保留段揭�
 - 對照組：新方法各自與「開發段最佳既有基準（majority）」比。
 - 判讀：區間整段 < 0（新方法較好）→「值得前瞻驗證」，列入最後前瞻段的考生；否則記為沒有改善。**不得**用保留段。
 - 最多選 1 個「最佳新方法」進入前瞻段：**先**篩出與 majority 的 Brier 差區間整段 < 0 的方法，**再**從中取開發段 Brier 最低者；沒有任何方法符合 → 無晉級（在跑之前宣告，跑完不得改）。
+
+### 14.4 第 2 輪結果與前瞻段考生（2026-09-27 11:40）
+
+- 開發段（實驗 1，2,688 點）Brier：vol_prior 0.6100、clock_prior 0.6175、jev_calibrated 0.6213、majority 0.6232、jev p1 0.6714。vol_prior 與 clock_prior 對 majority 的區間整段 < 0，jev_calibrated 跨 0。依 §14.3 晉級：**vol_prior**。
+- vol_prior 在前瞻段的規則（跑之前宣告）：切點與各組頻率**凍結於整個開發段已揭曉資料**（同 majority 在保留段的做法），不使用任何保留段或前瞻段標籤。
+- 前瞻段最後的比較（事先宣告）：主要比較 ① jev p1 − majority、② vol_prior − majority，Brier 差＋交易日配對 bootstrap；兩個結果都要報，不因結果挑選。前瞻段樣本小（目前 18 日、144 點），區間很可能跨 0，照 §7.2 用語。

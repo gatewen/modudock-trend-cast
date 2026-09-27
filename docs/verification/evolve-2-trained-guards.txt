@@ -1,0 +1,6 @@
+test_only_eligible_dev_observations_train_and_foreign_records_rejected (tests.test_evolution.EvolutionTests.test_only_eligible_dev_observations_train_and_foreign_records_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
