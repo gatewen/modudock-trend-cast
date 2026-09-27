@@ -74,3 +74,16 @@ class ForwardClient(DailyJevClient):
                 if self._sleep is None:cancel.wait(delay)
                 else:self._sleep(delay)
         return super().predict(day,body,cancel=cancel)
+
+
+def ledger_usage(path=LEDGER):
+    """Read a summary without creating/resetting the campaign ledger."""
+    path=Path(path).resolve()
+    if not path.exists():return 0
+    try:
+        with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5) as db:
+            row=db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()
+            if row is None or type(row[0]) is not int or row[0]<0:raise ValueError
+            return row[0]
+    except (sqlite3.Error,ValueError):
+        raise ClientError('evolution_budget_unavailable') from None

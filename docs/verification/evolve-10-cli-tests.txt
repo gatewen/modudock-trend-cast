@@ -1,0 +1,16 @@
+test_cli_and_shell_share_process_lock_and_persistent_reservation (tests.test_daily_forward_cli.DailyCliTests.test_cli_and_shell_share_process_lock_and_persistent_reservation) ... ok
+test_exact_summary_counts_include_committed_predictions_and_maturity (tests.test_daily_forward_cli.DailyCliTests.test_exact_summary_counts_include_committed_predictions_and_maturity) ... ok
+test_failure_safe_one_line_and_lock_released (tests.test_daily_forward_cli.DailyCliTests.test_failure_safe_one_line_and_lock_released) ... ok
+test_missing_db_not_created_and_oneshot_no_background_thread (tests.test_daily_forward_cli.DailyCliTests.test_missing_db_not_created_and_oneshot_no_background_thread) ... ok
+test_missing_each_key_no_writer_no_network_no_traceback (tests.test_daily_forward_cli.DailyCliTests.test_missing_each_key_no_writer_no_network_no_traceback) ... ok
+test_no_new_day_zero_jev_shared_sync_happens_first (tests.test_daily_forward_cli.DailyCliTests.test_no_new_day_zero_jev_shared_sync_happens_first) ... ok
+test_record_reservation_survives_process_failure_without_http (tests.test_daily_forward_cli.DailyCliTests.test_record_reservation_survives_process_failure_without_http) ... ok
+test_shell_respects_cli_lock_before_any_db_work (tests.test_daily_forward_cli.DailyCliTests.test_shell_respects_cli_lock_before_any_db_work) ... ok
+test_nonblocking_exclusion_symlink_alias_release_and_stale_lease (tests.test_daily_forward_cli.DailyLockTests.test_nonblocking_exclusion_symlink_alias_release_and_stale_lease) ... ok
+test_process_death_releases_lock_without_unlink (tests.test_daily_forward_cli.DailyLockTests.test_process_death_releases_lock_without_unlink) ... ok
+test_exact_schedule_direct_python_no_key_no_auto_install (tests.test_daily_forward_cli.LaunchdTemplateTests.test_exact_schedule_direct_python_no_key_no_auto_install) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.305s
+
+OK

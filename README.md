@@ -108,3 +108,56 @@ v1 不支援盤中即時預測、多檔股票、自訂股票 UI、交易下單�
 實驗 4 已凍結時，模組啟動、同步後與每 15 分鐘自動檢查新日 K；有 `TYPESAFE_API_KEY` 才會送每日三題的 jev_ind 請求，前三個凍結方法可離線產生。只記錄實驗建立之後的交易日；準時、補記與待確認分列。每次 HTTP 都計入進化帳本，429／529 跨重啟最多共三次且須早於下一交易日 09:00，其他失敗不自動重送。
 
 同步另補多日日 K、除權息與籌碼。模組與殼須保持執行才能自動記錄；關閉期間的起點，下次開啟後依原始可見資料補記。前瞻到期成績直接顯示；既有多日保留段仍未使用。測試與畫面見 [第 9 輪交件](docs/HANDOFF-EVOLVE-9.md)。
+
+## 不開殼的每日排程
+
+```sh
+cd /Users/gatewenlee/Code/modudock-modules/trend-cast
+/usr/local/bin/python3 scripts/daily_forward.py
+```
+
+預設使用模組內 `data/trendcast.sqlite3`，也可明確帶 `--db /絕對路徑/trendcast.sqlite3`。它與殼內後半共用 `DailyForwardService`，執行一次「增量同步日 K／除權息／籌碼 → 補缺的前瞻預測 → 到期計分」後結束。會直接呼叫所需 API；只處理實驗 4 的前瞻紀錄，不跑或揭露多日保留段。
+
+兩個入口共用 `data/trendcast.sqlite3.daily-forward.lock`，整段流程只允許一個持有者；撞鎖回 `status=busy`、本次 0 次 jev，等下個排程。鎖路徑依實際 DB 路徑決定（符號連結會解析）；程序退出時核心自動釋放，**不要刪除鎖檔**。鎖涵蓋每日前瞻流程；其他既有 30 分鐘資料表仍由 SQLite 交易序列化。更新程式後，請先把正在運行的 trend-cast 模組卸載再載入一次，使殼內後半也使用新版鎖。
+
+stdout 只有一行 JSON：`new_predictions` 是新提交的預測資料列數（一天四方法 × 三天期＝12 筆）；`scored_outcomes` 是新計分起點／天期數（一天三天期＝3 筆）；`jev_http_calls` 包含重試；`ledger_used` 是共用 3,000 次帳本的累計。另列 `missing_jev_days`。既有答案會跳過，完成後重跑為 0 次 jev。錯誤、缺答或未建實驗會回非零退出碼；`busy` 與 `missing_keys` 是可恢復的略過，退出碼為 0。
+
+兩把金鑰只從 `FUGLE_API_KEY`、`TYPESAFE_API_KEY` 環境變數讀。腳本不讀 `.zshrc`、不接收金鑰命令列參數；缺任一把時列出缺少的**變數名稱**後結束，不開 writer、不同步、不發 jev。摘要不包含金鑰或原始例外。
+
+排程範本：[com.gatewen.trendcast.daily.plist.example](docs/launchd/com.gatewen.trendcast.daily.plist.example)。以下是使用者決定安裝時才要做的步驟，本輪沒有實際安裝或載入：
+
+1. 確認 Mac 系統時區為台北，並修改範本中的 Python（須 ≥ 3.12）、模組、DB、工作目錄及日誌**絕對路徑**；plist 不會展開 `~` 或 shell 變數。確認 `data/` 存在且已有實驗 4。
+2. launchd 不讀互動式 shell 的 `.zshrc`。在已載入兩把金鑰的終端機中，把環境傳給目前使用者的 launchd（不要把金鑰寫進 plist 或版控）：
+
+   ```sh
+   test -n "$FUGLE_API_KEY" && test -n "$TYPESAFE_API_KEY" && {
+     launchctl setenv FUGLE_API_KEY "$FUGLE_API_KEY"
+     launchctl setenv TYPESAFE_API_KEY "$TYPESAFE_API_KEY"
+   }
+   ```
+
+   這個環境設定不保證跨登出／重新開機保存；重新登入後須重新提供，再檢查日誌不是 `missing_keys`。
+
+3. 自行決定安裝後，再複製、驗證並載入：
+
+   ```sh
+   mkdir -p "$HOME/Library/LaunchAgents"
+   cp docs/launchd/com.gatewen.trendcast.daily.plist.example \
+     "$HOME/Library/LaunchAgents/com.gatewen.trendcast.daily.plist"
+   plutil -lint "$HOME/Library/LaunchAgents/com.gatewen.trendcast.daily.plist"
+   launchctl bootstrap "gui/$(id -u)" \
+     "$HOME/Library/LaunchAgents/com.gatewen.trendcast.daily.plist"
+   ```
+
+範本的 `StartCalendarInterval` 列出週一至週五 **16:45、17:30、20:30**，不設 `RunAtLoad` 或持續重啟。launchd 不認識證交所休市日，因此仍可能在平日假日啟動；是否有新起點由同步後的交易資料判定。20:30 主要補較晚發布的籌碼；若來源尚未更新，下一次再補。預測仍只使用前一交易日以前的籌碼，已記錄的輸入不會改寫。
+
+日誌在 `data/daily-forward.log` 與 `data/daily-forward-error.log`。如果 Mac 睡眠，`StartCalendarInterval` 會在喚醒時合併補一次；關機時不執行，所以仍可能被標為補記。此為使用者 LaunchAgent，須處於登入狀態。[Apple 排程說明](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/ScheduledJobs.html)、[Apple LaunchAgent 說明](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html)。
+
+需要停止排程時由使用者執行：
+
+```sh
+launchctl bootout "gui/$(id -u)" \
+  "$HOME/Library/LaunchAgents/com.gatewen.trendcast.daily.plist"
+```
+
+第 10 輪真資料驗證、測試與變異對照見 [交件說明](docs/HANDOFF-EVOLVE-10.md)。

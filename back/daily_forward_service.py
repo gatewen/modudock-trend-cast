@@ -5,12 +5,13 @@ import threading
 
 from .daily_forward import (clock_now,ensure_schema,load_model,build_model,install_model,
     candidates,prepare_day,save_baselines,claim_request,save_jev,settle,next_deadline,closed_end)
-from .daily_experiment import load_experiment
 from .daily_store import DailyStore
-from .daily_incremental import attached,ensure_daily,windows,append_batch
+from .daily_incremental import attached,windows,append_batch
 from .daily_sources import FinmindClient,CALENDAR,INSTITUTIONAL,MARGIN
 from .daily_sync import TWSE_LIMITER
-from .daily_forward_client import ForwardBudget,ForwardClient
+from .daily_forward_client import ForwardBudget,ForwardClient,ledger_usage
+from .daily_lock import forward_lock
+from .evolution_budget import LEDGER,LIMIT
 from .data import DataError,day_value
 from .fugle import FugleClient
 from .twse import TwseClient
@@ -26,13 +27,16 @@ SAFE={'forward_frozen_settings_changed','forward_missing_p6_plan','daily_source_
 
 class DailyForwardService:
     def __init__(self,writer,gate,*,now=clock_now,on_change=None,client=None,budget=None,
-                 fugle=None,twse=None,finmind=None,poll_seconds=900):
+                 fugle=None,twse=None,finmind=None,poll_seconds=900,autostart=True,ledger_path=LEDGER):
         self.writer,self.gate,self.now=writer,gate,now;self.on_change=on_change
         self.client,self.budget=client,budget
+        self.ledger_path=budget.path if budget is not None else ledger_path
         self.fugle=fugle or FugleClient();self.twse=twse or TwseClient(limiter=TWSE_LIMITER);self.finmind=finmind or FinmindClient()
         self.poll_seconds=poll_seconds;self.event=threading.Event();self.cancel=threading.Event();self.lock=threading.Lock()
         self.sync_requested=False;self.state={'state':'idle'}
-        self.worker=threading.Thread(target=self._loop,name='daily-forward-worker',daemon=True);self.worker.start()
+        self.worker=None
+        if autostart:
+            self.worker=threading.Thread(target=self._loop,name='daily-forward-worker',daemon=True);self.worker.start()
 
     def trigger(self,*,sync=False):
         with self.lock:self.sync_requested |= sync
@@ -68,21 +72,62 @@ class DailyForwardService:
 
     def _ensure_client(self):
         if self.client is not None:return
-        self.budget=self.budget or ForwardBudget(now=self.now,deadline=lambda d:self._read(lambda s:next_deadline(s,d)))
+        self.budget=self.budget or ForwardBudget(path=self.ledger_path,now=self.now,deadline=lambda d:self._read(lambda s:next_deadline(s,d)))
         self.client=ForwardClient(self.budget)
 
-    def cycle(self,*,sync=False):
+    def _counts(self):
+        def read(store):
+            names={r[0] for r in store.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            return tuple(store.db.execute('SELECT count(*) FROM '+name).fetchone()[0] if name in names else 0
+                         for name in ('d_forward_predictions','d_forward_outcomes'))
+        return self._read(read)
+
+    def summary(self,status='complete',**extra):
+        return dict(status=status,new_predictions=0,scored_outcomes=0,jev_http_calls=0,
+                    ledger_used=ledger_usage(self.ledger_path),ledger_limit=LIMIT,**extra)
+
+    def cycle(self,*,sync=False,lease=None):
+        if lease is not None:
+            lease.require(self.writer.path)
+            return self._cycle_summary(sync=sync)
+        try:
+            with forward_lock(self.writer.path):return self._cycle_summary(sync=sync)
+        except DataError as error:
+            if str(error)!='daily_forward_busy':raise
+            return self.summary('busy')
+
+    def _cycle_summary(self,*,sync):
+        before=self._counts();calls=self.budget.calls if self.budget else 0
+        status='complete';code=None
+        try:
+            result=self._cycle(sync=sync)
+            if result:status=result
+        except Exception as error:
+            status='error'
+            code=str(error) if str(error) in SAFE else sync_reason(error)
+            self._emit('error',code)
+        after=self._counts();summary=self.summary(status,**({'error':code} if code else {}))
+        def missing(store):
+            if not store.db.execute("SELECT 1 FROM sqlite_master WHERE name='d_forward_days'").fetchone():return 0
+            return store.db.execute("SELECT count(*) FROM d_forward_days WHERE jev_state!='done'").fetchone()[0]
+        summary['missing_jev_days']=self._read(missing)
+        if status=='complete' and summary['missing_jev_days']:summary['status']='partial'
+        summary.update(new_predictions=after[0]-before[0],scored_outcomes=after[1]-before[1],
+                       jev_http_calls=(self.budget.calls if self.budget else 0)-calls)
+        return summary
+
+    def _cycle(self,*,sync=False):
         # No experiment is a normal state for installations without research data.
         with DailyStore(self.writer.path,readonly=True) as s:
-            if s.db.execute("SELECT 1 FROM sqlite_master WHERE name='d_experiments'").fetchone() is None:return
-            if s.db.execute('SELECT 1 FROM d_experiments WHERE id=4').fetchone() is None:return
+            if s.db.execute("SELECT 1 FROM sqlite_master WHERE name='d_experiments'").fetchone() is None:return 'no_experiment'
+            if s.db.execute('SELECT 1 FROM d_experiments WHERE id=4').fetchone() is None:return 'no_experiment'
         self._write(ensure_schema)
         row,bundle=self._read(load_model)
         if sync and os.environ.get('FUGLE_API_KEY'):
             try:self._sync(row)
             except DataError as error:
                 if str(error)!='busy':raise
-                return  # Terminal legacy sync callback (or next poll) will retry.
+                return 'busy'  # Terminal legacy sync callback (or next poll) will retry.
         days=self._read(lambda s:candidates(s,row,self.now()))
         if days and bundle is None:
             self._emit('preparing')

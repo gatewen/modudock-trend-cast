@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "status": "complete",
+    "new_predictions": 0,
+    "scored_outcomes": 0,
+    "jev_http_calls": 0,
+    "ledger_used": 1222,
+    "ledger_limit": 3000,
+    "missing_jev_days": 0
+  },
+  "exit_code": 0,
+  "seconds": 25.06,
+  "ssl_cert_file_unset": true,
+  "stderr_empty": true,
+  "ledger_before": 1222,
+  "ledger_after": 1222,
+  "new_fetch_log_entries": 5,
+  "fetches": [
+    {
+      "kind": "bars",
+      "start_day": "2026-09-17",
+      "end_day": "2026-09-26",
+      "status": "written",
+      "http_status": 200,
+      "n_rows": 6
+    },
+    {
+      "kind": "calendar",
+      "start_day": "2026-09-17",
+      "end_day": "2026-09-26",
+      "status": "written",
+      "http_status": 200,
+      "n_rows": 6
+    },
+    {
+      "kind": "corp",
+      "start_day": "2026-09-17",
+      "end_day": "2026-09-26",
+      "status": "written",
+      "http_status": 200,
+      "n_rows": 0
+    },
+    {
+      "kind": "institutional",
+      "start_day": "2026-09-17",
+      "end_day": "2026-09-26",
+      "status": "written",
+      "http_status": 200,
+      "n_rows": 30
+    },
+    {
+      "kind": "margin",
+      "start_day": "2026-09-17",
+      "end_day": "2026-09-26",
+      "status": "written",
+      "http_status": 200,
+      "n_rows": 6
+    }
+  ],
+  "frozen_digest_unchanged": true
+}

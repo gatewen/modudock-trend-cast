@@ -1,0 +1,25 @@
+test_candidates_freeze_holiday_and_1630_boundary (tests.test_daily_forward.ForwardCoreTests.test_candidates_freeze_holiday_and_1630_boundary) ... ok
+test_changed_methods_prompt_and_model_rejected (tests.test_daily_forward.ForwardCoreTests.test_changed_methods_prompt_and_model_rejected) ... ok
+test_exact_maturity_and_score_only_post_freeze (tests.test_daily_forward.ForwardCoreTests.test_exact_maturity_and_score_only_post_freeze) ... ok
+test_frozen_model_uses_all_dev_and_only_dev (tests.test_daily_forward.ForwardCoreTests.test_frozen_model_uses_all_dev_and_only_dev) ... ok
+test_future_and_same_day_chips_cannot_change_input_answers_or_predictability (tests.test_daily_forward.ForwardCoreTests.test_future_and_same_day_chips_cannot_change_input_answers_or_predictability) ... ok
+test_incremental_append_keeps_frozen_digest_and_rejects_revision (tests.test_daily_forward.ForwardCoreTests.test_incremental_append_keeps_frozen_digest_and_rejects_revision) ... ok
+test_original_recorded_at_next_session_strict_boundary_and_unknown (tests.test_daily_forward.ForwardCoreTests.test_original_recorded_at_next_session_strict_boundary_and_unknown) ... ok
+test_record_timestamp_taken_after_validation_not_before_writer_wait (tests.test_daily_forward.ForwardCoreTests.test_record_timestamp_taken_after_validation_not_before_writer_wait) ... ok
+test_reservation_atomic_three_answers_and_commit_rollback (tests.test_daily_forward.ForwardCoreTests.test_reservation_atomic_three_answers_and_commit_rollback) ... ok
+test_view_empty_forbidden_inputs_and_missing_coverage (tests.test_daily_forward.ForwardCoreTests.test_view_empty_forbidden_inputs_and_missing_coverage) ... ok
+test_campaign_cap_and_no_reimbursement (tests.test_daily_forward.ForwardRetryTests.test_campaign_cap_and_no_reimbursement) ... ok
+test_deadline_strict_and_unknown_does_not_guess_holiday (tests.test_daily_forward.ForwardRetryTests.test_deadline_strict_and_unknown_does_not_guess_holiday) ... ok
+test_only_429_529_three_across_restart_and_all_charged (tests.test_daily_forward.ForwardRetryTests.test_only_429_529_three_across_restart_and_all_charged) ... ok
+test_restart_transport_backoff_then_success_all_attempts_charged (tests.test_daily_forward.ForwardRetryTests.test_restart_transport_backoff_then_success_all_attempts_charged) ... ok
+test_transport_rechecks_deadline_after_sleep_and_payload_private (tests.test_daily_forward.ForwardRetryTests.test_transport_rechecks_deadline_after_sleep_and_payload_private) ... ok
+test_startup_and_each_terminal_sync_schedule_worker (tests.test_daily_forward.ForwardRuntimeTests.test_startup_and_each_terminal_sync_schedule_worker) ... ok
+test_incremental_sync_then_auto_generate_with_fake_sources (tests.test_daily_forward.ForwardServiceTests.test_incremental_sync_then_auto_generate_with_fake_sources) ... ok
+test_reserved_429_recovers_one_http_with_actual_private_payload (tests.test_daily_forward.ForwardServiceTests.test_reserved_429_recovers_one_http_with_actual_private_payload) ... ok
+test_service_full_fixture_flow_restart_zero_duplicate_and_no_real_http (tests.test_daily_forward.ForwardServiceTests.test_service_full_fixture_flow_restart_zero_duplicate_and_no_real_http) ... ok
+test_uncertain_restart_does_not_send_and_failure_persists (tests.test_daily_forward.ForwardServiceTests.test_uncertain_restart_does_not_send_and_failure_persists) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 5.572s
+
+OK
