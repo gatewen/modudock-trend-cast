@@ -1,0 +1,19 @@
+{
+  "address": "127.0.0.1:62295",
+  "publisher": "test-only backend, publish once after up",
+  "scratch_outside_modules": true,
+  "fixture_clock": "2026-09-29T13:29:00+08:00",
+  "snapshot": {
+    "day": "2026-09-29",
+    "at": "2026-09-29T13:20:00.000000+08:00",
+    "received_at": "2026-09-29T13:29:00.000000+08:00",
+    "payload_json": "{\"at\":\"2026-09-29T13:20:00+08:00\",\"schema\":1,\"signal_counts\":{\"bearish\":1,\"bullish\":2,\"mixed\":1,\"unrelated\":0},\"source_count\":4,\"top_themes\":[{\"direction\":\"bullish\",\"events\":2,\"name\":\"半導體需求\"}],\"window_hours\":24}"
+  },
+  "network_attempts": 0,
+  "ssl_cert_file_unset": true,
+  "real_db_untouched": true,
+  "shell_exit_code": 0,
+  "scratch_removed": true,
+  "ledger_before": 1222,
+  "ledger_after": 1222
+}

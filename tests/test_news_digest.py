@@ -123,7 +123,7 @@ class NewsSnapshotTests(unittest.TestCase):
         self.ingest('13:00:00')
         with ForbiddenClient().guard():result=self.record()
         self.assertEqual((result['method'],result['prompt_version'],result['status']),('jev_news','p5','disabled'))
-        self.assertFalse(news.JEV_NEWS_ENABLED)
+        self.assertTrue(news.JEV_NEWS_ENABLED)
         state=json.loads(result['state_json']);self.assertEqual(set(state),{'daily','news'})
         self.assertEqual(state['daily'],[{'relative_close':.01}]);self.assertNotIn('at',state['news'])
         self.assertNotIn(DAY,result['state_json']);self.assertNotIn('2330',result['state_json'])
@@ -132,7 +132,7 @@ class NewsSnapshotTests(unittest.TestCase):
         with self.assertRaises(sqlite3.IntegrityError):self.s.db.execute("UPDATE news_forward_inputs SET status='no_news'")
         self.s.db.rollback()
     def test_no_news_no_tables_is_normal_no_transport(self):
-        self.assertEqual(news.status_view(self.s),dict(status='ok',received_at=None,jev_news_enabled=False))
+        self.assertEqual(news.status_view(self.s),dict(status='ok',received_at=None,jev_news_enabled=True))
         with ForbiddenClient().guard():row=self.record()
         self.assertEqual(row['message'],'無新聞資料')
 
@@ -148,8 +148,8 @@ class NewsServiceTests(unittest.TestCase):
                 with patch.dict(os.environ,{},clear=True),ForbiddenClient().guard():result=service.cycle()
                 self.assertEqual((result['new_predictions'],result['jev_http_calls']),(9,0))
                 with DailyStore(path,readonly=True) as s:
-                    row=dict(s.db.execute('SELECT * FROM news_forward_inputs').fetchone())
-                    self.assertEqual(row['message'],'無新聞資料')
+                    row=dict(s.db.execute('SELECT * FROM news_forward_requests').fetchone())
+                    self.assertEqual(row['jev_state'],'no_news')
                     self.assertEqual(s.db.execute('SELECT count(*) FROM d_forward_predictions WHERE method=\'jev_news\'').fetchone()[0],0)
             finally:service.close();writer.close();writer.thread.join(5)
 

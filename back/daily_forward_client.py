@@ -13,13 +13,15 @@ from .db_lifecycle import DatabaseGate
 
 
 class ForwardBudget:
-    def __init__(self, *, path=LEDGER, now=clock_now, deadline=None):
+    def __init__(self, *, path=LEDGER, now=clock_now, deadline=None, method='jev_ind'):
+        if method not in ('jev_ind','jev_news'):raise ValueError('invalid_forward_method')
+        self.table='daily_forward_http' if method=='jev_ind' else 'daily_forward_news_http'
         self.database=DatabaseGate()
         self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
         self.now=now;self.deadline=deadline or (lambda day:None);self.calls=0;self.lock=threading.Lock()
         with self.database.connection(self.path) as db:
-            db.executescript('''CREATE TABLE IF NOT EXISTS budget(campaign TEXT PRIMARY KEY,used INTEGER NOT NULL CHECK(used>=0));
-                CREATE TABLE IF NOT EXISTS daily_forward_http(
+            db.executescript(f'''CREATE TABLE IF NOT EXISTS budget(campaign TEXT PRIMARY KEY,used INTEGER NOT NULL CHECK(used>=0));
+                CREATE TABLE IF NOT EXISTS {self.table}(
                 id INTEGER PRIMARY KEY,day TEXT NOT NULL,attempt INTEGER NOT NULL,started_at TEXT NOT NULL,
                 status INTEGER,error TEXT,latency REAL,UNIQUE(day,attempt));''')
             db.execute('INSERT OR IGNORE INTO budget VALUES (?,0)',(CAMPAIGN,))
@@ -27,7 +29,7 @@ class ForwardBudget:
     def last(self,day):
         with self.database.connection(self.path) as db:
             db.row_factory=sqlite3.Row
-            r=db.execute('SELECT * FROM daily_forward_http WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
+            r=db.execute(f'SELECT * FROM {self.table} WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
             return dict(r) if r else None
 
     def retry_status(self,day,previous=None):
@@ -46,20 +48,20 @@ class ForwardBudget:
     def reserve(self,day):
         with self.lock,self.database.connection(self.path,timeout=15) as db:
             db.row_factory=sqlite3.Row;db.execute('BEGIN IMMEDIATE')
-            r=db.execute('SELECT * FROM daily_forward_http WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
+            r=db.execute(f'SELECT * FROM {self.table} WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
             state=self.retry_status(day,dict(r)) if r else 'initial'
             if state not in ('initial','retry'):raise ClientError('forward_retry_'+state)
             used=db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()[0]
             if used>=LIMIT:raise ClientError('evolution_budget_exhausted')
             db.execute('UPDATE budget SET used=used+1 WHERE campaign=?',(CAMPAIGN,))
-            seq=db.execute('INSERT INTO daily_forward_http(day,attempt,started_at) VALUES (?,?,?)',
+            seq=db.execute(f'INSERT INTO {self.table}(day,attempt,started_at) VALUES (?,?,?)',
                 (day,r['attempt']+1 if r else 1,stamp(self.now()))).lastrowid
         self.calls+=1;return seq
 
     def finish(self,seq,*,status=None,error=None,latency=None):
         if seq is None:return
         with self.database.connection(self.path,timeout=15) as db:
-            db.execute('UPDATE daily_forward_http SET status=coalesce(?,status),error=?,latency=coalesce(?,latency) WHERE id=?',(status,error,latency,seq))
+            db.execute(f'UPDATE {self.table} SET status=coalesce(?,status),error=?,latency=coalesce(?,latency) WHERE id=?',(status,error,latency,seq))
 
     def exhausted(self):
         with self.database.connection(self.path) as db:return db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()[0]>=LIMIT

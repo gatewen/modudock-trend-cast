@@ -134,11 +134,11 @@ export default function mountDaily(ctx) {
     if(disposed||!body||typeof body!=='object')return;
     if(body.op==='news_changed'){send('news_status');return;}
     if(body.op==='news_status') {
-      if(body.request_id!==requests.news_status||body.status!=='ok'||body.jev_news_enabled!==false)return;
+      if(body.request_id!==requests.news_status||body.status!=='ok'||typeof body.jev_news_enabled!=='boolean')return;
       const at=body.received_at;
       if(at===null)news.textContent='新聞廣播：未收到';
       else if(typeof at==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+08:00$/.test(at)&&Number.isFinite(Date.parse(at)))
-        news.textContent=`新聞廣播：最後收到時間 ${at.slice(0,19).replace('T',' ')}（台北） · jev_news 未啟用`;
+        news.textContent=`新聞廣播：最後收到時間 ${at.slice(0,19).replace('T',' ')}（台北） · jev_news ${body.jev_news_enabled?'已啟用（需當日快照）':'未啟用'}`;
       return;
     }
     if(body.op==='daily_forward_changed'){send('daily_forward');return;}

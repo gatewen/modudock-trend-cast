@@ -26,7 +26,7 @@ MUTATIONS=[
  ('snapshot_after_close_overwritten',N,[("if at.date()==received.date() and at<=cutoff and received<=cutoff:","if True:")],D+'test_last_cutoff_snapshot_survives_afternoon_and_restart_latest_singleton'),
  ('calendar_promotion_removed',N,[("        _promote(store)\n        if store.db.execute", "        # mutation\n        if store.db.execute")],D+'test_unknown_calendar_candidate_promoted_only_when_confirmed'),
  ('latest_used_instead_of_snapshot',N,[("digest=snapshot(store,day)","digest=json.loads(store.db.execute('SELECT payload_json FROM news_digests WHERE id=1').fetchone()[0])")],D+'test_late_receipt_prior_day_and_other_day_are_not_eligible'),
- ('p5_flag_enabled',N,[("JEV_NEWS_ENABLED = False","JEV_NEWS_ENABLED = True")],D+'test_p5_disabled_preview_is_separate_immutable_and_contains_only_daily_and_snapshot'),
+ ('p5_flag_disabled',N,[("JEV_NEWS_ENABLED = True","JEV_NEWS_ENABLED = False")],'tests.test_news_forward.NewsForwardTests.test_complete_p6_projection_same_day_only_and_no_identifiers'),
  ('p5_metadata_sent',N,[("if k!='at'","if True")],D+'test_p5_disabled_preview_is_separate_immutable_and_contains_only_daily_and_snapshot'),
  ('news_topic_ignored',R,[("self.closed or topic != news_digest.TOPIC","self.closed")],'tests.test_news_digest.NewsProtocolTests.test_topic_and_validation_before_queue_receipt_is_local_and_queue_bounded'),
  ('news_route_disconnected','back/trendcast.py',[("app.event(packet.get('topic'), packet.get('body'), wire_size=body_size)","pass")],P),

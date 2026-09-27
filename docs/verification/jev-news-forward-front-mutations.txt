@@ -1,0 +1,9 @@
+forward_historical_guard_removed: KILLED -> forward rejects historical
+forward_freeze_floor_removed: KILLED -> forward rejects historical
+forward_horizon_missing: KILLED -> forward displays all
+forward_cohort_merged: KILLED -> forward displays all
+probabilities_swapped: KILLED -> forward displays all
+disclaimer_removed: KILLED -> forward empty latest
+forward_push_ignored: KILLED -> forward unsolicited refresh
+forward_request_removed: KILLED -> daily default seven
+8/8 front behavior mutations killed

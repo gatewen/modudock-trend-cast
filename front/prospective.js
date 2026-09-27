@@ -1,7 +1,7 @@
 // Dedicated forward-only renderer. Development date guards remain in daily.js.
 const timing = {ontime:'準時',backfill:'補記',unconfirmed:'準時待確認'};
 const labels = {up:'漲',flat:'盤整',down:'跌'};
-const methods = ['majority','ind_logit','vol_prior_d','jev_ind'];
+const methods = ['majority','ind_logit','vol_prior_d','jev_ind','jev_news'];
 const EMPTY = '尚無前瞻預測，下一個交易日收盤後自動產生';
 const DISCLAIMER = '這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法';
 const numeric = n => typeof n==='number' && Number.isFinite(n);
@@ -36,7 +36,8 @@ export default function prospective(doc,H) {
       for(const h of [3,7,14]){
         latestBody.append(el('h3',`${h} 個交易日`));
         const rows=methods.map(m=>{const p=(v.latest.predictions||[]).find(p=>p.H===h&&p.method===m);
-          return p?[m,labels[p.choice]||'—',percent(p.probabilities?.up),percent(p.probabilities?.flat),percent(p.probabilities?.down),timing[p.timing]||'—',safe(p.recorded_at)]:[m,'缺答','—','—','—','尚未完成','—'];});
+          const absent=m==='jev_news'&&v.latest.news_state==='no_news';
+          return p?[m,labels[p.choice]||'—',percent(p.probabilities?.up),percent(p.probabilities?.flat),percent(p.probabilities?.down),timing[p.timing]||'—',safe(p.recorded_at)]:[m,absent?'今日無新聞資料':'缺答','—','—','—',absent?'未發請求':'尚未完成','—'];});
         latestBody.append(table(['方法','答案','漲','盤整','跌','紀錄','記錄時間'],rows));
       }
       for(const key of ['ontime','backfill','unconfirmed']){
@@ -46,6 +47,10 @@ export default function prospective(doc,H) {
           m.method,m.n,percent(m.accuracy),Array.isArray(m.accuracy_wilson95)?m.accuracy_wilson95.map(percent).join(' ～ '):'—',number(m.brier),percent(m.coverage),m.missing])));
         const cmp=c.comparison||{};
         scoreBody.append(el('p',`jev_ind − majority：${number(cmp.difference)}；95% 區間 ${Array.isArray(cmp.ci95)?cmp.ci95.map(number).join(' ～ '):'—'}；交集 ${cmp.n??0}。${safe(cmp.verdict)}${cmp.small_sample?'；樣本太少，持續累積。':''}`,'tc-note'));
+        for(const baseline of ['jev_ind','majority']){
+          const p=c.news_comparisons?.[baseline];if(!p)continue;
+          scoreBody.append(el('p',`jev_news − ${baseline}：${number(p.difference)}；95% 區間 ${Array.isArray(p.ci95)?p.ci95.map(number).join(' ～ '):'—'}；交集 ${p.n??0}。${safe(p.verdict)}${p.small_sample?'；未滿 60 個到期日。':''}`,'tc-note'));
+        }
       }
       scoreBody.append(el('p','區間：20 交易日區塊 bootstrap，2,000 次、固定種子。','tc-note'));
       const pendingRows=(v.pending||[]).map(p=>[p.day,`${p.H} 日`,p.end_day||`尚待 ${p.remaining} 個交易日資料`]);

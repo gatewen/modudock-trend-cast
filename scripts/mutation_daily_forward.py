@@ -29,7 +29,7 @@ MUTATIONS=[
  ('post_sync_forecast_skipped',S,[("days=self._read(lambda s:candidates(s,row,self.now()))", "days=()")],W+'test_incremental_sync_then_auto_generate_with_fake_sources'),
  ('startup_worker_not_triggered','back/runtime.py',[("        self.daily_forward.trigger()", "        pass")],T+'ForwardRuntimeTests.test_startup_and_each_terminal_sync_schedule_worker'),
  ('sync_worker_not_triggered','back/runtime.py',[("            self.daily_forward.trigger(sync=True)", "            pass")],T+'ForwardRuntimeTests.test_startup_and_each_terminal_sync_schedule_worker'),
- ('small_sample_conclusion_allowed',V,[("comp['blocks']>=2", "comp['blocks']>=1")],C+'test_exact_maturity_and_score_only_post_freeze'),
+ ('small_sample_conclusion_allowed',V,[("complete=comp['blocks']>=2", "complete=comp['blocks']>=1")],C+'test_exact_maturity_and_score_only_post_freeze'),
  ('missing_coverage_hidden',V,[("missing=len(origins-present)", "missing=0")],C+'test_view_empty_forbidden_inputs_and_missing_coverage'),
 ]
 if __name__=='__main__':

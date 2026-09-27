@@ -164,9 +164,9 @@ test('forward empty latest comes before historical chart and keeps disclaimer',t
  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
  assert.equal(h.container.querySelector('.tc-prospective button'),null);
 });
-test('forward displays all three horizons four methods probabilities timing pending and cohorts',t=>{
+test('forward displays all three horizons five methods probabilities timing pending and cohorts',t=>{
  const h=setup(t);ready(h);forwardReady(h,forwardPopulated());
- assert.equal(h.container.querySelectorAll('.tc-forward-latest tbody tr').length,12);
+ assert.equal(h.container.querySelectorAll('.tc-forward-latest tbody tr').length,15);
  assert.match(h.container.querySelector('.tc-forward-latest').textContent,/20.00%60.00%20.00%準時待確認/);
  assert.match(h.container.querySelector('.tc-forward-pending').textContent,/2026-09-297 日尚待 7 個交易日資料/);
  assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['準時','補記','準時待確認']);
@@ -198,4 +198,25 @@ test('daily release copy distinguishes development findings and prospective orig
  assert.match(h.container.querySelector('.tc-daily-scores').textContent,/沒有方法顯著勝過 majority；jev_ind 三天期 Brier 顯著較差/);
  assert.match(h.container.querySelector('.tc-forward-origin').textContent,/2026-09-29.*實際交易日/);
  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+});
+
+
+test('news enabled reception and missing snapshot render separately',t=>{
+ const h=setup(t);ready(h);
+ h.answer('news_status',{received_at:'2026-09-29T13:29:00+08:00',jev_news_enabled:true});
+ assert.match(h.container.querySelector('.tc-news').textContent,/已啟用（需當日快照）/);
+ const value=forwardPopulated();value.latest.news_state='no_news';forwardReady(h,value);
+ const rows=[...h.container.querySelectorAll('.tc-forward-latest tbody tr')].filter(r=>r.textContent.startsWith('jev_news'));
+ assert.equal(rows.length,3);rows.forEach(r=>assert.match(r.textContent,/今日無新聞資料.*未發請求/));
+});
+test('news predictions show three horizons and both preregistered comparisons',t=>{
+ const h=setup(t);ready(h);const value=forwardPopulated();value.latest.news_state='done';
+ value.latest.predictions.push(...[3,7,14].map(H=>({H,method:'jev_news',choice:'up',probabilities:{up:.7,flat:.2,down:.1},timing:'ontime',recorded_at:'2026-09-29T17:00:00+08:00'})));
+ value.cohorts[0].news_comparisons=Object.fromEntries(['jev_ind','majority'].map(m=>[m,{n:1,difference:.01,ci95:[-.02,.03],small_sample:true,verdict:'結果不完整，不下結論'}]));
+ forwardReady(h,value);
+ const rows=[...h.container.querySelectorAll('.tc-forward-latest tbody tr')].filter(r=>r.textContent.startsWith('jev_news'));
+ assert.equal(rows.length,3);rows.forEach(r=>assert.match(r.textContent,/漲70.00%20.00%10.00%準時/));
+ assert.match(h.container.querySelector('.tc-forward-scores').textContent,/jev_news − jev_ind/);
+ assert.match(h.container.querySelector('.tc-forward-scores').textContent,/jev_news − majority/);
+ assert.match(h.container.querySelector('.tc-forward-scores').textContent,/未滿 60 個到期日/);
 });

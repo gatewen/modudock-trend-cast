@@ -1,0 +1,39 @@
+{
+  "url": "http://127.0.0.1:62295",
+  "catalog": [
+    "news-digest-fixture",
+    "trend-cast"
+  ],
+  "running": [
+    "news-digest-fixture",
+    "trend-cast"
+  ],
+  "received_events": [
+    {
+      "mod": "trend-cast",
+      "topic": "news.market_digest",
+      "body": {
+        "schema": 1,
+        "at": "2026-09-29T13:20:00+08:00",
+        "window_hours": 24,
+        "signal_counts": {
+          "bullish": 2,
+          "mixed": 1,
+          "unrelated": 0,
+          "bearish": 1
+        },
+        "top_themes": [
+          {
+            "name": "半導體需求",
+            "events": 2,
+            "direction": "bullish"
+          }
+        ],
+        "source_count": 4
+      }
+    }
+  ],
+  "news_changed": 1,
+  "page_errors": [],
+  "news_status_text": "新聞廣播：最後收到時間 2026-09-29 13:29:00（台北） · jev_news 已啟用（需當日快照）"
+}

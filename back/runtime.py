@@ -351,9 +351,9 @@ class Application:
         if self.writer.thread.is_alive():return False
         for gate in (self.database,self.daily_forward.database):
             if not gate.wait(max(0,end-time.monotonic())):return False
-        budget=self.daily_forward.budget
-        if budget is not None and hasattr(budget,'database'):
-            if not budget.database.wait(max(0,end-time.monotonic())):return False
+        for budget in (self.daily_forward.budget,self.daily_forward.news_budget):
+            if budget is not None and hasattr(budget,'database'):
+                if not budget.database.wait(max(0,end-time.monotonic())):return False
         return True
 
     def wait_closed(self, timeout=3):

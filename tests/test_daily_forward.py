@@ -128,7 +128,7 @@ class ForwardCoreTests(ForwardFixture):
         self.assertEqual(values[0]['recorded_at'],stamp(self.now))
         view=forward_view(self.s,dict(op='daily_forward'))
         self.assertEqual(view['cohorts'][0]['methods'][-1]['coverage'],0)
-        self.assertEqual(view['cohorts'][1]['methods'][-1]['recorded'],1)
+        self.assertEqual(next(m for m in view['cohorts'][1]['methods'] if m['method']=='jev_ind')['recorded'],1)
 
     def test_reservation_atomic_three_answers_and_commit_rollback(self):
         self.save();self.assertEqual(self.s.db.execute('SELECT count(*) FROM d_forward_predictions').fetchone()[0],9)
@@ -154,9 +154,9 @@ class ForwardCoreTests(ForwardFixture):
         self.assertEqual(settle(self.s,moment('2026-10-23T17:00:00')),2)
         self.assertEqual(settle(self.s,moment('2026-10-23T18:00:00')),0)
         view=forward_view(self.s,dict(op='daily_forward',H=3))
-        self.assertEqual([m['n'] for m in view['cohorts'][0]['methods']],[1]*4)
+        self.assertEqual([m['n'] for m in view['cohorts'][0]['methods'] if m['method'] in METHODS],[1]*4)
         comp=view['cohorts'][0]['comparison'];self.assertEqual(comp['verdict'],'結果不完整，不下結論');self.assertTrue(comp['small_sample'])
-        p=view['cohorts'][0]['methods'][-1];self.assertAlmostEqual(p['brier'],sum((v-int(k==outcome['label']))**2 for k,v in dict(up=.2,flat=.6,down=.2).items()))
+        p=next(m for m in view['cohorts'][0]['methods'] if m['method']=='jev_ind');self.assertAlmostEqual(p['brier'],sum((v-int(k==outcome['label']))**2 for k,v in dict(up=.2,flat=.6,down=.2).items()))
         self.assertEqual(self.s.db.execute('SELECT count(*) FROM d_outcomes').fetchone()[0],0)
     def test_view_empty_forbidden_inputs_and_missing_coverage(self):
         result=forward_view(self.s,dict(op='daily_forward'))

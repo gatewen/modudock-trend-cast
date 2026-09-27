@@ -19,20 +19,23 @@ from .fugle import FugleClient
 from .twse import TwseClient
 from .http_client import ClientError
 from .jobs import sync_reason
-from .news_digest import record_input as record_news_input
+from . import news_digest, news_forward
+from .news_forward import record_input as record_news_input
 
 SAFE={'forward_frozen_settings_changed','forward_missing_p6_plan','daily_source_digest_changed',
     'daily_frozen_settings_changed','forward_not_predictable','daily_source_revision',
     'evolution_budget_exhausted','forward_retry_exhausted','forward_retry_expired','forward_retry_uncertain',
-    'forward_retry_wait_calendar','missing_key','auth_disabled','http_status','network_error',
+    'forward_retry_wait_calendar','news_policy_changed','news_input_changed','news_forward_only','missing_key','auth_disabled','http_status','network_error',
     'tls_certificate_error','tls_error','request_timeout','cancelled','database_operation_failed'}
 
 
 class DailyForwardService:
     def __init__(self,writer,gate,*,now=clock_now,on_change=None,client=None,budget=None,
-                 fugle=None,twse=None,finmind=None,poll_seconds=900,autostart=True,ledger_path=LEDGER):
+                 fugle=None,twse=None,finmind=None,poll_seconds=900,autostart=True,ledger_path=LEDGER,
+                 news_client=None,news_budget=None):
         self.writer,self.gate,self.now=writer,gate,now;self.on_change=on_change
         self.client,self.budget=client,budget
+        self.news_client,self.news_budget=news_client,news_budget
         self.ledger_path=budget.path if budget is not None else ledger_path
         self.fugle=fugle or FugleClient();self.twse=twse or TwseClient(limiter=TWSE_LIMITER);self.finmind=finmind or FinmindClient()
         self.database=DatabaseGate()
@@ -75,13 +78,19 @@ class DailyForwardService:
                 self._write(lambda s:append_batch(s,kind,batch,floor))
         finally:self.gate.release('sync',generation)
 
-    def _ensure_client(self):
-        if self.client is not None:return
+    def _ensure_client(self,method='jev_ind'):
+        client_name,budget_name=('client','budget') if method=='jev_ind' else ('news_client','news_budget')
+        if getattr(self,client_name) is not None:return
         with self.database.admission():
-            self.budget=self.budget or ForwardBudget(path=self.ledger_path,now=self.now,deadline=lambda d:self._read(lambda s:next_deadline(s,d)))
+            budget=getattr(self,budget_name) or ForwardBudget(path=self.ledger_path,now=self.now,
+                deadline=lambda d:self._read(lambda s:next_deadline(s,d)),method=method)
+            setattr(self,budget_name,budget)
             if self.cancel.is_set():
-                self.budget.close();raise DataError('cancelled')
-            self.client=ForwardClient(self.budget)
+                budget.close();raise DataError('cancelled')
+            setattr(self,client_name,ForwardClient(budget))
+
+    def _calls(self):
+        return sum(b.calls for b in (self.budget,self.news_budget) if b is not None)
 
     def _counts(self):
         def read(store):
@@ -108,7 +117,7 @@ class DailyForwardService:
             return self.summary('busy')
 
     def _cycle_summary(self,*,sync):
-        before=self._counts();calls=self.budget.calls if self.budget else 0
+        before=self._counts();calls=self._calls()
         status='complete';code=None
         try:
             result=self._cycle(sync=sync)
@@ -122,9 +131,13 @@ class DailyForwardService:
             if not store.db.execute("SELECT 1 FROM sqlite_master WHERE name='d_forward_days'").fetchone():return 0
             return store.db.execute("SELECT count(*) FROM d_forward_days WHERE jev_state!='done'").fetchone()[0]
         summary['missing_jev_days']=self._read(missing)
-        if status=='complete' and summary['missing_jev_days']:summary['status']='partial'
+        def missing_news(store):
+            if not news_digest.exists(store,'news_forward_requests'):return 0
+            return store.db.execute("SELECT count(*) FROM news_forward_requests WHERE jev_state NOT IN ('done','no_news')").fetchone()[0]
+        summary['missing_news_days']=self._read(missing_news)
+        if status=='complete' and (summary['missing_jev_days'] or summary['missing_news_days']):summary['status']='partial'
         summary.update(new_predictions=after[0]-before[0],scored_outcomes=after[1]-before[1],
-                       jev_http_calls=(self.budget.calls if self.budget else 0)-calls)
+                       jev_http_calls=self._calls()-calls)
         return summary
 
     def _cycle(self,*,sync=False):
@@ -153,39 +166,44 @@ class DailyForwardService:
                     raise
                 self._write(lambda s:save_baselines(s,prepared,self.now))
             self._write(lambda s:record_news_input(s,day,self.now()))
-            # Missing key does not reserve a network attempt. The baselines remain available.
-            if self.client is None and not os.environ.get('TYPESAFE_API_KEY'):continue
-            self._ensure_client()
-            saved=self._read(lambda s:s.db.execute('SELECT * FROM d_forward_days WHERE day=?',(day,)).fetchone())
-            if saved['jev_state']=='done' or saved['jev_state']=='failed':continue
-            if saved['jev_state']=='reserved':
-                # Restart recovery is based on the durable HTTP status, never a blind retry.
-                state=self.budget.retry_status(day) if self.budget else 'uncertain'
-                if state=='initial':state='uncertain'  # process stopped between reservation and transport
-                self._set_failure(day,state,'forward_retry_'+state)
-            if self.budget:
-                state=self.budget.retry_status(day)
-                if state not in ('initial','retry'):
-                    self._set_failure(day,state,'forward_retry_'+state);continue
-            body=self._write(lambda s:claim_request(s,day))
-            if body is None:continue
-            try:
-                answer=self.client.predict(day,body,cancel=self.cancel)
-                self._write(lambda s:save_jev(s,day,answer,self.now))
-            except ClientError as error:
-                state=self.budget.retry_status(day) if self.budget else 'uncertain'
-                code=error.code if error.code in SAFE else 'response_invalid'
-                def failed(s):
-                    with s.transaction():s.db.execute('UPDATE d_forward_days SET jev_state=?,error=? WHERE day=?',
-                        ('retry_wait' if state in ('retry','wait_calendar') else 'failed',code,day))
-                self._write(failed)
+            self._run_request(day,'jev_ind')
+            self._run_request(day,'jev_news')
         self._write(lambda s:settle(s,self.now()))
         self._emit('idle')
 
-    def _set_failure(self,day,state,code):
+    def _run_request(self,day,method):
+        table='d_forward_days' if method=='jev_ind' else 'news_forward_requests'
+        client_name,budget_name=('client','budget') if method=='jev_ind' else ('news_client','news_budget')
+        if method=='jev_news' and not news_digest.JEV_NEWS_ENABLED:return
+        saved=self._read(lambda s:s.db.execute(f'SELECT * FROM {table} WHERE day=?',(day,)).fetchone())
+        if saved is None or saved['jev_state'] in ('done','failed','no_news'):return
+        if getattr(self,client_name) is None and not os.environ.get('TYPESAFE_API_KEY'):return
+        self._ensure_client(method)
+        client,budget=getattr(self,client_name),getattr(self,budget_name)
+        if saved['jev_state']=='reserved':
+            state=budget.retry_status(day) if budget else 'uncertain'
+            if state=='initial':state='uncertain'
+            self._set_failure(day,state,'forward_retry_'+state,table)
+            if state not in ('retry','wait_calendar'):return
+        if budget:
+            state=budget.retry_status(day)
+            if state not in ('initial','retry'):
+                self._set_failure(day,state,'forward_retry_'+state,table);return
+        claim,save=(claim_request,save_jev) if method=='jev_ind' else (news_forward.claim_request,news_forward.save_jev)
+        body=self._write(lambda s:claim(s,day))
+        if body is None:return
+        try:
+            answer=client.predict(day,body,cancel=self.cancel)
+            self._write(lambda s:save(s,day,answer,self.now))
+        except ClientError as error:
+            state=budget.retry_status(day) if budget else 'uncertain'
+            code=error.code if error.code in SAFE else 'response_invalid'
+            self._set_failure(day,state,code,table)
+
+    def _set_failure(self,day,state,code,table='d_forward_days'):
         def write(store):
             with store.transaction():
-                store.db.execute("UPDATE d_forward_days SET jev_state=?,error=? WHERE day=? AND jev_state!='done'",
+                store.db.execute(f"UPDATE {table} SET jev_state=?,error=? WHERE day=? AND jev_state!='done'",
                     ('retry_wait' if state in ('retry','wait_calendar') else 'failed',code,day))
         self._write(write)
 
@@ -201,4 +219,5 @@ class DailyForwardService:
 
     def close(self):
         self.cancel.set();self.event.set();self.database.stop()
-        if self.budget is not None and hasattr(self.budget,'close'):self.budget.close()
+        for budget in (self.budget,self.news_budget):
+            if budget is not None and hasattr(budget,'close'):budget.close()

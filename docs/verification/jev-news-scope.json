@@ -1,0 +1,15 @@
+{
+  "branch": "feat/jev-news",
+  "frozen_source_unchanged": {
+    "daily_config.py": "bbf60f097c5013674532724d768a7e05100f735f255bcc3a2b9cbb4318c46885",
+    "daily_models.py": "aee0de1aa83b8c47253c6b9897c4033b6a249edfc7824934237d43bd0dd77557",
+    "daily_indicators.py": "685e20087574dae1e72b2779849785886c6b72cd1ae3ca648ce1d1cced1fdbe2",
+    "daily_replay.py": "0a4f48258094dcf766dc504bab062f7d24e5b8abb4f4eeaa0a465e0884f9641c",
+    "daily_prompt.py": "ea117e4c731ab5a9683f42c341db2add3ef7168caab4840b529ca32d6caa2faa"
+  },
+  "python_tests": 423,
+  "front_tests": 52,
+  "mutations": 96,
+  "real_jev_calls": 0,
+  "ledger_used": 1222
+}

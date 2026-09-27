@@ -1,0 +1,6 @@
+news_prediction_hidden: KILLED -> news predictions show
+no_snapshot_says_missing: KILLED -> news enabled reception
+enabled_status_ignored: KILLED -> news enabled reception
+comparison_hidden: KILLED -> news predictions show
+sixty_day_caveat_removed: KILLED -> news predictions show
+5/5 front behavior mutations killed

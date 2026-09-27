@@ -1,6 +1,7 @@
 """Untrusted broadcast -> bounded latest value and causal daily news snapshots.
 
-No network client lives here. p5 is a disabled input preview, not a prediction.
+No network client lives here. Legacy input previews remain immutable; active p5
+requests live in news_forward.py.
 Unknown-calendar candidates are promoted only after the trading calendar confirms
 the date. This permits capture before that day's daily sources become available.
 """
@@ -13,7 +14,7 @@ from .data import TAIPEI, day_value
 
 TOPIC = 'news.market_digest'
 MAX_BYTES = 8 * 1024
-JEV_NEWS_ENABLED = False
+JEV_NEWS_ENABLED = True
 DIRECTIONS = {'bullish', 'mixed', 'unrelated', 'bearish'}
 FIELDS = {'schema', 'at', 'window_hours', 'signal_counts', 'top_themes', 'source_count'}
 SCHEMA = '''
