@@ -1,0 +1,9 @@
+{
+  "research": "paused",
+  "experiment_3_created": true,
+  "jev_move_completed": 500,
+  "http_calls": 500,
+  "retries": 0,
+  "no_more_requests_after_pause": true,
+  "campaign_used": 644
+}

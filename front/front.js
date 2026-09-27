@@ -62,7 +62,7 @@ export default function mount(ctx) {
     element('h1', '走勢推演'), element('p', '2330 台積電 · 30 分鐘後，漲、盤整或跌？', 'tc-sub'));
   const tag = element('span', '等待實驗', 'tc-tag'); head.append(title, tag);
   const status = element('div', '', 'tc-status'); status.setAttribute('role', 'status');
-  const keys = element('span'), range = element('span'), experiment = element('span'), work = element('span'); status.append(keys, range, experiment, work);
+  const keys = element('span'), range = element('span'), unrevealed = element('span', '', 'tc-unrevealed'), experiment = element('span'), work = element('span'); status.append(keys, range, unrevealed, experiment, work);
   const errors = element('p', '', 'tc-error'); errors.setAttribute('role', 'alert'); errors.hidden = true;
   const toolbar = element('div', '', 'tc-toolbar');
   const sync = button('重新同步', () => send('sync'));
@@ -78,7 +78,7 @@ export default function mount(ctx) {
   const stop = button('停止', () => send('cancel'));
   const refresh = button('更新報告', () => send('report'));
   const newExperiment = button('開新實驗', () => confirm('new_experiment'));
-  toolbar.append(sync, method, runDev, runHold, stop, refresh, newExperiment);
+  toolbar.append(sync, method, runDev, stop, refresh, newExperiment);
   on(method, 'change', updateButtons);
 
   const dialog = element('section', '', 'tc-dialog'); dialog.hidden = true; dialog.setAttribute('role', 'dialog');
@@ -189,9 +189,32 @@ export default function mount(ctx) {
   const showDetail = event => { const point = event.target.closest?.('.tc-point'); if (point) tooltip.textContent = point.dataset.detail; };
   on(chart, 'mouseover', showDetail); on(chart, 'focusin', showDetail);
 
-  const reportCard = element('section', '', 'tc-card'); reportCard.append(element('h2', '開發段成績'));
+  const reportCard = element('section', '', 'tc-card tc-dev'); reportCard.append(element('h2', '開發段成績'));
   const reportContent = element('div'); reportCard.append(reportContent);
-  function clearReport(message) { reportContent.replaceChildren(element('p', message, 'tc-note')); }
+  const evolutionCard = element('section', '', 'tc-card tc-evolution');
+  evolutionCard.append(element('h2', '進化新方法（開發段）'),
+    element('p', '開發段勝出＝值得前瞻驗證，不是證明有效', 'tc-note'));
+  const evolutionContent = element('div'), holdContent = element('div'), forwardContent = element('div');
+  evolutionCard.append(evolutionContent);
+  const lockCard = element('section', '', 'tc-card tc-lock');
+  lockCard.append(element('h2', '保留段已使用'));
+  const lockText = element('p', '保留段未解鎖；行情與成績維持隱藏。', 'tc-note');
+  const reveal = button('看保留段結果', () => confirm('reveal'));
+  const holdActions = element('div', '', 'tc-toolbar');
+  holdActions.append(runHold, reveal); lockCard.append(lockText, holdContent, holdActions);
+  const forwardCard = element('section', '', 'tc-card tc-forward');
+  forwardCard.append(element('h2', '前瞻段'), element('p', '考生：jev p1、vol_prior、always_flat、majority、momentum、reversal', 'tc-note'));
+  const forwardProgress = element('p', '已跑 — 點 · 前瞻段未揭露', 'tc-note');
+  forwardCard.append(forwardProgress);
+  const runForward = button('跑前瞻段', () => confirm('run_forward'));
+  const revealForward = button('看前瞻段結果', () => confirm('reveal_forward'));
+  const forwardActions = element('div', '', 'tc-toolbar');
+  forwardActions.append(runForward, revealForward); forwardCard.append(forwardContent, forwardActions);
+  root.append(head, status, toolbar, errors, dialog, chartCard, reportCard, evolutionCard, lockCard, forwardCard);
+  function clearReport(message) {
+    reportContent.replaceChildren(element('p', message, 'tc-note'));
+    evolutionContent.replaceChildren(); holdContent.replaceChildren(); forwardContent.replaceChildren();
+  }
   clearReport('等待計分報告…');
   function table(headers, rows) {
     const wrapper = element('div', '', 'tc-scroll'), node = element('table'), head = element('thead'), heading = element('tr'), body = element('tbody');
@@ -204,9 +227,8 @@ export default function mount(ctx) {
     if (body.status !== 'ok' || !body.dev) { clearReport(text(body.message) || '尚未建立實驗'); return; }
     if (body.experiment_id !== metadata.experiment_id) return;
     reportContent.replaceChildren();
-    const evolved = element('section', '', 'tc-evolution');
-    evolved.append(element('h2', '進化新方法（開發段）'),
-      element('p', '開發段勝出＝值得前瞻驗證，不是證明有效', 'tc-note'));
+    evolutionContent.replaceChildren(); holdContent.replaceChildren(); forwardContent.replaceChildren();
+    const evolved = evolutionContent;
     const evolution = body.evolution_dev;
     if (metadata.experiment_id === 1 && evolution?.state === 'ready') {
       evolved.append(table(['方法', '準確率', 'Brier', '差（−majority）', '95% 區間', '判讀'], EVOLUTION.map(name => {
@@ -216,58 +238,44 @@ export default function mount(ctx) {
           Array.isArray(ci) ? ci.map(v => number(v, 6)).join(' ～ ') : '—', text(c.statement)];
       })));
     } else evolved.append(element('p', '尚無進化新方法開發段結果。', 'tc-note'));
-    reportContent.append(evolved);
-    for (const [split, title] of [['dev', '開發段'], ['holdout', '保留段已使用'], ['forward', '前瞻段']]) {
+    for (const split of ['dev', 'holdout', 'forward']) {
+      const target = {dev: reportContent, holdout: holdContent, forward: forwardContent}[split];
       if (split === 'forward') {
-        reportContent.append(element('h2', title));
         if (body.forward?.state !== 'revealed' || metadata.forward?.state !== 'revealed') {
-          reportContent.append(element('p', '前瞻段未揭露；答案、分布與成績維持隱藏。', 'tc-note'));
+          target.append(element('p', '前瞻段未揭露；答案、分布與成績維持隱藏。', 'tc-note'));
           continue;
         }
       }
       const data = body[split]; if (!data || data.state === 'locked') continue;
       if (split === 'holdout' && metadata.holdout?.state !== 'revealed') continue;
       const comparison = data.comparison || {}, boot = comparison.bootstrap || {};
-      if (split === 'holdout') reportContent.append(element('h2', title));
-      if (split === 'forward') reportContent.append(element('p', `累積 ${count(data.cumulative_days)} 日／${count(data.predictable_and_scorable)} 點（僅已揭露範圍）`, 'tc-note'));
+      if (split === 'forward') target.append(element('p', `累積 ${count(data.cumulative_days)} 日／${count(data.predictable_and_scorable)} 點（僅已揭露範圍）`, 'tc-note'));
       const summary = element('div', '', 'tc-summary');
       for (const [label, value] of [['共同交集', count(comparison.n)], ['交集覆蓋率', percent(comparison.coverage)], ['最佳基準', text(comparison.baseline) || '—']]) {
         const item = element('div'); item.append(element('div', value, 'tc-value'), element('div', label, 'tc-label')); summary.append(item);
       }
       const conclusion = element('div', '', 'tc-conclusion');
       conclusion.append(element('strong', text(comparison.statement)), element('p', `Brier 差（jev − 基準）${number(comparison.brier_difference, 6)} · 95% 區間 ${Array.isArray(boot.brier_difference_ci95) ? boot.brier_difference_ci95.map(v => number(v, 6)).join(' ～ ') : '—'}`, 'tc-sub'));
-      reportContent.append(summary, conclusion, table(['方法', '樣本', '覆蓋率', '準確率', 'Wilson 95%', 'Brier', '缺答／失敗'], (split === 'forward' ? FORWARD : METHODS).map(name => {
+      target.append(summary, conclusion, table(['方法', '樣本', '覆蓋率', '準確率', 'Wilson 95%', 'Brier', '缺答／失敗'], (split === 'forward' ? FORWARD : METHODS).map(name => {
         const m = data.methods?.[name] || {};
         return [name, count(m.n), percent(m.coverage), percent(m.accuracy), interval(m.accuracy_wilson95), number(m.brier, 6), `${count(m.eligible_missing)}／${count(m.failure_attempts)}`];
       })));
       if (split === 'forward' && data.comparisons) {
         for (const name of ['jev', 'vol_prior']) {
           const c = data.comparisons[name] || {}, ci = c.bootstrap?.brier_difference_ci95;
-          reportContent.append(element('p', `${name === 'jev' ? 'jev p1' : name} − majority：${number(c.brier_difference, 6)} · 95% 區間 ${Array.isArray(ci) ? ci.map(v => number(v, 6)).join(' ～ ') : '—'} · ${text(c.statement)}`, 'tc-conclusion'));
+          target.append(element('p', `${name === 'jev' ? 'jev p1' : name} − majority：${number(c.brier_difference, 6)} · 95% 區間 ${Array.isArray(ci) ? ci.map(v => number(v, 6)).join(' ～ ') : '—'} · ${text(c.statement)}`, 'tc-conclusion'));
         }
       }
-      reportContent.append(element('p', `交易日配對 bootstrap ${count(boot.repetitions)} 次；主要指標為 Brier，愈低愈好。缺答是目前缺少的有效答案；失敗保留歷次紀錄。`, 'tc-note'));
+      target.append(element('p', `交易日配對 bootstrap ${count(boot.repetitions)} 次；主要指標為 Brier，愈低愈好。缺答是目前缺少的有效答案；失敗保留歷次紀錄。`, 'tc-note'));
       const groups = data.jev_description?.classes;
       if (groups) {
-        reportContent.append(element('p', 'jev 描述性分布（不影響結論）', 'tc-note'),
+        target.append(element('p', 'jev 描述性分布（不影響結論）', 'tc-note'),
           table(['choice', '命中率', '預測占比', '真實占比'], Object.entries(LABELS).map(([key, label]) => [label, percent(groups[key]?.hit_rate), percent(groups[key]?.choice_share), percent(groups[key]?.true_share)])));
       }
     }
     if (Array.isArray(body.frozen_warnings) && body.frozen_warnings.length) reportContent.append(element('p', '凍結資料重抓時發現差異，原始資料未被覆寫。', 'tc-note'));
   }
-  const lockCard = element('section', '', 'tc-card tc-lock');
-  lockCard.append(element('h2', '保留段已使用'));
-  const lockText = element('p', '保留段未解鎖；行情與成績維持隱藏。');
-  const reveal = button('看保留段結果', () => confirm('reveal')); lockCard.append(lockText, reveal);
-  const forwardCard = element('section', '', 'tc-card');
-  forwardCard.append(element('h2', '前瞻段'), element('p', '考生：jev p1、vol_prior、always_flat、majority、momentum、reversal', 'tc-note'));
-  const forwardProgress = element('p', '已跑 — 點 · 前瞻段未揭露', 'tc-note');
-  forwardCard.append(forwardProgress);
-  const runForward = button('跑前瞻段', () => confirm('run_forward'));
-  const revealForward = button('看前瞻段結果', () => confirm('reveal_forward'));
-  const forwardActions = element('div', '', 'tc-toolbar');
-  forwardActions.append(runForward, revealForward); forwardCard.append(forwardActions);
-  root.append(head, status, toolbar, errors, dialog, chartCard, forwardCard, reportCard, lockCard);
+
 
   function updateButtons() {
     const active = live && !disposed, hasExperiment = Number.isSafeInteger(metadata.experiment_id);
@@ -299,6 +307,8 @@ export default function mount(ctx) {
       keys.textContent = `富果：${KEYS[body.keys?.fugle] || '未設定'} · TypeSafe：${KEYS[body.keys?.typesafe] || '未設定'}`;
       range.textContent = isDate(body.data_range?.first_day) && isDate(body.data_range?.last_day)
         ? `資料 ${body.data_range.first_day}～${body.data_range.last_day}` : '';
+      unrevealed.textContent = metadata.experiment_id === 1 && Number.isSafeInteger(body.forward?.unrevealed_days) && body.forward.unrevealed_days > 0
+        ? `另有前瞻段 ${count(body.forward.unrevealed_days)} 日未揭露` : '';
       tag.textContent = body.experiment_id ? `實驗 ${count(body.experiment_id)} · 門檻 ${number((body.threshold_permille || 3) / 10, 1)}%` : '尚未建立實驗';
       experiment.textContent = isDate(body.dev_start) && isDate(body.dev_end) ? `開發段 ${body.dev_start}～${body.dev_end}` : '等待定稿資料';
       const syncReasons = Array.isArray(body.sync?.reasons)

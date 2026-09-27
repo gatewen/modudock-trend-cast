@@ -17,7 +17,7 @@ MUTATIONS = [
     ('p2_prior_flat_wrong', 'back/prompts.py', [("'flat': 51", "'flat': 50")],
      P + 'test_p2_http_payload_only_changes_instructions_and_preserves_privacy_and_threshold'),
     ('p2_private_symbol_added', 'back/jevcast.py',
-     [("'instructions': instructions(prompt_version),", "'instructions': instructions(prompt_version) + point.symbol,")],
+     [("        'instructions': instructions(prompt_version),", "        'instructions': instructions(prompt_version) + point.symbol,")],
      P + 'test_p2_http_payload_only_changes_instructions_and_preserves_privacy_and_threshold'),
     ('unknown_prompt_falls_back', 'back/prompts.py', [('if prompt_version not in PROMPT_VERSIONS:', 'if False:')],
      P + 'test_unsupported_prompt_refused_before_http_and_experiment_write'),

@@ -16,7 +16,7 @@ export default `
 .tc h1 { font-size: 24px; letter-spacing: .02em; }
 .tc h2 { font-size: 17px; }
 .tc h3 { font-size: 14px; }
-.tc .tc-evolution { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--tc-border); }
+
 .tc .tc-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .tc .tc-kicker { color: var(--tc-accent); font: 600 11px/1.4 ui-monospace, monospace; letter-spacing: .13em; }
 .tc .tc-sub { color: var(--tc-muted); font-size: 12px; margin-top: 3px; }
@@ -62,8 +62,6 @@ export default `
 .tc th { color: var(--tc-muted); font-size: 12px; font-weight: 500; }
 .tc tr[data-method="jev"] { background: var(--tc-surface); }
 .tc .tc-note { color: var(--tc-muted); font-size: 12px; margin-top: 12px; }
-.tc .tc-lock { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.tc .tc-lock p { flex: 1 1 240px; color: var(--tc-muted); font-size: 12px; }
 .tc .tc-error { color: var(--tc-bad); margin-bottom: 10px; }
 .tc .tc-dialog { padding: 16px; border: 2px solid var(--tc-accent); border-radius: 8px; background: var(--tc-surface); margin-bottom: 16px; }
 .tc .tc-dialog-actions { display: flex; gap: 8px; margin-top: 12px; }

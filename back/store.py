@@ -79,6 +79,15 @@ CREATE TABLE IF NOT EXISTS evolution_models (
  experiment_id INTEGER NOT NULL REFERENCES experiments(id), method TEXT NOT NULL,
  source_digest TEXT NOT NULL, parameters_json TEXT NOT NULL, created_at TEXT NOT NULL,
  PRIMARY KEY(experiment_id,method));
+CREATE TABLE IF NOT EXISTS move_samples (
+ experiment_id INTEGER PRIMARY KEY REFERENCES experiments(id), stage TEXT NOT NULL,
+ seed INTEGER NOT NULL, size INTEGER NOT NULL, reference_digest TEXT NOT NULL,
+ population_digest TEXT NOT NULL, times_json TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS move_answers (
+ experiment_id INTEGER NOT NULL REFERENCES experiments(id), t TEXT NOT NULL,
+ choice TEXT NOT NULL, probs_json TEXT NOT NULL, up_count INTEGER NOT NULL,
+ down_count INTEGER NOT NULL, model_reported TEXT, latency_seconds REAL NOT NULL,
+ PRIMARY KEY(experiment_id,t));
 '''
 COLUMNS = {
     'bars': ('symbol', 'day', 'ts_raw', 'bar_end', 'open', 'high', 'low', 'close', 'volume'),

@@ -85,7 +85,7 @@ class PromptTests(unittest.TestCase):
         self.assertEqual(P2_BASE_PERCENT, rounded)
 
     def test_unsupported_prompt_refused_before_http_and_experiment_write(self):
-        for version in ('p3', None, 2):
+        for version in ('p4', None, 2):
             with self.assertRaisesRegex(DataError, 'unsupported_prompt_version'):
                 JevClient(opener=self.server).predict(self.point, prompt_version=version)
             with self.assertRaisesRegex(DataError, 'unsupported_prompt_version'):

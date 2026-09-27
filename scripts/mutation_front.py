@@ -7,7 +7,20 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 MUTATIONS = [
-    ('evolution_table_missing', [('reportContent.append(evolved);','')],
+    ('evolution_nested_again', [('evolutionCard.append(evolutionContent);', 'evolutionCard.append(evolutionContent); reportCard.append(evolutionCard);'),
+        ('reportCard, evolutionCard, lockCard', 'reportCard, lockCard')],
+     'four independent cards'),
+    ('duplicate_forward_heading', [("forwardCard.append(forwardProgress);", "forwardCard.append(forwardProgress, element('h2', '前瞻段'));")],
+     'four independent cards'),
+    ('buttons_outside_segment', [('holdActions.append(runHold, reveal);','holdActions.append(reveal); toolbar.append(runHold);')],
+     'four independent cards'),
+    ('unrevealed_day_note_hidden', [('${count(body.forward.unrevealed_days)}', '${count(body.forward.run_points)}')],
+     'status explains unrevealed days'),
+    ('unrevealed_day_other_experiment', [('metadata.experiment_id === 1 && Number.isSafeInteger(body.forward?.unrevealed_days)', 'Number.isSafeInteger(body.forward?.unrevealed_days)')],
+     'status explains unrevealed days'),
+    ('split_scores_retained_on_experiment_change', [('evolutionContent.replaceChildren(); holdContent.replaceChildren(); forwardContent.replaceChildren();\n  }','evolutionContent.replaceChildren();\n  }')],
+     'changing experiment clears all'),
+    ('evolution_table_missing', [('evolutionCard.append(evolutionContent);','')],
      'evolution development table shows'),
     ('development_caveat_removed', [('開發段勝出＝值得前瞻驗證，不是證明有效','開發段成果')],
      'evolution development table shows'),

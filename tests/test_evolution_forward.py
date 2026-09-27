@@ -159,7 +159,7 @@ class EvolutionForwardTests(unittest.TestCase):
     def test_locked_status_only_explicit_metadata_and_never_scores(self):
         self.run_all()
         status=status_view(self.store)['forward']
-        self.assertEqual(status,dict(LOCKED,participants=list(FORWARD_METHODS),run_points=16))
+        self.assertEqual(status,dict(LOCKED,participants=list(FORWARD_METHODS),run_points=16,unrevealed_days=2))
         def auth(action,table,column,*_):
             if action==sqlite3.SQLITE_READ and (table=='outcomes' or column in ('answer','probs_json','close','label')):
                 return sqlite3.SQLITE_DENY
@@ -171,6 +171,12 @@ class EvolutionForwardTests(unittest.TestCase):
         self.assertEqual(progress_metadata(self.store,1)['run_points'],15)
         with patch('back.report.forward_report',side_effect=AssertionError('unrevealed score read')):
             self.assertEqual(build_report(self.store)['forward'],LOCKED)
+
+    def test_unrevealed_day_metadata_excludes_already_revealed_days(self):
+        self.run_all()
+        self.assertEqual(progress_metadata(self.store,1)['unrevealed_days'],2)
+        reveal_forward(self.store)
+        self.assertEqual(progress_metadata(self.store,1)['unrevealed_days'],0)
 
     def test_development_view_is_readonly_and_matches_round2_report(self):
         result=run_development(self.store)

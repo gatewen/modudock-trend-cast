@@ -1,0 +1,169 @@
+{
+  "stage": "A",
+  "sample_size": 500,
+  "new_predictions": 500,
+  "failed": 0,
+  "skipped": 0,
+  "missing": 0,
+  "report": {
+    "methods": {
+      "jev_move": {
+        "n": 500,
+        "correct": 241,
+        "accuracy": 0.482,
+        "accuracy_wilson95": [
+          0.4385065876245351,
+          0.5257678886320809
+        ],
+        "brier": 0.6407014968828071,
+        "per_class": {
+          "up": {
+            "true_count": 128,
+            "predicted_count": 10,
+            "correct": 3,
+            "precision": 0.3,
+            "recall": 0.0234375
+          },
+          "flat": {
+            "true_count": 251,
+            "predicted_count": 426,
+            "correct": 220,
+            "precision": 0.5164319248826291,
+            "recall": 0.8764940239043825
+          },
+          "down": {
+            "true_count": 121,
+            "predicted_count": 64,
+            "correct": 18,
+            "precision": 0.28125,
+            "recall": 0.1487603305785124
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 3,
+            "flat": 107,
+            "down": 18
+          },
+          "flat": {
+            "up": 3,
+            "flat": 220,
+            "down": 28
+          },
+          "down": {
+            "up": 4,
+            "flat": 99,
+            "down": 18
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "vol_prior": {
+        "n": 500,
+        "correct": 251,
+        "accuracy": 0.502,
+        "accuracy_wilson95": [
+          0.45832636322986225,
+          0.5456431394082917
+        ],
+        "brier": 0.6090862955106783,
+        "per_class": {
+          "up": {
+            "true_count": 128,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 251,
+            "predicted_count": 500,
+            "correct": 251,
+            "precision": 0.502,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 121,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 128,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 251,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 121,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      }
+    },
+    "brier_difference": 0.03161520137212881,
+    "accuracy_difference": -0.020000000000000018,
+    "bootstrap": {
+      "repetitions": 2000,
+      "seed": 20260927,
+      "trading_days": 267,
+      "unit": "trading_day",
+      "interval": "percentile_95_linear",
+      "brier_difference_ci95": [
+        0.008001290863832175,
+        0.0546107113618319
+      ],
+      "accuracy_difference_ci95": [
+        -0.04930966469428008,
+        0.008049102696990017
+      ]
+    },
+    "binary_choice_distribution": {
+      "still": 215,
+      "move": 285
+    },
+    "choice_distribution": {
+      "jev_move": {
+        "flat": 426,
+        "up": 10,
+        "down": 64
+      },
+      "vol_prior": {
+        "flat": 500
+      }
+    },
+    "stage_b_criterion_met": false,
+    "statement": "沒有改善",
+    "next_action": "停止，等 cc 決定；未執行階段 B"
+  },
+  "http_calls": 500,
+  "retries": 0,
+  "elapsed_seconds": 31.05024016601965,
+  "errors": {},
+  "campaign_used": 644
+}

@@ -24,7 +24,7 @@ from .experiment import (MODEL, PROMPT_VERSION, canonical, experiment_row,
 from .http_client import (ClientError, Response, _invalid_constant, _pairs,
                           secure_opener, transport_error_code)
 from .replay import LABELS, Replay, persist_outcome, threshold_value
-from .prompts import PROMPT_VERSIONS, instructions
+from .prompts import instructions
 from .store import now_string
 
 URL = 'https://api.typesafe.ai/v1/systemone'
@@ -42,6 +42,11 @@ def request_payload(point, model=MODEL, *, prompt_version=PROMPT_VERSION):
     if (set(state) != {'clock', 'minutes_to_close', 'today', 'recent', 'prev_days'}
             or hashlib.sha256(point.input_json.encode()).hexdigest() != point.input_hash):
         raise DataError('invalid_feature_input')
+    if prompt_version == 'p3':
+        return {'state': state, 'model': model, 'questions': {'move': {
+            'type': 'choice', 'instructions': instructions(prompt_version),
+            'criteria': {'move': f'上漲或下跌 {k}‰ 或更多（不論方向）',
+                         'still': f'漲跌都小於 {k}‰'}}}}
     return {'state': state, 'model': model, 'questions': {'direction': {
         'type': 'choice',
         'instructions': instructions(prompt_version),
@@ -57,19 +62,22 @@ class JevAnswer:
     latency_seconds: float = 0.0
 
 
-def validate_response(payload, model=MODEL):
+def validate_response(payload, model=MODEL, *, prompt_version=PROMPT_VERSION):
+    instructions(prompt_version)
+    labels = ('move', 'still') if prompt_version == 'p3' else LABELS
+    question = 'move' if prompt_version == 'p3' else 'direction'
     if not isinstance(payload, dict):
         raise ClientError('invalid_response')
     if 'model' in payload and payload['model'] != model:
         raise ClientError('model_mismatch')
     answers = payload.get('answers')
-    direction = answers.get('direction') if isinstance(answers, dict) else None
+    direction = answers.get(question) if isinstance(answers, dict) else None
     if not isinstance(direction, dict):
         raise ClientError('invalid_response')
     choice, probabilities = direction.get('choice'), direction.get('probabilities')
-    if not isinstance(choice, str) or choice not in LABELS:
+    if not isinstance(choice, str) or choice not in labels:
         raise ClientError('invalid_choice')
-    if not isinstance(probabilities, dict) or set(probabilities) != set(LABELS):
+    if not isinstance(probabilities, dict) or set(probabilities) != set(labels):
         raise ClientError('invalid_probabilities')
     values = {}
     for label, number in probabilities.items():
@@ -133,7 +141,7 @@ class JevClient:
                 continue
             if response.status != 200:
                 raise ClientError('http_status', response.status)
-            result = validate_response(response.payload, model)
+            result = validate_response(response.payload, model, prompt_version=prompt_version)
             return JevAnswer(result.choice, result.probabilities, result.model_reported,
                              self._clock() - started)
         raise AssertionError('unreachable')
@@ -307,7 +315,8 @@ class JevRunner:
             row = experiment_row(store, handle.experiment_id)
             if handle.split == 'holdout':
                 require_final_holdout(handle.experiment_id, row['prompt_version'])
-            if row['model'] != MODEL or row['prompt_version'] not in PROMPT_VERSIONS:
+            # Binary p3 must use the dedicated stage-A conversion pipeline.
+            if row['model'] != MODEL or row['prompt_version'] not in ('p1', 'p2'):
                 raise DataError('unsupported_experiment_version')
             verify_digest(store, row)
             plan = load_plan(store, handle.experiment_id)

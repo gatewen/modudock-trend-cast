@@ -331,3 +331,46 @@ test('another experiment cannot inherit evolution table or forward point count',
   assert.equal(h.container.querySelectorAll('.tc-evolution tbody tr').length,0);
   assert.doesNotMatch(h.container.textContent,/已跑 144/);
 });
+
+test('four independent cards have one heading each and buttons stay with their segment', t => {
+  const h=setup(t); ready(h,{holdout:{state:'revealed'},forward:{state:'locked',run_points:144,unrevealed_days:18}});
+  const holdout={...structuredClone(report().dev),state:'revealed'};
+  h.message(report({holdout}));
+  const root=h.container.querySelector('.tc'), dev=root.querySelector('.tc-dev'), evo=root.querySelector('.tc-evolution');
+  assert.ok(dev); assert.ok(evo);
+  assert.ok(dev.parentElement===root); assert.ok(evo.parentElement===root);
+  assert.ok(dev.nextElementSibling===evo);
+  assert.equal(dev.querySelectorAll('tr[data-method=jev]').length,1);
+  assert.equal(dev.querySelector('.tc-evolution'),null);
+  for (const title of ['開發段成績','進化新方法（開發段）','保留段已使用','前瞻段'])
+    assert.equal([...root.querySelectorAll('h2')].filter(h=>h.textContent===title).length,1,title);
+  assert.equal(root.querySelector('.tc-lock').querySelectorAll('tr[data-method=jev]').length,1);
+  for (const name of ['跑保留段','看保留段結果']) assert.ok(h.button(name).closest('.tc-card')===root.querySelector('.tc-lock'));
+  for (const name of ['跑前瞻段','看前瞻段結果']) assert.ok(h.button(name).closest('.tc-card')===root.querySelector('.tc-forward'));
+  assert.equal(root.querySelector('.tc-forward').querySelectorAll('tbody').length,0);
+});
+
+test('status explains unrevealed days with safe metadata and clears stale annotations', t => {
+  const h=setup(t); ready(h,{data_range:{first_day:'2024-08-01',last_day:'2026-08-31'},
+    forward:{state:'locked',run_points:144,unrevealed_days:18}});
+  const bar=h.container.querySelector('.tc-status');
+  assert.match(bar.textContent,/資料 2024-08-01～2026-08-31/);
+  assert.match(bar.textContent,/另有前瞻段 18 日未揭露/);
+  for (const value of [0,-1,1.5,'18', '<script>secret</script>',null]) {
+    h.message(status({forward:{state:'locked',unrevealed_days:value}}));
+    assert.doesNotMatch(bar.textContent,/另有前瞻段|secret/);
+  }
+  h.message(status({experiment_id:2,forward:{state:'locked',unrevealed_days:18}}));
+  assert.doesNotMatch(bar.textContent,/另有前瞻段/);
+});
+
+test('changing experiment clears all separate score containers immediately', t => {
+  const h=setup(t);ready(h,{holdout:{state:'revealed'},forward:{state:'revealed'}});
+  const exposed={...structuredClone(report().dev),state:'revealed'};
+  exposed.comparison.statement='OLD-SCORE';
+  h.message(report({holdout:exposed,forward:exposed}));
+  assert.match(h.container.textContent,/OLD-SCORE/);
+  h.message(status({experiment_id:3}));
+  assert.doesNotMatch(h.container.textContent,/OLD-SCORE/);
+  assert.equal(h.container.querySelectorAll('tbody tr').length,0);
+});

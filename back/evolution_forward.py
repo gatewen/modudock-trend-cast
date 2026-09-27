@@ -118,7 +118,7 @@ def run_forward_vol(store, *, experiment_id=1, client=None, cancel=None):
 
 def progress_metadata(store, experiment_id):
     """Explicitly authorized execution metadata; never read answers or outcomes."""
-    from .forward import FORWARD_METHODS
+    from .forward import FORWARD_METHODS, revealed_days
     days = active_days(store, experiment_id)
     per_point = {}
     for day in days:
@@ -127,4 +127,5 @@ def progress_metadata(store, experiment_id):
             if row['method'] in FORWARD_METHODS:
                 per_point.setdefault(row['t'], set()).add(row['method'])
     return dict(participants=list(FORWARD_METHODS),
+                unrevealed_days=len(set(days) - set(revealed_days(store, experiment_id))),
                 run_points=sum(set(FORWARD_METHODS) <= values for values in per_point.values()))

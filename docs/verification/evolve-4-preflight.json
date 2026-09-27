@@ -1,0 +1,18 @@
+{
+  "experiment_id": 3,
+  "prompt_version": "p3",
+  "reference": 1,
+  "same_settings": true,
+  "dev_start": "2024-09-05",
+  "dev_end": "2026-01-21",
+  "hold_start": "2026-01-22",
+  "hold_end": "2026-08-31",
+  "config": {
+    "mapping": "raw-start-plus-one-minute-auction-1330-v1",
+    "symbol": "2330",
+    "warmup_start": "2024-08-01"
+  },
+  "sample_size": 500,
+  "seed": 20260927,
+  "campaign_used_before": 144
+}

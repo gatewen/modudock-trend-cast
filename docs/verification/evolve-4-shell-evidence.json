@@ -1,0 +1,58 @@
+{
+  "url": "http://127.0.0.1:60622",
+  "catalog": [
+    "trend-cast"
+  ],
+  "states": [
+    "loading",
+    "running"
+  ],
+  "requests": [
+    "status",
+    "report",
+    "report",
+    "day"
+  ],
+  "page_errors": [],
+  "themes": {
+    "light": {
+      "color": "rgb(36, 36, 36)",
+      "background": "rgb(255, 255, 255)",
+      "width": 1048,
+      "scrollWidth": 1048,
+      "evolution_rows": 3
+    },
+    "dark": {
+      "color": "rgb(222, 222, 222)",
+      "background": "rgb(30, 30, 30)",
+      "width": 1048,
+      "scrollWidth": 1048,
+      "evolution_rows": 3
+    }
+  },
+  "reveal_sent": false,
+  "forward": {
+    "state": "locked",
+    "run_points": 144,
+    "participants": [
+      "jev",
+      "always_flat",
+      "majority",
+      "momentum",
+      "reversal",
+      "vol_prior"
+    ],
+    "unrevealed_days": 18
+  },
+  "forward_report_locked": true,
+  "card_headings": [
+    "開發段成績",
+    "進化新方法（開發段）",
+    "保留段已使用",
+    "前瞻段"
+  ],
+  "ssl_cert_file_unset": true,
+  "server_closed": true,
+  "campaign_used_after_acceptance": 644,
+  "typesafe_key_unset": true
+}

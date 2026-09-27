@@ -1,0 +1,1 @@
+{"catalog":["trend-cast"],"running":true,"forward":{"state":"locked","run_points":144,"participants":["jev","always_flat","majority","momentum","reversal","vol_prior"],"unrevealed_days":18},"evolution_rows":3,"themes":["light","dark"],"page_errors":[],"reveal_sent":false}

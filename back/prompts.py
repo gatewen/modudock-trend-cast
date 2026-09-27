@@ -2,7 +2,7 @@
 from .data import DataError
 
 PROMPT_VERSION = 'p1'
-PROMPT_VERSIONS = ('p1', 'p2')
+PROMPT_VERSIONS = ('p1', 'p2', 'p3')
 P1_INSTRUCTIONS = '根據 state，這檔股票從現在到 30 分鐘後，價格變化最可能落在哪一類？'
 
 # Experiment 1, p1, 2330 development 2024-09-05..2026-01-21, k=3 permille.
@@ -24,8 +24,12 @@ P2_INSTRUCTIONS = (
     '沒有明確訊號時，機率應接近上述基準比例。'
 )
 
+# SPEC 14.5: only p2's field glossary, deliberately no class base rates.
+P3_INSTRUCTIONS = P2_INSTRUCTIONS.split('\n\n')[0] + '\n\n' + (
+    '這檔股票從現在到 30 分鐘後，價格變化的幅度會落在哪一類？')
+
 
 def instructions(prompt_version):
     if prompt_version not in PROMPT_VERSIONS:
         raise DataError('unsupported_prompt_version')
-    return P1_INSTRUCTIONS if prompt_version == 'p1' else P2_INSTRUCTIONS
+    return {'p1': P1_INSTRUCTIONS, 'p2': P2_INSTRUCTIONS, 'p3': P3_INSTRUCTIONS}[prompt_version]
