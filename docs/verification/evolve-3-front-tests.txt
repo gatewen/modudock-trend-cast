@@ -1,0 +1,43 @@
+
+> modudock-trend-cast@0.2.0 test
+> node --test tests/front.test.mjs
+
+✔ mount synchronous; ready after registration; no sending before up (11.529584ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (15.817ms)
+✔ hover and keyboard focus show probabilities and realized return (4.084708ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (4.525334ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (5.474917ms)
+✔ date picker refuses unknown and locked days without requests (3.355833ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.356583ms)
+✔ locked day discards any supplied data and clears a previous visible chart (3.983416ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (5.201583ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (4.347917ms)
+✔ development progress can show counts but locked holdout progress cannot (3.154542ms)
+✔ untrusted strings become text, never HTML or handlers (3.986459ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (2.051292ms)
+✔ new experiment uses a second confirmation and validates threshold (2.072416ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (5.912333ms)
+✔ experiment change invalidates old report and pending reveal confirmation (3.110875ms)
+✔ missing key disables jev but baseline replay stays usable (4.648167ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (3.137375ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (2.782625ms)
+✔ error renders local explanation and never reflects upstream secret text (1.3535ms)
+✔ sync distinguishes total and partial failure with safe reasons and clears them after success (1.85125ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.536917ms)
+✔ forward run and reveal each require confirmation and send fixed experiment only (3.52575ms)
+✔ locked forward report and growing forward progress hide all counts even with revealed holdout (3.576959ms)
+✔ revealed forward shows cumulative days points and permanent used-holdout label (4.078958ms)
+✔ each forward rerun refreshes its cleared report without exposing generation counts (3.293ms)
+✔ evolution development table shows signed Brier intervals and honest interpretation (2.88725ms)
+✔ forward participants and committed points are metadata only while scores remain locked (4.035875ms)
+✔ revealed forward renders both prespecified comparisons including unfavorable result (4.086333ms)
+✔ used holdout heading stays visible even when current status is locked (3.459083ms)
+✔ another experiment cannot inherit evolution table or forward point count (3.56875ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283.158791

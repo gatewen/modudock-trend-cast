@@ -99,7 +99,8 @@ class ForwardTests(unittest.TestCase):
             return (build_report(self.store), status_view(self.store), day_view(self.store, self.future[0]), data_report(self.store))
         before = views()
         self.assertEqual(before[0]['forward'], LOCKED)
-        self.assertEqual(before[1]['forward'], LOCKED)
+        self.assertEqual({k: before[1]['forward'][k] for k in LOCKED}, LOCKED)
+        self.assertEqual(before[1]['forward']['run_points'], 0)
         self.assertEqual(before[2], {'status': 'forward_locked', 'message': '前瞻段未揭露'})
         for day in self.future: self.assertNotIn(day, json.dumps(before))
         from back.score import load_split

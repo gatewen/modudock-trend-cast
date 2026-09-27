@@ -198,3 +198,33 @@ def run_development(store, *, experiment_id=1, split='dev', client=None):
             last_day=data.row['dev_end'], source_digest=data.source_digest,
             http_calls=client.calls, new_predictions={m: len(pending[m]) for m in METHODS},
             missing_predictions=failures, comparison=report)
+
+
+def development_view(store, experiment_id):
+    """Read only committed development forecasts; never retrain or insert."""
+    if experiment_id != 1:
+        return {'state': 'unavailable', 'message': '進化方法只屬於實驗 1'}
+    row = experiment_row(store, experiment_id)
+    exists = store.db.execute('''SELECT 1 FROM predictions WHERE experiment_id=1
+        AND method IN ('clock_prior','vol_prior','jev_calibrated')
+        AND substr(t,1,10) BETWEEN ? AND ? LIMIT 1''', (row['dev_start'],row['dev_end'])).fetchone()
+    if not exists:
+        return {'state': 'unavailable', 'message': '尚無進化新方法開發段結果'}
+    data = read_development(store, experiment_id)
+    for point, outcome, _ in data.points:
+        if not point.predictable or not outcome.scorable:
+            continue
+        for method in METHODS:
+            saved = data.stored[method].get(point.t.isoformat())
+            if saved is None:
+                continue
+            answer = prediction_answer(saved, point, row['model'])
+            data.scored[method][point.t.isoformat()] = ScoredPoint(point.t.isoformat(), outcome.label,
+                                                                answer.choice, answer.probabilities)
+    complete = data.source_ready
+    for method in METHODS:
+        last = store.db.execute('''SELECT status FROM runs WHERE experiment_id=1 AND split='dev'
+            AND method=? ORDER BY id DESC LIMIT 1''',(method,)).fetchone()
+        complete = complete and last is not None and last['status']=='complete'
+    return {'state':'ready', **comparison_report(data.scored,data.eligible,complete=complete),
+            'message':'開發段勝出＝值得前瞻驗證，不是證明有效'}

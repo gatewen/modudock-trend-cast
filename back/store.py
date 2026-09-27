@@ -75,6 +75,10 @@ CREATE TABLE IF NOT EXISTS forward_exclusions (
 CREATE TABLE IF NOT EXISTS forward_attempts (
  run_id INTEGER NOT NULL REFERENCES runs(id), day TEXT NOT NULL, failed INTEGER NOT NULL,
  PRIMARY KEY(run_id,day));
+CREATE TABLE IF NOT EXISTS evolution_models (
+ experiment_id INTEGER NOT NULL REFERENCES experiments(id), method TEXT NOT NULL,
+ source_digest TEXT NOT NULL, parameters_json TEXT NOT NULL, created_at TEXT NOT NULL,
+ PRIMARY KEY(experiment_id,method));
 '''
 COLUMNS = {
     'bars': ('symbol', 'day', 'ts_raw', 'bar_end', 'open', 'high', 'low', 'close', 'volume'),

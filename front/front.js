@@ -1,6 +1,8 @@
 import styles from './style.js';
 
 const METHODS = ['jev', 'always_flat', 'majority', 'momentum', 'reversal'];
+const EVOLUTION = ['clock_prior', 'vol_prior', 'jev_calibrated'];
+const FORWARD = [...METHODS, 'vol_prior'];
 const LABELS = {up: '漲', flat: '盤整', down: '跌'};
 const PHASES = {idle: '待命', running: '進行中', complete: '完成', partial: '部分完成',
   cancelling: '停止中', cancelled: '已停止', failed: '失敗'};
@@ -110,7 +112,7 @@ export default function mount(ctx) {
     dialogText.textContent = op === 'reveal'
       ? '解鎖後會顯示走勢、標籤與成績，並永久記錄為已使用。開新實驗也不會清除已曝光日期。'
       : '使用目前已定稿的資料建立新切分。開發段可能增加；已曝光日期會跨實驗保留，原實驗不會被刪除。';
-    if (op === 'run_forward') dialogText.textContent = '使用實驗 1 的 jev p1 與四個基準，沿用已定案設定；呼叫計入本次自主進化總額度。跑完仍需另行揭露。';
+    if (op === 'run_forward') dialogText.textContent = '使用實驗 1 的 jev p1、vol_prior 與四個基準；vol_prior 凍結開發段切點與頻率，不呼叫 API。jev 呼叫計入總額度。跑完仍需另行揭露。';
     if (op === 'reveal_forward') dialogText.textContent = '所有方法完成且零缺答後才能揭露。這些日期將永久記錄為已曝光；尚未跑的新日期維持隱藏。';
     thresholdLabel.hidden = op !== 'new_experiment'; threshold.value = String(metadata.threshold_permille || 3);
     accept.textContent = op === 'run_forward' ? '確認執行' : op === 'reveal_forward' ? '確認揭露' : op === 'reveal' ? '確認解鎖' : '確認建立';
@@ -202,11 +204,24 @@ export default function mount(ctx) {
     if (body.status !== 'ok' || !body.dev) { clearReport(text(body.message) || '尚未建立實驗'); return; }
     if (body.experiment_id !== metadata.experiment_id) return;
     reportContent.replaceChildren();
+    const evolved = element('section', '', 'tc-evolution');
+    evolved.append(element('h2', '進化新方法（開發段）'),
+      element('p', '開發段勝出＝值得前瞻驗證，不是證明有效', 'tc-note'));
+    const evolution = body.evolution_dev;
+    if (metadata.experiment_id === 1 && evolution?.state === 'ready') {
+      evolved.append(table(['方法', '準確率', 'Brier', '差（−majority）', '95% 區間', '判讀'], EVOLUTION.map(name => {
+        const m = evolution.methods?.[name] || {}, c = evolution.comparisons?.[name] || {};
+        const ci = c.bootstrap?.brier_difference_ci95;
+        return [name, percent(m.accuracy), number(m.brier, 6), number(c.brier_difference, 6),
+          Array.isArray(ci) ? ci.map(v => number(v, 6)).join(' ～ ') : '—', text(c.statement)];
+      })));
+    } else evolved.append(element('p', '尚無進化新方法開發段結果。', 'tc-note'));
+    reportContent.append(evolved);
     for (const [split, title] of [['dev', '開發段'], ['holdout', '保留段已使用'], ['forward', '前瞻段']]) {
       if (split === 'forward') {
         reportContent.append(element('h2', title));
         if (body.forward?.state !== 'revealed' || metadata.forward?.state !== 'revealed') {
-          reportContent.append(element('p', '前瞻段未揭露；累積天數與點數維持隱藏。', 'tc-note'));
+          reportContent.append(element('p', '前瞻段未揭露；答案、分布與成績維持隱藏。', 'tc-note'));
           continue;
         }
       }
@@ -221,10 +236,16 @@ export default function mount(ctx) {
       }
       const conclusion = element('div', '', 'tc-conclusion');
       conclusion.append(element('strong', text(comparison.statement)), element('p', `Brier 差（jev − 基準）${number(comparison.brier_difference, 6)} · 95% 區間 ${Array.isArray(boot.brier_difference_ci95) ? boot.brier_difference_ci95.map(v => number(v, 6)).join(' ～ ') : '—'}`, 'tc-sub'));
-      reportContent.append(summary, conclusion, table(['方法', '樣本', '覆蓋率', '準確率', 'Wilson 95%', 'Brier', '缺答／失敗'], METHODS.map(name => {
+      reportContent.append(summary, conclusion, table(['方法', '樣本', '覆蓋率', '準確率', 'Wilson 95%', 'Brier', '缺答／失敗'], (split === 'forward' ? FORWARD : METHODS).map(name => {
         const m = data.methods?.[name] || {};
         return [name, count(m.n), percent(m.coverage), percent(m.accuracy), interval(m.accuracy_wilson95), number(m.brier, 6), `${count(m.eligible_missing)}／${count(m.failure_attempts)}`];
       })));
+      if (split === 'forward' && data.comparisons) {
+        for (const name of ['jev', 'vol_prior']) {
+          const c = data.comparisons[name] || {}, ci = c.bootstrap?.brier_difference_ci95;
+          reportContent.append(element('p', `${name === 'jev' ? 'jev p1' : name} − majority：${number(c.brier_difference, 6)} · 95% 區間 ${Array.isArray(ci) ? ci.map(v => number(v, 6)).join(' ～ ') : '—'} · ${text(c.statement)}`, 'tc-conclusion'));
+        }
+      }
       reportContent.append(element('p', `交易日配對 bootstrap ${count(boot.repetitions)} 次；主要指標為 Brier，愈低愈好。缺答是目前缺少的有效答案；失敗保留歷次紀錄。`, 'tc-note'));
       const groups = data.jev_description?.classes;
       if (groups) {
@@ -235,15 +256,18 @@ export default function mount(ctx) {
     if (Array.isArray(body.frozen_warnings) && body.frozen_warnings.length) reportContent.append(element('p', '凍結資料重抓時發現差異，原始資料未被覆寫。', 'tc-note'));
   }
   const lockCard = element('section', '', 'tc-card tc-lock');
+  lockCard.append(element('h2', '保留段已使用'));
   const lockText = element('p', '保留段未解鎖；行情與成績維持隱藏。');
   const reveal = button('看保留段結果', () => confirm('reveal')); lockCard.append(lockText, reveal);
   const forwardCard = element('section', '', 'tc-card');
-  forwardCard.append(element('h2', '前瞻段'), element('p', '固定實驗 1／jev p1 與四個基準。新日期先回放、零缺答後再揭露。', 'tc-note'));
+  forwardCard.append(element('h2', '前瞻段'), element('p', '考生：jev p1、vol_prior、always_flat、majority、momentum、reversal', 'tc-note'));
+  const forwardProgress = element('p', '已跑 — 點 · 前瞻段未揭露', 'tc-note');
+  forwardCard.append(forwardProgress);
   const runForward = button('跑前瞻段', () => confirm('run_forward'));
   const revealForward = button('看前瞻段結果', () => confirm('reveal_forward'));
   const forwardActions = element('div', '', 'tc-toolbar');
   forwardActions.append(runForward, revealForward); forwardCard.append(forwardActions);
-  root.append(head, status, toolbar, errors, dialog, chartCard, reportCard, lockCard, forwardCard);
+  root.append(head, status, toolbar, errors, dialog, chartCard, forwardCard, reportCard, lockCard);
 
   function updateButtons() {
     const active = live && !disposed, hasExperiment = Number.isSafeInteger(metadata.experiment_id);
@@ -269,6 +293,9 @@ export default function mount(ctx) {
     if (op === 'status') {
       const old = metadata.experiment_id;
       metadata = body; pendingAction = false;
+      forwardProgress.textContent = metadata.experiment_id === 1
+        ? `已跑 ${count(body.forward?.run_points)} 點（六方法共同完成） · ${body.forward?.state === 'revealed' ? '已揭露部分結果；新增日期仍需另行確認' : '前瞻段未揭露'}`
+        : '前瞻段只屬於實驗 1';
       keys.textContent = `富果：${KEYS[body.keys?.fugle] || '未設定'} · TypeSafe：${KEYS[body.keys?.typesafe] || '未設定'}`;
       range.textContent = isDate(body.data_range?.first_day) && isDate(body.data_range?.last_day)
         ? `資料 ${body.data_range.first_day}～${body.data_range.last_day}` : '';

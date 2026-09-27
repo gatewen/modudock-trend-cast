@@ -73,6 +73,9 @@ class ForwardRunner:
                 run = self.jev.start(1, split='forward')
             run.done.result()
             check()
+            from .evolution_forward import run_forward_vol
+            self.writer.submit(lambda store: run_forward_vol(store, cancel=handle.cancel)).result()
+            check()
             def verify(store):
                 from .forward import active_days
                 require_complete(store, selected(store), active_days(store))

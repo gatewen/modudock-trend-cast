@@ -11,7 +11,7 @@ from .experiment import day_access, experiment_row, holdout_overlap, holdout_rev
 from .http_client import ClientError
 from .replay import Replay
 from .score import (ALL_METHODS, best_development_baseline, load_split,
-                    prediction_answer, split_report)
+                    prediction_answer, split_report, forward_report)
 
 
 @contextmanager
@@ -53,6 +53,8 @@ def build_report(store, *, experiment_id=None, dev_only=False):
             'brier_definition': 'mean(sum((p_class - actual_class)^2)); unscaled multiclass',
             'dev': split_report(development, baseline),
             'frozen_warnings': frozen_warnings(store, row, row['dev_end'])}
+        from .evolution_run import development_view
+        result['evolution_dev'] = development_view(store, row['id'])
         if not dev_only:
             if not holdout_revealed(store, row):
                 # No holdout scoring/querying first and filtering later. No dates,
@@ -74,7 +76,7 @@ def build_report(store, *, experiment_id=None, dev_only=False):
             if forward_days:
                 forward = load_split(store, row, 'forward')
                 result['forward'] = {'state': 'revealed', 'cumulative_days': len(forward_days),
-                    **split_report(forward, baseline, development_ready=(development.complete
+                    **forward_report(forward, development_ready=(development.complete
                         and len(development.eligible) > 0
                         and len(development.common) * 100 >= len(development.eligible) * 95))}
         return result
@@ -103,6 +105,9 @@ def status_view(store, *, experiment_id=None):
         from .forward import LOCKED, revealed_days
         days = revealed_days(store, row['id'])
         result['forward'] = {'state': 'revealed', 'days': list(days), 'cumulative_days': len(days)} if days else dict(LOCKED)
+        if row['id'] == 1:
+            from .evolution_forward import progress_metadata
+            result['forward'].update(progress_metadata(store, row['id']))
         return result
 
 
@@ -184,7 +189,7 @@ def markdown_report(report):
             comparison['statement'] + '。', '',
             f'候選 {data["candidates"]}；可預測 {data["predictable"]}；可評分 {data["scorable"]}；'
             f'可預測且可評分 {data["predictable_and_scorable"]}。', '',
-            f'五方法共同交集 {comparison["n"]}，佔可預測且可評分點 {percent(comparison["coverage"])}。', '',
+            f'{"六" if split == "forward" else "五"}方法共同交集 {comparison["n"]}，佔可預測且可評分點 {percent(comparison["coverage"])}。', '',
             '| 方法 | 有效樣本 | 準確率 | Wilson 95% | Brier | 覆蓋率 | 目前缺答（可評分） | 歷次失敗工作 |',
             '|---|---:|---:|---|---:|---:|---:|---:|'])
         for method, values in data['methods'].items():
@@ -198,6 +203,12 @@ def markdown_report(report):
             f'95% 區間 {interval(boot["accuracy_difference_ci95"], points=True)}。', '',
             f'配對 bootstrap：{boot["trading_days"]} 個交易日區塊、{boot["repetitions"]} 次、'
             f'固定種子 {boot["seed"]}；取 2.5%／97.5% 線性百分位。', ''])
+        if split == 'forward':
+            for name in ('jev','vol_prior'):
+                pair = data['comparisons'][name]
+                lines.extend([f'事先宣告比較：{name} − majority。{pair["statement"]}。',
+                    f'Brier 差 {number(pair["brier_difference"])}；95% 區間 '
+                    f'{interval(pair["bootstrap"]["brier_difference_ci95"])}。',''])
         for method, values in data['methods'].items():
             lines.extend([f'### {method}：各類與混淆矩陣', '',
                 '| 類別 | 真實數 | 預測數 | 精確率 | 召回率 |', '|---|---:|---:|---:|---:|'])
@@ -216,6 +227,15 @@ def markdown_report(report):
             delta = None if group['share_difference'] is None else group['share_difference'] * 100
             lines.append(f'| {label} | {group["choice_count"]} | {percent(group["hit_rate"])} | '
                 f'{percent(group["choice_share"])} | {percent(group["true_share"])} | {number(delta, 4)} |')
+        lines.append('')
+    evolution = report.get('evolution_dev', {})
+    if evolution.get('state') == 'ready':
+        lines.extend(['## 進化新方法（開發段）','',evolution['message'],'',
+            '| 方法 | 準確率 | Brier | 與 majority 的 Brier 差 | 95% 區間 | 判讀 |','|---|---:|---:|---:|---|---|'])
+        for name in ('clock_prior','vol_prior','jev_calibrated'):
+            values,pair = evolution['methods'][name],evolution['comparisons'][name]
+            lines.append(f'| {name} | {percent(values["accuracy"])} | {number(values["brier"])} | '
+                f'{number(pair["brier_difference"])} | {interval(pair["bootstrap"]["brier_difference_ci95"])} | {pair["statement"]} |')
         lines.append('')
     if report['frozen_warnings']:
         lines.extend(['凍結資料重抓時曾發現差異：只記錄警告，未覆寫。', ''])

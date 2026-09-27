@@ -1,0 +1,17 @@
+{
+  "points": 144,
+  "predictable": 144,
+  "missing_answers": 0,
+  "http_calls": 0,
+  "experiment_id": 1,
+  "method": "vol_prior",
+  "network_forbidden": true,
+  "api_keys_absent": true,
+  "reveals_unchanged": true,
+  "forward_outcome_calls": 0,
+  "campaign_before": 144,
+  "campaign_after": 144,
+  "writes_confined_to_forward_vol_prior": true,
+  "after_shell_reveals_unchanged": true,
+  "after_shell_campaign_unchanged": true
+}

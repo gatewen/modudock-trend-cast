@@ -1,0 +1,50 @@
+{
+  "url": "http://127.0.0.1:55354",
+  "catalog": [
+    "trend-cast"
+  ],
+  "states": [
+    "loading",
+    "running"
+  ],
+  "requests": [
+    "status",
+    "report",
+    "report",
+    "day"
+  ],
+  "page_errors": [],
+  "themes": {
+    "light": {
+      "color": "rgb(36, 36, 36)",
+      "background": "rgb(255, 255, 255)",
+      "width": 1048,
+      "scrollWidth": 1048,
+      "evolution_rows": 3
+    },
+    "dark": {
+      "color": "rgb(222, 222, 222)",
+      "background": "rgb(30, 30, 30)",
+      "width": 1048,
+      "scrollWidth": 1048,
+      "evolution_rows": 3
+    }
+  },
+  "reveal_sent": false,
+  "forward": {
+    "state": "locked",
+    "run_points": 144,
+    "participants": [
+      "jev",
+      "always_flat",
+      "majority",
+      "momentum",
+      "reversal",
+      "vol_prior"
+    ]
+  },
+  "forward_report_locked": true,
+  "ssl_cert_file_unset": true,
+  "isolated_shell_settings": true,
+  "acceptance_shell_stopped": true
+}

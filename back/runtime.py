@@ -19,6 +19,7 @@ from .store import Store
 ERRORS = {'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
     'forward_settings_changed', 'forward_empty', 'forward_incomplete', 'forward_exposure_changed',
     'evolution_budget_exhausted', 'evolution_budget_unavailable',
+    'evolution_frozen_changed', 'evolution_prediction_conflict',
     'invalid_request', 'invalid_run', 'missing_key', 'auth_disabled', 'unknown_operation',
     'database_operation_failed', 'database_open_failed', 'frozen_data_changed',
     'unfinalized_month', 'insufficient_warmup', 'unknown_corporate_action',

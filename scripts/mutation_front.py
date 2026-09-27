@@ -7,6 +7,20 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 MUTATIONS = [
+    ('evolution_table_missing', [('reportContent.append(evolved);','')],
+     'evolution development table shows'),
+    ('development_caveat_removed', [('開發段勝出＝值得前瞻驗證，不是證明有效','開發段成果')],
+     'evolution development table shows'),
+    ('evolution_difference_wrong', [('number(c.brier_difference, 6),','number(m.brier, 6),')],
+     'evolution development table shows'),
+    ('forward_committed_count_wrong', [('count(body.forward?.run_points)','count(body.replay?.n_ok)')],
+     'forward participants and committed'),
+    ('vol_comparison_hidden', [("for (const name of ['jev', 'vol_prior'])", "for (const name of ['jev'])")],
+     'revealed forward renders both'),
+    ('used_holdout_heading_removed', [("lockCard.append(element('h2', '保留段已使用'));",'')],
+     'used holdout heading stays'),
+    ('evolution_other_experiment_allowed', [("if (metadata.experiment_id === 1 && evolution?.state === 'ready')", "if (evolution?.state === 'ready')")],
+     'another experiment cannot inherit'),
     ('sync_all_failed_wording_hidden', [("failed: '全部失敗'", "failed: '部分失敗'")],
      'sync distinguishes total and partial failure'),
     ('sync_safe_reasons_hidden', [("syncReasons.join('、')", "''")],

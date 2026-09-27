@@ -193,14 +193,16 @@ def load_split(store, row, split):
     days = plan.days_for(split)
     first, last = days[0], days[-1]
     args = (row['id'], first, last)
-    stored = {method: {} for method in ALL_METHODS}
+    from .forward import FORWARD_METHODS
+    methods_in_split = FORWARD_METHODS if split == 'forward' else ALL_METHODS
+    stored = {method: {} for method in methods_in_split}
     for record in store.db.execute('''SELECT * FROM predictions WHERE experiment_id=?
         AND substr(t,1,10) BETWEEN ? AND ? ORDER BY t''', args):
         if record['method'] in stored and record['t'][:10] in days:
             stored[record['method']][record['t']] = record
     outcomes = {record['t']: record for record in store.db.execute('''SELECT * FROM outcomes
         WHERE experiment_id=? AND substr(t,1,10) BETWEEN ? AND ?''', args) if record['t'][:10] in days}
-    runs = {method: [] for method in ALL_METHODS}
+    runs = {method: [] for method in methods_in_split}
     for run in store.db.execute('''SELECT * FROM runs WHERE experiment_id=? AND split=? ORDER BY id''',
                                 (row['id'], split)):
         if run['method'] in runs:
@@ -211,7 +213,7 @@ def load_split(store, row, split):
     if store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='run_scopes'").fetchone():
         scopes = {r[0] for r in store.db.execute('''SELECT s.run_id FROM run_scopes s JOIN runs r ON r.id=s.run_id
             WHERE r.experiment_id=? AND r.split=? AND s.full_split=1 AND r.status='complete' ''', (row['id'], split))}
-    scored = {method: {} for method in ALL_METHODS}
+    scored = {method: {} for method in methods_in_split}
     valid = Counter()
     invalid = Counter()
     eligible = {}
@@ -232,7 +234,7 @@ def load_split(store, row, split):
             continue
         if outcome.scorable:
             eligible[stamp] = outcome.label
-        for method in ALL_METHODS:
+        for method in methods_in_split:
             prediction = stored[method].get(stamp)
             if prediction is None:
                 continue
@@ -246,7 +248,7 @@ def load_split(store, row, split):
                 scored[method][stamp] = ScoredPoint(stamp, outcome.label, answer.choice, answer.probabilities)
     methods = {}
     common = set(eligible)
-    for method in ALL_METHODS:
+    for method in methods_in_split:
         common.intersection_update(scored[method])
         latest = runs[method][-1] if runs[method] else None
         traversed = any(run['id'] in scopes for run in runs[method])
@@ -281,7 +283,7 @@ def best_development_baseline(development):
 
 
 def split_report(data, baseline, *, development_ready=True):
-    common = {method: {t: data.scored[method][t] for t in data.common} for method in ALL_METHODS}
+    common = {method: {t: data.scored[method][t] for t in data.common} for method in data.scored}
     summaries = {method: metrics(points.values()) for method, points in common.items()}
     bootstrap = paired_bootstrap(common['jev'], common[baseline]) if baseline else {
         'repetitions': BOOTSTRAP_REPETITIONS, 'seed': BOOTSTRAP_SEED, 'trading_days': 0,
@@ -304,3 +306,23 @@ def split_report(data, baseline, *, development_ready=True):
                 common_n=len(data.common), eligible_n=len(data.eligible),
                 complete=data.complete and development_ready)),
         jev_description=descriptive_choices(data.scored['jev'].values()))
+
+
+def forward_report(data, *, development_ready=True):
+    """Both prespecified comparisons on the same six-method revealed cohort."""
+    result = split_report(data, 'majority', development_ready=development_ready)
+    comparisons = {'jev': result['comparison']}
+    common = {method: {t: data.scored[method][t] for t in data.common}
+              for method in ('vol_prior', 'majority')}
+    boot = paired_bootstrap(common['vol_prior'], common['majority'])
+    difference = math.fsum(common['vol_prior'][t].brier - common['majority'][t].brier
+                          for t in data.common) / len(data.common) if data.common else None
+    accuracy = sum(common['vol_prior'][t].correct - common['majority'][t].correct
+                   for t in data.common) / len(data.common) if data.common else None
+    comparisons['vol_prior'] = {**result['comparison'], 'brier_difference': difference,
+        'accuracy_difference': accuracy, 'bootstrap': boot,
+        'statement': conclusion('majority', difference, boot['brier_difference_ci95'],
+            common_n=len(data.common), eligible_n=len(data.eligible),
+            complete=data.complete and development_ready).replace('jev', 'vol_prior')}
+    result['comparisons'] = comparisons
+    return result

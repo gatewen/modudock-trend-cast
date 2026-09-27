@@ -16,6 +16,7 @@ export default `
 .tc h1 { font-size: 24px; letter-spacing: .02em; }
 .tc h2 { font-size: 17px; }
 .tc h3 { font-size: 14px; }
+.tc .tc-evolution { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--tc-border); }
 .tc .tc-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .tc .tc-kicker { color: var(--tc-accent); font: 600 11px/1.4 ui-monospace, monospace; letter-spacing: .13em; }
 .tc .tc-sub { color: var(--tc-muted); font-size: 12px; margin-top: 3px; }

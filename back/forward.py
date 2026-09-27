@@ -17,6 +17,7 @@ from .replay import FEATURE_VERSION, Replay
 from .store import now_string
 
 LOCKED = {'state': 'locked', 'message': '前瞻段未揭露'}
+FORWARD_METHODS = ('jev', 'always_flat', 'majority', 'momentum', 'reversal', 'vol_prior')
 
 
 def has_table(store, table):
@@ -143,7 +144,9 @@ def record_attempt(store, run_id, day, failed):
 
 
 def require_complete(store, row, days):
-    from .score import ALL_METHODS, prediction_answer
+    from .score import prediction_answer
+    from .evolution_forward import frozen_model
+    model = frozen_model(store)
     engine = Replay(store, plan_for(store, row['id'], days=days, verify=True))
     eligible = 0
     for t in engine.candidates('forward'):
@@ -158,18 +161,22 @@ def require_complete(store, row, days):
         if not point.predictable:
             continue
         eligible += int(outcome.scorable)
-        for method in ALL_METHODS:
+        for method in FORWARD_METHODS:
             record = store.db.execute('SELECT * FROM predictions WHERE experiment_id=? AND method=? AND t=?',
                 (row['id'], method, t.isoformat())).fetchone()
             try:
                 if record is None:
                     raise DataError('forward_incomplete')
                 prediction_answer(record, point, row['model'])
+                if method == 'vol_prior':
+                    expected = model.predict(point)
+                    if record['answer'] != expected.answer or json.loads(record['probs_json']) != expected.probabilities:
+                        raise DataError('forward_incomplete')
             except Exception:
                 raise DataError('forward_incomplete') from None
     if not eligible:
         raise DataError('forward_incomplete')
-    for method in ALL_METHODS:
+    for method in FORWARD_METHODS:
         latest = store.db.execute('''SELECT r.status,s.full_split FROM runs r LEFT JOIN run_scopes s ON s.run_id=r.id
             WHERE r.experiment_id=? AND r.method=? AND r.split='forward' ORDER BY r.id DESC LIMIT 1''', (row['id'], method)).fetchone()
         if not latest or latest['status'] != 'complete' or latest['full_split'] != 1:

@@ -276,3 +276,58 @@ test('each forward rerun refreshes its cleared report without exposing generatio
     assert.equal(h.sent.filter(v => v.op === 'report').length, before + 1);
   }
 });
+
+test('evolution development table shows signed Brier intervals and honest interpretation', t => {
+  const h=setup(t);ready(h);
+  const names=['clock_prior','vol_prior','jev_calibrated'];
+  const evo={state:'ready',methods:Object.fromEntries(names.map(name=>[name,{accuracy:.51,brier:.61}])),
+    comparisons:Object.fromEntries(names.map(name=>[name,{brier_difference:-.013,
+      bootstrap:{brier_difference_ci95:[-.02,-.006]},statement:name==='jev_calibrated'?'沒有改善':'值得前瞻驗證'}]))};
+  h.message(report({evolution_dev:evo}));
+  const section=h.container.querySelector('.tc-evolution');
+  assert.ok(section);
+  assert.match(section.textContent,/進化新方法（開發段）/);
+  assert.match(section.textContent,/開發段勝出＝值得前瞻驗證，不是證明有效/);
+  assert.equal(section.querySelectorAll('tbody tr').length,3);
+  for(const name of names) assert.match(section.textContent,new RegExp(name));
+  assert.match(section.textContent,/51\.00%/);assert.match(section.textContent,/0\.610000/);
+  assert.match(section.textContent,/-0\.013000/);assert.match(section.textContent,/-0\.020000 ～ -0\.006000/);
+  assert.match(section.textContent,/沒有改善/);
+});
+
+test('forward participants and committed points are metadata only while scores remain locked', t => {
+  const h=setup(t);ready(h,{forward:{state:'locked',run_points:144},holdout:{state:'revealed'}});
+  const hidden={...structuredClone(report().dev),state:'revealed',comparisons:{
+    vol_prior:{brier_difference:987.654321,statement:'PRIVATE-VOL',bootstrap:{brier_difference_ci95:[888888.888,999999.999]}}}};
+  h.message(report({forward:hidden}));
+  assert.match(h.container.textContent,/考生：jev p1、vol_prior、always_flat、majority、momentum、reversal/);
+  assert.match(h.container.textContent,/已跑 144 點（六方法共同完成）/);
+  assert.match(h.container.textContent,/前瞻段未揭露/);
+  assert.doesNotMatch(h.container.textContent,/PRIVATE-VOL|987\.654321|888888\.888|999999\.999/);
+});
+
+test('revealed forward renders both prespecified comparisons including unfavorable result', t => {
+  const h=setup(t);ready(h,{forward:{state:'revealed',run_points:16}});
+  const forward={...structuredClone(report().dev),state:'revealed',cumulative_days:2,predictable_and_scorable:16,
+    comparisons:{jev:{brier_difference:.1,bootstrap:{brier_difference_ci95:[.05,.15]},statement:'jev 比 majority 差'},
+      vol_prior:{brier_difference:-.02,bootstrap:{brier_difference_ci95:[-.03,-.01]},statement:'vol_prior 比 majority 好'}}};
+  h.message(report({forward}));
+  assert.match(h.container.textContent,/jev p1 − majority：0\.100000/);
+  assert.match(h.container.textContent,/vol_prior − majority：-0\.020000/);
+  assert.match(h.container.textContent,/jev 比 majority 差/);
+  assert.match(h.container.textContent,/vol_prior 比 majority 好/);
+});
+
+test('used holdout heading stays visible even when current status is locked', t => {
+  const h=setup(t);ready(h,{holdout:{state:'locked'}});h.message(report());
+  assert.ok(h.container.querySelector('.tc-lock h2'));
+  assert.equal(h.container.querySelector('.tc-lock h2').textContent,'保留段已使用');
+});
+
+test('another experiment cannot inherit evolution table or forward point count', t => {
+  const h=setup(t);ready(h,{experiment_id:2,forward:{state:'locked',run_points:144}});
+  const data=report({experiment_id:2,evolution_dev:{state:'ready',methods:{},comparisons:{}}});
+  h.message(data);
+  assert.equal(h.container.querySelectorAll('.tc-evolution tbody tr').length,0);
+  assert.doesNotMatch(h.container.textContent,/已跑 144/);
+});
