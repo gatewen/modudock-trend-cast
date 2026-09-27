@@ -1,0 +1,125 @@
+{"experiment": 4, "frozen": true, "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f"}
+{"progress": {"H": 3, "processed": 1, "total": 2894, "refits": 0}}
+{"progress": {"H": 3, "processed": 101, "total": 2894, "refits": 0}}
+{"progress": {"H": 7, "processed": 1, "total": 2894, "refits": 0}}
+{"progress": {"H": 3, "processed": 201, "total": 2894, "refits": 0}}
+{"progress": {"H": 7, "processed": 101, "total": 2894, "refits": 0}}
+{"progress": {"H": 14, "processed": 1, "total": 2894, "refits": 0}}
+{"progress": {"H": 14, "processed": 101, "total": 2894, "refits": 0}}
+{"progress": {"H": 7, "processed": 201, "total": 2894, "refits": 0}}
+{"progress": {"H": 14, "processed": 201, "total": 2894, "refits": 0}}
+{"progress": {"H": 3, "processed": 301, "total": 2894, "refits": 3}}
+{"progress": {"H": 14, "processed": 301, "total": 2894, "refits": 2}}
+{"progress": {"H": 7, "processed": 301, "total": 2894, "refits": 3}}
+{"progress": {"H": 3, "processed": 401, "total": 2894, "refits": 8}}
+{"progress": {"H": 14, "processed": 401, "total": 2894, "refits": 7}}
+{"progress": {"H": 7, "processed": 401, "total": 2894, "refits": 8}}
+{"progress": {"H": 3, "processed": 501, "total": 2894, "refits": 13}}
+{"progress": {"H": 14, "processed": 501, "total": 2894, "refits": 12}}
+{"progress": {"H": 7, "processed": 501, "total": 2894, "refits": 13}}
+{"progress": {"H": 14, "processed": 601, "total": 2894, "refits": 17}}
+{"progress": {"H": 3, "processed": 601, "total": 2894, "refits": 18}}
+{"progress": {"H": 7, "processed": 601, "total": 2894, "refits": 18}}
+{"progress": {"H": 14, "processed": 701, "total": 2894, "refits": 22}}
+{"progress": {"H": 3, "processed": 701, "total": 2894, "refits": 23}}
+{"progress": {"H": 7, "processed": 701, "total": 2894, "refits": 23}}
+{"progress": {"H": 14, "processed": 801, "total": 2894, "refits": 27}}
+{"progress": {"H": 3, "processed": 801, "total": 2894, "refits": 28}}
+{"progress": {"H": 7, "processed": 801, "total": 2894, "refits": 28}}
+{"progress": {"H": 14, "processed": 901, "total": 2894, "refits": 32}}
+{"progress": {"H": 7, "processed": 901, "total": 2894, "refits": 33}}
+{"progress": {"H": 3, "processed": 901, "total": 2894, "refits": 33}}
+{"progress": {"H": 14, "processed": 1001, "total": 2894, "refits": 37}}
+{"progress": {"H": 7, "processed": 1001, "total": 2894, "refits": 38}}
+{"progress": {"H": 3, "processed": 1001, "total": 2894, "refits": 38}}
+{"progress": {"H": 14, "processed": 1101, "total": 2894, "refits": 42}}
+{"progress": {"H": 7, "processed": 1101, "total": 2894, "refits": 43}}
+{"progress": {"H": 3, "processed": 1101, "total": 2894, "refits": 43}}
+{"progress": {"H": 14, "processed": 1201, "total": 2894, "refits": 47}}
+{"progress": {"H": 7, "processed": 1201, "total": 2894, "refits": 48}}
+{"progress": {"H": 3, "processed": 1201, "total": 2894, "refits": 48}}
+{"progress": {"H": 14, "processed": 1301, "total": 2894, "refits": 52}}
+{"progress": {"H": 7, "processed": 1301, "total": 2894, "refits": 53}}
+{"progress": {"H": 3, "processed": 1301, "total": 2894, "refits": 53}}
+{"progress": {"H": 14, "processed": 1401, "total": 2894, "refits": 57}}
+{"progress": {"H": 7, "processed": 1401, "total": 2894, "refits": 58}}
+{"progress": {"H": 3, "processed": 1401, "total": 2894, "refits": 58}}
+{"progress": {"H": 14, "processed": 1501, "total": 2894, "refits": 62}}
+{"progress": {"H": 7, "processed": 1501, "total": 2894, "refits": 63}}
+{"progress": {"H": 3, "processed": 1501, "total": 2894, "refits": 63}}
+{"progress": {"H": 14, "processed": 1601, "total": 2894, "refits": 67}}
+{"progress": {"H": 7, "processed": 1601, "total": 2894, "refits": 68}}
+{"progress": {"H": 3, "processed": 1601, "total": 2894, "refits": 68}}
+{"progress": {"H": 14, "processed": 1701, "total": 2894, "refits": 72}}
+{"progress": {"H": 7, "processed": 1701, "total": 2894, "refits": 73}}
+{"progress": {"H": 3, "processed": 1701, "total": 2894, "refits": 73}}
+{"progress": {"H": 14, "processed": 1801, "total": 2894, "refits": 77}}
+{"progress": {"H": 7, "processed": 1801, "total": 2894, "refits": 78}}
+{"progress": {"H": 3, "processed": 1801, "total": 2894, "refits": 78}}
+{"progress": {"H": 14, "processed": 1901, "total": 2894, "refits": 82}}
+{"progress": {"H": 7, "processed": 1901, "total": 2894, "refits": 83}}
+{"progress": {"H": 3, "processed": 1901, "total": 2894, "refits": 83}}
+{"progress": {"H": 14, "processed": 2001, "total": 2894, "refits": 87}}
+{"progress": {"H": 7, "processed": 2001, "total": 2894, "refits": 88}}
+{"progress": {"H": 3, "processed": 2001, "total": 2894, "refits": 88}}
+{"progress": {"H": 14, "processed": 2101, "total": 2894, "refits": 92}}
+{"progress": {"H": 7, "processed": 2101, "total": 2894, "refits": 93}}
+{"progress": {"H": 3, "processed": 2101, "total": 2894, "refits": 93}}
+{"progress": {"H": 14, "processed": 2201, "total": 2894, "refits": 97}}
+{"progress": {"H": 7, "processed": 2201, "total": 2894, "refits": 98}}
+{"progress": {"H": 3, "processed": 2201, "total": 2894, "refits": 98}}
+{"progress": {"H": 14, "processed": 2301, "total": 2894, "refits": 102}}
+{"progress": {"H": 7, "processed": 2301, "total": 2894, "refits": 103}}
+{"progress": {"H": 3, "processed": 2301, "total": 2894, "refits": 103}}
+{"progress": {"H": 14, "processed": 2401, "total": 2894, "refits": 107}}
+{"progress": {"H": 7, "processed": 2401, "total": 2894, "refits": 108}}
+{"progress": {"H": 3, "processed": 2401, "total": 2894, "refits": 108}}
+{"progress": {"H": 7, "processed": 2501, "total": 2894, "refits": 113}}
+{"progress": {"H": 14, "processed": 2501, "total": 2894, "refits": 112}}
+{"progress": {"H": 3, "processed": 2501, "total": 2894, "refits": 113}}
+{"progress": {"H": 7, "processed": 2601, "total": 2894, "refits": 118}}
+{"progress": {"H": 14, "processed": 2601, "total": 2894, "refits": 117}}
+{"progress": {"H": 3, "processed": 2601, "total": 2894, "refits": 118}}
+{"progress": {"H": 7, "processed": 2701, "total": 2894, "refits": 123}}
+{"progress": {"H": 14, "processed": 2701, "total": 2894, "refits": 122}}
+{"progress": {"H": 3, "processed": 2701, "total": 2894, "refits": 123}}
+{"progress": {"H": 7, "processed": 2801, "total": 2894, "refits": 128}}
+{"progress": {"H": 14, "processed": 2801, "total": 2894, "refits": 127}}
+{"progress": {"H": 3, "processed": 2801, "total": 2894, "refits": 128}}
+{"progress": {"H": 7, "processed": 2894, "total": 2894, "refits": 132}}
+{"progress": {"H": 14, "processed": 2894, "total": 2894, "refits": 131}}
+{"progress": {"H": 3, "processed": 2894, "total": 2894, "refits": 132}}
+{
+  "runs": [
+    {
+      "H": 3,
+      "points": 2894,
+      "scorable": 2891,
+      "new_predictions": 49198,
+      "refits": 132,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 7,
+      "points": 2894,
+      "scorable": 2887,
+      "new_predictions": 49198,
+      "refits": 132,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 14,
+      "points": 2894,
+      "scorable": 2880,
+      "new_predictions": 49198,
+      "refits": 131,
+      "http_calls": 0,
+      "network_attempts": 0
+    }
+  ],
+  "elapsed_seconds": 210.7847710410133,
+  "http_calls": 0,
+  "network_attempts": 0
+}

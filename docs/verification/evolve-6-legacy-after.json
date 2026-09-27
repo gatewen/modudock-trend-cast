@@ -1,0 +1,25 @@
+{
+  "table_hashes": {
+    "bars": "359122333addba9b6fa80b25dfc4b589dfdc2f4b5f0c0476fa87d275e9a82c86",
+    "corp_coverage": "e120157caf9d24e91bbea8733a8707e8b08f8fefe7763260189be9a237c2ca7d",
+    "corp_events": "8ede38d64af7633deda26138d3eac20c710da0d40b7b5a19ba2bd0da2449ad92",
+    "daily": "12b90a6defe1a221de227dbd30e9883c1beca43ca7a76a469506c3f523828e9f",
+    "evolution_models": "4a5f9a65b0a41ecb7f683ba413547585478ef1c2d311618a37b31a9ebec24bb9",
+    "experiments": "e7263e7ab7b20ed4db30e1677dad0188ff39bd51a9830645cf35e21e12a835f5",
+    "fetch_log": "ed20979012233341ee7cc8389deca7cfe0af78e9417e7171232f09344a129d80",
+    "forward_attempts": "3c78bc609bf5991ecc98b7ac940db953af1cbfacacad12c2d6c9cc93e69a93a6",
+    "forward_days": "a8f4507e2365c4fe363a3e66bca43734af658a74f0288610bb3604c83e93932b",
+    "forward_exclusions": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "move_answers": "3b68549f875ddb01ae547a0625a5eb9bde0bbfe28940bc7ea5ec85ffbc9634ca",
+    "move_samples": "07b0d86909e1f5311eb03883fa2c9d08c2225cc7f35aa0cc71c8cb2384018be7",
+    "outcomes": "1d56054d241ce8afab1714edadf80a17fdd9e346c93e2740fb11f482e3717148",
+    "predictions": "0fcc1ec952f7a3cfb025dff9aeac70ae74a49a18f94236a705894a5ea7d3a341",
+    "prior_exposures": "6f7b08834f74e2d2cb1a8ee06d1fddfc79ad2345ea406a80136e10ee89b9915a",
+    "reveal_context": "d4f7141b84bc113728411b9ca0ab3f2ea14bb07b8eac6656843d6ea382c13d8e",
+    "reveals": "6438a295afe6a43fe649ca38c21e306c397470e02b595c61cf7ce20e675abb2b",
+    "run_scopes": "72a4ada63ff06fb689b60f60a3051b4f58c5cfb849249abd46f5643b897def54",
+    "runs": "c104316f6feaaefdab703277a0319a0ea9576e430a0cdcd61f319227ba8853a2"
+  },
+  "campaign_used": 644,
+  "unchanged": true
+}

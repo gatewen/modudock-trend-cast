@@ -1,0 +1,6791 @@
+{
+  "experiment": 4,
+  "split": "dev",
+  "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "protocol": {
+    "bias20": {
+      "window": 20
+    },
+    "bollinger": {
+      "ddof": 0,
+      "sigma": 2,
+      "window": 20
+    },
+    "bootstrap": {
+      "block_sessions": 20,
+      "iterations": 2000,
+      "layout": "nonoverlapping_keep_tail",
+      "seed": 20260927
+    },
+    "chip_lag_sessions": 1,
+    "claims": {
+      "bias20": {
+        "high": "高乖離可能回落",
+        "low": "低乖離可能反彈"
+      },
+      "bollinger": {
+        "above": "上軌突破（追勢／反轉說法並存）",
+        "below": "下軌跌破（追勢／反轉說法並存）"
+      },
+      "foreign_net": {
+        "negative": "外資賣超偏空",
+        "positive": "外資買超偏多"
+      },
+      "kd": {
+        "bear_cross": "高檔死亡交叉偏空",
+        "bull_cross": "低檔黃金交叉偏多"
+      },
+      "ma_cross": {
+        "bear": "死亡交叉偏空",
+        "bull": "黃金交叉偏多"
+      },
+      "ma_trend": {
+        "bear": "跌破長均線偏空",
+        "bull": "站上長均線偏多"
+      },
+      "macd": {
+        "bear_flip": "柱狀體翻負偏空",
+        "bull_flip": "柱狀體翻正偏多"
+      },
+      "margin_chg": {
+        "negative": "融資減少（追勢／反向說法並存）",
+        "positive": "融資增加（追勢／反向說法並存）"
+      },
+      "rsi14": {
+        "overbought": "超買可能回落",
+        "oversold": "超賣可能反彈"
+      },
+      "trust_net": {
+        "negative": "投信賣超偏空",
+        "positive": "投信買超偏多"
+      },
+      "vol_price": {
+        "down_high": "價跌量增偏空",
+        "up_high": "價漲量增偏多"
+      }
+    },
+    "foreign_net": {
+      "sum_sessions": 3
+    },
+    "frequency": {
+      "add": 1,
+      "fallback": "majority",
+      "min_samples": 30,
+      "tie": [
+        "flat",
+        "up",
+        "down"
+      ]
+    },
+    "horizons": [
+      3,
+      7,
+      14
+    ],
+    "indicators": [
+      "ma_cross",
+      "ma_trend",
+      "rsi14",
+      "kd",
+      "macd",
+      "bollinger",
+      "bias20",
+      "vol_price",
+      "foreign_net",
+      "trust_net",
+      "margin_chg"
+    ],
+    "k": {
+      "ddof": 0,
+      "endpoints": "both_dev",
+      "rounding": "HALF_UP",
+      "sigma_multiplier": 0.5,
+      "step": ".005"
+    },
+    "kd": {
+      "d_smoothing": 3,
+      "flat_rsv": 50,
+      "initial": 50,
+      "k_smoothing": 3,
+      "rsv_window": 9
+    },
+    "logit": {
+      "bias_state_cuts": "fit_training_only_at_refit",
+      "initial": "zero_every_fit",
+      "lambda": 1.0,
+      "learning_rate": 0.1,
+      "loss": "mean_CE_plus_lambda_over_2_L2",
+      "min_train": 250,
+      "missing": "train_mean_and_missing_state",
+      "numeric_zero_sd": 1.0,
+      "onehot_scale": false,
+      "penalize_intercept": false,
+      "refit_origin": "first_predictable_dev_session",
+      "refit_sessions": 20,
+      "scale": "train_population",
+      "steps": 300
+    },
+    "ma_cross": {
+      "fast": 5,
+      "lookback": 3,
+      "multiple": "latest",
+      "slow": 20
+    },
+    "ma_trend": {
+      "equal": "neutral",
+      "window": 60
+    },
+    "macd": {
+      "ema_initial": "first_value",
+      "fast": 12,
+      "histogram": "dif_minus_signal",
+      "signal": 9,
+      "slow": 26
+    },
+    "margin_chg": {
+      "difference_sessions": 5
+    },
+    "methods": [
+      "always_flat",
+      "majority",
+      "momentum_H",
+      "reversal_H",
+      "vol_prior_d",
+      "ind_ma_cross",
+      "ind_ma_trend",
+      "ind_rsi14",
+      "ind_kd",
+      "ind_macd",
+      "ind_bollinger",
+      "ind_bias20",
+      "ind_vol_price",
+      "ind_foreign_net",
+      "ind_trust_net",
+      "ind_margin_chg",
+      "ind_logit"
+    ],
+    "numeric_columns": [
+      "ma_cross",
+      "ma_trend",
+      "rsi14",
+      "kd_k",
+      "kd_d",
+      "macd_dif",
+      "macd_signal",
+      "macd_hist",
+      "bollinger",
+      "bias20",
+      "vol_price_return",
+      "vol_price_ratio",
+      "foreign_net",
+      "trust_net",
+      "margin_chg"
+    ],
+    "rsi14": {
+      "flat": 50,
+      "initial": "mean_first_14",
+      "smoothing": "Wilder",
+      "window": 14
+    },
+    "states": {
+      "bias20": [
+        "low",
+        "middle",
+        "high"
+      ],
+      "bollinger": [
+        "above",
+        "below",
+        "inside"
+      ],
+      "foreign_net": [
+        "positive",
+        "negative",
+        "zero"
+      ],
+      "kd": [
+        "bull_cross",
+        "bear_cross",
+        "low",
+        "middle",
+        "high"
+      ],
+      "ma_cross": [
+        "bull",
+        "bear",
+        "neutral"
+      ],
+      "ma_trend": [
+        "bull",
+        "bear",
+        "neutral"
+      ],
+      "macd": [
+        "bull_flip",
+        "bear_flip",
+        "positive",
+        "negative",
+        "zero"
+      ],
+      "margin_chg": [
+        "positive",
+        "negative",
+        "zero"
+      ],
+      "rsi14": [
+        "oversold",
+        "overbought",
+        "middle"
+      ],
+      "trust_net": [
+        "positive",
+        "negative",
+        "zero"
+      ],
+      "vol_price": [
+        "up_high",
+        "up_low",
+        "down_high",
+        "down_low",
+        "flat_high",
+        "flat_low"
+      ]
+    },
+    "terciles": {
+      "equal": "lower",
+      "fit": "matured_dev_only",
+      "interpolation": "linear",
+      "quantiles": [
+        0.3333333333333333,
+        0.6666666666666666
+      ]
+    },
+    "trust_net": {
+      "sum_sessions": 3
+    },
+    "version": "daily-indicators-v1",
+    "vol_price": {
+      "flat": "separate",
+      "mean_includes_today": true,
+      "window": 20
+    },
+    "vol_prior_d": {
+      "ddof": 0,
+      "return_count": 20
+    },
+    "warmup": 60
+  },
+  "horizons": {
+    "3": {
+      "threshold": {
+        "denominator": 100,
+        "numerator": 1
+      },
+      "n": 2891,
+      "expected_scorable": 2891,
+      "complete": true,
+      "methods": {
+        "always_flat": {
+          "n": 2891,
+          "correct": 1020,
+          "accuracy": 0.35281909373919057,
+          "accuracy_wilson95": [
+            0.3356062809874918,
+            0.37042252504367446
+          ],
+          "brier": 1.2943618125216187,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 2891,
+              "correct": 1020,
+              "precision": 0.35281909373919057,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 1055,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1020,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 816,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.6291094071070579,
+            "ci95": [
+              0.5870875934428743,
+              0.6697527155472637
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "momentum_H": {
+          "n": 2891,
+          "correct": 907,
+          "accuracy": 0.313732272570045,
+          "accuracy_wilson95": [
+            0.2970747093503074,
+            0.3308841908795001
+          ],
+          "brier": 1.37253545485991,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1053,
+              "correct": 321,
+              "precision": 0.30484330484330485,
+              "recall": 0.3042654028436019
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1021,
+              "correct": 377,
+              "precision": 0.3692458374142997,
+              "recall": 0.3696078431372549
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 817,
+              "correct": 209,
+              "precision": 0.2558139534883721,
+              "recall": 0.25612745098039214
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 321,
+              "flat": 377,
+              "down": 357
+            },
+            "flat": {
+              "up": 392,
+              "flat": 377,
+              "down": 251
+            },
+            "down": {
+              "up": 340,
+              "flat": 267,
+              "down": 209
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.7072830494453491,
+            "ci95": [
+              0.6701037923703459,
+              0.7467145233132032
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "reversal_H": {
+          "n": 2891,
+          "correct": 1074,
+          "accuracy": 0.3714977516430301,
+          "accuracy_wilson95": [
+            0.35406523779696814,
+            0.38927131082953786
+          ],
+          "brier": 1.2570044967139398,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 817,
+              "correct": 357,
+              "precision": 0.4369645042839657,
+              "recall": 0.33838862559241706
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1021,
+              "correct": 377,
+              "precision": 0.3692458374142997,
+              "recall": 0.3696078431372549
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 1053,
+              "correct": 340,
+              "precision": 0.32288698955365625,
+              "recall": 0.4166666666666667
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 357,
+              "flat": 377,
+              "down": 321
+            },
+            "flat": {
+              "up": 251,
+              "flat": 377,
+              "down": 392
+            },
+            "down": {
+              "up": 209,
+              "flat": 267,
+              "down": 340
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.5917520912993789,
+            "ci95": [
+              0.5498312386014959,
+              0.6314761431000457
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "vol_prior_d": {
+          "n": 2891,
+          "correct": 989,
+          "accuracy": 0.34209616049809755,
+          "accuracy_wilson95": [
+            0.3250225478978353,
+            0.35958885034711746
+          ],
+          "brier": 0.6688535329691506,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1482,
+              "correct": 520,
+              "precision": 0.3508771929824561,
+              "recall": 0.4928909952606635
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1343,
+              "correct": 460,
+              "precision": 0.3425167535368578,
+              "recall": 0.45098039215686275
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 66,
+              "correct": 9,
+              "precision": 0.13636363636363635,
+              "recall": 0.011029411764705883
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 520,
+              "flat": 505,
+              "down": 30
+            },
+            "flat": {
+              "up": 533,
+              "flat": 460,
+              "down": 27
+            },
+            "down": {
+              "up": 429,
+              "flat": 378,
+              "down": 9
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.003601127554589676,
+            "ci95": [
+              0.0005080269812930833,
+              0.006883681589123115
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_cross": {
+          "n": 2891,
+          "correct": 985,
+          "accuracy": 0.34071255620892427,
+          "accuracy_wilson95": [
+            0.32365761362086676,
+            0.35819024813554246
+          ],
+          "brier": 0.666015805484799,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 827,
+              "correct": 287,
+              "precision": 0.347037484885127,
+              "recall": 0.2720379146919431
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 2026,
+              "correct": 689,
+              "precision": 0.34007897334649556,
+              "recall": 0.6754901960784314
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 38,
+              "correct": 9,
+              "precision": 0.23684210526315788,
+              "recall": 0.011029411764705883
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 287,
+              "flat": 755,
+              "down": 13
+            },
+            "flat": {
+              "up": 315,
+              "flat": 689,
+              "down": 16
+            },
+            "down": {
+              "up": 225,
+              "flat": 582,
+              "down": 9
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0007634000702379674,
+            "ci95": [
+              -0.0015941607952036747,
+              0.002976238236536815
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_trend": {
+          "n": 2891,
+          "correct": 1112,
+          "accuracy": 0.38464199239017643,
+          "accuracy_wilson95": [
+            0.3670717895073903,
+            0.4025183557602807
+          ],
+          "brier": 0.6648577797740598,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 832,
+              "correct": 343,
+              "precision": 0.41225961538461536,
+              "recall": 0.3251184834123223
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 2020,
+              "correct": 762,
+              "precision": 0.37722772277227723,
+              "recall": 0.7470588235294118
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 39,
+              "correct": 7,
+              "precision": 0.1794871794871795,
+              "recall": 0.00857843137254902
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 343,
+              "flat": 696,
+              "down": 16
+            },
+            "flat": {
+              "up": 242,
+              "flat": 762,
+              "down": 16
+            },
+            "down": {
+              "up": 247,
+              "flat": 562,
+              "down": 7
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": -0.0003946256405011629,
+            "ci95": [
+              -0.0044823300689830654,
+              0.003972334551897219
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_rsi14": {
+          "n": 2891,
+          "correct": 1021,
+          "accuracy": 0.3531649948114839,
+          "accuracy_wilson95": [
+            0.3359478523687184,
+            0.3707718377845838
+          ],
+          "brier": 0.6658708359760038,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1636,
+              "correct": 591,
+              "precision": 0.36124694376528116,
+              "recall": 0.5601895734597157
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1230,
+              "correct": 425,
+              "precision": 0.34552845528455284,
+              "recall": 0.4166666666666667
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 591,
+              "flat": 453,
+              "down": 11
+            },
+            "flat": {
+              "up": 586,
+              "flat": 425,
+              "down": 9
+            },
+            "down": {
+              "up": 459,
+              "flat": 352,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0006184305614428169,
+            "ci95": [
+              -0.0009276690309051872,
+              0.0023351853874393103
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_kd": {
+          "n": 2891,
+          "correct": 1090,
+          "accuracy": 0.3770321687997233,
+          "accuracy_wilson95": [
+            0.3595400000759082,
+            0.39485069450477256
+          ],
+          "brier": 0.66506180592928,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 2046,
+              "correct": 778,
+              "precision": 0.38025415444770283,
+              "recall": 0.7374407582938388
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 804,
+              "correct": 302,
+              "precision": 0.3756218905472637,
+              "recall": 0.296078431372549
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 41,
+              "correct": 10,
+              "precision": 0.24390243902439024,
+              "recall": 0.012254901960784314
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 778,
+              "flat": 259,
+              "down": 18
+            },
+            "flat": {
+              "up": 705,
+              "flat": 302,
+              "down": 13
+            },
+            "down": {
+              "up": 563,
+              "flat": 243,
+              "down": 10
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": -0.0001905994852809102,
+            "ci95": [
+              -0.0036339581332335415,
+              0.0031936115730182616
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_macd": {
+          "n": 2891,
+          "correct": 1098,
+          "accuracy": 0.37979937737806985,
+          "accuracy_wilson95": [
+            0.3622783001704753,
+            0.39763946738729267
+          ],
+          "brier": 0.665120004226146,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1269,
+              "correct": 493,
+              "precision": 0.38849487785658,
+              "recall": 0.46729857819905213
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1590,
+              "correct": 600,
+              "precision": 0.37735849056603776,
+              "recall": 0.5882352941176471
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 32,
+              "correct": 5,
+              "precision": 0.15625,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 493,
+              "flat": 546,
+              "down": 16
+            },
+            "flat": {
+              "up": 409,
+              "flat": 600,
+              "down": 11
+            },
+            "down": {
+              "up": 367,
+              "flat": 444,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": -0.00013240118841499986,
+            "ci95": [
+              -0.002554735904684253,
+              0.0021460076540168473
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bollinger": {
+          "n": 2891,
+          "correct": 1050,
+          "accuracy": 0.36319612590799033,
+          "accuracy_wilson95": [
+            0.345857730792994,
+            0.38089759890224995
+          ],
+          "brier": 0.6659641045993001,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1936,
+              "correct": 715,
+              "precision": 0.3693181818181818,
+              "recall": 0.6777251184834123
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 921,
+              "correct": 329,
+              "precision": 0.3572204125950054,
+              "recall": 0.32254901960784316
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 34,
+              "correct": 6,
+              "precision": 0.17647058823529413,
+              "recall": 0.007352941176470588
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 715,
+              "flat": 321,
+              "down": 19
+            },
+            "flat": {
+              "up": 682,
+              "flat": 329,
+              "down": 9
+            },
+            "down": {
+              "up": 539,
+              "flat": 271,
+              "down": 6
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.000711699184739185,
+            "ci95": [
+              -0.0022052593859270627,
+              0.003585628736883921
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bias20": {
+          "n": 2891,
+          "correct": 1114,
+          "accuracy": 0.3853337945347631,
+          "accuracy_wilson95": [
+            0.36775672518907837,
+            0.40321518832286446
+          ],
+          "brier": 0.6639473109126509,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1281,
+              "correct": 518,
+              "precision": 0.40437158469945356,
+              "recall": 0.4909952606635071
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1550,
+              "correct": 586,
+              "precision": 0.37806451612903225,
+              "recall": 0.5745098039215686
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 60,
+              "correct": 10,
+              "precision": 0.16666666666666666,
+              "recall": 0.012254901960784314
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 518,
+              "flat": 507,
+              "down": 30
+            },
+            "flat": {
+              "up": 414,
+              "flat": 586,
+              "down": 20
+            },
+            "down": {
+              "up": 349,
+              "flat": 457,
+              "down": 10
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": -0.0013050945019100503,
+            "ci95": [
+              -0.005580836478013684,
+              0.0027253862203545803
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_vol_price": {
+          "n": 2891,
+          "correct": 1060,
+          "accuracy": 0.36665513663092353,
+          "accuracy_wilson95": [
+            0.3492768453058699,
+            0.3843873256107332
+          ],
+          "brier": 0.6678223937609913,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1144,
+              "correct": 441,
+              "precision": 0.38548951048951047,
+              "recall": 0.41800947867298577
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1644,
+              "correct": 589,
+              "precision": 0.35827250608272504,
+              "recall": 0.5774509803921568
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 103,
+              "correct": 30,
+              "precision": 0.2912621359223301,
+              "recall": 0.03676470588235294
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 441,
+              "flat": 579,
+              "down": 35
+            },
+            "flat": {
+              "up": 393,
+              "flat": 589,
+              "down": 38
+            },
+            "down": {
+              "up": 310,
+              "flat": 476,
+              "down": 30
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0025699883464303536,
+            "ci95": [
+              -0.0001905437000743121,
+              0.005335346437551364
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_foreign_net": {
+          "n": 2891,
+          "correct": 1071,
+          "accuracy": 0.3704600484261501,
+          "accuracy_wilson95": [
+            0.3530389940483253,
+            0.38822490221177286
+          ],
+          "brier": 0.665561147967146,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1284,
+              "correct": 485,
+              "precision": 0.37772585669781933,
+              "recall": 0.4597156398104265
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1571,
+              "correct": 580,
+              "precision": 0.36919159770846594,
+              "recall": 0.5686274509803921
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 36,
+              "correct": 6,
+              "precision": 0.16666666666666666,
+              "recall": 0.007352941176470588
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 485,
+              "flat": 551,
+              "down": 19
+            },
+            "flat": {
+              "up": 429,
+              "flat": 580,
+              "down": 11
+            },
+            "down": {
+              "up": 370,
+              "flat": 440,
+              "down": 6
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0003087425525851169,
+            "ci95": [
+              -0.0016524909023371598,
+              0.00239562426954599
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_trust_net": {
+          "n": 2891,
+          "correct": 978,
+          "accuracy": 0.338291248702871,
+          "accuracy_wilson95": [
+            0.3212693723619475,
+            0.35574230053951017
+          ],
+          "brier": 0.6676884080658154,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1327,
+              "correct": 454,
+              "precision": 0.3421250941974378,
+              "recall": 0.43033175355450237
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1529,
+              "correct": 517,
+              "precision": 0.3381294964028777,
+              "recall": 0.5068627450980392
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 35,
+              "correct": 7,
+              "precision": 0.2,
+              "recall": 0.00857843137254902
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 454,
+              "flat": 584,
+              "down": 17
+            },
+            "flat": {
+              "up": 492,
+              "flat": 517,
+              "down": 11
+            },
+            "down": {
+              "up": 381,
+              "flat": 428,
+              "down": 7
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.0024360026512544675,
+            "ci95": [
+              0.0005620803424376614,
+              0.004521528700632188
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_margin_chg": {
+          "n": 2891,
+          "correct": 1036,
+          "accuracy": 0.3583535108958838,
+          "accuracy_wilson95": [
+            0.3410726151833411,
+            0.376010336802
+          ],
+          "brier": 0.6661454438207115,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1241,
+              "correct": 458,
+              "precision": 0.3690572119258662,
+              "recall": 0.43412322274881515
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1612,
+              "correct": 569,
+              "precision": 0.3529776674937965,
+              "recall": 0.557843137254902
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 38,
+              "correct": 9,
+              "precision": 0.23684210526315788,
+              "recall": 0.011029411764705883
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 458,
+              "flat": 583,
+              "down": 14
+            },
+            "flat": {
+              "up": 436,
+              "flat": 569,
+              "down": 15
+            },
+            "down": {
+              "up": 347,
+              "flat": 460,
+              "down": 9
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": 0.000893038406150564,
+            "ci95": [
+              -0.0010664380973779842,
+              0.0028755636770841065
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_logit": {
+          "n": 2891,
+          "correct": 1139,
+          "accuracy": 0.3939813213420962,
+          "accuracy_wilson95": [
+            0.37632159501771445,
+            0.41192242154762637
+          ],
+          "brier": 0.6617199456527343,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1144,
+              "correct": 473,
+              "precision": 0.41346153846153844,
+              "recall": 0.4483412322274882
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1702,
+              "correct": 657,
+              "precision": 0.38601645123384254,
+              "recall": 0.6441176470588236
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 45,
+              "correct": 9,
+              "precision": 0.2,
+              "recall": 0.011029411764705883
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 473,
+              "flat": 565,
+              "down": 17
+            },
+            "flat": {
+              "up": 344,
+              "flat": 657,
+              "down": 19
+            },
+            "down": {
+              "up": 327,
+              "flat": 480,
+              "down": 9
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2891,
+            "difference": -0.0035324597618266885,
+            "ci95": [
+              -0.007337996941701804,
+              0.0004183794966306472
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        }
+      },
+      "shortlist": [],
+      "claims_vs_frequency": [
+        {
+          "indicator": "ma_cross",
+          "state": "bear",
+          "claim": "死亡交叉偏空",
+          "n": 261,
+          "counts": {
+            "up": 116,
+            "flat": 77,
+            "down": 68
+          },
+          "frequencies": {
+            "up": 0.4444444444444444,
+            "flat": 0.2950191570881226,
+            "down": 0.26053639846743293
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "bull",
+          "claim": "黃金交叉偏多",
+          "n": 272,
+          "counts": {
+            "up": 91,
+            "flat": 99,
+            "down": 82
+          },
+          "frequencies": {
+            "up": 0.33455882352941174,
+            "flat": 0.3639705882352941,
+            "down": 0.3014705882352941
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 2358,
+          "counts": {
+            "up": 848,
+            "flat": 844,
+            "down": 666
+          },
+          "frequencies": {
+            "up": 0.359626802374894,
+            "flat": 0.35793044953350295,
+            "down": 0.2824427480916031
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bear",
+          "claim": "跌破長均線偏空",
+          "n": 860,
+          "counts": {
+            "up": 359,
+            "flat": 250,
+            "down": 251
+          },
+          "frequencies": {
+            "up": 0.4174418604651163,
+            "flat": 0.29069767441860467,
+            "down": 0.29186046511627906
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bull",
+          "claim": "站上長均線偏多",
+          "n": 2031,
+          "counts": {
+            "up": 696,
+            "flat": 770,
+            "down": 565
+          },
+          "frequencies": {
+            "up": 0.34268833087149186,
+            "flat": 0.379123584441162,
+            "down": 0.2781880846873461
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2657,
+          "counts": {
+            "up": 970,
+            "flat": 942,
+            "down": 745
+          },
+          "frequencies": {
+            "up": 0.36507339104252917,
+            "flat": 0.35453519006398193,
+            "down": 0.2803914188934889
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "overbought",
+          "claim": "超買可能回落",
+          "n": 212,
+          "counts": {
+            "up": 71,
+            "flat": 74,
+            "down": 67
+          },
+          "frequencies": {
+            "up": 0.33490566037735847,
+            "flat": 0.3490566037735849,
+            "down": 0.3160377358490566
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "oversold",
+          "claim": "超賣可能反彈",
+          "n": 22,
+          "counts": {
+            "up": 14,
+            "flat": 4,
+            "down": 4
+          },
+          "frequencies": {
+            "up": 0.6363636363636364,
+            "flat": 0.18181818181818182,
+            "down": 0.18181818181818182
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bear_cross",
+          "claim": "高檔死亡交叉偏空",
+          "n": 56,
+          "counts": {
+            "up": 15,
+            "flat": 30,
+            "down": 11
+          },
+          "frequencies": {
+            "up": 0.26785714285714285,
+            "flat": 0.5357142857142857,
+            "down": 0.19642857142857142
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bull_cross",
+          "claim": "低檔黃金交叉偏多",
+          "n": 9,
+          "counts": {
+            "up": 2,
+            "flat": 3,
+            "down": 4
+          },
+          "frequencies": {
+            "up": 0.2222222222222222,
+            "flat": 0.3333333333333333,
+            "down": 0.4444444444444444
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "high",
+          "claim": "無預設方向",
+          "n": 587,
+          "counts": {
+            "up": 178,
+            "flat": 227,
+            "down": 182
+          },
+          "frequencies": {
+            "up": 0.303236797274276,
+            "flat": 0.38671209540034074,
+            "down": 0.3100511073253833
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "low",
+          "claim": "無預設方向",
+          "n": 179,
+          "counts": {
+            "up": 80,
+            "flat": 63,
+            "down": 36
+          },
+          "frequencies": {
+            "up": 0.44692737430167595,
+            "flat": 0.35195530726256985,
+            "down": 0.2011173184357542
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2060,
+          "counts": {
+            "up": 780,
+            "flat": 697,
+            "down": 583
+          },
+          "frequencies": {
+            "up": 0.3786407766990291,
+            "flat": 0.3383495145631068,
+            "down": 0.2830097087378641
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bear_flip",
+          "claim": "柱狀體翻負偏空",
+          "n": 128,
+          "counts": {
+            "up": 55,
+            "flat": 42,
+            "down": 31
+          },
+          "frequencies": {
+            "up": 0.4296875,
+            "flat": 0.328125,
+            "down": 0.2421875
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bull_flip",
+          "claim": "柱狀體翻正偏多",
+          "n": 128,
+          "counts": {
+            "up": 44,
+            "flat": 55,
+            "down": 29
+          },
+          "frequencies": {
+            "up": 0.34375,
+            "flat": 0.4296875,
+            "down": 0.2265625
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "negative",
+          "claim": "無預設方向",
+          "n": 1279,
+          "counts": {
+            "up": 508,
+            "flat": 404,
+            "down": 367
+          },
+          "frequencies": {
+            "up": 0.3971853010164191,
+            "flat": 0.3158717748240813,
+            "down": 0.2869429241594996
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "positive",
+          "claim": "無預設方向",
+          "n": 1356,
+          "counts": {
+            "up": 448,
+            "flat": 519,
+            "down": 389
+          },
+          "frequencies": {
+            "up": 0.3303834808259587,
+            "flat": 0.3827433628318584,
+            "down": 0.2868731563421829
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "above",
+          "claim": "上軌突破（追勢／反轉說法並存）",
+          "n": 224,
+          "counts": {
+            "up": 63,
+            "flat": 85,
+            "down": 76
+          },
+          "frequencies": {
+            "up": 0.28125,
+            "flat": 0.3794642857142857,
+            "down": 0.3392857142857143
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "below",
+          "claim": "下軌跌破（追勢／反轉說法並存）",
+          "n": 96,
+          "counts": {
+            "up": 44,
+            "flat": 23,
+            "down": 29
+          },
+          "frequencies": {
+            "up": 0.4583333333333333,
+            "flat": 0.23958333333333334,
+            "down": 0.3020833333333333
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "inside",
+          "claim": "無預設方向",
+          "n": 2571,
+          "counts": {
+            "up": 948,
+            "flat": 912,
+            "down": 711
+          },
+          "frequencies": {
+            "up": 0.3687281213535589,
+            "flat": 0.3547257876312719,
+            "down": 0.2765460910151692
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "high",
+          "claim": "高乖離可能回落",
+          "n": 1020,
+          "counts": {
+            "up": 320,
+            "flat": 397,
+            "down": 303
+          },
+          "frequencies": {
+            "up": 0.3137254901960784,
+            "flat": 0.3892156862745098,
+            "down": 0.29705882352941176
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "low",
+          "claim": "低乖離可能反彈",
+          "n": 942,
+          "counts": {
+            "up": 401,
+            "flat": 283,
+            "down": 258
+          },
+          "frequencies": {
+            "up": 0.4256900212314225,
+            "flat": 0.30042462845010615,
+            "down": 0.27388535031847133
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 926,
+          "counts": {
+            "up": 333,
+            "flat": 338,
+            "down": 255
+          },
+          "frequencies": {
+            "up": 0.3596112311015119,
+            "flat": 0.3650107991360691,
+            "down": 0.275377969762419
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 3,
+          "counts": {
+            "up": 1,
+            "flat": 2,
+            "down": 0
+          },
+          "frequencies": {
+            "up": 0.3333333333333333,
+            "flat": 0.6666666666666666,
+            "down": 0.0
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_high",
+          "claim": "價跌量增偏空",
+          "n": 528,
+          "counts": {
+            "up": 216,
+            "flat": 171,
+            "down": 141
+          },
+          "frequencies": {
+            "up": 0.4090909090909091,
+            "flat": 0.32386363636363635,
+            "down": 0.26704545454545453
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_low",
+          "claim": "無預設方向",
+          "n": 701,
+          "counts": {
+            "up": 273,
+            "flat": 244,
+            "down": 184
+          },
+          "frequencies": {
+            "up": 0.38944365192582026,
+            "flat": 0.34807417974322397,
+            "down": 0.2624821683309558
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_high",
+          "claim": "無預設方向",
+          "n": 62,
+          "counts": {
+            "up": 24,
+            "flat": 22,
+            "down": 16
+          },
+          "frequencies": {
+            "up": 0.3870967741935484,
+            "flat": 0.3548387096774194,
+            "down": 0.25806451612903225
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_low",
+          "claim": "無預設方向",
+          "n": 195,
+          "counts": {
+            "up": 63,
+            "flat": 75,
+            "down": 57
+          },
+          "frequencies": {
+            "up": 0.3230769230769231,
+            "flat": 0.38461538461538464,
+            "down": 0.2923076923076923
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_high",
+          "claim": "價漲量增偏多",
+          "n": 596,
+          "counts": {
+            "up": 210,
+            "flat": 210,
+            "down": 176
+          },
+          "frequencies": {
+            "up": 0.3523489932885906,
+            "flat": 0.3523489932885906,
+            "down": 0.2953020134228188
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_low",
+          "claim": "無預設方向",
+          "n": 809,
+          "counts": {
+            "up": 269,
+            "flat": 298,
+            "down": 242
+          },
+          "frequencies": {
+            "up": 0.33250927070457353,
+            "flat": 0.3683559950556242,
+            "down": 0.29913473423980225
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 188,
+            "flat": 185,
+            "down": 146
+          },
+          "frequencies": {
+            "up": 0.3622350674373796,
+            "flat": 0.35645472061657035,
+            "down": 0.2813102119460501
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "negative",
+          "claim": "外資賣超偏空",
+          "n": 1150,
+          "counts": {
+            "up": 463,
+            "flat": 357,
+            "down": 330
+          },
+          "frequencies": {
+            "up": 0.4026086956521739,
+            "flat": 0.31043478260869567,
+            "down": 0.28695652173913044
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "positive",
+          "claim": "外資買超偏多",
+          "n": 1222,
+          "counts": {
+            "up": 404,
+            "flat": 478,
+            "down": 340
+          },
+          "frequencies": {
+            "up": 0.33060556464811786,
+            "flat": 0.3911620294599018,
+            "down": 0.27823240589198034
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 188,
+            "flat": 185,
+            "down": 146
+          },
+          "frequencies": {
+            "up": 0.3622350674373796,
+            "flat": 0.35645472061657035,
+            "down": 0.2813102119460501
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "negative",
+          "claim": "投信賣超偏空",
+          "n": 1277,
+          "counts": {
+            "up": 453,
+            "flat": 455,
+            "down": 369
+          },
+          "frequencies": {
+            "up": 0.3547376664056382,
+            "flat": 0.35630383711824587,
+            "down": 0.2889584964761159
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "positive",
+          "claim": "投信買超偏多",
+          "n": 1095,
+          "counts": {
+            "up": 414,
+            "flat": 380,
+            "down": 301
+          },
+          "frequencies": {
+            "up": 0.3780821917808219,
+            "flat": 0.3470319634703196,
+            "down": 0.27488584474885847
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "negative",
+          "claim": "融資減少（追勢／反向說法並存）",
+          "n": 1540,
+          "counts": {
+            "up": 534,
+            "flat": 559,
+            "down": 447
+          },
+          "frequencies": {
+            "up": 0.34675324675324676,
+            "flat": 0.36298701298701297,
+            "down": 0.2902597402597403
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "positive",
+          "claim": "融資增加（追勢／反向說法並存）",
+          "n": 1351,
+          "counts": {
+            "up": 521,
+            "flat": 461,
+            "down": 369
+          },
+          "frequencies": {
+            "up": 0.385640266469282,
+            "flat": 0.34122871946706146,
+            "down": 0.27313101406365653
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        }
+      ]
+    },
+    "7": {
+      "threshold": {
+        "denominator": 50,
+        "numerator": 1
+      },
+      "n": 2887,
+      "expected_scorable": 2887,
+      "complete": true,
+      "methods": {
+        "always_flat": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 1.0453758226532732,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.413965042731368,
+            "ci95": [
+              0.3701202913780397,
+              0.4535662763036567
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "momentum_H": {
+          "n": 2887,
+          "correct": 996,
+          "accuracy": 0.34499480429511603,
+          "accuracy_wilson95": [
+            0.3278709119480167,
+            0.36253065010612956
+          ],
+          "brier": 1.3100103914097678,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 941,
+              "correct": 241,
+              "precision": 0.2561105207226355,
+              "recall": 0.25638297872340426
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 1377,
+              "correct": 642,
+              "precision": 0.4662309368191721,
+              "recall": 0.46589259796806964
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 569,
+              "correct": 113,
+              "precision": 0.19859402460456943,
+              "recall": 0.19859402460456943
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 241,
+              "flat": 479,
+              "down": 220
+            },
+            "flat": {
+              "up": 500,
+              "flat": 642,
+              "down": 236
+            },
+            "down": {
+              "up": 200,
+              "flat": 256,
+              "down": 113
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.6785996114878626,
+            "ci95": [
+              0.6363922006842662,
+              0.7197804782539995
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "reversal_H": {
+          "n": 2887,
+          "correct": 1062,
+          "accuracy": 0.36785590578455146,
+          "accuracy_wilson95": [
+            0.35045208431953995,
+            0.38561092333108976
+          ],
+          "brier": 1.2642881884308972,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 569,
+              "correct": 220,
+              "precision": 0.3866432337434095,
+              "recall": 0.23404255319148937
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 1377,
+              "correct": 642,
+              "precision": 0.4662309368191721,
+              "recall": 0.46589259796806964
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 941,
+              "correct": 200,
+              "precision": 0.21253985122210414,
+              "recall": 0.351493848857645
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 220,
+              "flat": 479,
+              "down": 241
+            },
+            "flat": {
+              "up": 236,
+              "flat": 642,
+              "down": 500
+            },
+            "down": {
+              "up": 113,
+              "flat": 256,
+              "down": 200
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.6328774085089919,
+            "ci95": [
+              0.5732385342960133,
+              0.6886082713253311
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "vol_prior_d": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6331963866127696,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0017856066908642618,
+            "ci95": [
+              -0.0025294411785027975,
+              0.0058903170611557705
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_cross": {
+          "n": 2887,
+          "correct": 1362,
+          "accuracy": 0.47177000346380327,
+          "accuracy_wilson95": [
+            0.45360993943605726,
+            0.49000509365313366
+          ],
+          "brier": 0.6334672337740567,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 183,
+              "correct": 64,
+              "precision": 0.34972677595628415,
+              "recall": 0.06808510638297872
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2704,
+              "correct": 1298,
+              "precision": 0.48002958579881655,
+              "recall": 0.941944847605225
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 64,
+              "flat": 876,
+              "down": 0
+            },
+            "flat": {
+              "up": 80,
+              "flat": 1298,
+              "down": 0
+            },
+            "down": {
+              "up": 39,
+              "flat": 530,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.002056453852151519,
+            "ci95": [
+              -0.0009281856092379321,
+              0.004930073634929825
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_trend": {
+          "n": 2887,
+          "correct": 1331,
+          "accuracy": 0.46103221337028055,
+          "accuracy_wilson95": [
+            0.4429127471602977,
+            0.47925524330024183
+          ],
+          "brier": 0.6331606767494292,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 152,
+              "correct": 36,
+              "precision": 0.23684210526315788,
+              "recall": 0.03829787234042553
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2735,
+              "correct": 1295,
+              "precision": 0.473491773308958,
+              "recall": 0.9397677793904209
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 36,
+              "flat": 904,
+              "down": 0
+            },
+            "flat": {
+              "up": 83,
+              "flat": 1295,
+              "down": 0
+            },
+            "down": {
+              "up": 33,
+              "flat": 536,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0017498968275239002,
+            "ci95": [
+              -0.004585630314984037,
+              0.008294668530194211
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_rsi14": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.632180509983118,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0007697300612128212,
+            "ci95": [
+              -0.0027578790926037597,
+              0.0050714981796417735
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_kd": {
+          "n": 2887,
+          "correct": 1377,
+          "accuracy": 0.47696570834776586,
+          "accuracy_wilson95": [
+            0.4587890306268269,
+            0.495203603734292
+          ],
+          "brier": 0.6299506746828502,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 110,
+              "correct": 43,
+              "precision": 0.39090909090909093,
+              "recall": 0.045744680851063826
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2777,
+              "correct": 1334,
+              "precision": 0.4803745048613612,
+              "recall": 0.9680696661828737
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 43,
+              "flat": 897,
+              "down": 0
+            },
+            "flat": {
+              "up": 44,
+              "flat": 1334,
+              "down": 0
+            },
+            "down": {
+              "up": 23,
+              "flat": 546,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": -0.0014601052390550535,
+            "ci95": [
+              -0.005789691365678736,
+              0.002777937482872653
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_macd": {
+          "n": 2887,
+          "correct": 1367,
+          "accuracy": 0.4735019050917908,
+          "accuracy_wilson95": [
+            0.45533608389148006,
+            0.4917381496216868
+          ],
+          "brier": 0.6296116095542936,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 50,
+              "correct": 10,
+              "precision": 0.2,
+              "recall": 0.010638297872340425
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2837,
+              "correct": 1357,
+              "precision": 0.4783221713077194,
+              "recall": 0.9847605224963716
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 10,
+              "flat": 930,
+              "down": 0
+            },
+            "flat": {
+              "up": 21,
+              "flat": 1357,
+              "down": 0
+            },
+            "down": {
+              "up": 19,
+              "flat": 550,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": -0.0017991703676116036,
+            "ci95": [
+              -0.007714638970524405,
+              0.003979416616183931
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bollinger": {
+          "n": 2887,
+          "correct": 1381,
+          "accuracy": 0.47835122965015586,
+          "accuracy_wilson95": [
+            0.4601704547479677,
+            0.496589539952332
+          ],
+          "brier": 0.6315530810173065,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 24,
+              "correct": 10,
+              "precision": 0.4166666666666667,
+              "recall": 0.010638297872340425
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2863,
+              "correct": 1371,
+              "precision": 0.47886831994411455,
+              "recall": 0.9949201741654572
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 10,
+              "flat": 930,
+              "down": 0
+            },
+            "flat": {
+              "up": 7,
+              "flat": 1371,
+              "down": 0
+            },
+            "down": {
+              "up": 7,
+              "flat": 562,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0001423010954012535,
+            "ci95": [
+              -0.0029018832390482535,
+              0.0034941725820598333
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bias20": {
+          "n": 2887,
+          "correct": 1297,
+          "accuracy": 0.44925528229996536,
+          "accuracy_wilson95": [
+            0.4311900869885899,
+            0.46745534058891275
+          ],
+          "brier": 0.6297691236606471,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 552,
+              "correct": 178,
+              "precision": 0.322463768115942,
+              "recall": 0.18936170212765957
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2335,
+              "correct": 1119,
+              "precision": 0.47922912205567453,
+              "recall": 0.8120464441219158
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 178,
+              "flat": 762,
+              "down": 0
+            },
+            "flat": {
+              "up": 259,
+              "flat": 1119,
+              "down": 0
+            },
+            "down": {
+              "up": 115,
+              "flat": 454,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": -0.0016416562612580825,
+            "ci95": [
+              -0.008818107239492431,
+              0.00585409569087318
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_vol_price": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6330653726786335,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0016545927567282507,
+            "ci95": [
+              -0.001333556438207073,
+              0.004657648688860122
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_foreign_net": {
+          "n": 2887,
+          "correct": 1375,
+          "accuracy": 0.47627294769657086,
+          "accuracy_wilson95": [
+            0.4580983711439128,
+            0.4945105830476158
+          ],
+          "brier": 0.6344012664669594,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 7,
+              "correct": 1,
+              "precision": 0.14285714285714285,
+              "recall": 0.0010638297872340426
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2880,
+              "correct": 1374,
+              "precision": 0.47708333333333336,
+              "recall": 0.9970972423802612
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 1,
+              "flat": 939,
+              "down": 0
+            },
+            "flat": {
+              "up": 4,
+              "flat": 1374,
+              "down": 0
+            },
+            "down": {
+              "up": 2,
+              "flat": 567,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0029904865450540645,
+            "ci95": [
+              -0.000558626029868779,
+              0.006469806198919956
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_trust_net": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6337583963055586,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.002347616383653371,
+            "ci95": [
+              -0.0004872003785383268,
+              0.005326633838019559
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_margin_chg": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6329788095743527,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": 0.0015680296524475102,
+            "ci95": [
+              -0.0004901345502344118,
+              0.0038305156840459306
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_logit": {
+          "n": 2887,
+          "correct": 1382,
+          "accuracy": 0.4786976099757534,
+          "accuracy_wilson95": [
+            0.4605158326808415,
+            0.4969360021042535
+          ],
+          "brier": 0.6264439184342763,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 218,
+              "correct": 87,
+              "precision": 0.39908256880733944,
+              "recall": 0.0925531914893617
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2669,
+              "correct": 1295,
+              "precision": 0.48520044960659425,
+              "recall": 0.9397677793904209
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 87,
+              "flat": 853,
+              "down": 0
+            },
+            "flat": {
+              "up": 83,
+              "flat": 1295,
+              "down": 0
+            },
+            "down": {
+              "up": 48,
+              "flat": 521,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2887,
+            "difference": -0.004966861487628888,
+            "ci95": [
+              -0.010866412957467634,
+              0.0009191331542501099
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        }
+      },
+      "shortlist": [],
+      "claims_vs_frequency": [
+        {
+          "indicator": "ma_cross",
+          "state": "bear",
+          "claim": "死亡交叉偏空",
+          "n": 261,
+          "counts": {
+            "up": 103,
+            "flat": 111,
+            "down": 47
+          },
+          "frequencies": {
+            "up": 0.3946360153256705,
+            "flat": 0.42528735632183906,
+            "down": 0.18007662835249041
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "bull",
+          "claim": "黃金交叉偏多",
+          "n": 271,
+          "counts": {
+            "up": 80,
+            "flat": 136,
+            "down": 55
+          },
+          "frequencies": {
+            "up": 0.2952029520295203,
+            "flat": 0.5018450184501845,
+            "down": 0.2029520295202952
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 2355,
+          "counts": {
+            "up": 757,
+            "flat": 1131,
+            "down": 467
+          },
+          "frequencies": {
+            "up": 0.3214437367303609,
+            "flat": 0.4802547770700637,
+            "down": 0.19830148619957538
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bear",
+          "claim": "跌破長均線偏空",
+          "n": 860,
+          "counts": {
+            "up": 333,
+            "flat": 373,
+            "down": 154
+          },
+          "frequencies": {
+            "up": 0.3872093023255814,
+            "flat": 0.43372093023255814,
+            "down": 0.17906976744186046
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bull",
+          "claim": "站上長均線偏多",
+          "n": 2027,
+          "counts": {
+            "up": 607,
+            "flat": 1005,
+            "down": 415
+          },
+          "frequencies": {
+            "up": 0.2994573260976813,
+            "flat": 0.4958066107548101,
+            "down": 0.20473606314750864
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2653,
+          "counts": {
+            "up": 870,
+            "flat": 1258,
+            "down": 525
+          },
+          "frequencies": {
+            "up": 0.32793064455333587,
+            "flat": 0.4741801733886167,
+            "down": 0.19788918205804748
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "overbought",
+          "claim": "超買可能回落",
+          "n": 212,
+          "counts": {
+            "up": 56,
+            "flat": 115,
+            "down": 41
+          },
+          "frequencies": {
+            "up": 0.2641509433962264,
+            "flat": 0.5424528301886793,
+            "down": 0.19339622641509435
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "oversold",
+          "claim": "超賣可能反彈",
+          "n": 22,
+          "counts": {
+            "up": 14,
+            "flat": 5,
+            "down": 3
+          },
+          "frequencies": {
+            "up": 0.6363636363636364,
+            "flat": 0.22727272727272727,
+            "down": 0.13636363636363635
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bear_cross",
+          "claim": "高檔死亡交叉偏空",
+          "n": 56,
+          "counts": {
+            "up": 18,
+            "flat": 29,
+            "down": 9
+          },
+          "frequencies": {
+            "up": 0.32142857142857145,
+            "flat": 0.5178571428571429,
+            "down": 0.16071428571428573
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bull_cross",
+          "claim": "低檔黃金交叉偏多",
+          "n": 9,
+          "counts": {
+            "up": 3,
+            "flat": 5,
+            "down": 1
+          },
+          "frequencies": {
+            "up": 0.3333333333333333,
+            "flat": 0.5555555555555556,
+            "down": 0.1111111111111111
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "high",
+          "claim": "無預設方向",
+          "n": 587,
+          "counts": {
+            "up": 150,
+            "flat": 321,
+            "down": 116
+          },
+          "frequencies": {
+            "up": 0.2555366269165247,
+            "flat": 0.5468483816013628,
+            "down": 0.19761499148211242
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "low",
+          "claim": "無預設方向",
+          "n": 179,
+          "counts": {
+            "up": 82,
+            "flat": 68,
+            "down": 29
+          },
+          "frequencies": {
+            "up": 0.4581005586592179,
+            "flat": 0.37988826815642457,
+            "down": 0.16201117318435754
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2056,
+          "counts": {
+            "up": 687,
+            "flat": 955,
+            "down": 414
+          },
+          "frequencies": {
+            "up": 0.3341439688715953,
+            "flat": 0.46449416342412453,
+            "down": 0.20136186770428016
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bear_flip",
+          "claim": "柱狀體翻負偏空",
+          "n": 128,
+          "counts": {
+            "up": 47,
+            "flat": 64,
+            "down": 17
+          },
+          "frequencies": {
+            "up": 0.3671875,
+            "flat": 0.5,
+            "down": 0.1328125
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bull_flip",
+          "claim": "柱狀體翻正偏多",
+          "n": 127,
+          "counts": {
+            "up": 38,
+            "flat": 69,
+            "down": 20
+          },
+          "frequencies": {
+            "up": 0.2992125984251969,
+            "flat": 0.5433070866141733,
+            "down": 0.15748031496062992
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "negative",
+          "claim": "無預設方向",
+          "n": 1277,
+          "counts": {
+            "up": 470,
+            "flat": 533,
+            "down": 274
+          },
+          "frequencies": {
+            "up": 0.36805011746280347,
+            "flat": 0.41738449490994517,
+            "down": 0.21456538762725136
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "positive",
+          "claim": "無預設方向",
+          "n": 1355,
+          "counts": {
+            "up": 385,
+            "flat": 712,
+            "down": 258
+          },
+          "frequencies": {
+            "up": 0.28413284132841327,
+            "flat": 0.5254612546125461,
+            "down": 0.1904059040590406
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "above",
+          "claim": "上軌突破（追勢／反轉說法並存）",
+          "n": 224,
+          "counts": {
+            "up": 55,
+            "flat": 125,
+            "down": 44
+          },
+          "frequencies": {
+            "up": 0.24553571428571427,
+            "flat": 0.5580357142857143,
+            "down": 0.19642857142857142
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "below",
+          "claim": "下軌跌破（追勢／反轉說法並存）",
+          "n": 96,
+          "counts": {
+            "up": 40,
+            "flat": 32,
+            "down": 24
+          },
+          "frequencies": {
+            "up": 0.4166666666666667,
+            "flat": 0.3333333333333333,
+            "down": 0.25
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "inside",
+          "claim": "無預設方向",
+          "n": 2567,
+          "counts": {
+            "up": 845,
+            "flat": 1221,
+            "down": 501
+          },
+          "frequencies": {
+            "up": 0.32917802882742503,
+            "flat": 0.4756525126606934,
+            "down": 0.19516945851188158
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "high",
+          "claim": "高乖離可能回落",
+          "n": 1021,
+          "counts": {
+            "up": 277,
+            "flat": 538,
+            "down": 206
+          },
+          "frequencies": {
+            "up": 0.2713026444662096,
+            "flat": 0.5269343780607247,
+            "down": 0.20176297747306562
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "low",
+          "claim": "低乖離可能反彈",
+          "n": 943,
+          "counts": {
+            "up": 371,
+            "flat": 382,
+            "down": 190
+          },
+          "frequencies": {
+            "up": 0.3934252386002121,
+            "flat": 0.4050901378579003,
+            "down": 0.2014846235418876
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 916,
+          "counts": {
+            "up": 292,
+            "flat": 453,
+            "down": 171
+          },
+          "frequencies": {
+            "up": 0.31877729257641924,
+            "flat": 0.4945414847161572,
+            "down": 0.18668122270742357
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 7,
+          "counts": {
+            "up": 0,
+            "flat": 5,
+            "down": 2
+          },
+          "frequencies": {
+            "up": 0.0,
+            "flat": 0.7142857142857143,
+            "down": 0.2857142857142857
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_high",
+          "claim": "價跌量增偏空",
+          "n": 528,
+          "counts": {
+            "up": 196,
+            "flat": 247,
+            "down": 85
+          },
+          "frequencies": {
+            "up": 0.3712121212121212,
+            "flat": 0.4678030303030303,
+            "down": 0.16098484848484848
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_low",
+          "claim": "無預設方向",
+          "n": 700,
+          "counts": {
+            "up": 245,
+            "flat": 317,
+            "down": 138
+          },
+          "frequencies": {
+            "up": 0.35,
+            "flat": 0.45285714285714285,
+            "down": 0.19714285714285715
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_high",
+          "claim": "無預設方向",
+          "n": 62,
+          "counts": {
+            "up": 22,
+            "flat": 28,
+            "down": 12
+          },
+          "frequencies": {
+            "up": 0.3548387096774194,
+            "flat": 0.45161290322580644,
+            "down": 0.1935483870967742
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_low",
+          "claim": "無預設方向",
+          "n": 195,
+          "counts": {
+            "up": 53,
+            "flat": 93,
+            "down": 49
+          },
+          "frequencies": {
+            "up": 0.2717948717948718,
+            "flat": 0.47692307692307695,
+            "down": 0.2512820512820513
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_high",
+          "claim": "價漲量增偏多",
+          "n": 596,
+          "counts": {
+            "up": 180,
+            "flat": 299,
+            "down": 117
+          },
+          "frequencies": {
+            "up": 0.30201342281879195,
+            "flat": 0.5016778523489933,
+            "down": 0.19630872483221476
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_low",
+          "claim": "無預設方向",
+          "n": 806,
+          "counts": {
+            "up": 244,
+            "flat": 394,
+            "down": 168
+          },
+          "frequencies": {
+            "up": 0.3027295285359802,
+            "flat": 0.48883374689826303,
+            "down": 0.20843672456575682
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 157,
+            "flat": 270,
+            "down": 92
+          },
+          "frequencies": {
+            "up": 0.302504816955684,
+            "flat": 0.5202312138728323,
+            "down": 0.17726396917148363
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "negative",
+          "claim": "外資賣超偏空",
+          "n": 1148,
+          "counts": {
+            "up": 405,
+            "flat": 509,
+            "down": 234
+          },
+          "frequencies": {
+            "up": 0.352787456445993,
+            "flat": 0.44337979094076657,
+            "down": 0.2038327526132404
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "positive",
+          "claim": "外資買超偏多",
+          "n": 1220,
+          "counts": {
+            "up": 378,
+            "flat": 599,
+            "down": 243
+          },
+          "frequencies": {
+            "up": 0.30983606557377047,
+            "flat": 0.49098360655737705,
+            "down": 0.19918032786885245
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 157,
+            "flat": 270,
+            "down": 92
+          },
+          "frequencies": {
+            "up": 0.302504816955684,
+            "flat": 0.5202312138728323,
+            "down": 0.17726396917148363
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "negative",
+          "claim": "投信賣超偏空",
+          "n": 1275,
+          "counts": {
+            "up": 396,
+            "flat": 605,
+            "down": 274
+          },
+          "frequencies": {
+            "up": 0.31058823529411766,
+            "flat": 0.4745098039215686,
+            "down": 0.21490196078431373
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "positive",
+          "claim": "投信買超偏多",
+          "n": 1093,
+          "counts": {
+            "up": 387,
+            "flat": 503,
+            "down": 203
+          },
+          "frequencies": {
+            "up": 0.35407136322049404,
+            "flat": 0.4602012808783166,
+            "down": 0.18572735590118938
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "negative",
+          "claim": "融資減少（追勢／反向說法並存）",
+          "n": 1539,
+          "counts": {
+            "up": 482,
+            "flat": 760,
+            "down": 297
+          },
+          "frequencies": {
+            "up": 0.31319038336582194,
+            "flat": 0.49382716049382713,
+            "down": 0.19298245614035087
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "positive",
+          "claim": "融資增加（追勢／反向說法並存）",
+          "n": 1348,
+          "counts": {
+            "up": 458,
+            "flat": 618,
+            "down": 272
+          },
+          "frequencies": {
+            "up": 0.3397626112759644,
+            "flat": 0.45845697329376855,
+            "down": 0.20178041543026706
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        }
+      ]
+    },
+    "14": {
+      "threshold": {
+        "denominator": 40,
+        "numerator": 1
+      },
+      "n": 2880,
+      "expected_scorable": 2880,
+      "complete": true,
+      "methods": {
+        "always_flat": {
+          "n": 2880,
+          "correct": 1184,
+          "accuracy": 0.4111111111111111,
+          "accuracy_wilson95": [
+            0.3932710965744202,
+            0.4291879368672535
+          ],
+          "brier": 1.1777777777777778,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2880,
+              "correct": 1184,
+              "precision": 0.4111111111111111,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 1153,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1184,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 543,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.5327788546949259,
+            "ci95": [
+              0.45928474457543383,
+              0.6023281089167116
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "momentum_H": {
+          "n": 2880,
+          "correct": 1010,
+          "accuracy": 0.3506944444444444,
+          "accuracy_wilson95": [
+            0.3334760735390085,
+            0.36831058419505275
+          ],
+          "brier": 1.2986111111111112,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1158,
+              "correct": 418,
+              "precision": 0.3609671848013817,
+              "recall": 0.36253252385082396
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1179,
+              "correct": 487,
+              "precision": 0.41306191687871074,
+              "recall": 0.41131756756756754
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 543,
+              "correct": 105,
+              "precision": 0.19337016574585636,
+              "recall": 0.19337016574585636
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 418,
+              "flat": 482,
+              "down": 253
+            },
+            "flat": {
+              "up": 512,
+              "flat": 487,
+              "down": 185
+            },
+            "down": {
+              "up": 228,
+              "flat": 210,
+              "down": 105
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.6536121880282593,
+            "ci95": [
+              0.5893932140828629,
+              0.7207782412706272
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "reversal_H": {
+          "n": 2880,
+          "correct": 968,
+          "accuracy": 0.33611111111111114,
+          "accuracy_wilson95": [
+            0.31908747268879806,
+            0.3535713702192878
+          ],
+          "brier": 1.3277777777777777,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 543,
+              "correct": 253,
+              "precision": 0.46593001841620624,
+              "recall": 0.2194275802254987
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1179,
+              "correct": 487,
+              "precision": 0.41306191687871074,
+              "recall": 0.41131756756756754
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 1158,
+              "correct": 228,
+              "precision": 0.19689119170984457,
+              "recall": 0.4198895027624309
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 253,
+              "flat": 482,
+              "down": 418
+            },
+            "flat": {
+              "up": 185,
+              "flat": 487,
+              "down": 512
+            },
+            "down": {
+              "up": 105,
+              "flat": 210,
+              "down": 228
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.6827788546949259,
+            "ci95": [
+              0.6014190673978377,
+              0.7593366501627268
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "vol_prior_d": {
+          "n": 2880,
+          "correct": 1128,
+          "accuracy": 0.39166666666666666,
+          "accuracy_wilson95": [
+            0.3739951557800023,
+            0.4096267912270375
+          ],
+          "brier": 0.6527494588875051,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 890,
+              "correct": 348,
+              "precision": 0.39101123595505616,
+              "recall": 0.3018213356461405
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1960,
+              "correct": 780,
+              "precision": 0.3979591836734694,
+              "recall": 0.6587837837837838
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 30,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 348,
+              "flat": 791,
+              "down": 14
+            },
+            "flat": {
+              "up": 388,
+              "flat": 780,
+              "down": 16
+            },
+            "down": {
+              "up": 154,
+              "flat": 389,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.007750535804653279,
+            "ci95": [
+              0.002156298589381018,
+              0.013857935122734102
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_cross": {
+          "n": 2880,
+          "correct": 1155,
+          "accuracy": 0.4010416666666667,
+          "accuracy_wilson95": [
+            0.38328526050810086,
+            0.41906171031563755
+          ],
+          "brier": 0.6470714753845279,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 312,
+              "correct": 102,
+              "precision": 0.3269230769230769,
+              "recall": 0.08846487424111014
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2556,
+              "correct": 1053,
+              "precision": 0.4119718309859155,
+              "recall": 0.8893581081081081
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 102,
+              "flat": 1044,
+              "down": 7
+            },
+            "flat": {
+              "up": 126,
+              "flat": 1053,
+              "down": 5
+            },
+            "down": {
+              "up": 84,
+              "flat": 459,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0020725523016759694,
+            "ci95": [
+              -0.00010934031465955675,
+              0.00454001420733197
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_ma_trend": {
+          "n": 2880,
+          "correct": 1251,
+          "accuracy": 0.434375,
+          "accuracy_wilson95": [
+            0.416371349732147,
+            0.45255348355096375
+          ],
+          "brier": 0.6481920685728504,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 830,
+              "correct": 380,
+              "precision": 0.4578313253012048,
+              "recall": 0.3295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2036,
+              "correct": 871,
+              "precision": 0.42779960707269155,
+              "recall": 0.7356418918918919
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 14,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 380,
+              "flat": 766,
+              "down": 7
+            },
+            "flat": {
+              "up": 306,
+              "flat": 871,
+              "down": 7
+            },
+            "down": {
+              "up": 144,
+              "flat": 399,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0031931454899985336,
+            "ci95": [
+              -0.005646663269152267,
+              0.012020341662058707
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_rsi14": {
+          "n": 2880,
+          "correct": 1141,
+          "accuracy": 0.39618055555555554,
+          "accuracy_wilson95": [
+            0.3784673149129718,
+            0.41417038430210795
+          ],
+          "brier": 0.6472927429041133,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 194,
+              "correct": 67,
+              "precision": 0.34536082474226804,
+              "recall": 0.058109280138768434
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2611,
+              "correct": 1051,
+              "precision": 0.4025277671390272,
+              "recall": 0.887668918918919
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 75,
+              "correct": 23,
+              "precision": 0.30666666666666664,
+              "recall": 0.0423572744014733
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 67,
+              "flat": 1074,
+              "down": 12
+            },
+            "flat": {
+              "up": 93,
+              "flat": 1051,
+              "down": 40
+            },
+            "down": {
+              "up": 34,
+              "flat": 486,
+              "down": 23
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.002293819821261409,
+            "ci95": [
+              -0.005485149116335424,
+              0.010899932781582
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_kd": {
+          "n": 2880,
+          "correct": 1104,
+          "accuracy": 0.38333333333333336,
+          "accuracy_wilson95": [
+            0.36574306319951655,
+            0.40123441819268024
+          ],
+          "brier": 0.6472574288102356,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1099,
+              "correct": 408,
+              "precision": 0.37124658780709735,
+              "recall": 0.3538594969644406
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1769,
+              "correct": 696,
+              "precision": 0.39344262295081966,
+              "recall": 0.5878378378378378
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 408,
+              "flat": 738,
+              "down": 7
+            },
+            "flat": {
+              "up": 483,
+              "flat": 696,
+              "down": 5
+            },
+            "down": {
+              "up": 208,
+              "flat": 335,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0022585057273837215,
+            "ci95": [
+              -0.004371829467585958,
+              0.008745183720512688
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_macd": {
+          "n": 2880,
+          "correct": 1232,
+          "accuracy": 0.42777777777777776,
+          "accuracy_wilson95": [
+            0.40981638211552607,
+            0.44593158255583376
+          ],
+          "brier": 0.6473335662139923,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1196,
+              "correct": 494,
+              "precision": 0.41304347826086957,
+              "recall": 0.4284475281873374
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1672,
+              "correct": 738,
+              "precision": 0.44138755980861244,
+              "recall": 0.6233108108108109
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 494,
+              "flat": 652,
+              "down": 7
+            },
+            "flat": {
+              "up": 441,
+              "flat": 738,
+              "down": 5
+            },
+            "down": {
+              "up": 261,
+              "flat": 282,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.002334643131140387,
+            "ci95": [
+              -0.004520562564199287,
+              0.009439946473133695
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bollinger": {
+          "n": 2880,
+          "correct": 1126,
+          "accuracy": 0.3909722222222222,
+          "accuracy_wilson95": [
+            0.37330727273269176,
+            0.4089276354731111
+          ],
+          "brier": 0.6468195551101734,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 260,
+              "correct": 71,
+              "precision": 0.27307692307692305,
+              "recall": 0.06157849089332177
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2608,
+              "correct": 1055,
+              "precision": 0.40452453987730064,
+              "recall": 0.8910472972972973
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 71,
+              "flat": 1075,
+              "down": 7
+            },
+            "flat": {
+              "up": 124,
+              "flat": 1055,
+              "down": 5
+            },
+            "down": {
+              "up": 65,
+              "flat": 478,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0018206320273214866,
+            "ci95": [
+              -0.0013343465060649043,
+              0.004953396509801937
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_bias20": {
+          "n": 2880,
+          "correct": 1226,
+          "accuracy": 0.42569444444444443,
+          "accuracy_wilson95": [
+            0.4077470717731855,
+            0.4438397764944636
+          ],
+          "brier": 0.6481051973040735,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1169,
+              "correct": 503,
+              "precision": 0.43028229255774164,
+              "recall": 0.4362532523850824
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1695,
+              "correct": 723,
+              "precision": 0.4265486725663717,
+              "recall": 0.6106418918918919
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 16,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 503,
+              "flat": 640,
+              "down": 10
+            },
+            "flat": {
+              "up": 455,
+              "flat": 723,
+              "down": 6
+            },
+            "down": {
+              "up": 211,
+              "flat": 332,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.003106274221221522,
+            "ci95": [
+              -0.005679159159700267,
+              0.011732779510371869
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_vol_price": {
+          "n": 2880,
+          "correct": 1190,
+          "accuracy": 0.4131944444444444,
+          "accuracy_wilson95": [
+            0.3953381028590153,
+            0.4312820469863692
+          ],
+          "brier": 0.6476230365622244,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 748,
+              "correct": 309,
+              "precision": 0.41310160427807485,
+              "recall": 0.26799653078924546
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2120,
+              "correct": 881,
+              "precision": 0.41556603773584905,
+              "recall": 0.7440878378378378
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 309,
+              "flat": 837,
+              "down": 7
+            },
+            "flat": {
+              "up": 298,
+              "flat": 881,
+              "down": 5
+            },
+            "down": {
+              "up": 141,
+              "flat": 402,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.002624113479372518,
+            "ci95": [
+              -0.0001424228459807753,
+              0.00555839233617435
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_foreign_net": {
+          "n": 2880,
+          "correct": 1169,
+          "accuracy": 0.4059027777777778,
+          "accuracy_wilson95": [
+            0.3881050350156599,
+            0.4239512074167369
+          ],
+          "brier": 0.648970918476693,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1259,
+              "correct": 502,
+              "precision": 0.3987291501191422,
+              "recall": 0.43538594969644406
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1609,
+              "correct": 667,
+              "precision": 0.41454319453076444,
+              "recall": 0.5633445945945946
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 502,
+              "flat": 644,
+              "down": 7
+            },
+            "flat": {
+              "up": 512,
+              "flat": 667,
+              "down": 5
+            },
+            "down": {
+              "up": 245,
+              "flat": 298,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.003971995393841078,
+            "ci95": [
+              -0.0016327335667459517,
+              0.010009684073096294
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_trust_net": {
+          "n": 2880,
+          "correct": 1269,
+          "accuracy": 0.440625,
+          "accuracy_wilson95": [
+            0.42258432331314755,
+            0.4588238591810955
+          ],
+          "brier": 0.6478168185512443,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1047,
+              "correct": 472,
+              "precision": 0.45081184336198665,
+              "recall": 0.409366869037294
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1821,
+              "correct": 797,
+              "precision": 0.43767160900604063,
+              "recall": 0.6731418918918919
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 472,
+              "flat": 674,
+              "down": 7
+            },
+            "flat": {
+              "up": 382,
+              "flat": 797,
+              "down": 5
+            },
+            "down": {
+              "up": 193,
+              "flat": 350,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0028178954683923795,
+            "ci95": [
+              -0.003033452978480918,
+              0.009004842467532737
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_margin_chg": {
+          "n": 2880,
+          "correct": 1133,
+          "accuracy": 0.39340277777777777,
+          "accuracy_wilson95": [
+            0.37571502861056927,
+            0.4113745153995628
+          ],
+          "brier": 0.6468315493208873,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 389,
+              "correct": 131,
+              "precision": 0.33676092544987146,
+              "recall": 0.11361665221162186
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2479,
+              "correct": 1002,
+              "precision": 0.40419524001613555,
+              "recall": 0.8462837837837838
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 131,
+              "flat": 1015,
+              "down": 7
+            },
+            "flat": {
+              "up": 177,
+              "flat": 1002,
+              "down": 5
+            },
+            "down": {
+              "up": 81,
+              "flat": 462,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": 0.0018326262380353182,
+            "ci95": [
+              -0.00042038536193818516,
+              0.004047315145404976
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        },
+        "ind_logit": {
+          "n": 2880,
+          "correct": 1195,
+          "accuracy": 0.4149305555555556,
+          "accuracy_wilson95": [
+            0.39706086115825734,
+            0.4330268856902195
+          ],
+          "brier": 0.6446866413010583,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 935,
+              "correct": 385,
+              "precision": 0.4117647058823529,
+              "recall": 0.3339115351257589
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1933,
+              "correct": 810,
+              "precision": 0.4190377651319193,
+              "recall": 0.6841216216216216
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 385,
+              "flat": 761,
+              "down": 7
+            },
+            "flat": {
+              "up": 369,
+              "flat": 810,
+              "down": 5
+            },
+            "down": {
+              "up": 181,
+              "flat": 362,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          },
+          "brier_vs_majority": {
+            "n": 2880,
+            "difference": -0.000312281781793606,
+            "ci95": [
+              -0.007628787962655498,
+              0.007474666667638965
+            ],
+            "blocks": 145,
+            "block_sessions": 20,
+            "repetitions": 2000,
+            "seed": 20260927,
+            "layout": "nonoverlapping_keep_tail"
+          },
+          "verdict": "未入圍",
+          "coverage": 1.0,
+          "missing": 0
+        }
+      },
+      "shortlist": [],
+      "claims_vs_frequency": [
+        {
+          "indicator": "ma_cross",
+          "state": "bear",
+          "claim": "死亡交叉偏空",
+          "n": 260,
+          "counts": {
+            "up": 103,
+            "flat": 100,
+            "down": 57
+          },
+          "frequencies": {
+            "up": 0.39615384615384613,
+            "flat": 0.38461538461538464,
+            "down": 0.21923076923076923
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "bull",
+          "claim": "黃金交叉偏多",
+          "n": 269,
+          "counts": {
+            "up": 106,
+            "flat": 104,
+            "down": 59
+          },
+          "frequencies": {
+            "up": 0.3940520446096654,
+            "flat": 0.38661710037174724,
+            "down": 0.21933085501858737
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_cross",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 2351,
+          "counts": {
+            "up": 944,
+            "flat": 980,
+            "down": 427
+          },
+          "frequencies": {
+            "up": 0.40153126329221606,
+            "flat": 0.41684389621437684,
+            "down": 0.18162484049340705
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bear",
+          "claim": "跌破長均線偏空",
+          "n": 860,
+          "counts": {
+            "up": 396,
+            "flat": 320,
+            "down": 144
+          },
+          "frequencies": {
+            "up": 0.4604651162790698,
+            "flat": 0.37209302325581395,
+            "down": 0.16744186046511628
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "bull",
+          "claim": "站上長均線偏多",
+          "n": 2020,
+          "counts": {
+            "up": 757,
+            "flat": 864,
+            "down": 399
+          },
+          "frequencies": {
+            "up": 0.37475247524752475,
+            "flat": 0.4277227722772277,
+            "down": 0.19752475247524753
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "ma_trend",
+          "state": "neutral",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2646,
+          "counts": {
+            "up": 1070,
+            "flat": 1093,
+            "down": 483
+          },
+          "frequencies": {
+            "up": 0.40438397581254726,
+            "flat": 0.41307634164777024,
+            "down": 0.18253968253968253
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "overbought",
+          "claim": "超買可能回落",
+          "n": 212,
+          "counts": {
+            "up": 66,
+            "flat": 88,
+            "down": 58
+          },
+          "frequencies": {
+            "up": 0.3113207547169811,
+            "flat": 0.41509433962264153,
+            "down": 0.27358490566037735
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "rsi14",
+          "state": "oversold",
+          "claim": "超賣可能反彈",
+          "n": 22,
+          "counts": {
+            "up": 17,
+            "flat": 3,
+            "down": 2
+          },
+          "frequencies": {
+            "up": 0.7727272727272727,
+            "flat": 0.13636363636363635,
+            "down": 0.09090909090909091
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bear_cross",
+          "claim": "高檔死亡交叉偏空",
+          "n": 56,
+          "counts": {
+            "up": 22,
+            "flat": 23,
+            "down": 11
+          },
+          "frequencies": {
+            "up": 0.39285714285714285,
+            "flat": 0.4107142857142857,
+            "down": 0.19642857142857142
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "bull_cross",
+          "claim": "低檔黃金交叉偏多",
+          "n": 9,
+          "counts": {
+            "up": 5,
+            "flat": 4,
+            "down": 0
+          },
+          "frequencies": {
+            "up": 0.5555555555555556,
+            "flat": 0.4444444444444444,
+            "down": 0.0
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "high",
+          "claim": "無預設方向",
+          "n": 587,
+          "counts": {
+            "up": 212,
+            "flat": 254,
+            "down": 121
+          },
+          "frequencies": {
+            "up": 0.36115843270868825,
+            "flat": 0.43270868824531517,
+            "down": 0.2061328790459966
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "low",
+          "claim": "無預設方向",
+          "n": 179,
+          "counts": {
+            "up": 91,
+            "flat": 65,
+            "down": 23
+          },
+          "frequencies": {
+            "up": 0.5083798882681564,
+            "flat": 0.36312849162011174,
+            "down": 0.12849162011173185
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 2049,
+          "counts": {
+            "up": 823,
+            "flat": 838,
+            "down": 388
+          },
+          "frequencies": {
+            "up": 0.40165934602244996,
+            "flat": 0.40897999023914106,
+            "down": 0.18936066373840899
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "kd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bear_flip",
+          "claim": "柱狀體翻負偏空",
+          "n": 127,
+          "counts": {
+            "up": 57,
+            "flat": 51,
+            "down": 19
+          },
+          "frequencies": {
+            "up": 0.44881889763779526,
+            "flat": 0.4015748031496063,
+            "down": 0.14960629921259844
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "bull_flip",
+          "claim": "柱狀體翻正偏多",
+          "n": 126,
+          "counts": {
+            "up": 51,
+            "flat": 55,
+            "down": 20
+          },
+          "frequencies": {
+            "up": 0.40476190476190477,
+            "flat": 0.4365079365079365,
+            "down": 0.15873015873015872
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "negative",
+          "claim": "無預設方向",
+          "n": 1272,
+          "counts": {
+            "up": 544,
+            "flat": 457,
+            "down": 271
+          },
+          "frequencies": {
+            "up": 0.4276729559748428,
+            "flat": 0.35927672955974843,
+            "down": 0.2130503144654088
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "positive",
+          "claim": "無預設方向",
+          "n": 1355,
+          "counts": {
+            "up": 501,
+            "flat": 621,
+            "down": 233
+          },
+          "frequencies": {
+            "up": 0.36974169741697416,
+            "flat": 0.45830258302583027,
+            "down": 0.17195571955719557
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "macd",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "above",
+          "claim": "上軌突破（追勢／反轉說法並存）",
+          "n": 224,
+          "counts": {
+            "up": 82,
+            "flat": 92,
+            "down": 50
+          },
+          "frequencies": {
+            "up": 0.36607142857142855,
+            "flat": 0.4107142857142857,
+            "down": 0.22321428571428573
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "below",
+          "claim": "下軌跌破（追勢／反轉說法並存）",
+          "n": 96,
+          "counts": {
+            "up": 44,
+            "flat": 34,
+            "down": 18
+          },
+          "frequencies": {
+            "up": 0.4583333333333333,
+            "flat": 0.3541666666666667,
+            "down": 0.1875
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "inside",
+          "claim": "無預設方向",
+          "n": 2560,
+          "counts": {
+            "up": 1027,
+            "flat": 1058,
+            "down": 475
+          },
+          "frequencies": {
+            "up": 0.401171875,
+            "flat": 0.41328125,
+            "down": 0.185546875
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bollinger",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "high",
+          "claim": "高乖離可能回落",
+          "n": 1021,
+          "counts": {
+            "up": 379,
+            "flat": 444,
+            "down": 198
+          },
+          "frequencies": {
+            "up": 0.3712047012732615,
+            "flat": 0.4348677766895201,
+            "down": 0.1939275220372184
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "low",
+          "claim": "低乖離可能反彈",
+          "n": 928,
+          "counts": {
+            "up": 417,
+            "flat": 338,
+            "down": 173
+          },
+          "frequencies": {
+            "up": 0.44935344827586204,
+            "flat": 0.3642241379310345,
+            "down": 0.18642241379310345
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "middle",
+          "claim": "無預設方向",
+          "n": 917,
+          "counts": {
+            "up": 357,
+            "flat": 395,
+            "down": 165
+          },
+          "frequencies": {
+            "up": 0.3893129770992366,
+            "flat": 0.430752453653217,
+            "down": 0.17993456924754633
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "bias20",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 14,
+          "counts": {
+            "up": 0,
+            "flat": 7,
+            "down": 7
+          },
+          "frequencies": {
+            "up": 0.0,
+            "flat": 0.5,
+            "down": 0.5
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_high",
+          "claim": "價跌量增偏空",
+          "n": 528,
+          "counts": {
+            "up": 231,
+            "flat": 200,
+            "down": 97
+          },
+          "frequencies": {
+            "up": 0.4375,
+            "flat": 0.3787878787878788,
+            "down": 0.18371212121212122
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "down_low",
+          "claim": "無預設方向",
+          "n": 696,
+          "counts": {
+            "up": 296,
+            "flat": 285,
+            "down": 115
+          },
+          "frequencies": {
+            "up": 0.42528735632183906,
+            "flat": 0.40948275862068967,
+            "down": 0.16522988505747127
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_high",
+          "claim": "無預設方向",
+          "n": 62,
+          "counts": {
+            "up": 26,
+            "flat": 21,
+            "down": 15
+          },
+          "frequencies": {
+            "up": 0.41935483870967744,
+            "flat": 0.3387096774193548,
+            "down": 0.24193548387096775
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "flat_low",
+          "claim": "無預設方向",
+          "n": 195,
+          "counts": {
+            "up": 73,
+            "flat": 76,
+            "down": 46
+          },
+          "frequencies": {
+            "up": 0.37435897435897436,
+            "flat": 0.38974358974358975,
+            "down": 0.2358974358974359
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_high",
+          "claim": "價漲量增偏多",
+          "n": 595,
+          "counts": {
+            "up": 224,
+            "flat": 256,
+            "down": 115
+          },
+          "frequencies": {
+            "up": 0.3764705882352941,
+            "flat": 0.43025210084033616,
+            "down": 0.19327731092436976
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "vol_price",
+          "state": "up_low",
+          "claim": "無預設方向",
+          "n": 804,
+          "counts": {
+            "up": 303,
+            "flat": 346,
+            "down": 155
+          },
+          "frequencies": {
+            "up": 0.376865671641791,
+            "flat": 0.43034825870646765,
+            "down": 0.1927860696517413
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 183,
+            "flat": 250,
+            "down": 86
+          },
+          "frequencies": {
+            "up": 0.35260115606936415,
+            "flat": 0.4816955684007707,
+            "down": 0.16570327552986513
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "negative",
+          "claim": "外資賣超偏空",
+          "n": 1144,
+          "counts": {
+            "up": 483,
+            "flat": 434,
+            "down": 227
+          },
+          "frequencies": {
+            "up": 0.4222027972027972,
+            "flat": 0.3793706293706294,
+            "down": 0.19842657342657344
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "positive",
+          "claim": "外資買超偏多",
+          "n": 1217,
+          "counts": {
+            "up": 487,
+            "flat": 500,
+            "down": 230
+          },
+          "frequencies": {
+            "up": 0.40016433853738703,
+            "flat": 0.4108463434675431,
+            "down": 0.18898931799506985
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "foreign_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 519,
+          "counts": {
+            "up": 183,
+            "flat": 250,
+            "down": 86
+          },
+          "frequencies": {
+            "up": 0.35260115606936415,
+            "flat": 0.4816955684007707,
+            "down": 0.16570327552986513
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "negative",
+          "claim": "投信賣超偏空",
+          "n": 1274,
+          "counts": {
+            "up": 482,
+            "flat": 543,
+            "down": 249
+          },
+          "frequencies": {
+            "up": 0.3783359497645212,
+            "flat": 0.4262166405023548,
+            "down": 0.19544740973312402
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "positive",
+          "claim": "投信買超偏多",
+          "n": 1087,
+          "counts": {
+            "up": 488,
+            "flat": 391,
+            "down": 208
+          },
+          "frequencies": {
+            "up": 0.44894204231830726,
+            "flat": 0.35970561177552896,
+            "down": 0.19135234590616376
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "trust_net",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "missing",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "negative",
+          "claim": "融資減少（追勢／反向說法並存）",
+          "n": 1537,
+          "counts": {
+            "up": 608,
+            "flat": 643,
+            "down": 286
+          },
+          "frequencies": {
+            "up": 0.3955757970071568,
+            "flat": 0.4183474300585556,
+            "down": 0.18607677293428757
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "positive",
+          "claim": "融資增加（追勢／反向說法並存）",
+          "n": 1343,
+          "counts": {
+            "up": 545,
+            "flat": 541,
+            "down": 257
+          },
+          "frequencies": {
+            "up": 0.4058078927773641,
+            "flat": 0.4028294862248697,
+            "down": 0.1913626209977662
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        },
+        {
+          "indicator": "margin_chg",
+          "state": "zero",
+          "claim": "無預設方向",
+          "n": 0,
+          "counts": {
+            "up": 0,
+            "flat": 0,
+            "down": 0
+          },
+          "frequencies": {
+            "up": null,
+            "flat": null,
+            "down": null
+          },
+          "note": "描述性、未平滑；bias20 使用當時已揭曉樣本的切點"
+        }
+      ]
+    }
+  },
+  "multiplicity": {
+    "indicators_per_horizon": 11,
+    "indicator_tests": 33,
+    "all_nonreference_tests": 48,
+    "expected_lucky_indicators_per_horizon": 0.275,
+    "expected_lucky_indicators_all_horizons": 0.8250000000000001,
+    "expected_lucky_all_nonreference_tests": 1.2000000000000002,
+    "note": "每個天期測了 11 個指標，預期約 11×2.5%=0.275 個因運氣看起來較好；三天期共 33 次為 0.825 個。含基準與 logit 共 48 個非參考比較，約 1.2 個。此為名目估算，未作多重比較校正。"
+  },
+  "execution": {
+    "runs": [
+      {
+        "H": 3,
+        "points": 2894,
+        "scorable": 2891,
+        "new_predictions": 49198,
+        "refits": 132,
+        "http_calls": 0,
+        "network_attempts": 0
+      },
+      {
+        "H": 7,
+        "points": 2894,
+        "scorable": 2887,
+        "new_predictions": 49198,
+        "refits": 132,
+        "http_calls": 0,
+        "network_attempts": 0
+      },
+      {
+        "H": 14,
+        "points": 2894,
+        "scorable": 2880,
+        "new_predictions": 49198,
+        "refits": 131,
+        "http_calls": 0,
+        "network_attempts": 0
+      }
+    ],
+    "elapsed_seconds": 210.7847710410133,
+    "http_calls": 0,
+    "network_attempts": 0
+  }
+}

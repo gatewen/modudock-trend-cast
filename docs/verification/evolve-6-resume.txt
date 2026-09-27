@@ -1,0 +1,35 @@
+{"experiment": 4, "frozen": true, "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f"}
+{
+  "runs": [
+    {
+      "H": 3,
+      "points": 2894,
+      "scorable": 2891,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 7,
+      "points": 2894,
+      "scorable": 2887,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 14,
+      "points": 2894,
+      "scorable": 2880,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    }
+  ],
+  "elapsed_seconds": 10.247252624947578,
+  "http_calls": 0,
+  "network_attempts": 0
+}

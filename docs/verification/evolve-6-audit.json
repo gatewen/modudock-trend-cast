@@ -1,0 +1,37 @@
+{
+  "methods_checked": 51,
+  "bootstrap_intervals_checked": 51,
+  "full_raw_digest_matches": true,
+  "development_only": true,
+  "horizons": {
+    "3": {
+      "n": 2891,
+      "labels": {
+        "down": 816,
+        "flat": 1020,
+        "up": 1055
+      },
+      "shortlist": []
+    },
+    "7": {
+      "n": 2887,
+      "labels": {
+        "down": 569,
+        "flat": 1378,
+        "up": 940
+      },
+      "shortlist": []
+    },
+    "14": {
+      "n": 2880,
+      "labels": {
+        "down": 543,
+        "flat": 1184,
+        "up": 1153
+      },
+      "shortlist": []
+    }
+  },
+  "network_attempts": 0,
+  "development_labels_match_round_5": true
+}

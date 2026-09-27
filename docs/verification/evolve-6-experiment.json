@@ -1,0 +1,323 @@
+{
+  "id": 4,
+  "created_at": "2026-09-27T13:25:45+08:00",
+  "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "dev_digest": "dc2d71d42d9890c7677aeca6a1bc0a7345da0969b9bf0a2dab555509d01b44c1",
+  "config": {
+    "dev_end": "2021-12-31",
+    "dev_start": "2010-04-01",
+    "finmind_summary": {
+      "d_calendar": {
+        "first_day": "2010-01-04",
+        "last_day": "2024-07-23",
+        "rows": 3573,
+        "sha256": "bd1db133e47011b338e922f0840aa9aa289b924a1ea7cd81d46203f12423a47c"
+      },
+      "d_institutional": {
+        "first_day": "2012-05-02",
+        "last_day": "2024-07-23",
+        "rows": 12953,
+        "sha256": "db929c5c3136cc6c2a922ca8017e01d1689f7d88a0c44214fedf43e4410f947e"
+      },
+      "d_margin": {
+        "first_day": "2010-01-04",
+        "last_day": "2024-07-23",
+        "rows": 3573,
+        "sha256": "29366a46109b2f946e3b54fc4f699514fe3e02b0611247006b500204b8a5f728"
+      }
+    },
+    "first_prediction": "2010-04-07",
+    "hold_end": "2024-07-25",
+    "hold_start": "2022-01-03",
+    "protocol": {
+      "bias20": {
+        "window": 20
+      },
+      "bollinger": {
+        "ddof": 0,
+        "sigma": 2,
+        "window": 20
+      },
+      "bootstrap": {
+        "block_sessions": 20,
+        "iterations": 2000,
+        "layout": "nonoverlapping_keep_tail",
+        "seed": 20260927
+      },
+      "chip_lag_sessions": 1,
+      "claims": {
+        "bias20": {
+          "high": "高乖離可能回落",
+          "low": "低乖離可能反彈"
+        },
+        "bollinger": {
+          "above": "上軌突破（追勢／反轉說法並存）",
+          "below": "下軌跌破（追勢／反轉說法並存）"
+        },
+        "foreign_net": {
+          "negative": "外資賣超偏空",
+          "positive": "外資買超偏多"
+        },
+        "kd": {
+          "bear_cross": "高檔死亡交叉偏空",
+          "bull_cross": "低檔黃金交叉偏多"
+        },
+        "ma_cross": {
+          "bear": "死亡交叉偏空",
+          "bull": "黃金交叉偏多"
+        },
+        "ma_trend": {
+          "bear": "跌破長均線偏空",
+          "bull": "站上長均線偏多"
+        },
+        "macd": {
+          "bear_flip": "柱狀體翻負偏空",
+          "bull_flip": "柱狀體翻正偏多"
+        },
+        "margin_chg": {
+          "negative": "融資減少（追勢／反向說法並存）",
+          "positive": "融資增加（追勢／反向說法並存）"
+        },
+        "rsi14": {
+          "overbought": "超買可能回落",
+          "oversold": "超賣可能反彈"
+        },
+        "trust_net": {
+          "negative": "投信賣超偏空",
+          "positive": "投信買超偏多"
+        },
+        "vol_price": {
+          "down_high": "價跌量增偏空",
+          "up_high": "價漲量增偏多"
+        }
+      },
+      "foreign_net": {
+        "sum_sessions": 3
+      },
+      "frequency": {
+        "add": 1,
+        "fallback": "majority",
+        "min_samples": 30,
+        "tie": [
+          "flat",
+          "up",
+          "down"
+        ]
+      },
+      "horizons": [
+        3,
+        7,
+        14
+      ],
+      "indicators": [
+        "ma_cross",
+        "ma_trend",
+        "rsi14",
+        "kd",
+        "macd",
+        "bollinger",
+        "bias20",
+        "vol_price",
+        "foreign_net",
+        "trust_net",
+        "margin_chg"
+      ],
+      "k": {
+        "ddof": 0,
+        "endpoints": "both_dev",
+        "rounding": "HALF_UP",
+        "sigma_multiplier": 0.5,
+        "step": ".005"
+      },
+      "kd": {
+        "d_smoothing": 3,
+        "flat_rsv": 50,
+        "initial": 50,
+        "k_smoothing": 3,
+        "rsv_window": 9
+      },
+      "logit": {
+        "bias_state_cuts": "fit_training_only_at_refit",
+        "initial": "zero_every_fit",
+        "lambda": 1.0,
+        "learning_rate": 0.1,
+        "loss": "mean_CE_plus_lambda_over_2_L2",
+        "min_train": 250,
+        "missing": "train_mean_and_missing_state",
+        "numeric_zero_sd": 1.0,
+        "onehot_scale": false,
+        "penalize_intercept": false,
+        "refit_origin": "first_predictable_dev_session",
+        "refit_sessions": 20,
+        "scale": "train_population",
+        "steps": 300
+      },
+      "ma_cross": {
+        "fast": 5,
+        "lookback": 3,
+        "multiple": "latest",
+        "slow": 20
+      },
+      "ma_trend": {
+        "equal": "neutral",
+        "window": 60
+      },
+      "macd": {
+        "ema_initial": "first_value",
+        "fast": 12,
+        "histogram": "dif_minus_signal",
+        "signal": 9,
+        "slow": 26
+      },
+      "margin_chg": {
+        "difference_sessions": 5
+      },
+      "methods": [
+        "always_flat",
+        "majority",
+        "momentum_H",
+        "reversal_H",
+        "vol_prior_d",
+        "ind_ma_cross",
+        "ind_ma_trend",
+        "ind_rsi14",
+        "ind_kd",
+        "ind_macd",
+        "ind_bollinger",
+        "ind_bias20",
+        "ind_vol_price",
+        "ind_foreign_net",
+        "ind_trust_net",
+        "ind_margin_chg",
+        "ind_logit"
+      ],
+      "numeric_columns": [
+        "ma_cross",
+        "ma_trend",
+        "rsi14",
+        "kd_k",
+        "kd_d",
+        "macd_dif",
+        "macd_signal",
+        "macd_hist",
+        "bollinger",
+        "bias20",
+        "vol_price_return",
+        "vol_price_ratio",
+        "foreign_net",
+        "trust_net",
+        "margin_chg"
+      ],
+      "rsi14": {
+        "flat": 50,
+        "initial": "mean_first_14",
+        "smoothing": "Wilder",
+        "window": 14
+      },
+      "states": {
+        "bias20": [
+          "low",
+          "middle",
+          "high"
+        ],
+        "bollinger": [
+          "above",
+          "below",
+          "inside"
+        ],
+        "foreign_net": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "kd": [
+          "bull_cross",
+          "bear_cross",
+          "low",
+          "middle",
+          "high"
+        ],
+        "ma_cross": [
+          "bull",
+          "bear",
+          "neutral"
+        ],
+        "ma_trend": [
+          "bull",
+          "bear",
+          "neutral"
+        ],
+        "macd": [
+          "bull_flip",
+          "bear_flip",
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "margin_chg": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "rsi14": [
+          "oversold",
+          "overbought",
+          "middle"
+        ],
+        "trust_net": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "vol_price": [
+          "up_high",
+          "up_low",
+          "down_high",
+          "down_low",
+          "flat_high",
+          "flat_low"
+        ]
+      },
+      "terciles": {
+        "equal": "lower",
+        "fit": "matured_dev_only",
+        "interpolation": "linear",
+        "quantiles": [
+          0.3333333333333333,
+          0.6666666666666666
+        ]
+      },
+      "trust_net": {
+        "sum_sessions": 3
+      },
+      "version": "daily-indicators-v1",
+      "vol_price": {
+        "flat": "separate",
+        "mean_includes_today": true,
+        "window": 20
+      },
+      "vol_prior_d": {
+        "ddof": 0,
+        "return_count": 20
+      },
+      "warmup": 60
+    },
+    "start": "2010-01-04",
+    "symbol": "2330",
+    "thresholds": {
+      "14": {
+        "denominator": 40,
+        "numerator": 1
+      },
+      "3": {
+        "denominator": 100,
+        "numerator": 1
+      },
+      "7": {
+        "denominator": 50,
+        "numerator": 1
+      }
+    },
+    "warmup_end": "2010-04-06"
+  }
+}
