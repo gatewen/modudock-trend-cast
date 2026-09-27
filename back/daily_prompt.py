@@ -147,14 +147,14 @@ def chip_percentages(store, config, point):
     return result
 
 
-def describe_indicators(history, point, chip_text):
+def describe_indicators(history, point, chip_text, *, groups=None):
     v=point.values
     def state(name):
         value=point.states.get(name,'missing')
         if value=='missing':return '無資料'
         if value not in STATES[name]: raise DataError('p6_invalid_indicator_state')
         return STATE_TEXT[name][value]
-    groups=bias_states(history,point)
+    groups=bias_states(history,point) if groups is None else groups
     result={
         'ma_cross':f'5/20均線差={number(v.get("ma_cross"),percent=True)}；{state("ma_cross")}',
         'ma_trend':f'收盤相對60日均線={number(v.get("ma_trend"),percent=True)}；{state("ma_trend")}',

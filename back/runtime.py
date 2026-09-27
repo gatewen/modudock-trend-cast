@@ -17,6 +17,8 @@ from .report import build_report, current_experiment, day_view, status_view
 from .store import Store
 from .daily_store import DailyStore
 from .daily_view import DailyViews, OPS as DAILY_OPS
+from .daily_forward_service import DailyForwardService
+from .daily_forward_view import forward_view
 
 ERRORS = {'daily_view_dev_only', 'daily_view_invalid_date', 'daily_view_invalid_range',
     'daily_experiment_missing', 'daily_view_incomplete', 'invalid_daily_horizon', 'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
@@ -59,6 +61,8 @@ class Application:
         self.jev = JevRunner(writer, self.gate, client=jev_client, on_progress=self._on_replay)
         self.baselines = BaselineRunner(writer, self.gate, on_progress=self._on_replay)
         self.sync = SyncRunner(writer, self.gate, fugle=fugle, twse=twse, on_progress=self._on_sync)
+        self.daily_forward = DailyForwardService(writer, self.gate,
+            on_change=lambda: self.emit({'op':'daily_forward_changed'}))
         self.forward = ForwardRunner(writer, self.gate, client=jev_client, on_progress=self._on_replay)
 
     def emit(self, body):
@@ -100,6 +104,8 @@ class Application:
                 return
             self._sync = progress
         self._status()
+        if progress['status'] in ('complete', 'partial', 'failed'):
+            self.daily_forward.trigger(sync=True)
 
     def _on_replay(self, progress):
         with self._lock:
@@ -114,6 +120,7 @@ class Application:
     def start(self):
         self._status()
         self.request({'op': 'status'})
+        self.daily_forward.trigger()
         if key_state()['fugle'] == 'available':
             self.request({'op': 'sync'})
 
@@ -154,9 +161,12 @@ class Application:
             if self.closed or generation != self._view_generation:
                 continue
             try:
-                with (DailyStore if body['op'] in DAILY_OPS else Store)(self.writer.path, readonly=True) as store:
+                with (DailyStore if body['op'] in (*DAILY_OPS, 'daily_forward') else Store)(self.writer.path, readonly=True) as store:
                     op = body['op']
-                    if op in DAILY_OPS:
+                    if op == 'daily_forward':
+                        value = forward_view(store, body)
+                        value['service'] = dict(self.daily_forward.state)
+                    elif op in DAILY_OPS:
                         value = self.daily_views.handle(store, body)
                     elif op == 'status':
                         value = self._read_status(store, experiment_id)
@@ -184,7 +194,7 @@ class Application:
             return self.error(DataError('invalid_request'))
         op = body.get('op')
         try:
-            if op in ('status', 'day', 'report', *DAILY_OPS):
+            if op in ('status', 'day', 'report', 'daily_forward', *DAILY_OPS):
                 self._queue_read(body)
             elif op == 'sync':
                 state = key_state()['fugle']
@@ -300,6 +310,7 @@ class Application:
 
     def close(self):
         self.closed = True
+        self.daily_forward.close()
         self.forward.close()
         self.jev.close()
         self.baselines.close()

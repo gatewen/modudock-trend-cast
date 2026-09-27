@@ -1,3 +1,4 @@
+import prospective from './prospective.js';
 const CAP = '2021-12-31';
 const allowedDay = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= '2010-04-01' && d <= CAP;
 const forbiddenDate = value => (JSON.stringify(value).match(/\d{4}-\d{2}-\d{2}/g) || []).some(d => d > CAP);
@@ -67,7 +68,8 @@ export default function mountDaily(ctx) {
   claimSelect.value='kd'; const claimTable=el('div'); claimsCard.append(claimSelect,claimTable);
   const hold = card('多日保留段', 'tc-daily-holdout');
   hold.append(el('p','未使用（沒有入圍者，保留給未來）','tc-note'));
-  root.append(head,status,error,chartCard,indicatorsCard,reportCard,claimsCard,hold);
+  const forward = prospective(doc,H);
+  root.append(head,status,error,forward.root,chartCard,indicatorsCard,reportCard,claimsCard,hold);
   function controls() {
     refresh.disabled = !live; span.disabled = !live;
     date.disabled = !live || !days.length; previous.disabled = !live || days.indexOf(selected)<=0;
@@ -81,7 +83,7 @@ export default function mountDaily(ctx) {
   }
   function load() {
     error.hidden=true; clearChart(); report.replaceChildren(el('p','正在計算開發段成績與區間…','tc-note'));
-    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report');
+    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report'); send('daily_forward');
   }
   on(date,'change',()=>choose(date.value));
   on(span,'change',()=>{clearChart();send('daily_chart',{range:span.value});});
@@ -128,7 +130,10 @@ export default function mountDaily(ctx) {
       `${NAMES[r.indicator]} · ${safe(r.description)}`,safe(r.claim),count(r.n),percent(r.frequencies?.up),percent(r.frequencies?.flat),percent(r.frequencies?.down),r.n<30?'樣本太少':'描述性頻率'])));
   }
   ctx.channel.onMessage(body=>{
-    if(disposed||!body||typeof body!=='object'||forbiddenDate(body))return;
+    if(disposed||!body||typeof body!=='object')return;
+    if(body.op==='daily_forward_changed'){send('daily_forward');return;}
+    if(body.op==='daily_forward'){if(body.request_id===requests.daily_forward)forward.render(body);return;}
+    if(forbiddenDate(body))return;
     if(body.op==='error') {
       if(!Object.values(requests).includes(body.request_id))return;
       error.textContent=ERRORS[body.code]||'多日資料讀取失敗，請重新整理。';error.hidden=false;return;

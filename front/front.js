@@ -43,7 +43,8 @@ export default function mount(ctx) {
       const match = pending.get(body.request_id);
       if (!match || (body.op !== 'error' && body.op !== match.op && !(!isDaily && body.op === 'status'))) return;
       pending.delete(body.request_id); receive?.({...body, request_id: match.local});
-    } else if (!isDaily && ['status', 'error'].includes(body.op)) receive?.(body);
+    } else if (isDaily && body.op === 'daily_forward_changed') receive?.(body);
+    else if (!isDaily && ['status', 'error'].includes(body.op)) receive?.(body);
   });
   ctx.onUp(() => { if (live || disposed) return; live = true; select.disabled = false; up?.(); });
   ctx.report('ready');

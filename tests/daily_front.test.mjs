@@ -30,7 +30,7 @@ function report(h,extra={}) {h.answer('daily_report',{methods:methods.map(method
 test('daily default seven days registers before ready and sends only reads after up',t=>{
   const h=setup(t);assert.deepEqual(h.reports,['ready']);assert.equal(h.find('預測天期').value,'7');
   assert.equal(h.sent.length,0);h.up();h.up();
-  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report']);
+  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report','daily_forward']);
   assert.ok(h.sent.every(b=>b.H===7));assert.equal(h.container.querySelectorAll('.tc-forward').length,0);
   assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用（沒有入圍者，保留給未來）/);
   assert.equal(h.container.querySelector('.tc-daily-holdout button'),null);
@@ -117,4 +117,47 @@ test('legacy action status acknowledgement survives channel routing after confir
   button('確認解鎖').click();const request=h.latest('reveal');assert.equal(request.confirmed,true);
   h.message({...status,request_id:request.request_id,holdout:{state:'revealed'}});
   assert.match(h.container.querySelector('.tc-lock').textContent,/結果只作歷史描述/);
+});
+
+const forwardEmpty={split:'forward',frozen_day:'2026-09-27',latest:null,cohorts:[],pending:[],recorded_days:0};
+function forwardReady(h,extra={}){h.answer('daily_forward',{...forwardEmpty,...extra});}
+const four=['majority','ind_logit','vol_prior_d','jev_ind'];
+function forwardPopulated(){return {...forwardEmpty,recorded_days:1,latest:{day:'2026-09-29',predictions:[3,7,14].flatMap(H=>four.map(method=>({H,method,choice:'flat',probabilities:{up:.2,flat:.6,down:.2},timing:'unconfirmed',recorded_at:'2026-09-29T18:00:00+08:00'})))},
+ cohorts:['ontime','backfill','unconfirmed'].map(timing=>({timing,methods:four.map(method=>({method,n:0,accuracy:null,accuracy_wilson95:null,brier:null,coverage:1,missing:0})),comparison:{n:0,difference:null,ci95:null,small_sample:true,verdict:'結果不完整，不下結論'}})),pending:[{day:'2026-09-29',H:7,end_day:null,remaining:7}],pending_total:1,missing_total:0};}
+
+test('forward empty latest comes before historical chart and keeps disclaimer',t=>{
+ const h=setup(t);ready(h);forwardReady(h);
+ const latest=h.container.querySelector('.tc-forward-latest');
+ assert.match(latest.textContent,/尚無前瞻預測，下一個交易日收盤後自動產生/);
+ assert.match(latest.textContent,/這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法/);
+ const cards=[...h.container.querySelectorAll('.tc-card')];assert.ok(cards.indexOf(latest)<cards.indexOf(h.container.querySelector('.tc-daily-chart')));
+ assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+ assert.equal(h.container.querySelector('.tc-prospective button'),null);
+});
+test('forward displays all three horizons four methods probabilities timing pending and cohorts',t=>{
+ const h=setup(t);ready(h);forwardReady(h,forwardPopulated());
+ assert.equal(h.container.querySelectorAll('.tc-forward-latest tbody tr').length,12);
+ assert.match(h.container.querySelector('.tc-forward-latest').textContent,/20.00%60.00%20.00%準時待確認/);
+ assert.match(h.container.querySelector('.tc-forward-pending').textContent,/2026-09-297 日尚待 7 個交易日資料/);
+ assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['準時','補記','準時待確認']);
+ assert.match(h.container.querySelector('.tc-forward-scores').textContent,/結果不完整，不下結論；樣本太少/);
+});
+test('forward rejects historical injection and wrong frozen origin without weakening dev exits',t=>{
+ const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),latest:{day:'2024-07-26',predictions:[]}});
+ assert.doesNotMatch(h.container.textContent,/2024-07-26/);
+ h.container.querySelector('button').click();forwardReady(h,{...forwardPopulated(),pending:[{day:'2022-01-03',H:7}]});
+ assert.doesNotMatch(h.container.textContent,/2022-01-03|2026-09-29/);
+ h.container.querySelector('button').click();
+ const oldRecord=forwardPopulated();oldRecord.latest.predictions[0].recorded_at='2024-07-26T18:00:00+08:00';
+ forwardReady(h,oldRecord);assert.doesNotMatch(h.container.textContent,/2024-07-26|2026-09-29/);
+ h.container.querySelector('button').click();forwardReady(h,{...forwardPopulated(),frozen_day:'2021-12-31'});
+ assert.doesNotMatch(h.container.textContent,/2026-09-29/);
+});
+test('forward unsolicited refresh is read only and stale replies cannot cross horizon',t=>{
+ const h=setup(t);ready(h);const before=h.sent.length,old=h.latest('daily_forward');
+ h.message({op:'daily_forward_changed'});assert.equal(h.sent.length,before+1);assert.equal(h.sent.at(-1).op,'daily_forward');
+ h.change('預測天期','3');h.message({op:'daily_forward',H:7,experiment_id:4,status:'ok',request_id:old.request_id,...forwardPopulated()});
+ assert.doesNotMatch(h.container.textContent,/2026-09-29/);
+ forwardReady(h);assert.match(h.container.textContent,/尚無前瞻預測/);
+ h.change('預測天期','30m');const n=h.sent.length;h.message({op:'daily_forward_changed'});assert.equal(h.sent.length,n);
 });

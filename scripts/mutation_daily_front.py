@@ -8,7 +8,7 @@ MUTATIONS=[
  ('legacy_status_ack_dropped','front.js',[(" && !(!isDaily && body.op === 'status')", "")],'legacy action status acknowledgement'),
  ('default_horizon_wrong','front.js',[("select.value = '7';", "select.value = '3';")],'daily default seven'),
  ('late_epoch_replies_allowed','front.js',[("if (!match || (body.op !== 'error' && body.op !== match.op && !(!isDaily && body.op === 'status'))) return;", "if (!match) { receive?.({...body, request_id: 3}); return; }" )],'daily horizon and range switching'),
- ('future_text_guard_removed','daily.js',[("||forbiddenDate(body)", "")],'daily rejects future'),
+ ('future_text_guard_removed','daily.js',[("    if(forbiddenDate(body))return;", "")],'daily rejects future'),
  ('date_controls_guard_removed','daily.js',[("if (!allowedDay(value) || !days.includes(value))", "if (false)")],'daily bounded date'),
  ('correct_colors_swapped','daily.js',[("p.correct===true?'correct'", "p.correct===false?'correct'")],'daily chart shape'),
  ('logit_points_hidden','daily.js',[("!['jev_ind','ind_logit'].includes(p.method)", "!['jev_ind'].includes(p.method)")],'daily chart shape'),

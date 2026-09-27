@@ -88,4 +88,6 @@ export default `
   .tc .tc-toolbar { gap: 6px; }
   .tc button, .tc select { font-size: 12px; }
 }
+
+.tc-prospective { display: grid; gap: 18px; }
 `;

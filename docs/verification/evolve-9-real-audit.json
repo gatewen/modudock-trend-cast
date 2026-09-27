@@ -1,0 +1,52 @@
+{
+  "http_calls": 0,
+  "campaign_used": 1222,
+  "latest_source_day": "2026-09-24",
+  "forward_predictions": 0,
+  "forward_outcomes": 0,
+  "existing_tables_unchanged": 37,
+  "views": [
+    {
+      "status": "ok",
+      "experiment_id": 4,
+      "H": 3,
+      "split": "forward",
+      "frozen_day": "2026-09-27",
+      "message": "尚無前瞻預測，下一個交易日收盤後自動產生",
+      "disclaimer": "這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法",
+      "latest": null,
+      "cohorts": [],
+      "pending": [],
+      "missing": [],
+      "recorded_days": 0
+    },
+    {
+      "status": "ok",
+      "experiment_id": 4,
+      "H": 7,
+      "split": "forward",
+      "frozen_day": "2026-09-27",
+      "message": "尚無前瞻預測，下一個交易日收盤後自動產生",
+      "disclaimer": "這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法",
+      "latest": null,
+      "cohorts": [],
+      "pending": [],
+      "missing": [],
+      "recorded_days": 0
+    },
+    {
+      "status": "ok",
+      "experiment_id": 4,
+      "H": 14,
+      "split": "forward",
+      "frozen_day": "2026-09-27",
+      "message": "尚無前瞻預測，下一個交易日收盤後自動產生",
+      "disclaimer": "這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法",
+      "latest": null,
+      "cohorts": [],
+      "pending": [],
+      "missing": [],
+      "recorded_days": 0
+    }
+  ]
+}

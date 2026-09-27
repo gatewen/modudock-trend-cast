@@ -1,0 +1,31 @@
+{
+  "synthetic": true,
+  "real_http_calls": 0,
+  "holiday_0928_predictions": 0,
+  "origin": "2026-09-29",
+  "forecast_rows": 12,
+  "outcome_rows": 3,
+  "research_outcomes_unchanged": true,
+  "initial_timing": "unconfirmed",
+  "confirmed_timing": "ontime",
+  "maturities": [
+    {
+      "H": 3,
+      "end_day": "2026-10-02",
+      "new_outcomes": 1
+    },
+    {
+      "H": 7,
+      "end_day": "2026-10-08",
+      "new_outcomes": 1
+    },
+    {
+      "H": 14,
+      "end_day": "2026-10-19",
+      "new_outcomes": 1
+    }
+  ],
+  "recorded_at_preserved": true,
+  "duplicate_request": false,
+  "pending": 0
+}
