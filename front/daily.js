@@ -31,7 +31,7 @@ export default function mountDaily(ctx) {
   const root = el('section', '', 'tc tc-daily'); ctx.container.append(root);
   const head = el('header', '', 'tc-head'), title = el('div');
   title.append(el('p', 'TREND CAST / DAILY RESEARCH', 'tc-kicker'), el('h1', `${H} 個交易日後，漲、盤整或跌？`),
-    el('p', '2330 台積電 · 開發段歷史檢驗', 'tc-sub'));
+    el('p', '2330 台積電 · 多日預測（3／7／14 個交易日）', 'tc-sub'));
   const refresh = button('重新整理', () => load()); head.append(title, refresh);
   const status = el('div', '正在讀取多日實驗…', 'tc-status'); status.setAttribute('role', 'status');
   const news = el('p', '新聞廣播：未收到', 'tc-news tc-sub'); news.setAttribute('role', 'status');
@@ -60,7 +60,7 @@ export default function mountDaily(ctx) {
   const indicators = el('div', '', 'tc-indicator-grid');
   indicatorsCard.append(dateNav, indicators, el('p','指標是當時可見的訊號，並非預測結論。籌碼只用前一交易日以前。','tc-note'));
   const reportCard = card(`${H} 日開發段成績`, 'tc-daily-scores'), report = el('div');
-  const reportNote = el('p','既有方法為完整開發段；jev_ind 為固定抽樣。樣本數與比較範圍分列。','tc-note');
+  const reportNote = el('p','開發段沒有方法顯著勝過 majority；jev_ind 三天期 Brier 顯著較差。既有方法為完整開發段；jev_ind 為共同 576 日抽樣，樣本數與比較範圍分列。','tc-note');
   reportCard.append(reportNote, report);
   const claimsCard = card('網路說法 vs 實際', 'tc-daily-claims');
   claimsCard.append(el('p','常見說法是待驗假說；下列為開發段實際頻率，未平滑，不代表未來勝率。','tc-note'));

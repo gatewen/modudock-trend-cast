@@ -4,6 +4,7 @@ import json
 import os
 from queue import Queue, Empty, Full
 import threading
+import time
 
 from .baselines import METHODS
 from .data import DataError, TAIPEI
@@ -20,6 +21,7 @@ from .daily_view import DailyViews, OPS as DAILY_OPS
 from .daily_forward_service import DailyForwardService
 from .daily_forward_view import forward_view
 from . import news_digest
+from .db_lifecycle import DatabaseGate
 
 ERRORS = {'daily_view_dev_only', 'daily_view_invalid_date', 'daily_view_invalid_range',
     'daily_experiment_missing', 'daily_view_incomplete', 'invalid_daily_horizon', 'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
@@ -57,6 +59,7 @@ class Application:
         self._sync = {'status': 'idle'}
         self._replay = {'status': 'idle'}
         self.daily_views = DailyViews()
+        self.database = DatabaseGate()
         self._reads = Queue(maxsize=8)
         self.reader = threading.Thread(target=self._read_loop, name='view-reader', daemon=True)
         self.reader.start()
@@ -109,6 +112,7 @@ class Application:
         self.emit(body)
 
     def _on_sync(self, progress):
+        if self.closed:return
         with self._lock:
             if progress['generation'] < self._sync.get('generation', 0):
                 return
@@ -138,6 +142,7 @@ class Application:
             self.request({'op': 'sync'})
 
     def _queue_read(self, body):
+        if self.closed:return
         with self._lock:
             item = (self._view_generation, self._experiment, dict(body))
         try:
@@ -174,7 +179,7 @@ class Application:
             if self.closed or generation != self._view_generation:
                 continue
             try:
-                with (DailyStore if body['op'] in (*DAILY_OPS, 'daily_forward') else Store)(self.writer.path, readonly=True) as store:
+                with self.database.store(DailyStore if body['op'] in (*DAILY_OPS, 'daily_forward') else Store, self.writer.path, readonly=True) as store:
                     op = body['op']
                     if op == 'news_status':
                         value = news_digest.status_view(store)
@@ -324,7 +329,10 @@ class Application:
         self.request({'op': 'status'})
 
     def close(self):
+        if self.closed:return
         self.closed = True
+        self.database.stop()
+        self.writer.close(abort=True)
         self.daily_forward.close()
         self.forward.close()
         self.jev.close()
@@ -336,4 +344,24 @@ class Application:
             except Empty:
                 break
         self._reads.put_nowait(None)
-        self.writer.close()
+
+    def wait_database_closed(self, timeout):
+        end=time.monotonic()+timeout
+        self.writer.thread.join(max(0,end-time.monotonic()))
+        if self.writer.thread.is_alive():return False
+        for gate in (self.database,self.daily_forward.database):
+            if not gate.wait(max(0,end-time.monotonic())):return False
+        budget=self.daily_forward.budget
+        if budget is not None and hasattr(budget,'database'):
+            if not budget.database.wait(max(0,end-time.monotonic())):return False
+        return True
+
+    def wait_closed(self, timeout=3):
+        """Tests/embedding owners release fake network gates, then await this barrier."""
+        end=time.monotonic()+timeout
+        if not self.wait_database_closed(max(0,end-time.monotonic())):return False
+        threads=[self.reader,self.daily_forward.worker,self.sync.worker,*self.jev.workers,self.forward.thread]
+        if self.forward.jev:threads.extend(self.forward.jev.workers)
+        for thread in threads:
+            if thread is not None:thread.join(max(0,end-time.monotonic()))
+        return all(thread is None or not thread.is_alive() for thread in threads)

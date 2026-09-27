@@ -9,13 +9,15 @@ from .daily_jev_client import DailyJevClient, CAMPAIGN
 from .evolution_budget import LEDGER, LIMIT
 from .http_client import ClientError
 from .data import TAIPEI
+from .db_lifecycle import DatabaseGate
 
 
 class ForwardBudget:
     def __init__(self, *, path=LEDGER, now=clock_now, deadline=None):
+        self.database=DatabaseGate()
         self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
         self.now=now;self.deadline=deadline or (lambda day:None);self.calls=0;self.lock=threading.Lock()
-        with sqlite3.connect(self.path) as db:
+        with self.database.connection(self.path) as db:
             db.executescript('''CREATE TABLE IF NOT EXISTS budget(campaign TEXT PRIMARY KEY,used INTEGER NOT NULL CHECK(used>=0));
                 CREATE TABLE IF NOT EXISTS daily_forward_http(
                 id INTEGER PRIMARY KEY,day TEXT NOT NULL,attempt INTEGER NOT NULL,started_at TEXT NOT NULL,
@@ -23,7 +25,7 @@ class ForwardBudget:
             db.execute('INSERT OR IGNORE INTO budget VALUES (?,0)',(CAMPAIGN,))
 
     def last(self,day):
-        with sqlite3.connect(self.path) as db:
+        with self.database.connection(self.path) as db:
             db.row_factory=sqlite3.Row
             r=db.execute('SELECT * FROM daily_forward_http WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
             return dict(r) if r else None
@@ -42,7 +44,7 @@ class ForwardBudget:
         return 'retry' if self.now()<cutoff else 'expired'
 
     def reserve(self,day):
-        with self.lock,sqlite3.connect(self.path,timeout=15) as db:
+        with self.lock,self.database.connection(self.path,timeout=15) as db:
             db.row_factory=sqlite3.Row;db.execute('BEGIN IMMEDIATE')
             r=db.execute('SELECT * FROM daily_forward_http WHERE day=? ORDER BY attempt DESC LIMIT 1',(day,)).fetchone()
             state=self.retry_status(day,dict(r)) if r else 'initial'
@@ -56,11 +58,13 @@ class ForwardBudget:
 
     def finish(self,seq,*,status=None,error=None,latency=None):
         if seq is None:return
-        with sqlite3.connect(self.path,timeout=15) as db:
+        with self.database.connection(self.path,timeout=15) as db:
             db.execute('UPDATE daily_forward_http SET status=coalesce(?,status),error=?,latency=coalesce(?,latency) WHERE id=?',(status,error,latency,seq))
 
     def exhausted(self):
-        with sqlite3.connect(self.path) as db:return db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()[0]>=LIMIT
+        with self.database.connection(self.path) as db:return db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()[0]>=LIMIT
+
+    def close(self):self.database.stop()
 
 class ForwardClient(DailyJevClient):
     """Also honor the remaining backoff when resuming a durable 429/529."""
@@ -76,12 +80,12 @@ class ForwardClient(DailyJevClient):
         return super().predict(day,body,cancel=cancel)
 
 
-def ledger_usage(path=LEDGER):
+def ledger_usage(path=LEDGER,*,database=None):
     """Read a summary without creating/resetting the campaign ledger."""
     path=Path(path).resolve()
     if not path.exists():return 0
     try:
-        with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5) as db:
+        with (database or DatabaseGate()).connection(path.as_uri()+'?mode=ro',uri=True,timeout=5) as db:
             row=db.execute('SELECT used FROM budget WHERE campaign=?',(CAMPAIGN,)).fetchone()
             if row is None or type(row[0]) is not int or row[0]<0:raise ValueError
             return row[0]

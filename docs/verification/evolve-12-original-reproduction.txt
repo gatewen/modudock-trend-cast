@@ -1,0 +1,77 @@
+run 1 OK daily_worker_alive False
+run 2 OK daily_worker_alive True
+run 3 OK daily_worker_alive True
+run 4 OK daily_worker_alive False
+run 5 OK daily_worker_alive True
+run 6 OK daily_worker_alive False
+run 7 OK daily_worker_alive True
+run 8 ERROR daily_worker_alive True
+test_old_sync_and_replay_progress_generations_cannot_replace_current_status (tests.test_runtime.RuntimeTests.test_old_sync_and_replay_progress_generations_cannot_replace_current_status) ... ERROR
+
+======================================================================
+ERROR: test_old_sync_and_replay_progress_generations_cannot_replace_current_status (tests.test_runtime.RuntimeTests.test_old_sync_and_replay_progress_generations_cannot_replace_current_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tempfile.py", line 950, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tempfile.py", line 930, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 703, in _rmtree_safe_fd
+    onexc(func, path, err)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 662, in _rmtree_safe_fd
+    os.rmdir(name, dir_fd=dirfd)
+OSError: [Errno 66] Directory not empty: '/var/folders/fc/mhqhl4r17g9bjkdhzx_2tr940000gn/T/tmpsgzomdxu'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.203s
+
+FAILED (errors=1)
+
+run 9 OK daily_worker_alive False
+run 10 OK daily_worker_alive False
+run 11 OK daily_worker_alive True
+run 12 OK daily_worker_alive False
+run 13 OK daily_worker_alive True
+run 14 OK daily_worker_alive False
+run 15 OK daily_worker_alive False
+run 16 OK daily_worker_alive False
+run 17 OK daily_worker_alive True
+run 18 OK daily_worker_alive False
+run 19 OK daily_worker_alive False
+run 20 OK daily_worker_alive False
+run 21 ERROR daily_worker_alive True
+test_old_sync_and_replay_progress_generations_cannot_replace_current_status (tests.test_runtime.RuntimeTests.test_old_sync_and_replay_progress_generations_cannot_replace_current_status) ... ERROR
+
+======================================================================
+ERROR: test_old_sync_and_replay_progress_generations_cannot_replace_current_status (tests.test_runtime.RuntimeTests.test_old_sync_and_replay_progress_generations_cannot_replace_current_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tempfile.py", line 950, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tempfile.py", line 930, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 759, in rmtree
+    _rmtree_safe_fd(stack, onexc)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 703, in _rmtree_safe_fd
+    onexc(func, path, err)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/shutil.py", line 662, in _rmtree_safe_fd
+    os.rmdir(name, dir_fd=dirfd)
+OSError: [Errno 66] Directory not empty: '/var/folders/fc/mhqhl4r17g9bjkdhzx_2tr940000gn/T/tmpl9vmuq70'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.185s
+
+FAILED (errors=1)
+
+run 22 OK daily_worker_alive False
+run 23 OK daily_worker_alive False
+run 24 OK daily_worker_alive True
+run 25 OK daily_worker_alive False
+run 26 OK daily_worker_alive False
+run 27 OK daily_worker_alive True
+run 28 OK daily_worker_alive False
+run 29 OK daily_worker_alive True
+run 30 OK daily_worker_alive False
+original_errors 2 live_after_old_teardown 12 of 30

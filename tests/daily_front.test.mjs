@@ -172,22 +172,30 @@ test('forward displays all three horizons four methods probabilities timing pend
  assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['準時','補記','準時待確認']);
  assert.match(h.container.querySelector('.tc-forward-scores').textContent,/結果不完整，不下結論；樣本太少/);
 });
+function forwardDataText(h){const copy=h.container.cloneNode(true);copy.querySelectorAll('.tc-forward-origin').forEach(n=>n.remove());return copy.textContent;}
 test('forward rejects historical injection and wrong frozen origin without weakening dev exits',t=>{
  const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),latest:{day:'2024-07-26',predictions:[]}});
- assert.doesNotMatch(h.container.textContent,/2024-07-26/);
+ assert.doesNotMatch(forwardDataText(h),/2024-07-26/);
  h.container.querySelector('button').click();forwardReady(h,{...forwardPopulated(),pending:[{day:'2022-01-03',H:7}]});
- assert.doesNotMatch(h.container.textContent,/2022-01-03|2026-09-29/);
+ assert.doesNotMatch(forwardDataText(h),/2022-01-03|2026-09-29/);
  h.container.querySelector('button').click();
  const oldRecord=forwardPopulated();oldRecord.latest.predictions[0].recorded_at='2024-07-26T18:00:00+08:00';
- forwardReady(h,oldRecord);assert.doesNotMatch(h.container.textContent,/2024-07-26|2026-09-29/);
+ forwardReady(h,oldRecord);assert.doesNotMatch(forwardDataText(h),/2024-07-26|2026-09-29/);
  h.container.querySelector('button').click();forwardReady(h,{...forwardPopulated(),frozen_day:'2021-12-31'});
- assert.doesNotMatch(h.container.textContent,/2026-09-29/);
+ assert.doesNotMatch(forwardDataText(h),/2026-09-29/);
 });
 test('forward unsolicited refresh is read only and stale replies cannot cross horizon',t=>{
  const h=setup(t);ready(h);const before=h.sent.length,old=h.latest('daily_forward');
  h.message({op:'daily_forward_changed'});assert.equal(h.sent.length,before+1);assert.equal(h.sent.at(-1).op,'daily_forward');
  h.change('預測天期','3');h.message({op:'daily_forward',H:7,experiment_id:4,status:'ok',request_id:old.request_id,...forwardPopulated()});
- assert.doesNotMatch(h.container.textContent,/2026-09-29/);
+ assert.doesNotMatch(forwardDataText(h),/2026-09-29/);
  forwardReady(h);assert.match(h.container.textContent,/尚無前瞻預測/);
  h.change('預測天期','30m');const n=h.sent.length;h.message({op:'daily_forward_changed'});assert.equal(h.sent.length,n);
+});
+
+test('daily release copy distinguishes development findings and prospective origin',t=>{
+ const h=setup(t);ready(h);forwardReady(h);
+ assert.match(h.container.querySelector('.tc-daily-scores').textContent,/沒有方法顯著勝過 majority；jev_ind 三天期 Brier 顯著較差/);
+ assert.match(h.container.querySelector('.tc-forward-origin').textContent,/2026-09-29.*實際交易日/);
+ assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
 });

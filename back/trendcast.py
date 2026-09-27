@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import time
 from xml.parsers import expat
 
 if __package__ in (None, ''):
@@ -39,17 +40,24 @@ def main(argv=None, *, app_factory=Application, writer_factory=DBWriter, outbox_
     seq = None
     ready = False
     running = False
+    closing = False
 
     def finish():
+        nonlocal closing
+        closing = True
+        deadline = time.monotonic() + 0.8
         if app is not None:
             app.close()
+            if not app.wait_database_closed(max(0, deadline-time.monotonic())):os._exit(0)
         elif writer is not None:
-            writer.close()
-        return shutdown(outbox, {'t': 'done', 'seq': seq} if seq is not None else None)
+            writer.close(abort=True)
+            writer.thread.join(max(0, deadline-time.monotonic()))
+            if writer.thread.is_alive():os._exit(0)
+        return shutdown(outbox, {'t': 'done', 'seq': seq} if seq is not None else None, timeout=max(0,deadline-time.monotonic()))
 
     def initialized(future):
         nonlocal ready
-        if outbox.closed:
+        if outbox.closed or closing:
             return
         if future.exception() is not None:
             shutdown(outbox, {'t': 'fail', 'seq': seq, 'reason': 'database_open_failed'}, 1)

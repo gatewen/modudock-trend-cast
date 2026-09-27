@@ -1,0 +1,25 @@
+test_database_open_failure_only_after_hello_exits_instead_of_hanging (tests.test_protocol.ProtocolTests.test_database_open_failure_only_after_hello_exits_instead_of_hanging) ... ok
+test_eof_shutdown_done_is_last_and_under_one_second (tests.test_protocol.ProtocolTests.test_eof_shutdown_done_is_last_and_under_one_second) ... ok
+test_external_sqlite_write_lock_does_not_block_bye_or_done (tests.test_protocol.ProtocolTests.test_external_sqlite_write_lock_does_not_block_bye_or_done) ... ok
+test_network_gate_bye_discards_late_results_and_preserves_commits_for_restart (tests.test_protocol.ProtocolTests.test_network_gate_bye_discards_late_results_and_preserves_commits_for_restart) ... ok
+test_outbox_coalesces_progress_so_terminal_status_is_not_dropped (tests.test_protocol.ProtocolTests.test_outbox_coalesces_progress_so_terminal_status_is_not_dropped) ... ok
+test_outbox_concurrent_producers_never_interleave_json_or_write_after_done (tests.test_protocol.ProtocolTests.test_outbox_concurrent_producers_never_interleave_json_or_write_after_done) ... ok
+test_preflight_fail_only_after_hello_and_flush_then_exit (tests.test_protocol.ProtocolTests.test_preflight_fail_only_after_hello_and_flush_then_exit) ... ok
+test_preflight_version_checks (tests.test_protocol.ProtocolTests.test_preflight_version_checks) ... ok
+test_real_day_packet_above_900_kib_is_replaced_by_safe_error (tests.test_protocol.ProtocolTests.test_real_day_packet_above_900_kib_is_replaced_by_safe_error) ... ok
+test_real_process_seq_lifecycle_invalid_messages_and_no_business_before_up (tests.test_protocol.ProtocolTests.test_real_process_seq_lifecycle_invalid_messages_and_no_business_before_up) ... ok
+test_stdout_not_drained_still_exits_under_one_second (tests.test_protocol.ProtocolTests.test_stdout_not_drained_still_exits_under_one_second) ... ok
+test_writer_gate_terminal_drops_queued_business_and_rejects_late_producer (tests.test_protocol.ProtocolTests.test_writer_gate_terminal_drops_queued_business_and_rejects_late_producer) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.712s
+
+OK
+normal 0.010588 seconds
+normal 0.045582 seconds
+one_then_block 0.019882 seconds
+all_ok 0.010498 seconds
+oversized_day 0.010554 seconds
+normal 0.010550 seconds
+flood 0.822405 seconds
+maximum 0.8224048754200339 seconds

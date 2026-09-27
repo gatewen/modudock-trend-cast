@@ -89,8 +89,8 @@ class Outbox:
             return
 
 
-def shutdown(outbox, terminal=None, code=0):
+def shutdown(outbox, terminal=None, code=0, *, timeout=0.8):
     outbox.close_with(terminal)
-    if not outbox.terminal_sent.wait(0.8):
+    if not outbox.terminal_sent.wait(timeout):
         os._exit(code)
     return code

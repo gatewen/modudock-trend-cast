@@ -1,0 +1,177 @@
+{
+  "command": [
+    "/usr/local/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "source_digest": "2389c5daed8d2a3b319bb684c2af2911ae0bcc4ebd541868711da64ecc02576f",
+  "requested_runs": 20,
+  "started_at": "2026-09-27T08:38:35.022956+00:00",
+  "runs": [
+    {
+      "run": 1,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 151.229,
+      "log": "run-01.txt"
+    },
+    {
+      "run": 2,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 153.14,
+      "log": "run-02.txt"
+    },
+    {
+      "run": 3,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.879,
+      "log": "run-03.txt"
+    },
+    {
+      "run": 4,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 149.369,
+      "log": "run-04.txt"
+    },
+    {
+      "run": 5,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 154.676,
+      "log": "run-05.txt"
+    },
+    {
+      "run": 6,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.577,
+      "log": "run-06.txt"
+    },
+    {
+      "run": 7,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 152.249,
+      "log": "run-07.txt"
+    },
+    {
+      "run": 8,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 149.161,
+      "log": "run-08.txt"
+    },
+    {
+      "run": 9,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.027,
+      "log": "run-09.txt"
+    },
+    {
+      "run": 10,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 153.935,
+      "log": "run-10.txt"
+    },
+    {
+      "run": 11,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.535,
+      "log": "run-11.txt"
+    },
+    {
+      "run": 12,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.161,
+      "log": "run-12.txt"
+    },
+    {
+      "run": 13,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 152.422,
+      "log": "run-13.txt"
+    },
+    {
+      "run": 14,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 149.641,
+      "log": "run-14.txt"
+    },
+    {
+      "run": 15,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.405,
+      "log": "run-15.txt"
+    },
+    {
+      "run": 16,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 149.312,
+      "log": "run-16.txt"
+    },
+    {
+      "run": 17,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 149.698,
+      "log": "run-17.txt"
+    },
+    {
+      "run": 18,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 153.857,
+      "log": "run-18.txt"
+    },
+    {
+      "run": 19,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 156.448,
+      "log": "run-19.txt"
+    },
+    {
+      "run": 20,
+      "ok": true,
+      "exit_code": 0,
+      "tests": 411,
+      "elapsed_seconds": 150.246,
+      "log": "run-20.txt"
+    }
+  ]
+}

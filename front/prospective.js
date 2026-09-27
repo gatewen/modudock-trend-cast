@@ -14,7 +14,7 @@ export default function prospective(doc,H) {
   const root=el('section','','tc-prospective');
   function card(title,cls){const n=el('section','',`tc-card ${cls}`);n.append(el('h2',title));root.append(n);return n;}
   const latest=card('最新預測','tc-forward-latest'),latestBody=el('div');
-  latest.append(latestBody,el('p',DISCLAIMER,'tc-note'));latestBody.append(el('p','正在讀取前瞻紀錄…','tc-empty'));
+  latest.append(latestBody,el('p','前瞻紀錄自 2026-09-29 起按實際交易日累積；資料尚未可得時不產生紀錄。','tc-note tc-forward-origin'),el('p',DISCLAIMER,'tc-note'));latestBody.append(el('p','正在讀取前瞻紀錄…','tc-empty'));
   const scores=card(`${H} 日前瞻成績`,'tc-forward-scores'),scoreBody=el('div');
   scores.append(el('p','以準時成績為主；補記另外列示，待確認不納入主要比較。','tc-note'),scoreBody);
   const pending=card('待到期清單','tc-forward-pending'),pendingBody=el('div');pending.append(pendingBody);

@@ -1,4 +1,5 @@
 """Cancelable automatic live data/prediction worker; DBWriter owns all writes."""
+from contextlib import ExitStack
 from datetime import timedelta
 import os
 import threading
@@ -11,6 +12,7 @@ from .daily_sources import FinmindClient,CALENDAR,INSTITUTIONAL,MARGIN
 from .daily_sync import TWSE_LIMITER
 from .daily_forward_client import ForwardBudget,ForwardClient,ledger_usage
 from .daily_lock import forward_lock
+from .db_lifecycle import DatabaseGate
 from .evolution_budget import LEDGER,LIMIT
 from .data import DataError,day_value
 from .fugle import FugleClient
@@ -33,6 +35,7 @@ class DailyForwardService:
         self.client,self.budget=client,budget
         self.ledger_path=budget.path if budget is not None else ledger_path
         self.fugle=fugle or FugleClient();self.twse=twse or TwseClient(limiter=TWSE_LIMITER);self.finmind=finmind or FinmindClient()
+        self.database=DatabaseGate()
         self.poll_seconds=poll_seconds;self.event=threading.Event();self.cancel=threading.Event();self.lock=threading.Lock()
         self.sync_requested=False;self.state={'state':'idle'}
         self.worker=None
@@ -40,6 +43,7 @@ class DailyForwardService:
             self.worker=threading.Thread(target=self._loop,name='daily-forward-worker',daemon=True);self.worker.start()
 
     def trigger(self,*,sync=False):
+        if self.cancel.is_set():return
         with self.lock:self.sync_requested |= sync
         self.event.set()
 
@@ -55,7 +59,7 @@ class DailyForwardService:
         return self.writer.submit(guarded).result()
 
     def _read(self,fn):
-        with DailyStore(self.writer.path,readonly=True) as store:return fn(store)
+        with self.database.store(DailyStore,self.writer.path,readonly=True) as store:return fn(store)
 
     def _sync(self,row):
         generation=self.gate.claim('sync')
@@ -73,8 +77,11 @@ class DailyForwardService:
 
     def _ensure_client(self):
         if self.client is not None:return
-        self.budget=self.budget or ForwardBudget(path=self.ledger_path,now=self.now,deadline=lambda d:self._read(lambda s:next_deadline(s,d)))
-        self.client=ForwardClient(self.budget)
+        with self.database.admission():
+            self.budget=self.budget or ForwardBudget(path=self.ledger_path,now=self.now,deadline=lambda d:self._read(lambda s:next_deadline(s,d)))
+            if self.cancel.is_set():
+                self.budget.close();raise DataError('cancelled')
+            self.client=ForwardClient(self.budget)
 
     def _counts(self):
         def read(store):
@@ -85,14 +92,17 @@ class DailyForwardService:
 
     def summary(self,status='complete',**extra):
         return dict(status=status,new_predictions=0,scored_outcomes=0,jev_http_calls=0,
-                    ledger_used=ledger_usage(self.ledger_path),ledger_limit=LIMIT,**extra)
+                    ledger_used=ledger_usage(self.ledger_path,database=self.database),ledger_limit=LIMIT,**extra)
 
     def cycle(self,*,sync=False,lease=None):
+        self.database.check()
         if lease is not None:
             lease.require(self.writer.path)
             return self._cycle_summary(sync=sync)
         try:
-            with forward_lock(self.writer.path):return self._cycle_summary(sync=sync)
+            with ExitStack() as stack:
+                with self.database.admission():stack.enter_context(forward_lock(self.writer.path))
+                return self._cycle_summary(sync=sync)
         except DataError as error:
             if str(error)!='daily_forward_busy':raise
             return self.summary('busy')
@@ -119,7 +129,7 @@ class DailyForwardService:
 
     def _cycle(self,*,sync=False):
         # No experiment is a normal state for installations without research data.
-        with DailyStore(self.writer.path,readonly=True) as s:
+        with self.database.store(DailyStore,self.writer.path,readonly=True) as s:
             if s.db.execute("SELECT 1 FROM sqlite_master WHERE name='d_experiments'").fetchone() is None:return 'no_experiment'
             if s.db.execute('SELECT 1 FROM d_experiments WHERE id=4').fetchone() is None:return 'no_experiment'
         self._write(ensure_schema)
@@ -189,4 +199,6 @@ class DailyForwardService:
                 code=str(error) if str(error) in SAFE else sync_reason(error)
                 self._emit('error',code)
 
-    def close(self):self.cancel.set();self.event.set()
+    def close(self):
+        self.cancel.set();self.event.set();self.database.stop()
+        if self.budget is not None and hasattr(self.budget,'close'):self.budget.close()

@@ -50,10 +50,8 @@ class RuntimeTests(unittest.TestCase):
 
     def close(self):
         self.app.close(); self.client.release.set(); self.fugle.release.set()
-        self.writer.thread.join(3)
-        for worker in self.app.jev.workers: worker.join(3)
-        self.app.sync.worker.join(3); self.app.reader.join(3)
-        self.keys_patch.stop()
+        try:self.assertTrue(self.app.wait_closed(3), "runtime threads/connections still active")
+        finally:self.keys_patch.stop()
 
     def query(self, sql, args=()):
         with Store(self.path, readonly=True) as store:
