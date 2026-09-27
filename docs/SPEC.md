@@ -335,3 +335,13 @@ reveals(experiment_id, revealed_at, first_day, last_day, what)  -- 保留段揭�
 - 開發段（實驗 1，2,688 點）Brier：vol_prior 0.6100、clock_prior 0.6175、jev_calibrated 0.6213、majority 0.6232、jev p1 0.6714。vol_prior 與 clock_prior 對 majority 的區間整段 < 0，jev_calibrated 跨 0。依 §14.3 晉級：**vol_prior**。
 - vol_prior 在前瞻段的規則（跑之前宣告）：切點與各組頻率**凍結於整個開發段已揭曉資料**（同 majority 在保留段的做法），不使用任何保留段或前瞻段標籤。
 - 前瞻段最後的比較（事先宣告）：主要比較 ① jev p1 − majority、② vol_prior − majority，Brier 差＋交易日配對 bootstrap；兩個結果都要報，不因結果挑選。前瞻段樣本小（目前 18 日、144 點），區間很可能跨 0，照 §7.2 用語。
+
+### 14.5 第 4 輪：jev 改問「會不會大幅變動」（p3，事先宣告，2026-09-27 12:05）
+
+- 動機：§14.4 顯示「波動」比「方向」好預測；p1／p2 直接問方向都失敗。
+- **實驗 3**：評估範圍與實驗 1 相同，`prompt_version = p3`，state 仍為 f1。
+- p3 問題（`move`，choice）：instructions＝p2 的欄位說明（**不含**基準比例），加上「這檔股票從現在到 30 分鐘後，價格變化的幅度會落在哪一類？」；criteria：`move`「上漲或下跌 k‰ 或更多（不論方向）」、`still`「漲跌都小於 k‰」。
+- 三類機率換算（walk-forward）：`P(flat)=P(still)`；`P(up)=P(move)·u`、`P(down)=P(move)·(1−u)`，u＝在時點 t 已揭曉（`t'+30≤t`）的開發段 move 標籤中 up 的比例（加 1 平滑）；答案取三類最大。方法名 `jev_move`。回應驗證照 §6.1（兩個鍵、總和 1±0.01、choice 為最大者）。
+- **階段 A（篩選）**：從實驗 1 開發段「可預測且可評分」的點，以種子 20260927 均勻抽 500 點（抽樣只看時點清單，不看標籤），只在這 500 點跑 jev p3。比較 `jev_move − vol_prior` 的 Brier 差（同 500 點；交易日配對 bootstrap 2000 次）。
+- **階段 B（只有 A 的區間整段 < 0 才做）**：跑完整開發段，再比一次 `jev_move − vol_prior`；若區間整段 < 0，`jev_move` 加入前瞻段考生，揭露時增列第 ③ 個比較 `jev_move − majority`。否則停在這裡，記「沒有改善」。
+- 額度：A 約 500 次；B 約 2,200 次；整場上限 3,000 不變，超過就不做 B。
