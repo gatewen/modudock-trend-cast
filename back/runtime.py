@@ -15,8 +15,11 @@ from .forward_runner import ForwardRunner
 from .forward import reveal_forward
 from .report import build_report, current_experiment, day_view, status_view
 from .store import Store
+from .daily_store import DailyStore
+from .daily_view import DailyViews, OPS as DAILY_OPS
 
-ERRORS = {'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
+ERRORS = {'daily_view_dev_only', 'daily_view_invalid_date', 'daily_view_invalid_range',
+    'daily_experiment_missing', 'daily_view_incomplete', 'invalid_daily_horizon', 'busy', 'confirmation_required', 'experiment_required', 'stale_experiment',
     'forward_settings_changed', 'forward_empty', 'forward_incomplete', 'forward_exposure_changed',
     'evolution_budget_exhausted', 'evolution_budget_unavailable',
     'evolution_frozen_changed', 'evolution_prediction_conflict',
@@ -49,6 +52,7 @@ class Application:
         self._metadata = {'status': 'loading'}
         self._sync = {'status': 'idle'}
         self._replay = {'status': 'idle'}
+        self.daily_views = DailyViews()
         self._reads = Queue(maxsize=8)
         self.reader = threading.Thread(target=self._read_loop, name='view-reader', daemon=True)
         self.reader.start()
@@ -150,9 +154,11 @@ class Application:
             if self.closed or generation != self._view_generation:
                 continue
             try:
-                with Store(self.writer.path, readonly=True) as store:
+                with (DailyStore if body['op'] in DAILY_OPS else Store)(self.writer.path, readonly=True) as store:
                     op = body['op']
-                    if op == 'status':
+                    if op in DAILY_OPS:
+                        value = self.daily_views.handle(store, body)
+                    elif op == 'status':
                         value = self._read_status(store, experiment_id)
                     elif op == 'day':
                         value = day_view(store, body.get('date'), experiment_id=experiment_id)
@@ -178,7 +184,7 @@ class Application:
             return self.error(DataError('invalid_request'))
         op = body.get('op')
         try:
-            if op in ('status', 'day', 'report'):
+            if op in ('status', 'day', 'report', *DAILY_OPS):
                 self._queue_read(body)
             elif op == 'sync':
                 state = key_state()['fugle']

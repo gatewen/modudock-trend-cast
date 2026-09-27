@@ -101,7 +101,7 @@ def main():
             shutil.copytree(ROOT / 'front', work / 'front')
             (work / 'tests').mkdir()
             shutil.copy2(ROOT / 'tests/front.test.mjs', work / 'tests/front.test.mjs')
-            target = work / 'front/front.js'
+            target = work / 'front/intraday.js'
             source = target.read_text()
             for old, new in changes:
                 # textContent helper is intentionally shared by HTML and SVG;

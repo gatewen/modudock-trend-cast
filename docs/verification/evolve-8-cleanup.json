@@ -1,0 +1,9 @@
+{
+  "shell_port": 51321,
+  "shell_closed": true,
+  "own_go_processes_gone": true,
+  "own_browser_script_gone": true,
+  "handoff_links_valid": true,
+  "configured_secrets_absent": true,
+  "preexisting_parent_temp": "上層 .playwright-mcp 僅有 13:36 的既有 console 日誌，本輪未使用或修改。"
+}

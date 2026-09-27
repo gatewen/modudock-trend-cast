@@ -66,6 +66,20 @@ export default `
 .tc .tc-dialog { padding: 16px; border: 2px solid var(--tc-accent); border-radius: 8px; background: var(--tc-surface); margin-bottom: 16px; }
 .tc .tc-dialog-actions { display: flex; gap: 8px; margin-top: 12px; }
 .tc .tc-dialog label { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.tc.tc-shell { padding: 0; }
+.tc .tc-horizon { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--tc-border); font-weight: 600; }
+.tc .tc-horizon select { min-width: 145px; }
+.tc .tc-indicator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; }
+.tc .tc-indicator { border: 1px solid var(--tc-grid); border-radius: 7px; padding: 12px; background: var(--tc-surface); }
+.tc .tc-indicator h3 { color: var(--tc-muted); font-weight: 500; margin-bottom: 6px; }
+.tc .tc-indicator strong { font-size: 15px; }
+.tc .tc-daily-point { cursor: pointer; fill: var(--tc-muted); stroke: var(--tc-bg); stroke-width: 1; }
+.tc .tc-daily-point[data-result="correct"] { fill: var(--tc-good); }
+.tc .tc-daily-point[data-result="incorrect"] { fill: var(--tc-bad); }
+.tc .tc-daily-point:focus { stroke: var(--tc-accent); stroke-width: 3; }
+.tc .tc-daily-claims select { margin: 12px 0; }
+.tc tr[data-method="jev_ind"], .tc tr[data-method="ind_logit"] { background: var(--tc-surface); }
+.tc .tc-daily-holdout { border-left: 4px solid var(--tc-accent); }
 @media (max-width: 650px) {
   .tc { padding: 14px 12px; }
   .tc .tc-card { padding: 13px 10px; }

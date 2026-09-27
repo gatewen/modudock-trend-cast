@@ -1,0 +1,14 @@
+test_actual_read_worker_routes_all_daily_exits_and_zero_http (tests.test_daily_view.DailyRuntimeTests.test_actual_read_worker_routes_all_daily_exits_and_zero_http) ... ok
+test_adjusted_chart_reference_and_ranges_end_at_development (tests.test_daily_view.DailyViewTests.test_adjusted_chart_reference_and_ranges_end_at_development) ... ok
+test_all_exits_bounded_readonly_no_network_no_config_leak (tests.test_daily_view.DailyViewTests.test_all_exits_bounded_readonly_no_network_no_config_leak) ... ok
+test_cache_rechecks_source_digest_and_prediction_changes (tests.test_daily_view.DailyViewTests.test_cache_rechecks_source_digest_and_prediction_changes) ... ok
+test_eighteen_methods_comparison_matches_existing_report_and_small_samples (tests.test_daily_view.DailyViewTests.test_eighteen_methods_comparison_matches_existing_report_and_small_samples) ... ok
+test_indicator_all_eleven_lagged_chips_and_maturity_bias (tests.test_daily_view.DailyViewTests.test_indicator_all_eleven_lagged_chips_and_maturity_bias) ... ok
+test_markers_only_sampled_two_methods_with_boolean_correctness (tests.test_daily_view.DailyViewTests.test_markers_only_sampled_two_methods_with_boolean_correctness) ... ok
+test_maturity_outside_dev_is_not_scored_or_colored_and_future_rows_are_inert (tests.test_daily_view.DailyViewTests.test_maturity_outside_dev_is_not_scored_or_colored_and_future_rows_are_inert) ... ok
+test_reject_holdout_exposed_dates_invalid_horizon_and_write_parameters (tests.test_daily_view.DailyViewTests.test_reject_holdout_exposed_dates_invalid_horizon_and_write_parameters) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 8.995s
+
+OK

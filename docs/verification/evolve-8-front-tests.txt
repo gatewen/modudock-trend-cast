@@ -1,0 +1,55 @@
+
+> modudock-trend-cast@0.2.0 test
+> node --test tests/*.test.mjs
+
+✔ daily default seven days registers before ready and sends only reads after up (11.825333ms)
+✔ daily chart shape and exact boolean colors show both sampled methods (17.045959ms)
+✔ daily bounded date controls eleven plain states and invalid dates never request (4.89525ms)
+✔ daily all methods sample sizes comparison intervals and n under thirty warning (5.353542ms)
+✔ daily horizon and range switching discard late replies including earlier mount epoch (7.356167ms)
+✔ daily rejects future dates at every outlet and ignores legacy status/report (2.473ms)
+✔ thirty minute mode keeps legacy interface and switching back clears all its dates (5.732417ms)
+✔ daily strings stay text and unmount stops messages and leaves no UI (5.084875ms)
+✔ legacy action status acknowledgement survives channel routing after confirmation (4.21625ms)
+✔ mount synchronous; ready after registration; no sending before up (11.619166ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (17.200541ms)
+✔ hover and keyboard focus show probabilities and realized return (5.19775ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (4.005667ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (5.291458ms)
+✔ date picker refuses unknown and locked days without requests (3.658584ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.59475ms)
+✔ locked day discards any supplied data and clears a previous visible chart (4.154208ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (6.086041ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (2.931083ms)
+✔ development progress can show counts but locked holdout progress cannot (2.883584ms)
+✔ untrusted strings become text, never HTML or handlers (3.876208ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (3.255958ms)
+✔ new experiment uses a second confirmation and validates threshold (3.010167ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (3.147ms)
+✔ experiment change invalidates old report and pending reveal confirmation (2.675ms)
+✔ missing key disables jev but baseline replay stays usable (3.985ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (3.143ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (2.702458ms)
+✔ error renders local explanation and never reflects upstream secret text (2.598416ms)
+✔ sync distinguishes total and partial failure with safe reasons and clears them after success (1.438042ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.442666ms)
+✔ forward run and reveal each require confirmation and send fixed experiment only (3.085625ms)
+✔ locked forward report and growing forward progress hide all counts even with revealed holdout (3.28425ms)
+✔ revealed forward shows cumulative days points and permanent used-holdout label (3.881084ms)
+✔ each forward rerun refreshes its cleared report without exposing generation counts (3.515166ms)
+✔ evolution development table shows signed Brier intervals and honest interpretation (3.831542ms)
+✔ forward participants and committed points are metadata only while scores remain locked (3.51875ms)
+✔ revealed forward renders both prespecified comparisons including unfavorable result (4.119625ms)
+✔ used holdout heading stays visible even when current status is locked (3.210458ms)
+✔ another experiment cannot inherit evolution table or forward point count (3.197125ms)
+✔ four independent cards have one heading each and buttons stay with their segment (4.292542ms)
+✔ status explains unrevealed days with safe metadata and clears stale annotations (3.229417ms)
+✔ changing experiment clears all separate score containers immediately (4.376583ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 281.281708

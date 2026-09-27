@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {Window} from 'happy-dom';
-import mount from '../front/front.js';
+import mount from '../front/intraday.js';
 
 function setup(t) {
   const window = new Window(), container = window.document.createElement('div');
@@ -134,7 +134,7 @@ test('untrusted strings become text, never HTML or handlers', t => {
   const data = report(); data.dev.comparison.statement = '<script>attack()</script>'; h.message(data);
   assert.equal(h.container.querySelectorAll('img,script').length, 0);
   assert.match(h.container.textContent, /<script>attack\(\)<\/script>/);
-  assert.doesNotMatch(readFileSync(new URL('../front/front.js', import.meta.url), 'utf8'), /\.innerHTML\s*=/);
+  assert.doesNotMatch(readFileSync(new URL('../front/intraday.js', import.meta.url), 'utf8'), /\.innerHTML\s*=/);
 });
 
 test('reveal requires second explicit confirmation and cancel sends nothing', t => {

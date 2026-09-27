@@ -1,0 +1,101 @@
+{
+  "metric_rows_checked": 54,
+  "intervals_checked": 54,
+  "claims_checked": 153,
+  "database_tables_unchanged": 33,
+  "http_calls": 0,
+  "campaign_used": 1222,
+  "all_daily_exports_development_only": true,
+  "packets": [
+    {
+      "H": 3,
+      "op": "daily_status",
+      "bytes": 40855
+    },
+    {
+      "H": 3,
+      "op": "daily_chart",
+      "bytes": 241683
+    },
+    {
+      "H": 3,
+      "op": "daily_chart",
+      "bytes": 20503
+    },
+    {
+      "H": 3,
+      "op": "daily_chart",
+      "bytes": 10765
+    },
+    {
+      "H": 3,
+      "op": "daily_indicators",
+      "bytes": 1958
+    },
+    {
+      "H": 3,
+      "op": "daily_report",
+      "bytes": 21180
+    },
+    {
+      "H": 7,
+      "op": "daily_status",
+      "bytes": 40855
+    },
+    {
+      "H": 7,
+      "op": "daily_chart",
+      "bytes": 242049
+    },
+    {
+      "H": 7,
+      "op": "daily_chart",
+      "bytes": 20551
+    },
+    {
+      "H": 7,
+      "op": "daily_chart",
+      "bytes": 10792
+    },
+    {
+      "H": 7,
+      "op": "daily_indicators",
+      "bytes": 1958
+    },
+    {
+      "H": 7,
+      "op": "daily_report",
+      "bytes": 21203
+    },
+    {
+      "H": 14,
+      "op": "daily_status",
+      "bytes": 40857
+    },
+    {
+      "H": 14,
+      "op": "daily_chart",
+      "bytes": 241795
+    },
+    {
+      "H": 14,
+      "op": "daily_chart",
+      "bytes": 20516
+    },
+    {
+      "H": 14,
+      "op": "daily_chart",
+      "bytes": 10775
+    },
+    {
+      "H": 14,
+      "op": "daily_indicators",
+      "bytes": 1959
+    },
+    {
+      "H": 14,
+      "op": "daily_report",
+      "bytes": 21155
+    }
+  ]
+}
