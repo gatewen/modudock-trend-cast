@@ -14,7 +14,7 @@ from back.evolution_run import ForbiddenClient
 ROOT=Path(__file__).resolve().parents[1]
 
 
-def main():
+def main(*,stem='evolve2-4'):
     out=ROOT/'docs/verification'
     ens=json.loads((out/'evolve2-1-ens-avg.json').read_text())
     market=json.loads((out/'evolve2-2-development.json').read_text())
@@ -43,8 +43,11 @@ def main():
         result['jev_used']=db.execute("SELECT used FROM budget WHERE campaign='evolve/2026-09-27'").fetchone()[0]
     assert result['jev_used']==1222
     result.update(jev_limit=LIMIT,elapsed_seconds=round(time.monotonic()-start,3),reviewed_results_match=True)
-    (out/'evolve2-4-view-audit.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+    (out/(stem+'-view-audit.json')).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k!='horizons'}));return 0
 
 
-if __name__=='__main__':raise SystemExit(main())
+if __name__=='__main__':
+    import argparse
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--stem',default='evolve2-4')
+    raise SystemExit(main(stem=p.parse_args().stem))

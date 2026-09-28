@@ -80,6 +80,9 @@ export default `
 .tc .tc-daily-claims select { margin: 12px 0; }
 .tc tr[data-method="jev_ind"], .tc tr[data-method="ind_logit"] { background: var(--tc-surface); }
 .tc .tc-daily-holdout { border-left: 4px solid var(--tc-accent); }
+.tc .tc-method { display: inline-block; vertical-align: middle; }
+.tc .tc-method-code { color: var(--tc-muted); font-size: 10px; font-weight: normal; }
+.tc td .tc-method-code { display: block; }
 .tc .tc-daily-research { background: var(--tc-surface); }
 .tc .tc-daily-research p { margin-top: 8px; }
 .tc .tc-daily-holdout details { margin-top: 16px; }

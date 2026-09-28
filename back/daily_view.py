@@ -246,7 +246,7 @@ class DailyViews:
                     frequencies={k:counts[k]/n if n else None for k in LABELS}, small_sample=n<30))
         result = dict(methods=methods, claims=claims, shortlist=shortlist,
             holdout=holdout_status(store),
-            comparison_note='差＝方法 − majority（猜最常見答案）；負值較好。各列使用相同日期配對，jev_ind 每 5 日抽樣，其餘用開發段可評分日。20 交易日區塊 bootstrap 2,000 次，種子 20260927。ens_avg 3 日為邊緣入圍：換種子後區間上界略跨 0。',
+            comparison_note='差＝方法 − majority；負值較好。各列使用相同日期配對，jev_ind 每 5 日抽樣，其餘用開發段可評分日。20 交易日區塊 bootstrap 2,000 次，種子 20260927。ens_avg 3 日為邊緣入圍：換種子後區間上界略跨 0。',
             multiplicity='原 11 指標每個天期預期約 0.275 個因運氣較好；ens_avg 共 3 個比較，預期約 0.075 個；大環境 6×3＝18 個比較，預期約 0.45 個。以上為名目估算、未作多重比較校正；開發段入圍只代表值得再驗證。')
         self.report_cache = {k:v for k,v in self.report_cache.items() if k[0] != H}
         self.report_cache[key] = result

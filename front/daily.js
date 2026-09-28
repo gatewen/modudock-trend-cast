@@ -1,4 +1,5 @@
 import prospective from './prospective.js';
+import {writeMethods,plainMethods} from './method_names.js';
 const CAP = '2021-12-31';
 const allowedDay = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= '2010-04-01' && d <= CAP;
 const forbiddenDate = value => (JSON.stringify(value).match(/\d{4}-\d{2}-\d{2}/g) || []).some(d => d > CAP);
@@ -22,7 +23,7 @@ export default function mountDaily(ctx) {
   const doc = ctx.container.ownerDocument, H = ctx.H;
   let live = false, disposed = false, serial = 0, selected = '', days = [], claims = [];
   const requests = {}, listeners = [];
-  const el = (tag, text = '', cls = '') => { const n = doc.createElement(tag); n.textContent = text; n.className = cls; return n; };
+  const el = (tag, text = '', cls = '') => { const n = doc.createElement(tag); writeMethods(n,text); n.className = cls; return n; };
   const on = (node, event, fn) => { node.addEventListener(event, fn); listeners.push(() => node.removeEventListener(event, fn)); };
   function send(op, fields = {}) {
     if (!live || disposed) return;
@@ -43,8 +44,8 @@ export default function mountDaily(ctx) {
   const research = card('研究結論', 'tc-daily-research');
   const researchHold = el('p','保留段結論讀取中…');
   research.append(el('p','開發段有 3 組小幅入圍：ens_avg 3／7 日、mkt_logit 3 日；ens_avg 3 日屬邊緣。'),researchHold,
-    el('p','jev 讀指標在開發段顯著較差。前瞻紀錄自 2026-09-29 起累積；jev 讀新聞仍在前瞻中。'),
-    el('p','已測：11 個技術／籌碼指標、5 個大環境指標、2 個組合模型、ens_avg、jev 讀指標；另有 jev 讀新聞（前瞻中）。','tc-note'),
+    el('p','jev_ind 在開發段顯著較差。前瞻紀錄自 2026-09-29 起累積；jev_news 仍在前瞻中。'),
+    el('p','已測：11 個技術／籌碼指標、5 個大環境指標、2 個組合模型、ens_avg、jev_ind；另有 jev_news（前瞻中）。','tc-note'),
     el('p','這不是投資建議','tc-note'));
   const chartCard = card('日線走勢與抽樣預測', 'tc-daily-chart');
   const chartToolbar = el('div', '', 'tc-chart-head');
@@ -69,7 +70,7 @@ export default function mountDaily(ctx) {
   const indicators = el('div', '', 'tc-indicator-grid');
   indicatorsCard.append(dateNav, indicators, el('p','指標是當時可見的訊號，並非預測結論。籌碼只用前一交易日以前。','tc-note'));
   const reportCard = card(`${H} 日開發段成績`, 'tc-daily-scores'), report = el('div');
-  const reportNote = el('p','開發段入圍只代表值得再驗證，不代表未來有效。jev_ind（jev 讀指標）三天期 Brier 顯著較差；共同 576 日抽樣，與其他方法的完整開發段分列。','tc-note');
+  const reportNote = el('p','開發段入圍只代表值得再驗證，不代表未來有效。jev_ind 在 3／7／14 日的 Brier 顯著較差；共同 576 日抽樣，與其他方法的完整開發段分列。','tc-note');
   reportCard.append(reportNote, report);
   const claimsCard = card('網路說法 vs 實際', 'tc-daily-claims');
   claimsCard.append(el('p','常見說法是待驗假說；下列為開發段實際頻率，未平滑，不代表未來勝率。','tc-note'));
@@ -123,7 +124,7 @@ export default function mountDaily(ctx) {
     for(const p of Array.isArray(body.points)?body.points:[]) {
       if(!allowedDay(p.day)||!map.has(p.day)||!['jev_ind','ind_logit'].includes(p.method)||!Object.hasOwn(LABELS,p.choice))continue;
       const value=map.get(p.day),correct=p.correct===true?'correct':p.correct===false?'incorrect':'unknown';
-      const info=`${p.day} · ${p.method} 猜${LABELS[p.choice]} · ${correct==='correct'?'正確':correct==='incorrect'?'錯誤':'尚無有效結果'}`;
+      const info=plainMethods(`${p.day} · ${p.method} 猜${LABELS[p.choice]} · ${correct==='correct'?'正確':correct==='incorrect'?'錯誤':'尚無有效結果'}`);
       const g=svg('g',{class:'tc-daily-point','data-result':correct,'data-day':p.day,tabindex:0,role:'button','aria-label':info});
       g.dataset.detail=info;
       const xx=x(value.i),yy=y(value.close)+(p.method==='jev_ind'?-7:7),r=span.value==='all'?2.8:5;
@@ -158,7 +159,7 @@ export default function mountDaily(ctx) {
       table(['主要比較','樣本','Brier 差','95% 區間','結論'],rows.map(r=>[
         `${r.method} ${r.H} 日 − majority`,count(r.n),signed(r.difference),
         Array.isArray(r.ci95)?r.ci95.map(signed).join(' ～ '):'—',safe(r.verdict)])));
-    holdResults.append(el('p','majority＝猜最常見答案。差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。','tc-note'),
+    holdResults.append(el('p','差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。','tc-note'),
       el('p',safe(body.multiplicity),'tc-note'));
     const details=el('details'),description=el('summary',`展開 ${H} 日全部方法的描述性成績`);
     const descriptive=Array.isArray(body.descriptive)?body.descriptive.filter(r=>METHODS.includes(r.method)&&r.method!=='jev_ind'):[];
@@ -175,7 +176,7 @@ export default function mountDaily(ctx) {
       const at=body.received_at;
       if(at===null)news.textContent='新聞廣播：未收到';
       else if(typeof at==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?\+08:00$/.test(at)&&Number.isFinite(Date.parse(at)))
-        news.textContent=`新聞廣播：最後收到時間 ${at.slice(0,19).replace('T',' ')}（台北） · jev_news ${body.jev_news_enabled?'已啟用（需當日快照）':'未啟用'}`;
+        writeMethods(news,`新聞廣播：最後收到時間 ${at.slice(0,19).replace('T',' ')}（台北） · jev_news ${body.jev_news_enabled?'已啟用（需當日快照）':'未啟用'}`);
       return;
     }
     if(body.op==='daily_forward_changed'){send('daily_forward');return;}
@@ -205,7 +206,7 @@ export default function mountDaily(ctx) {
       }
     } else if(body.op==='daily_report') {
       const rows=Array.isArray(body.methods)?body.methods.filter(r=>METHODS.includes(r.method)):[];
-      report.replaceChildren(table(['方法','樣本','準確率','Brier','差（−majority）','95% 區間','入圍'],rows.map(r=>[
+      report.replaceChildren(table(['方法','樣本','準確率','Brier','差（−基準）','95% 區間','入圍'],rows.map(r=>[
         r.method,count(r.n),percent(r.accuracy),number(r.brier,6),number(r.difference,6),
         Array.isArray(r.ci95)?r.ci95.map(v=>number(v,6)).join(' ～ '):'—',safe(r.verdict)])));
       report.append(el('p',safe(body.comparison_note),'tc-note'),el('p',safe(body.multiplicity),'tc-note'));

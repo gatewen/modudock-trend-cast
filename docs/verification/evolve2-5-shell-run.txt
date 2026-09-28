@@ -1,0 +1,1 @@
+{"address": "127.0.0.1:59975", "network_attempts": 0, "scratch_outside_modules": true, "real_db_untouched": true, "shell_exit_code": 0, "scratch_removed": true}

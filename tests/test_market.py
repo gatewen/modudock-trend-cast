@@ -89,8 +89,30 @@ class MarketFeatureTests(unittest.TestCase):
                 rows=deepcopy(self.rows);latest=self.point.day if series=='taiex' else self.days[89]
                 for r in rows:
                     if r['series']==series and r['day']==latest:r['spot_buy' if series=='usd_twd' else 'close']=code
-                p=self.calculate(rows)
+                p,info=features(self.point,MarketHistory(rows),'600')
+                self.assertEqual(info[series]['status'],'missing_code')
+                self.assertEqual(info[series]['day'],latest)
+                selected,_=MarketHistory(rows).available(series,self.point.day)
+                self.assertEqual(selected[-1]['day'],latest)
                 for name in names:self.assertIsNone(p.values[name]);self.assertEqual(p.states[name],'missing')
+
+    def test_audit_missing_code_changes_no_rows_features_or_hashes(self):
+        for series in SOURCES:
+            for key in (('spot_buy','spot_sell') if series=='usd_twd' else ('close',)):
+                rows=deepcopy(self.rows)
+                latest=self.point.day if series=='taiex' else self.days[89]
+                next(r for r in rows if r['series']==series and r['day']==latest)[key]=None
+                history=MarketHistory(rows);actual,info=features(self.point,history,'600')
+                available=history.available
+                def legacy(name,day):
+                    data,a=available(name,day)
+                    return data,dict(a,status='available') if a['status']=='missing_code' else a
+                with patch.object(history,'available',side_effect=legacy):old,_=features(self.point,history,'600')
+                self.assertEqual(actual.serialized(),old.serialized());self.assertEqual(actual.digest,old.digest)
+                self.assertEqual(info[series]['status'],'missing_code')
+        history=MarketHistory(source_rows(['2010-01-04']))
+        self.assertEqual(history.available('tsm','2010-01-11')[1]['status'],'stale')
+        self.assertEqual(MarketHistory([]).available('tsm',self.point.day)[1]['status'],'missing')
 
     def test_adr_midpoint_one_to_five_raw_close(self):
         self.point=frame('2010-06-14')
@@ -345,6 +367,26 @@ class MarketPersistenceTests(unittest.TestCase):
         self.assertNotEqual(score(before),score(after))
         self.s.db.execute("UPDATE market_features SET alignment_json='{}'");self.s.db.commit()
         with self.assertRaisesRegex(DataError,'feature_mismatch'):view.report(self.s,row,3)
+
+    def test_alignment_repair_changes_only_audit_json_and_rejects_other_differences(self):
+        from scripts.repair_market_alignment import repair,fingerprint
+        self.s.db.execute("UPDATE market_rows SET spot_sell=NULL WHERE series='usd_twd' AND day=?",(self.points[-2].day,))
+        self.s.db.commit();self.run_all()
+        row=self.s.db.execute('SELECT * FROM market_features WHERE day=?',(self.points[-1].day,)).fetchone()
+        correct=json.loads(row['alignment_json']);self.assertEqual(correct['usd_twd']['status'],'missing_code')
+        legacy=deepcopy(correct);legacy['usd_twd']['status']='available'
+        self.s.db.execute('UPDATE market_features SET alignment_json=? WHERE day=?',(canonical(legacy),row['day']));self.s.db.commit()
+        before=fingerprint(self.s);preview=repair(self.s)
+        self.assertEqual(len(preview['corrections']),1)
+        with ForbiddenClient().guard():result=repair(self.s,execute=True)
+        self.assertTrue(result['features_hashes_and_results_unchanged']);self.assertEqual(before,fingerprint(self.s))
+        self.assertEqual(json.loads(self.s.db.execute('SELECT alignment_json FROM market_features WHERE day=?',(row['day'],)).fetchone()[0]),correct)
+        self.assertEqual(repair(self.s,execute=True)['corrections'],[])
+        tampered=deepcopy(legacy);tampered['usd_twd']['age']=99
+        self.s.db.execute('UPDATE market_features SET alignment_json=? WHERE day=?',(canonical(tampered),row['day']));self.s.db.commit()
+        changes=self.s.db.total_changes
+        with self.assertRaisesRegex(DataError,'not_a_missing_code_correction'):repair(self.s,execute=True)
+        self.assertEqual(changes,self.s.db.total_changes)
 
     def test_interval_strict_negative_and_tampering_rejected(self):
         self.run_all()

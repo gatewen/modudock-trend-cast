@@ -30,6 +30,10 @@ class MarketHistory:
         age=(d-date.fromisoformat(row['day'])).days
         info=dict(day=row['day'],age=age,status='stale' if age>5 else 'available')
         if age>5:return [],info
+        keys=('spot_buy','spot_sell') if series=='usd_twd' else ('close',)
+        if any(positive(row.get(key)) is None for key in keys):info['status']='missing_code'
+        # Audit metadata only: keep the same rows, including the invalid latest
+        # quote, so no feature silently backfills or changes its input window.
         return self.rows[series][:i+1],info
 
 

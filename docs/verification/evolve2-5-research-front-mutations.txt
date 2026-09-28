@@ -1,0 +1,9 @@
+locked_scores_leak: KILLED -> holdout results require
+holdout_scope_removed: KILLED -> holdout results require
+holdout_horizon_removed: KILLED -> holdout results require
+holdout_exposed_end_allowed: KILLED -> holdout results require
+holdout_difference_swapped: KILLED -> revealed holdout shows
+holdout_interval_sign_lost: KILLED -> revealed holdout shows
+descriptive_method_lost: KILLED -> revealed holdout shows
+research_conclusion_lost: KILLED -> revealed holdout shows
+8/8 front behavior mutations killed

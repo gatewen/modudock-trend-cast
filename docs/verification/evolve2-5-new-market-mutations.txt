@@ -1,0 +1,6 @@
+missing_code_marked_available: KILLED -> tests.test_market.MarketFeatureTests.test_missing_latest_never_backfills
+fx_sell_missing_ignored: KILLED -> tests.test_market.MarketFeatureTests.test_audit_missing_code_changes_no_rows_features_or_hashes
+missing_quote_rows_removed: KILLED -> tests.test_market.MarketFeatureTests.test_missing_latest_never_backfills
+repair_changes_input_hash: KILLED -> tests.test_market.MarketPersistenceTests.test_alignment_repair_changes_only_audit_json_and_rejects_other_differences
+repair_accepts_other_audit_changes: KILLED -> tests.test_market.MarketPersistenceTests.test_alignment_repair_changes_only_audit_json_and_rejects_other_differences
+5/5 behavior mutations killed

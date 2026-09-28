@@ -1,0 +1,194 @@
+{
+  "executed": false,
+  "corrections": [
+    {
+      "day": "2012-01-03",
+      "before": {
+        "sox": {
+          "age": 4,
+          "day": "2011-12-30",
+          "status": "available"
+        },
+        "taiex": {
+          "age": 0,
+          "day": "2012-01-03",
+          "status": "available"
+        },
+        "tsm": {
+          "age": 4,
+          "day": "2011-12-30",
+          "status": "available"
+        },
+        "usd_twd": {
+          "age": 1,
+          "day": "2012-01-02",
+          "status": "available"
+        }
+      },
+      "after": {
+        "taiex": {
+          "day": "2012-01-03",
+          "age": 0,
+          "status": "available"
+        },
+        "tsm": {
+          "day": "2011-12-30",
+          "age": 4,
+          "status": "available"
+        },
+        "sox": {
+          "day": "2011-12-30",
+          "age": 4,
+          "status": "available"
+        },
+        "usd_twd": {
+          "day": "2012-01-02",
+          "age": 1,
+          "status": "missing_code"
+        }
+      }
+    }
+  ],
+  "feature_and_result_fingerprints_before": {
+    "d_features": {
+      "n": 2894,
+      "sha256": "7f98899f1a695c14351d949a417e7884906fcb6f974a183e2a30dbaf1ef5695e"
+    },
+    "d_predictions": {
+      "n": 149322,
+      "sha256": "403b39a94fd6c2b746cc59474a0937b9cdca187439b16f7e052024ca89d1747b"
+    },
+    "d_outcomes": {
+      "n": 8658,
+      "sha256": "0d0a1aad97a101de3ac45e4dc88f539e555e79be9528283b2e3ec83f0c460125"
+    },
+    "d_fits": {
+      "n": 395,
+      "sha256": "76ec53b06106b64e882d9d12daee45b39d4368f6df982e7fb2a50ab6a426cfcf"
+    },
+    "market_features": {
+      "n": 2894,
+      "sha256": "169a017d04bcba36ec27716e0274b3d7da77320fc48e1e095cee17ca9f5be065"
+    },
+    "market_predictions": {
+      "n": 52092,
+      "sha256": "4dda6783c29af41a27169603b87e835b0cdc6bc70659a5b7cd87567ed1a17b0a"
+    },
+    "market_fits": {
+      "n": 395,
+      "sha256": "f74135e5ab0c1f8bff710e3ac1c211d301fda225609ca0144aecdf7af648c000"
+    },
+    "d_experiments": {
+      "n": 1,
+      "sha256": "f91b4164e1c91fbdafb62502a7c7c4d992f2c0a0d16180f6d6cb66b5b32f082b"
+    },
+    "market_experiments": {
+      "n": 1,
+      "sha256": "76d6f623afd6789c5b72dde9975f9dd51f0cdfe990bcc7ba81d99eb9a8fc102e"
+    },
+    "market_rows": {
+      "n": 12995,
+      "sha256": "ee0af9ef25bcecf53a861cabf0735b87ae5fb8d6f4e639eaea9822885d2cbefc"
+    },
+    "d_hold_features": {
+      "n": 619,
+      "sha256": "93f5e7d4e639400636e18bf46e4288791054e5aabb2720c392ce79fb05362c23"
+    },
+    "d_hold_predictions": {
+      "n": 44568,
+      "sha256": "a3e151a49edc8546008c2bf63eaf058a2157542f34dc0bc4928f268d0edb3e9f"
+    },
+    "d_hold_outcomes": {
+      "n": 1833,
+      "sha256": "5738a63795a1f745dbf913909512d53263d96197437fa97c4bc8ae290985bb5f"
+    },
+    "d_hold_models": {
+      "n": 1,
+      "sha256": "f4e575ec7f0fa764e7350b7305738ec6a15b91eedfeb834474b287383202129d"
+    },
+    "d_hold_completion": {
+      "n": 1,
+      "sha256": "fc928f2283e97dfa394ec58b1cf1b9d8169239523ce53e17e51c833613eed636"
+    },
+    "d_hold_seal": {
+      "n": 1,
+      "sha256": "15fa80240d3a5332b5a70d08858493ead5742958d96fe6b5ca9866afb5b68fdc"
+    },
+    "reveals": {
+      "n": 20,
+      "sha256": "a5bf6becc6b014e71c142c212562eb058dcaa40fd4e63c07c9d0873f02ea5445"
+    }
+  },
+  "feature_and_result_fingerprints_after": {
+    "d_features": {
+      "n": 2894,
+      "sha256": "7f98899f1a695c14351d949a417e7884906fcb6f974a183e2a30dbaf1ef5695e"
+    },
+    "d_predictions": {
+      "n": 149322,
+      "sha256": "403b39a94fd6c2b746cc59474a0937b9cdca187439b16f7e052024ca89d1747b"
+    },
+    "d_outcomes": {
+      "n": 8658,
+      "sha256": "0d0a1aad97a101de3ac45e4dc88f539e555e79be9528283b2e3ec83f0c460125"
+    },
+    "d_fits": {
+      "n": 395,
+      "sha256": "76ec53b06106b64e882d9d12daee45b39d4368f6df982e7fb2a50ab6a426cfcf"
+    },
+    "market_features": {
+      "n": 2894,
+      "sha256": "169a017d04bcba36ec27716e0274b3d7da77320fc48e1e095cee17ca9f5be065"
+    },
+    "market_predictions": {
+      "n": 52092,
+      "sha256": "4dda6783c29af41a27169603b87e835b0cdc6bc70659a5b7cd87567ed1a17b0a"
+    },
+    "market_fits": {
+      "n": 395,
+      "sha256": "f74135e5ab0c1f8bff710e3ac1c211d301fda225609ca0144aecdf7af648c000"
+    },
+    "d_experiments": {
+      "n": 1,
+      "sha256": "f91b4164e1c91fbdafb62502a7c7c4d992f2c0a0d16180f6d6cb66b5b32f082b"
+    },
+    "market_experiments": {
+      "n": 1,
+      "sha256": "76d6f623afd6789c5b72dde9975f9dd51f0cdfe990bcc7ba81d99eb9a8fc102e"
+    },
+    "market_rows": {
+      "n": 12995,
+      "sha256": "ee0af9ef25bcecf53a861cabf0735b87ae5fb8d6f4e639eaea9822885d2cbefc"
+    },
+    "d_hold_features": {
+      "n": 619,
+      "sha256": "93f5e7d4e639400636e18bf46e4288791054e5aabb2720c392ce79fb05362c23"
+    },
+    "d_hold_predictions": {
+      "n": 44568,
+      "sha256": "a3e151a49edc8546008c2bf63eaf058a2157542f34dc0bc4928f268d0edb3e9f"
+    },
+    "d_hold_outcomes": {
+      "n": 1833,
+      "sha256": "5738a63795a1f745dbf913909512d53263d96197437fa97c4bc8ae290985bb5f"
+    },
+    "d_hold_models": {
+      "n": 1,
+      "sha256": "f4e575ec7f0fa764e7350b7305738ec6a15b91eedfeb834474b287383202129d"
+    },
+    "d_hold_completion": {
+      "n": 1,
+      "sha256": "fc928f2283e97dfa394ec58b1cf1b9d8169239523ce53e17e51c833613eed636"
+    },
+    "d_hold_seal": {
+      "n": 1,
+      "sha256": "15fa80240d3a5332b5a70d08858493ead5742958d96fe6b5ca9866afb5b68fdc"
+    },
+    "reveals": {
+      "n": 20,
+      "sha256": "a5bf6becc6b014e71c142c212562eb058dcaa40fd4e63c07c9d0873f02ea5445"
+    }
+  },
+  "features_hashes_and_results_unchanged": true,
+  "http_calls": 0
+}

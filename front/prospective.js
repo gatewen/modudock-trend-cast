@@ -1,4 +1,5 @@
 // Dedicated forward-only renderer. Development date guards remain in daily.js.
+import {writeMethods} from './method_names.js';
 const timing = {ontime:'準時',backfill:'補記',unconfirmed:'準時待確認'};
 const labels = {up:'漲',flat:'盤整',down:'跌'};
 const methods = ['majority','ind_logit','vol_prior_d','jev_ind','jev_news'];
@@ -10,7 +11,7 @@ const number = n => numeric(n)?n.toFixed(6):'—';
 const safe = s => typeof s==='string'?s.slice(0,200):'';
 const day = s => typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
 export default function prospective(doc,H) {
-  const el=(tag,text='',cls='')=>{const n=doc.createElement(tag);n.textContent=text;n.className=cls;return n;};
+  const el=(tag,text='',cls='')=>{const n=doc.createElement(tag);writeMethods(n,text);n.className=cls;return n;};
   const root=el('section','','tc-prospective');
   function card(title,cls){const n=el('section','',`tc-card ${cls}`);n.append(el('h2',title));root.append(n);return n;}
   const latest=card('最新預測','tc-forward-latest'),latestBody=el('div');
