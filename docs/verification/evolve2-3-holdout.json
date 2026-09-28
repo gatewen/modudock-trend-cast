@@ -1,0 +1,5079 @@
+{
+  "experiment": 4,
+  "split": "holdout",
+  "revealed_at": "2026-09-29T02:22:02+08:00",
+  "first_day": "2022-01-03",
+  "last_day": "2024-07-25",
+  "model_hash": "a6a7510873cc43d53ca0a85f9710488fc98db0655fbc9f0bdba4028fdd80fc60",
+  "policy": {
+    "version": "daily-holdout-v1",
+    "spec_commit": "37755a0",
+    "methods": [
+      "always_flat",
+      "majority",
+      "momentum_H",
+      "reversal_H",
+      "vol_prior_d",
+      "ind_ma_cross",
+      "ind_ma_trend",
+      "ind_rsi14",
+      "ind_kd",
+      "ind_macd",
+      "ind_bollinger",
+      "ind_bias20",
+      "ind_vol_price",
+      "ind_foreign_net",
+      "ind_trust_net",
+      "ind_margin_chg",
+      "ind_logit",
+      "ind_mkt_trend",
+      "ind_mkt_ret5",
+      "ind_adr_premium",
+      "ind_sox_ret1",
+      "ind_sox_trend",
+      "mkt_logit",
+      "ens_avg"
+    ],
+    "primary": [
+      [
+        3,
+        "ens_avg"
+      ],
+      [
+        7,
+        "ens_avg"
+      ],
+      [
+        3,
+        "mkt_logit"
+      ]
+    ],
+    "first": "2022-01-03",
+    "last": "2024-07-25",
+    "horizons": [
+      3,
+      7,
+      14
+    ],
+    "market": {
+      "version": "market-v1",
+      "spec_commit": "d322a30",
+      "original": {
+        "version": "daily-indicators-v1",
+        "indicators": [
+          "ma_cross",
+          "ma_trend",
+          "rsi14",
+          "kd",
+          "macd",
+          "bollinger",
+          "bias20",
+          "vol_price",
+          "foreign_net",
+          "trust_net",
+          "margin_chg"
+        ],
+        "methods": [
+          "always_flat",
+          "majority",
+          "momentum_H",
+          "reversal_H",
+          "vol_prior_d",
+          "ind_ma_cross",
+          "ind_ma_trend",
+          "ind_rsi14",
+          "ind_kd",
+          "ind_macd",
+          "ind_bollinger",
+          "ind_bias20",
+          "ind_vol_price",
+          "ind_foreign_net",
+          "ind_trust_net",
+          "ind_margin_chg",
+          "ind_logit"
+        ],
+        "numeric_columns": [
+          "ma_cross",
+          "ma_trend",
+          "rsi14",
+          "kd_k",
+          "kd_d",
+          "macd_dif",
+          "macd_signal",
+          "macd_hist",
+          "bollinger",
+          "bias20",
+          "vol_price_return",
+          "vol_price_ratio",
+          "foreign_net",
+          "trust_net",
+          "margin_chg"
+        ],
+        "states": {
+          "ma_cross": [
+            "bull",
+            "bear",
+            "neutral"
+          ],
+          "ma_trend": [
+            "bull",
+            "bear",
+            "neutral"
+          ],
+          "rsi14": [
+            "oversold",
+            "overbought",
+            "middle"
+          ],
+          "kd": [
+            "bull_cross",
+            "bear_cross",
+            "low",
+            "middle",
+            "high"
+          ],
+          "macd": [
+            "bull_flip",
+            "bear_flip",
+            "positive",
+            "negative",
+            "zero"
+          ],
+          "bollinger": [
+            "above",
+            "below",
+            "inside"
+          ],
+          "bias20": [
+            "low",
+            "middle",
+            "high"
+          ],
+          "vol_price": [
+            "up_high",
+            "up_low",
+            "down_high",
+            "down_low",
+            "flat_high",
+            "flat_low"
+          ],
+          "foreign_net": [
+            "positive",
+            "negative",
+            "zero"
+          ],
+          "trust_net": [
+            "positive",
+            "negative",
+            "zero"
+          ],
+          "margin_chg": [
+            "positive",
+            "negative",
+            "zero"
+          ]
+        },
+        "claims": {
+          "ma_cross": {
+            "bull": "黃金交叉偏多",
+            "bear": "死亡交叉偏空"
+          },
+          "ma_trend": {
+            "bull": "站上長均線偏多",
+            "bear": "跌破長均線偏空"
+          },
+          "rsi14": {
+            "oversold": "超賣可能反彈",
+            "overbought": "超買可能回落"
+          },
+          "kd": {
+            "bull_cross": "低檔黃金交叉偏多",
+            "bear_cross": "高檔死亡交叉偏空"
+          },
+          "macd": {
+            "bull_flip": "柱狀體翻正偏多",
+            "bear_flip": "柱狀體翻負偏空"
+          },
+          "bollinger": {
+            "above": "上軌突破（追勢／反轉說法並存）",
+            "below": "下軌跌破（追勢／反轉說法並存）"
+          },
+          "bias20": {
+            "low": "低乖離可能反彈",
+            "high": "高乖離可能回落"
+          },
+          "vol_price": {
+            "up_high": "價漲量增偏多",
+            "down_high": "價跌量增偏空"
+          },
+          "foreign_net": {
+            "positive": "外資買超偏多",
+            "negative": "外資賣超偏空"
+          },
+          "trust_net": {
+            "positive": "投信買超偏多",
+            "negative": "投信賣超偏空"
+          },
+          "margin_chg": {
+            "positive": "融資增加（追勢／反向說法並存）",
+            "negative": "融資減少（追勢／反向說法並存）"
+          }
+        },
+        "warmup": 60,
+        "horizons": [
+          3,
+          7,
+          14
+        ],
+        "chip_lag_sessions": 1,
+        "ma_cross": {
+          "fast": 5,
+          "slow": 20,
+          "lookback": 3,
+          "multiple": "latest"
+        },
+        "ma_trend": {
+          "window": 60,
+          "equal": "neutral"
+        },
+        "rsi14": {
+          "window": 14,
+          "smoothing": "Wilder",
+          "initial": "mean_first_14",
+          "flat": 50
+        },
+        "kd": {
+          "rsv_window": 9,
+          "k_smoothing": 3,
+          "d_smoothing": 3,
+          "initial": 50,
+          "flat_rsv": 50
+        },
+        "macd": {
+          "fast": 12,
+          "slow": 26,
+          "signal": 9,
+          "ema_initial": "first_value",
+          "histogram": "dif_minus_signal"
+        },
+        "bollinger": {
+          "window": 20,
+          "sigma": 2,
+          "ddof": 0
+        },
+        "bias20": {
+          "window": 20
+        },
+        "vol_price": {
+          "window": 20,
+          "mean_includes_today": true,
+          "flat": "separate"
+        },
+        "foreign_net": {
+          "sum_sessions": 3
+        },
+        "trust_net": {
+          "sum_sessions": 3
+        },
+        "margin_chg": {
+          "difference_sessions": 5
+        },
+        "vol_prior_d": {
+          "return_count": 20,
+          "ddof": 0
+        },
+        "frequency": {
+          "min_samples": 30,
+          "add": 1,
+          "fallback": "majority",
+          "tie": [
+            "flat",
+            "up",
+            "down"
+          ]
+        },
+        "terciles": {
+          "quantiles": [
+            0.3333333333333333,
+            0.6666666666666666
+          ],
+          "interpolation": "linear",
+          "equal": "lower",
+          "fit": "matured_dev_only"
+        },
+        "k": {
+          "sigma_multiplier": 0.5,
+          "ddof": 0,
+          "step": ".005",
+          "rounding": "HALF_UP",
+          "endpoints": "both_dev"
+        },
+        "logit": {
+          "lambda": 1.0,
+          "steps": 300,
+          "learning_rate": 0.1,
+          "refit_sessions": 20,
+          "min_train": 250,
+          "initial": "zero_every_fit",
+          "loss": "mean_CE_plus_lambda_over_2_L2",
+          "penalize_intercept": false,
+          "scale": "train_population",
+          "missing": "train_mean_and_missing_state",
+          "onehot_scale": false,
+          "numeric_zero_sd": 1.0,
+          "refit_origin": "first_predictable_dev_session",
+          "bias_state_cuts": "fit_training_only_at_refit"
+        },
+        "bootstrap": {
+          "block_sessions": 20,
+          "layout": "nonoverlapping_keep_tail",
+          "iterations": 2000,
+          "seed": 20260927
+        }
+      },
+      "indicators": [
+        "ma_cross",
+        "ma_trend",
+        "rsi14",
+        "kd",
+        "macd",
+        "bollinger",
+        "bias20",
+        "vol_price",
+        "foreign_net",
+        "trust_net",
+        "margin_chg",
+        "mkt_trend",
+        "mkt_ret5",
+        "adr_premium",
+        "sox_ret1",
+        "sox_trend"
+      ],
+      "numeric": [
+        "ma_cross",
+        "ma_trend",
+        "rsi14",
+        "kd_k",
+        "kd_d",
+        "macd_dif",
+        "macd_signal",
+        "macd_hist",
+        "bollinger",
+        "bias20",
+        "vol_price_return",
+        "vol_price_ratio",
+        "foreign_net",
+        "trust_net",
+        "margin_chg",
+        "mkt_trend",
+        "mkt_ret5",
+        "adr_premium",
+        "sox_ret1",
+        "sox_trend"
+      ],
+      "states": {
+        "ma_cross": [
+          "bull",
+          "bear",
+          "neutral"
+        ],
+        "ma_trend": [
+          "bull",
+          "bear",
+          "neutral"
+        ],
+        "rsi14": [
+          "oversold",
+          "overbought",
+          "middle"
+        ],
+        "kd": [
+          "bull_cross",
+          "bear_cross",
+          "low",
+          "middle",
+          "high"
+        ],
+        "macd": [
+          "bull_flip",
+          "bear_flip",
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "bollinger": [
+          "above",
+          "below",
+          "inside"
+        ],
+        "bias20": [
+          "low",
+          "middle",
+          "high"
+        ],
+        "vol_price": [
+          "up_high",
+          "up_low",
+          "down_high",
+          "down_low",
+          "flat_high",
+          "flat_low"
+        ],
+        "foreign_net": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "trust_net": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "margin_chg": [
+          "positive",
+          "negative",
+          "zero"
+        ],
+        "mkt_trend": [
+          "bull",
+          "bear",
+          "neutral"
+        ],
+        "mkt_ret5": [
+          "low",
+          "middle",
+          "high"
+        ],
+        "adr_premium": [
+          "low",
+          "middle",
+          "high"
+        ],
+        "sox_ret1": [
+          "low",
+          "middle",
+          "high"
+        ],
+        "sox_trend": [
+          "bull",
+          "bear",
+          "neutral"
+        ]
+      },
+      "methods": [
+        "ind_mkt_trend",
+        "ind_mkt_ret5",
+        "ind_adr_premium",
+        "ind_sox_ret1",
+        "ind_sox_trend",
+        "mkt_logit"
+      ],
+      "source": "FinMind",
+      "prices": "Close_not_Adj_Close",
+      "fx": "(spot_buy+spot_sell)/2",
+      "adr_ratio": 5,
+      "max_age_calendar_days": 5,
+      "age_anchor": "prediction_day",
+      "cutoff": {
+        "taiex": "day<=d",
+        "tsm": "us_day<d",
+        "sox": "us_day<d",
+        "usd_twd": "day<d"
+      },
+      "missing": "latest_row_no_backfill_nonpositive_or_invalid_is_missing",
+      "mkt_trend": {
+        "window": 60,
+        "numeric": "close/MA-1",
+        "equal": "neutral",
+        "mean_includes_latest": true
+      },
+      "mkt_ret5": {
+        "lag_sessions": 5
+      },
+      "sox_ret1": {
+        "lag_sessions": 1
+      },
+      "sox_trend": {
+        "window": 20,
+        "numeric": "close/MA-1",
+        "equal": "neutral",
+        "mean_includes_latest": true
+      },
+      "history": "consecutive_source_rows_any_missing_in_window_is_missing",
+      "terciles": {
+        "names": [
+          "bias20",
+          "mkt_ret5",
+          "adr_premium",
+          "sox_ret1"
+        ],
+        "fit": "matured_only",
+        "logit": "fixed_at_refit",
+        "ties": "lower"
+      },
+      "comparisons": 18,
+      "expected_lucky": 0.45
+    },
+    "frequency": "all_scorable_development_endpoints",
+    "logit": "last_persisted_development_fit_no_refit",
+    "update_on_holdout": false,
+    "bootstrap": {
+      "block_sessions": 20,
+      "iterations": 2000,
+      "seed": 20260927
+    },
+    "comparisons": 3,
+    "expected_lucky": 0.075
+  },
+  "n_days": 619,
+  "missing_predictions": 0,
+  "prediction_digest": "a3e151a49edc8546008c2bf63eaf058a2157542f34dc0bc4928f268d0edb3e9f",
+  "outcome_digest": "bb6028672511805f4a2292dc02cecb8b3e942c8ee81bbd269559c68b33553514",
+  "primary_comparisons": [
+    {
+      "n": 616,
+      "difference": -7.713747490739626e-05,
+      "ci95": [
+        -0.002523971425673895,
+        0.0024207942909131555
+      ],
+      "blocks": 31,
+      "block_sessions": 20,
+      "repetitions": 2000,
+      "seed": 20260927,
+      "layout": "nonoverlapping_keep_tail",
+      "H": 3,
+      "method": "ens_avg",
+      "baseline": "majority",
+      "expected_scorable": 616,
+      "complete": true,
+      "verdict": "沒有證據顯示 ens_avg 比簡單方法好"
+    },
+    {
+      "n": 616,
+      "difference": 0.005917197075854286,
+      "ci95": [
+        -0.002109220710313637,
+        0.014534747722407006
+      ],
+      "blocks": 31,
+      "block_sessions": 20,
+      "repetitions": 2000,
+      "seed": 20260927,
+      "layout": "nonoverlapping_keep_tail",
+      "H": 3,
+      "method": "mkt_logit",
+      "baseline": "majority",
+      "expected_scorable": 616,
+      "complete": true,
+      "verdict": "沒有證據顯示 mkt_logit 比簡單方法好"
+    },
+    {
+      "n": 612,
+      "difference": -0.00405397049480414,
+      "ci95": [
+        -0.00877372804825334,
+        0.001002476715190043
+      ],
+      "blocks": 31,
+      "block_sessions": 20,
+      "repetitions": 2000,
+      "seed": 20260927,
+      "layout": "nonoverlapping_keep_tail",
+      "H": 7,
+      "method": "ens_avg",
+      "baseline": "majority",
+      "expected_scorable": 612,
+      "complete": true,
+      "verdict": "沒有證據顯示 ens_avg 比簡單方法好"
+    }
+  ],
+  "descriptive": {
+    "3": {
+      "always_flat": {
+        "n": 616,
+        "correct": 180,
+        "accuracy": 0.2922077922077922,
+        "accuracy_wilson95": [
+          0.25767048782115404,
+          0.3293206752303402
+        ],
+        "brier": 1.4155844155844155,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 616,
+            "correct": 180,
+            "precision": 0.2922077922077922,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 221,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 180,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "majority": {
+        "n": 616,
+        "correct": 221,
+        "accuracy": 0.3587662337662338,
+        "accuracy_wilson95": [
+          0.3218722740057692,
+          0.39741078213079334
+        ],
+        "brier": 0.6722423407826065,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 616,
+            "correct": 221,
+            "precision": 0.3587662337662338,
+            "recall": 1.0
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 221,
+            "flat": 0,
+            "down": 0
+          },
+          "flat": {
+            "up": 180,
+            "flat": 0,
+            "down": 0
+          },
+          "down": {
+            "up": 215,
+            "flat": 0,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "momentum_H": {
+        "n": 616,
+        "correct": 199,
+        "accuracy": 0.32305194805194803,
+        "accuracy_wilson95": [
+          0.28731752036364205,
+          0.360979641922396
+        ],
+        "brier": 1.353896103896104,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 224,
+            "correct": 85,
+            "precision": 0.3794642857142857,
+            "recall": 0.38461538461538464
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 180,
+            "correct": 54,
+            "precision": 0.3,
+            "recall": 0.3
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 212,
+            "correct": 60,
+            "precision": 0.2830188679245283,
+            "recall": 0.27906976744186046
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 85,
+            "flat": 51,
+            "down": 85
+          },
+          "flat": {
+            "up": 59,
+            "flat": 54,
+            "down": 67
+          },
+          "down": {
+            "up": 80,
+            "flat": 75,
+            "down": 60
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "reversal_H": {
+        "n": 616,
+        "correct": 219,
+        "accuracy": 0.3555194805194805,
+        "accuracy_wilson95": [
+          0.31872135434134363,
+          0.39410843871789847
+        ],
+        "brier": 1.2889610389610389,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 212,
+            "correct": 85,
+            "precision": 0.4009433962264151,
+            "recall": 0.38461538461538464
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 180,
+            "correct": 54,
+            "precision": 0.3,
+            "recall": 0.3
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 224,
+            "correct": 80,
+            "precision": 0.35714285714285715,
+            "recall": 0.37209302325581395
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 85,
+            "flat": 51,
+            "down": 85
+          },
+          "flat": {
+            "up": 67,
+            "flat": 54,
+            "down": 59
+          },
+          "down": {
+            "up": 60,
+            "flat": 75,
+            "down": 80
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "vol_prior_d": {
+        "n": 616,
+        "correct": 214,
+        "accuracy": 0.3474025974025974,
+        "accuracy_wilson95": [
+          0.31085229853900553,
+          0.38584433682693553
+        ],
+        "brier": 0.6683024875662806,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 458,
+            "correct": 168,
+            "precision": 0.36681222707423583,
+            "recall": 0.7601809954751131
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 158,
+            "correct": 46,
+            "precision": 0.2911392405063291,
+            "recall": 0.25555555555555554
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 168,
+            "flat": 53,
+            "down": 0
+          },
+          "flat": {
+            "up": 134,
+            "flat": 46,
+            "down": 0
+          },
+          "down": {
+            "up": 156,
+            "flat": 59,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_cross": {
+        "n": 616,
+        "correct": 216,
+        "accuracy": 0.35064935064935066,
+        "accuracy_wilson95": [
+          0.31399850037300414,
+          0.38915139807025734
+        ],
+        "brier": 0.6700996926412088,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 568,
+            "correct": 201,
+            "precision": 0.3538732394366197,
+            "recall": 0.9095022624434389
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 48,
+            "correct": 15,
+            "precision": 0.3125,
+            "recall": 0.08333333333333333
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 201,
+            "flat": 20,
+            "down": 0
+          },
+          "flat": {
+            "up": 165,
+            "flat": 15,
+            "down": 0
+          },
+          "down": {
+            "up": 202,
+            "flat": 13,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_trend": {
+        "n": 616,
+        "correct": 178,
+        "accuracy": 0.288961038961039,
+        "accuracy_wilson95": [
+          0.2545609400964755,
+          0.3259769598776984
+        ],
+        "brier": 0.6786140076609279,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 231,
+            "correct": 70,
+            "precision": 0.30303030303030304,
+            "recall": 0.3167420814479638
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 385,
+            "correct": 108,
+            "precision": 0.2805194805194805,
+            "recall": 0.6
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 70,
+            "flat": 151,
+            "down": 0
+          },
+          "flat": {
+            "up": 72,
+            "flat": 108,
+            "down": 0
+          },
+          "down": {
+            "up": 89,
+            "flat": 126,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_rsi14": {
+        "n": 616,
+        "correct": 215,
+        "accuracy": 0.349025974025974,
+        "accuracy_wilson95": [
+          0.31242516170556467,
+          0.3874981051990366
+        ],
+        "brier": 0.6717220485516359,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 549,
+            "correct": 198,
+            "precision": 0.36065573770491804,
+            "recall": 0.8959276018099548
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 67,
+            "correct": 17,
+            "precision": 0.2537313432835821,
+            "recall": 0.09444444444444444
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 198,
+            "flat": 23,
+            "down": 0
+          },
+          "flat": {
+            "up": 163,
+            "flat": 17,
+            "down": 0
+          },
+          "down": {
+            "up": 188,
+            "flat": 27,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_kd": {
+        "n": 616,
+        "correct": 208,
+        "accuracy": 0.33766233766233766,
+        "accuracy_wilson95": [
+          0.30142519310095894,
+          0.375911653033021
+        ],
+        "brier": 0.6782906617684941,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 483,
+            "correct": 174,
+            "precision": 0.36024844720496896,
+            "recall": 0.7873303167420814
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 133,
+            "correct": 34,
+            "precision": 0.2556390977443609,
+            "recall": 0.18888888888888888
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 174,
+            "flat": 47,
+            "down": 0
+          },
+          "flat": {
+            "up": 146,
+            "flat": 34,
+            "down": 0
+          },
+          "down": {
+            "up": 163,
+            "flat": 52,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_macd": {
+        "n": 616,
+        "correct": 178,
+        "accuracy": 0.288961038961039,
+        "accuracy_wilson95": [
+          0.2545609400964755,
+          0.3259769598776984
+        ],
+        "brier": 0.6791670065888983,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 323,
+            "correct": 104,
+            "precision": 0.3219814241486068,
+            "recall": 0.47058823529411764
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 293,
+            "correct": 74,
+            "precision": 0.2525597269624573,
+            "recall": 0.4111111111111111
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 104,
+            "flat": 117,
+            "down": 0
+          },
+          "flat": {
+            "up": 106,
+            "flat": 74,
+            "down": 0
+          },
+          "down": {
+            "up": 113,
+            "flat": 102,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bollinger": {
+        "n": 616,
+        "correct": 212,
+        "accuracy": 0.34415584415584416,
+        "accuracy_wilson95": [
+          0.3077080048961381,
+          0.3825353673924827
+        ],
+        "brier": 0.6748374620666122,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 561,
+            "correct": 198,
+            "precision": 0.35294117647058826,
+            "recall": 0.8959276018099548
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 55,
+            "correct": 14,
+            "precision": 0.2545454545454545,
+            "recall": 0.07777777777777778
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 198,
+            "flat": 23,
+            "down": 0
+          },
+          "flat": {
+            "up": 166,
+            "flat": 14,
+            "down": 0
+          },
+          "down": {
+            "up": 197,
+            "flat": 18,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bias20": {
+        "n": 616,
+        "correct": 180,
+        "accuracy": 0.2922077922077922,
+        "accuracy_wilson95": [
+          0.25767048782115404,
+          0.3293206752303402
+        ],
+        "brier": 0.6846482276157685,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 265,
+            "correct": 84,
+            "precision": 0.3169811320754717,
+            "recall": 0.38009049773755654
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 351,
+            "correct": 96,
+            "precision": 0.27350427350427353,
+            "recall": 0.5333333333333333
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 84,
+            "flat": 137,
+            "down": 0
+          },
+          "flat": {
+            "up": 84,
+            "flat": 96,
+            "down": 0
+          },
+          "down": {
+            "up": 97,
+            "flat": 118,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_vol_price": {
+        "n": 616,
+        "correct": 205,
+        "accuracy": 0.3327922077922078,
+        "accuracy_wilson95": [
+          0.29671819018207923,
+          0.3709387613359201
+        ],
+        "brier": 0.6723934222572261,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 297,
+            "correct": 111,
+            "precision": 0.37373737373737376,
+            "recall": 0.502262443438914
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 319,
+            "correct": 94,
+            "precision": 0.2946708463949843,
+            "recall": 0.5222222222222223
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 111,
+            "flat": 110,
+            "down": 0
+          },
+          "flat": {
+            "up": 86,
+            "flat": 94,
+            "down": 0
+          },
+          "down": {
+            "up": 100,
+            "flat": 115,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_foreign_net": {
+        "n": 616,
+        "correct": 192,
+        "accuracy": 0.3116883116883117,
+        "accuracy_wilson95": [
+          0.2763730094536696,
+          0.349337732061747
+        ],
+        "brier": 0.6768123393109183,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 327,
+            "correct": 110,
+            "precision": 0.3363914373088685,
+            "recall": 0.497737556561086
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 289,
+            "correct": 82,
+            "precision": 0.2837370242214533,
+            "recall": 0.45555555555555555
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 110,
+            "flat": 111,
+            "down": 0
+          },
+          "flat": {
+            "up": 98,
+            "flat": 82,
+            "down": 0
+          },
+          "down": {
+            "up": 119,
+            "flat": 96,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_trust_net": {
+        "n": 616,
+        "correct": 198,
+        "accuracy": 0.32142857142857145,
+        "accuracy_wilson95": [
+          0.2857524925597522,
+          0.35931803818762575
+        ],
+        "brier": 0.6730708202660958,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 382,
+            "correct": 132,
+            "precision": 0.34554973821989526,
+            "recall": 0.5972850678733032
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 234,
+            "correct": 66,
+            "precision": 0.28205128205128205,
+            "recall": 0.36666666666666664
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 132,
+            "flat": 89,
+            "down": 0
+          },
+          "flat": {
+            "up": 114,
+            "flat": 66,
+            "down": 0
+          },
+          "down": {
+            "up": 136,
+            "flat": 79,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_margin_chg": {
+        "n": 616,
+        "correct": 205,
+        "accuracy": 0.3327922077922078,
+        "accuracy_wilson95": [
+          0.29671819018207923,
+          0.3709387613359201
+        ],
+        "brier": 0.672451353007204,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 321,
+            "correct": 117,
+            "precision": 0.3644859813084112,
+            "recall": 0.5294117647058824
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 295,
+            "correct": 88,
+            "precision": 0.2983050847457627,
+            "recall": 0.4888888888888889
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 117,
+            "flat": 104,
+            "down": 0
+          },
+          "flat": {
+            "up": 92,
+            "flat": 88,
+            "down": 0
+          },
+          "down": {
+            "up": 112,
+            "flat": 103,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_logit": {
+        "n": 616,
+        "correct": 184,
+        "accuracy": 0.2987012987012987,
+        "accuracy_wilson95": [
+          0.26389612592465234,
+          0.33600156328148273
+        ],
+        "brier": 0.6802177712565639,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 344,
+            "correct": 112,
+            "precision": 0.32558139534883723,
+            "recall": 0.5067873303167421
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 272,
+            "correct": 72,
+            "precision": 0.2647058823529412,
+            "recall": 0.4
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 112,
+            "flat": 109,
+            "down": 0
+          },
+          "flat": {
+            "up": 108,
+            "flat": 72,
+            "down": 0
+          },
+          "down": {
+            "up": 124,
+            "flat": 91,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_trend": {
+        "n": 616,
+        "correct": 181,
+        "accuracy": 0.29383116883116883,
+        "accuracy_wilson95": [
+          0.2592260834528372,
+          0.33099171113731723
+        ],
+        "brier": 0.6796760657318764,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 242,
+            "correct": 75,
+            "precision": 0.30991735537190085,
+            "recall": 0.3393665158371041
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 374,
+            "correct": 106,
+            "precision": 0.28342245989304815,
+            "recall": 0.5888888888888889
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 75,
+            "flat": 146,
+            "down": 0
+          },
+          "flat": {
+            "up": 74,
+            "flat": 106,
+            "down": 0
+          },
+          "down": {
+            "up": 93,
+            "flat": 122,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_ret5": {
+        "n": 616,
+        "correct": 190,
+        "accuracy": 0.30844155844155846,
+        "accuracy_wilson95": [
+          0.2732506356156594,
+          0.34600684282243693
+        ],
+        "brier": 0.6762556425777143,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 211,
+            "correct": 75,
+            "precision": 0.35545023696682465,
+            "recall": 0.3393665158371041
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 405,
+            "correct": 115,
+            "precision": 0.2839506172839506,
+            "recall": 0.6388888888888888
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 75,
+            "flat": 146,
+            "down": 0
+          },
+          "flat": {
+            "up": 65,
+            "flat": 115,
+            "down": 0
+          },
+          "down": {
+            "up": 71,
+            "flat": 144,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_adr_premium": {
+        "n": 616,
+        "correct": 211,
+        "accuracy": 0.3425324675324675,
+        "accuracy_wilson95": [
+          0.30613657757634655,
+          0.3808801631736139
+        ],
+        "brier": 0.6705754092399989,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 505,
+            "correct": 186,
+            "precision": 0.3683168316831683,
+            "recall": 0.8416289592760181
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 111,
+            "correct": 25,
+            "precision": 0.22522522522522523,
+            "recall": 0.1388888888888889
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 186,
+            "flat": 35,
+            "down": 0
+          },
+          "flat": {
+            "up": 155,
+            "flat": 25,
+            "down": 0
+          },
+          "down": {
+            "up": 164,
+            "flat": 51,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_ret1": {
+        "n": 616,
+        "correct": 219,
+        "accuracy": 0.3555194805194805,
+        "accuracy_wilson95": [
+          0.31872135434134363,
+          0.39410843871789847
+        ],
+        "brier": 0.6700902844966151,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 482,
+            "correct": 174,
+            "precision": 0.36099585062240663,
+            "recall": 0.7873303167420814
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 134,
+            "correct": 45,
+            "precision": 0.3358208955223881,
+            "recall": 0.25
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 174,
+            "flat": 47,
+            "down": 0
+          },
+          "flat": {
+            "up": 135,
+            "flat": 45,
+            "down": 0
+          },
+          "down": {
+            "up": 173,
+            "flat": 42,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_trend": {
+        "n": 616,
+        "correct": 183,
+        "accuracy": 0.29707792207792205,
+        "accuracy_wilson95": [
+          0.26233890507791985,
+          0.334332152589555
+        ],
+        "brier": 0.6764145488752259,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 281,
+            "correct": 89,
+            "precision": 0.3167259786476868,
+            "recall": 0.40271493212669685
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 335,
+            "correct": 94,
+            "precision": 0.28059701492537314,
+            "recall": 0.5222222222222223
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 89,
+            "flat": 132,
+            "down": 0
+          },
+          "flat": {
+            "up": 86,
+            "flat": 94,
+            "down": 0
+          },
+          "down": {
+            "up": 106,
+            "flat": 109,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "mkt_logit": {
+        "n": 616,
+        "correct": 188,
+        "accuracy": 0.3051948051948052,
+        "accuracy_wilson95": [
+          0.2701303513600295,
+          0.3426738640007464
+        ],
+        "brier": 0.6781595378584607,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 354,
+            "correct": 118,
+            "precision": 0.3333333333333333,
+            "recall": 0.5339366515837104
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 262,
+            "correct": 70,
+            "precision": 0.26717557251908397,
+            "recall": 0.3888888888888889
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 118,
+            "flat": 103,
+            "down": 0
+          },
+          "flat": {
+            "up": 110,
+            "flat": 70,
+            "down": 0
+          },
+          "down": {
+            "up": 126,
+            "flat": 89,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ens_avg": {
+        "n": 616,
+        "correct": 193,
+        "accuracy": 0.3133116883116883,
+        "accuracy_wilson95": [
+          0.2779349743616325,
+          0.35100239869244443
+        ],
+        "brier": 0.672165203307699,
+        "per_class": {
+          "up": {
+            "true_count": 221,
+            "predicted_count": 416,
+            "correct": 143,
+            "precision": 0.34375,
+            "recall": 0.6470588235294118
+          },
+          "flat": {
+            "true_count": 180,
+            "predicted_count": 200,
+            "correct": 50,
+            "precision": 0.25,
+            "recall": 0.2777777777777778
+          },
+          "down": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 143,
+            "flat": 78,
+            "down": 0
+          },
+          "flat": {
+            "up": 130,
+            "flat": 50,
+            "down": 0
+          },
+          "down": {
+            "up": 143,
+            "flat": 72,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      }
+    },
+    "7": {
+      "always_flat": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 1.2941176470588236,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "majority": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6903444509630978,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "momentum_H": {
+        "n": 612,
+        "correct": 222,
+        "accuracy": 0.3627450980392157,
+        "accuracy_wilson95": [
+          0.3256189497733813,
+          0.4015835670534141
+        ],
+        "brier": 1.2745098039215685,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 220,
+            "correct": 88,
+            "precision": 0.4,
+            "recall": 0.40930232558139534
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 215,
+            "correct": 70,
+            "precision": 0.32558139534883723,
+            "recall": 0.32407407407407407
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 177,
+            "correct": 64,
+            "precision": 0.3615819209039548,
+            "recall": 0.35359116022099446
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 88,
+            "flat": 80,
+            "down": 47
+          },
+          "flat": {
+            "up": 80,
+            "flat": 70,
+            "down": 66
+          },
+          "down": {
+            "up": 52,
+            "flat": 65,
+            "down": 64
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "reversal_H": {
+        "n": 612,
+        "correct": 169,
+        "accuracy": 0.2761437908496732,
+        "accuracy_wilson95": [
+          0.2422017600310335,
+          0.3128785352698115
+        ],
+        "brier": 1.4477124183006536,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 177,
+            "correct": 47,
+            "precision": 0.2655367231638418,
+            "recall": 0.2186046511627907
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 215,
+            "correct": 70,
+            "precision": 0.32558139534883723,
+            "recall": 0.32407407407407407
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 220,
+            "correct": 52,
+            "precision": 0.23636363636363636,
+            "recall": 0.287292817679558
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 47,
+            "flat": 80,
+            "down": 88
+          },
+          "flat": {
+            "up": 66,
+            "flat": 70,
+            "down": 80
+          },
+          "down": {
+            "up": 64,
+            "flat": 65,
+            "down": 52
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "vol_prior_d": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6819349121567203,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_cross": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6905605499184543,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_trend": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6926697409589248,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_rsi14": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6900279894725446,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_kd": {
+        "n": 612,
+        "correct": 211,
+        "accuracy": 0.34477124183006536,
+        "accuracy_wilson95": [
+          0.30818864427869785,
+          0.3832903926087494
+        ],
+        "brier": 0.6937807324899787,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 92,
+            "correct": 28,
+            "precision": 0.30434782608695654,
+            "recall": 0.13023255813953488
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 520,
+            "correct": 183,
+            "precision": 0.35192307692307695,
+            "recall": 0.8472222222222222
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 28,
+            "flat": 187,
+            "down": 0
+          },
+          "flat": {
+            "up": 33,
+            "flat": 183,
+            "down": 0
+          },
+          "down": {
+            "up": 31,
+            "flat": 150,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_macd": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6977866587179344,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bollinger": {
+        "n": 612,
+        "correct": 210,
+        "accuracy": 0.3431372549019608,
+        "accuracy_wilson95": [
+          0.3066069644486575,
+          0.38162448335339444
+        ],
+        "brier": 0.6939871706881783,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 27,
+            "correct": 6,
+            "precision": 0.2222222222222222,
+            "recall": 0.027906976744186046
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 585,
+            "correct": 204,
+            "precision": 0.3487179487179487,
+            "recall": 0.9444444444444444
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 6,
+            "flat": 209,
+            "down": 0
+          },
+          "flat": {
+            "up": 12,
+            "flat": 204,
+            "down": 0
+          },
+          "down": {
+            "up": 9,
+            "flat": 172,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bias20": {
+        "n": 612,
+        "correct": 217,
+        "accuracy": 0.3545751633986928,
+        "accuracy_wilson95": [
+          0.3176889036641915,
+          0.39327566773562755
+        ],
+        "brier": 0.6961651140902454,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 265,
+            "correct": 83,
+            "precision": 0.3132075471698113,
+            "recall": 0.386046511627907
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 347,
+            "correct": 134,
+            "precision": 0.3861671469740634,
+            "recall": 0.6203703703703703
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 83,
+            "flat": 132,
+            "down": 0
+          },
+          "flat": {
+            "up": 82,
+            "flat": 134,
+            "down": 0
+          },
+          "down": {
+            "up": 100,
+            "flat": 81,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_vol_price": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6942813122849744,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_foreign_net": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6876797521421197,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_trust_net": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6888376428738668,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_margin_chg": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.691697135039239,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_logit": {
+        "n": 612,
+        "correct": 212,
+        "accuracy": 0.3464052287581699,
+        "accuracy_wilson95": [
+          0.30977081154291575,
+          0.38495581442992677
+        ],
+        "brier": 0.6931945205535942,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 111,
+            "correct": 33,
+            "precision": 0.2972972972972973,
+            "recall": 0.15348837209302327
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 501,
+            "correct": 179,
+            "precision": 0.35728542914171657,
+            "recall": 0.8287037037037037
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 33,
+            "flat": 182,
+            "down": 0
+          },
+          "flat": {
+            "up": 37,
+            "flat": 179,
+            "down": 0
+          },
+          "down": {
+            "up": 41,
+            "flat": 140,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_trend": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6945923678542026,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_ret5": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6960342882304815,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_adr_premium": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6904695428680115,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_ret1": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6915297838625414,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_trend": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6937274887075755,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "mkt_logit": {
+        "n": 612,
+        "correct": 215,
+        "accuracy": 0.35130718954248363,
+        "accuracy_wilson95": [
+          0.3145202218949926,
+          0.3899491713340357
+        ],
+        "brier": 0.6933769082980468,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 129,
+            "correct": 39,
+            "precision": 0.3023255813953488,
+            "recall": 0.1813953488372093
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 483,
+            "correct": 176,
+            "precision": 0.36438923395445133,
+            "recall": 0.8148148148148148
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 39,
+            "flat": 176,
+            "down": 0
+          },
+          "flat": {
+            "up": 40,
+            "flat": 176,
+            "down": 0
+          },
+          "down": {
+            "up": 50,
+            "flat": 131,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ens_avg": {
+        "n": 612,
+        "correct": 216,
+        "accuracy": 0.35294117647058826,
+        "accuracy_wilson95": [
+          0.3161043229784083,
+          0.3916126593360154
+        ],
+        "brier": 0.6862904804682936,
+        "per_class": {
+          "up": {
+            "true_count": 215,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 216,
+            "predicted_count": 612,
+            "correct": 216,
+            "precision": 0.35294117647058826,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 181,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 215,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 216,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 181,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      }
+    },
+    "14": {
+      "always_flat": {
+        "n": 605,
+        "correct": 173,
+        "accuracy": 0.2859504132231405,
+        "accuracy_wilson95": [
+          0.25138289972524647,
+          0.3232189999192448
+        ],
+        "brier": 1.428099173553719,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 605,
+            "correct": 173,
+            "precision": 0.2859504132231405,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 237,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 173,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 195,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "majority": {
+        "n": 605,
+        "correct": 173,
+        "accuracy": 0.2859504132231405,
+        "accuracy_wilson95": [
+          0.25138289972524647,
+          0.3232189999192448
+        ],
+        "brier": 0.6944619585125964,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 605,
+            "correct": 173,
+            "precision": 0.2859504132231405,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 237,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 173,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 195,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "momentum_H": {
+        "n": 605,
+        "correct": 224,
+        "accuracy": 0.3702479338842975,
+        "accuracy_wilson95": [
+          0.33270241111680854,
+          0.409430786737188
+        ],
+        "brier": 1.259504132231405,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 240,
+            "correct": 105,
+            "precision": 0.4375,
+            "recall": 0.4430379746835443
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 170,
+            "correct": 48,
+            "precision": 0.2823529411764706,
+            "recall": 0.2774566473988439
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 195,
+            "correct": 71,
+            "precision": 0.3641025641025641,
+            "recall": 0.3641025641025641
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 105,
+            "flat": 59,
+            "down": 73
+          },
+          "flat": {
+            "up": 74,
+            "flat": 48,
+            "down": 51
+          },
+          "down": {
+            "up": 61,
+            "flat": 63,
+            "down": 71
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "reversal_H": {
+        "n": 605,
+        "correct": 182,
+        "accuracy": 0.30082644628099175,
+        "accuracy_wilson95": [
+          0.2656325181929584,
+          0.33853372819438676
+        ],
+        "brier": 1.3983471074380165,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 195,
+            "correct": 73,
+            "precision": 0.37435897435897436,
+            "recall": 0.3080168776371308
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 170,
+            "correct": 48,
+            "precision": 0.2823529411764706,
+            "recall": 0.2774566473988439
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 240,
+            "correct": 61,
+            "precision": 0.25416666666666665,
+            "recall": 0.3128205128205128
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 73,
+            "flat": 59,
+            "down": 105
+          },
+          "flat": {
+            "up": 51,
+            "flat": 48,
+            "down": 74
+          },
+          "down": {
+            "up": 71,
+            "flat": 63,
+            "down": 61
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "vol_prior_d": {
+        "n": 605,
+        "correct": 240,
+        "accuracy": 0.39669421487603307,
+        "accuracy_wilson95": [
+          0.35848145904422163,
+          0.43621057746373754
+        ],
+        "brier": 0.6844701515793605,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 446,
+            "correct": 189,
+            "precision": 0.42376681614349776,
+            "recall": 0.7974683544303798
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 159,
+            "correct": 51,
+            "precision": 0.32075471698113206,
+            "recall": 0.2947976878612717
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 189,
+            "flat": 48,
+            "down": 0
+          },
+          "flat": {
+            "up": 122,
+            "flat": 51,
+            "down": 0
+          },
+          "down": {
+            "up": 135,
+            "flat": 60,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_cross": {
+        "n": 605,
+        "correct": 193,
+        "accuracy": 0.31900826446280994,
+        "accuracy_wilson95": [
+          0.283109934955828,
+          0.35719051300611643
+        ],
+        "brier": 0.6936699678459823,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 97,
+            "correct": 40,
+            "precision": 0.41237113402061853,
+            "recall": 0.16877637130801687
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 508,
+            "correct": 153,
+            "precision": 0.30118110236220474,
+            "recall": 0.884393063583815
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 40,
+            "flat": 197,
+            "down": 0
+          },
+          "flat": {
+            "up": 20,
+            "flat": 153,
+            "down": 0
+          },
+          "down": {
+            "up": 37,
+            "flat": 158,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_ma_trend": {
+        "n": 605,
+        "correct": 191,
+        "accuracy": 0.315702479338843,
+        "accuracy_wilson95": [
+          0.27992734877761394,
+          0.35380324435258514
+        ],
+        "brier": 0.7009913916555841,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 231,
+            "correct": 78,
+            "precision": 0.33766233766233766,
+            "recall": 0.3291139240506329
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 374,
+            "correct": 113,
+            "precision": 0.30213903743315507,
+            "recall": 0.653179190751445
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 78,
+            "flat": 159,
+            "down": 0
+          },
+          "flat": {
+            "up": 60,
+            "flat": 113,
+            "down": 0
+          },
+          "down": {
+            "up": 93,
+            "flat": 102,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_rsi14": {
+        "n": 605,
+        "correct": 173,
+        "accuracy": 0.2859504132231405,
+        "accuracy_wilson95": [
+          0.25138289972524647,
+          0.3232189999192448
+        ],
+        "brier": 0.7000789757574297,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 605,
+            "correct": 173,
+            "precision": 0.2859504132231405,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 237,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 173,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 195,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_kd": {
+        "n": 605,
+        "correct": 180,
+        "accuracy": 0.2975206611570248,
+        "accuracy_wilson95": [
+          0.2624619617410396,
+          0.33513442981456026
+        ],
+        "brier": 0.7004158588425495,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 92,
+            "correct": 32,
+            "precision": 0.34782608695652173,
+            "recall": 0.1350210970464135
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 513,
+            "correct": 148,
+            "precision": 0.2884990253411306,
+            "recall": 0.8554913294797688
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 32,
+            "flat": 205,
+            "down": 0
+          },
+          "flat": {
+            "up": 25,
+            "flat": 148,
+            "down": 0
+          },
+          "down": {
+            "up": 35,
+            "flat": 160,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_macd": {
+        "n": 605,
+        "correct": 201,
+        "accuracy": 0.3322314049586777,
+        "accuracy_wilson95": [
+          0.29586137787237854,
+          0.37071848941654706
+        ],
+        "brier": 0.6952186629435643,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 321,
+            "correct": 118,
+            "precision": 0.367601246105919,
+            "recall": 0.4978902953586498
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 284,
+            "correct": 83,
+            "precision": 0.29225352112676056,
+            "recall": 0.4797687861271676
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 118,
+            "flat": 119,
+            "down": 0
+          },
+          "flat": {
+            "up": 90,
+            "flat": 83,
+            "down": 0
+          },
+          "down": {
+            "up": 113,
+            "flat": 82,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bollinger": {
+        "n": 605,
+        "correct": 180,
+        "accuracy": 0.2975206611570248,
+        "accuracy_wilson95": [
+          0.2624619617410396,
+          0.33513442981456026
+        ],
+        "brier": 0.6953334517155095,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 27,
+            "correct": 11,
+            "precision": 0.4074074074074074,
+            "recall": 0.046413502109704644
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 578,
+            "correct": 169,
+            "precision": 0.29238754325259514,
+            "recall": 0.976878612716763
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 11,
+            "flat": 226,
+            "down": 0
+          },
+          "flat": {
+            "up": 4,
+            "flat": 169,
+            "down": 0
+          },
+          "down": {
+            "up": 12,
+            "flat": 183,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_bias20": {
+        "n": 605,
+        "correct": 211,
+        "accuracy": 0.3487603305785124,
+        "accuracy_wilson95": [
+          0.31184696207527957,
+          0.38758217937237255
+        ],
+        "brier": 0.6942926968304334,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 266,
+            "correct": 100,
+            "precision": 0.37593984962406013,
+            "recall": 0.4219409282700422
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 339,
+            "correct": 111,
+            "precision": 0.3274336283185841,
+            "recall": 0.6416184971098265
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 100,
+            "flat": 137,
+            "down": 0
+          },
+          "flat": {
+            "up": 62,
+            "flat": 111,
+            "down": 0
+          },
+          "down": {
+            "up": 104,
+            "flat": 91,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_vol_price": {
+        "n": 605,
+        "correct": 189,
+        "accuracy": 0.31239669421487604,
+        "accuracy_wilson95": [
+          0.27674690704855676,
+          0.350413831249897
+        ],
+        "brier": 0.6999654070129495,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 294,
+            "correct": 106,
+            "precision": 0.36054421768707484,
+            "recall": 0.4472573839662447
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 311,
+            "correct": 83,
+            "precision": 0.26688102893890675,
+            "recall": 0.4797687861271676
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 106,
+            "flat": 131,
+            "down": 0
+          },
+          "flat": {
+            "up": 90,
+            "flat": 83,
+            "down": 0
+          },
+          "down": {
+            "up": 98,
+            "flat": 97,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_foreign_net": {
+        "n": 605,
+        "correct": 205,
+        "accuracy": 0.33884297520661155,
+        "accuracy_wilson95": [
+          0.30224953079885214,
+          0.377470046153564
+        ],
+        "brier": 0.6889233404349727,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 320,
+            "correct": 114,
+            "precision": 0.35625,
+            "recall": 0.4810126582278481
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 285,
+            "correct": 91,
+            "precision": 0.3192982456140351,
+            "recall": 0.5260115606936416
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 114,
+            "flat": 123,
+            "down": 0
+          },
+          "flat": {
+            "up": 82,
+            "flat": 91,
+            "down": 0
+          },
+          "down": {
+            "up": 124,
+            "flat": 71,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_trust_net": {
+        "n": 605,
+        "correct": 216,
+        "accuracy": 0.35702479338842974,
+        "accuracy_wilson95": [
+          0.31985852171936924,
+          0.39599525680764613
+        ],
+        "brier": 0.689827560385036,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 371,
+            "correct": 143,
+            "precision": 0.38544474393531,
+            "recall": 0.6033755274261603
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 234,
+            "correct": 73,
+            "precision": 0.31196581196581197,
+            "recall": 0.42196531791907516
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 143,
+            "flat": 94,
+            "down": 0
+          },
+          "flat": {
+            "up": 100,
+            "flat": 73,
+            "down": 0
+          },
+          "down": {
+            "up": 128,
+            "flat": 67,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_margin_chg": {
+        "n": 605,
+        "correct": 219,
+        "accuracy": 0.36198347107438017,
+        "accuracy_wilson95": [
+          0.324671346964616,
+          0.4010372138100174
+        ],
+        "brier": 0.6937263595705132,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 311,
+            "correct": 129,
+            "precision": 0.41479099678456594,
+            "recall": 0.5443037974683544
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 294,
+            "correct": 90,
+            "precision": 0.30612244897959184,
+            "recall": 0.5202312138728323
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 129,
+            "flat": 108,
+            "down": 0
+          },
+          "flat": {
+            "up": 83,
+            "flat": 90,
+            "down": 0
+          },
+          "down": {
+            "up": 99,
+            "flat": 96,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_logit": {
+        "n": 605,
+        "correct": 210,
+        "accuracy": 0.34710743801652894,
+        "accuracy_wilson95": [
+          0.3102461364912552,
+          0.3858980775405243
+        ],
+        "brier": 0.6959559790320428,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 330,
+            "correct": 121,
+            "precision": 0.36666666666666664,
+            "recall": 0.510548523206751
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 275,
+            "correct": 89,
+            "precision": 0.3236363636363636,
+            "recall": 0.5144508670520231
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 121,
+            "flat": 116,
+            "down": 0
+          },
+          "flat": {
+            "up": 84,
+            "flat": 89,
+            "down": 0
+          },
+          "down": {
+            "up": 125,
+            "flat": 70,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_trend": {
+        "n": 605,
+        "correct": 188,
+        "accuracy": 0.31074380165289256,
+        "accuracy_wilson95": [
+          0.27515749604900824,
+          0.3487183148335728
+        ],
+        "brier": 0.7051014177355633,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 242,
+            "correct": 79,
+            "precision": 0.32644628099173556,
+            "recall": 0.3333333333333333
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 363,
+            "correct": 109,
+            "precision": 0.3002754820936639,
+            "recall": 0.630057803468208
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 79,
+            "flat": 158,
+            "down": 0
+          },
+          "flat": {
+            "up": 64,
+            "flat": 109,
+            "down": 0
+          },
+          "down": {
+            "up": 99,
+            "flat": 96,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_mkt_ret5": {
+        "n": 605,
+        "correct": 195,
+        "accuracy": 0.32231404958677684,
+        "accuracy_wilson95": [
+          0.28629464785600517,
+          0.36057565493768445
+        ],
+        "brier": 0.6944326822966481,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 209,
+            "correct": 80,
+            "precision": 0.3827751196172249,
+            "recall": 0.33755274261603374
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 396,
+            "correct": 115,
+            "precision": 0.2904040404040404,
+            "recall": 0.6647398843930635
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 80,
+            "flat": 157,
+            "down": 0
+          },
+          "flat": {
+            "up": 58,
+            "flat": 115,
+            "down": 0
+          },
+          "down": {
+            "up": 71,
+            "flat": 124,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_adr_premium": {
+        "n": 605,
+        "correct": 206,
+        "accuracy": 0.34049586776859503,
+        "accuracy_wilson95": [
+          0.3038478432612979,
+          0.379156661106991
+        ],
+        "brier": 0.6996573338840114,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 490,
+            "correct": 189,
+            "precision": 0.38571428571428573,
+            "recall": 0.7974683544303798
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 115,
+            "correct": 17,
+            "precision": 0.14782608695652175,
+            "recall": 0.09826589595375723
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 189,
+            "flat": 48,
+            "down": 0
+          },
+          "flat": {
+            "up": 156,
+            "flat": 17,
+            "down": 0
+          },
+          "down": {
+            "up": 145,
+            "flat": 50,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_ret1": {
+        "n": 605,
+        "correct": 191,
+        "accuracy": 0.315702479338843,
+        "accuracy_wilson95": [
+          0.27992734877761394,
+          0.35380324435258514
+        ],
+        "brier": 0.6965183124614808,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 251,
+            "correct": 92,
+            "precision": 0.3665338645418327,
+            "recall": 0.3881856540084388
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 354,
+            "correct": 99,
+            "precision": 0.2796610169491525,
+            "recall": 0.5722543352601156
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 92,
+            "flat": 145,
+            "down": 0
+          },
+          "flat": {
+            "up": 74,
+            "flat": 99,
+            "down": 0
+          },
+          "down": {
+            "up": 85,
+            "flat": 110,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ind_sox_trend": {
+        "n": 605,
+        "correct": 197,
+        "accuracy": 0.3256198347107438,
+        "accuracy_wilson95": [
+          0.2894814703081865,
+          0.36395868731724845
+        ],
+        "brier": 0.6993281262696314,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 280,
+            "correct": 103,
+            "precision": 0.3678571428571429,
+            "recall": 0.4345991561181435
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 325,
+            "correct": 94,
+            "precision": 0.28923076923076924,
+            "recall": 0.5433526011560693
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 103,
+            "flat": 134,
+            "down": 0
+          },
+          "flat": {
+            "up": 79,
+            "flat": 94,
+            "down": 0
+          },
+          "down": {
+            "up": 98,
+            "flat": 97,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "mkt_logit": {
+        "n": 605,
+        "correct": 218,
+        "accuracy": 0.3603305785123967,
+        "accuracy_wilson95": [
+          0.3230665846003637,
+          0.399357048758397
+        ],
+        "brier": 0.694713164992804,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 338,
+            "correct": 130,
+            "precision": 0.38461538461538464,
+            "recall": 0.5485232067510548
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 267,
+            "correct": 88,
+            "precision": 0.3295880149812734,
+            "recall": 0.5086705202312138
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 130,
+            "flat": 107,
+            "down": 0
+          },
+          "flat": {
+            "up": 85,
+            "flat": 88,
+            "down": 0
+          },
+          "down": {
+            "up": 123,
+            "flat": 72,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      },
+      "ens_avg": {
+        "n": 605,
+        "correct": 216,
+        "accuracy": 0.35702479338842974,
+        "accuracy_wilson95": [
+          0.31985852171936924,
+          0.39599525680764613
+        ],
+        "brier": 0.6901140785994333,
+        "per_class": {
+          "up": {
+            "true_count": 237,
+            "predicted_count": 272,
+            "correct": 107,
+            "precision": 0.39338235294117646,
+            "recall": 0.45147679324894513
+          },
+          "flat": {
+            "true_count": 173,
+            "predicted_count": 333,
+            "correct": 109,
+            "precision": 0.32732732732732733,
+            "recall": 0.630057803468208
+          },
+          "down": {
+            "true_count": 195,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 107,
+            "flat": 130,
+            "down": 0
+          },
+          "flat": {
+            "up": 64,
+            "flat": 109,
+            "down": 0
+          },
+          "down": {
+            "up": 101,
+            "flat": 94,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        },
+        "coverage": 1.0,
+        "missing": 0,
+        "note": "描述性成績，不作優劣結論"
+      }
+    }
+  },
+  "promoted": [],
+  "http_calls": 0,
+  "multiplicity": {
+    "comparisons": 3,
+    "expected_lucky": 0.075,
+    "note": "3 個事先指定比較，預期約 0.075 個因運氣顯著較好；名目估算，未作多重比較校正。其餘成績只描述，不增列比較。"
+  },
+  "execution": {
+    "new_predictions": 44568,
+    "n_days": 619,
+    "n_predictions": 44568,
+    "prediction_digest": "a3e151a49edc8546008c2bf63eaf058a2157542f34dc0bc4928f268d0edb3e9f",
+    "feature_digest": "93f5e7d4e639400636e18bf46e4288791054e5aabb2720c392ce79fb05362c23",
+    "new_reveal": true
+  },
+  "network_attempts_during_prediction_and_scoring": 0
+}

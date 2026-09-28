@@ -206,6 +206,11 @@ def exposed_days(store, symbol, days):
         ranges.append((row['dev_start'], row['dev_end']))
         ranges.extend((r[0], r[1]) for r in store.db.execute(
             'SELECT first_day,last_day FROM reveals WHERE experiment_id=?', (row['id'],)))
+    # Multi-day experiment IDs have their own namespace in the shared reveal log.
+    if 'namespace' in {r[1] for r in store.db.execute('PRAGMA table_info(reveals)')}:
+        ranges.extend((r[0],r[1]) for r in store.db.execute('''SELECT r.first_day,r.last_day FROM reveals r
+            JOIN d_experiments e ON e.id=r.experiment_id WHERE r.namespace='daily'
+            AND json_extract(e.config_json,'$.symbol')=?''',(symbol,)))
     return tuple(day for day in sorted(set(days))
                  if any(first <= day <= last for first, last in ranges))
 

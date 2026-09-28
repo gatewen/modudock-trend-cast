@@ -1,0 +1,65 @@
+
+> modudock-trend-cast@0.4.0 test
+> node --test tests/*.test.mjs
+
+✔ daily default seven days registers before ready and sends only reads after up (12.547584ms)
+✔ daily holdout used status is permanent and ignores unadmitted result packets (17.005334ms)
+✔ news status absent publisher remains usable and timestamp refresh is text only (5.99975ms)
+✔ news status rejects late epoch replies and mismatched operation (5.719917ms)
+✔ daily chart shape and exact boolean colors show both sampled methods (4.679125ms)
+✔ daily bounded date controls eleven plain states and invalid dates never request (4.340958ms)
+✔ daily all methods sample sizes comparison intervals and n under thirty warning (5.890583ms)
+✔ daily horizon and range switching discard late replies including earlier mount epoch (7.002708ms)
+✔ daily rejects future dates at every outlet and ignores legacy status/report (3.108083ms)
+✔ thirty minute mode keeps legacy interface and switching back clears all its dates (7.460209ms)
+✔ daily strings stay text and unmount stops messages and leaves no UI (4.680125ms)
+✔ legacy action status acknowledgement survives channel routing after confirmation (4.297583ms)
+✔ forward empty latest comes before historical chart and keeps disclaimer (2.252584ms)
+✔ forward displays all three horizons five methods probabilities timing pending and cohorts (6.122625ms)
+✔ forward rejects historical injection and wrong frozen origin without weakening dev exits (6.957417ms)
+✔ forward unsolicited refresh is read only and stale replies cannot cross horizon (3.798375ms)
+✔ daily release copy distinguishes development findings and prospective origin (3.084209ms)
+✔ news enabled reception and missing snapshot render separately (5.701625ms)
+✔ news predictions show three horizons and both preregistered comparisons (6.262792ms)
+✔ mount synchronous; ready after registration; no sending before up (11.792125ms)
+✔ status initializes authorized date and renders eight SVG predictions with outcome colors (17.177292ms)
+✔ hover and keyboard focus show probabilities and realized return (5.1355ms)
+✔ unpredictable unscorable missing or nonboolean correctness never gets green/red (4.001334ms)
+✔ day navigation clears old plot immediately and rejects out-of-order day response (5.187875ms)
+✔ date picker refuses unknown and locked days without requests (3.240667ms)
+✔ older report for the same experiment cannot overwrite a later refresh (4.482875ms)
+✔ locked day discards any supplied data and clears a previous visible chart (4.108625ms)
+✔ report table includes raw metrics Wilson Brier coverage failures and fourth conclusion (6.638875ms)
+✔ locked metadata refuses even an accidentally supplied revealed holdout report (4.015667ms)
+✔ development progress can show counts but locked holdout progress cannot (3.230583ms)
+✔ untrusted strings become text, never HTML or handlers (3.886209ms)
+✔ reveal requires second explicit confirmation and cancel sends nothing (3.418458ms)
+✔ new experiment uses a second confirmation and validates threshold (3.340333ms)
+✔ successful reveal refreshes the cleared day and failed confirmation can recover (3.116458ms)
+✔ experiment change invalidates old report and pending reveal confirmation (2.91975ms)
+✔ missing key disables jev but baseline replay stays usable (4.262417ms)
+✔ busy flags keep sync independent of replay and prevent experiment creation (3.264833ms)
+✔ no experiment shows no chart or score and late unmount callbacks do nothing (2.923833ms)
+✔ error renders local explanation and never reflects upstream secret text (2.937583ms)
+✔ sync distinguishes total and partial failure with safe reasons and clears them after success (3.010292ms)
+✔ theme rules inherit shell tokens and define both color schemes (2.61225ms)
+✔ forward run and reveal each require confirmation and send fixed experiment only (3.298083ms)
+✔ locked forward report and growing forward progress hide all counts even with revealed holdout (3.495834ms)
+✔ revealed forward shows cumulative days points and permanent used-holdout label (4.039917ms)
+✔ each forward rerun refreshes its cleared report without exposing generation counts (3.301333ms)
+✔ evolution development table shows signed Brier intervals and honest interpretation (2.572708ms)
+✔ forward participants and committed points are metadata only while scores remain locked (3.758292ms)
+✔ revealed forward renders both prespecified comparisons including unfavorable result (3.931333ms)
+✔ used holdout heading stays visible even when current status is locked (3.177208ms)
+✔ another experiment cannot inherit evolution table or forward point count (3.258709ms)
+✔ four independent cards have one heading each and buttons stay with their segment (4.113875ms)
+✔ status explains unrevealed days with safe metadata and clears stale annotations (3.2255ms)
+✔ changing experiment clears all separate score containers immediately (4.200083ms)
+ℹ tests 53
+ℹ suites 0
+ℹ pass 53
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 291.3755

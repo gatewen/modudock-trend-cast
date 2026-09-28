@@ -41,6 +41,12 @@ class MarketBatch:
 
 def parse(payload, series, start=START, end=DEV_END):
     bounds(start,end)
+    return parse_bounded(payload,series,start,end)
+
+
+def parse_bounded(payload,series,start,end):
+    """Shared parser after the caller has admitted an explicit date interval."""
+    day_value(start);day_value(end)
     if series not in SOURCES: raise DataError('market_unknown_series')
     if not isinstance(payload,dict) or payload.get('status')!=200 or payload.get('msg')!='success':
         raise DataError('market_unconfirmed_response')

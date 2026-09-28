@@ -59,6 +59,11 @@ def returns(rows,lag):
 
 def features(point,history,raw_close):
     if not DEV_START<=point.day<=DEV_END:raise DataError('market_features_dev_only')
+    return asof_features(point,history,raw_close)
+
+
+def asof_features(point,history,raw_close):
+    """Pure as-of calculation; callers own their explicit split boundary."""
     data={};alignment={}
     for series in SOURCES:data[series],alignment[series]=history.available(series,point.day)
     values={};states={}

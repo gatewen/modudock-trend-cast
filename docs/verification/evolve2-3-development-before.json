@@ -1,0 +1,37 @@
+{
+  "tables": {
+    "d_features": {
+      "n": 2894,
+      "sha256": "7f98899f1a695c14351d949a417e7884906fcb6f974a183e2a30dbaf1ef5695e"
+    },
+    "d_predictions": {
+      "n": 149322,
+      "sha256": "403b39a94fd6c2b746cc59474a0937b9cdca187439b16f7e052024ca89d1747b"
+    },
+    "d_outcomes": {
+      "n": 8658,
+      "sha256": "0d0a1aad97a101de3ac45e4dc88f539e555e79be9528283b2e3ec83f0c460125"
+    },
+    "d_fits": {
+      "n": 395,
+      "sha256": "76ec53b06106b64e882d9d12daee45b39d4368f6df982e7fb2a50ab6a426cfcf"
+    },
+    "market_features": {
+      "n": 2894,
+      "sha256": "cd9e0b6f7606f233febb829c226504610063ffd396eb125797bb5851d385cfeb"
+    },
+    "market_predictions": {
+      "n": 52092,
+      "sha256": "4dda6783c29af41a27169603b87e835b0cdc6bc70659a5b7cd87567ed1a17b0a"
+    },
+    "market_fits": {
+      "n": 395,
+      "sha256": "f74135e5ab0c1f8bff710e3ac1c211d301fda225609ca0144aecdf7af648c000"
+    }
+  },
+  "original": {
+    "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+    "dev_digest": "dc2d71d42d9890c7677aeca6a1bc0a7345da0969b9bf0a2dab555509d01b44c1"
+  },
+  "market_digest": "643dc062e57e2c901d83541f82aa2ecee632adb9431625d3ac89967d98fc70c8"
+}

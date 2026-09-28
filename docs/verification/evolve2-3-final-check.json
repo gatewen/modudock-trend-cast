@@ -1,0 +1,51 @@
+{
+  "reveals": [
+    {
+      "experiment_id": 4,
+      "revealed_at": "2026-09-29T02:22:02+08:00",
+      "first_day": "2022-01-03",
+      "last_day": "2024-07-25",
+      "what": "all",
+      "segment": "holdout",
+      "namespace": "daily"
+    }
+  ],
+  "counts": {
+    "d_hold_features": 619,
+    "d_hold_predictions": 44568,
+    "d_hold_outcomes": 1833,
+    "d_hold_completion": 1,
+    "d_hold_seal": 1
+  },
+  "market_sources": {
+    "sox": {
+      "n": 643,
+      "first": "2022-01-03",
+      "last": "2024-07-25"
+    },
+    "taiex": {
+      "n": 619,
+      "first": "2022-01-03",
+      "last": "2024-07-23"
+    },
+    "tsm": {
+      "n": 643,
+      "first": "2022-01-03",
+      "last": "2024-07-25"
+    },
+    "usd_twd": {
+      "n": 627,
+      "first": "2022-01-03",
+      "last": "2024-07-24"
+    }
+  },
+  "holdout_status": {
+    "state": "used",
+    "message": "已使用（一次性保留段考試已揭露）"
+  },
+  "resume_same_report": true,
+  "resume_no_execution": true,
+  "jev_used": 1222,
+  "jev_limit": 2222,
+  "promoted": []
+}

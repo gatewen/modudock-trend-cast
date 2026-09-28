@@ -17,6 +17,7 @@ from .daily_models import prediction
 from .daily_prompt import bias_states, STATE_TEXT, BUCKET_TEXT, chip_percentages, sample_dates
 from .daily_replay import DEV_START, DEV_END, DailyReplay, horizon
 from .daily_score import paired_blocks
+from .daily_reveal import holdout_status
 from .data import DataError, day_value
 from .experiment import canonical
 from .score import ScoredPoint, metrics
@@ -95,7 +96,7 @@ class DailyViews:
         if op == 'daily_status':
             result = dict(dev_start=c['dev_start'], dev_end=c['dev_end'],
                 days=[f.day for f in self.history if f.predictable and c['dev_start'] <= f.day <= c['dev_end']],
-                threshold=float(Fraction(**c['thresholds'][str(H)])), holdout=dict(state='unused', message=HOLD_MESSAGE))
+                threshold=float(Fraction(**c['thresholds'][str(H)])), holdout=holdout_status(store))
         elif op == 'daily_indicators': result = self.indicators(store, c, H, body['date'])
         elif op == 'daily_chart': result = self.chart(store, c, H, body.get('range', '6m'))
         else: result = self.report(store, row, H)
@@ -169,7 +170,7 @@ class DailyViews:
     def report(self, store, row, H):
         c = row['config']; outcomes, points, states, rows = self.saved(store, c, H)
         key = (H, row['dev_digest'], hashlib.sha256(canonical([outcomes, rows]).encode()).hexdigest())
-        if key in self.report_cache: return self.report_cache[key]
+        if key in self.report_cache: return dict(self.report_cache[key],holdout=holdout_status(store))
         calendar = tuple(r[0] for r in store.db.execute('SELECT day FROM d_calendar WHERE day BETWEEN ? AND ? ORDER BY day', (c['dev_start'], c['dev_end'])))
         common = set(outcomes).intersection(*(set(points[m]) for m in METHODS))
         sample = set(sample_dates(store, c)['days'])
@@ -197,7 +198,7 @@ class DailyViews:
                     claim=CLAIMS[name].get(state, '無預設方向'), n=n,
                     frequencies={k:counts[k]/n if n else None for k in LABELS}, small_sample=n<30))
         result = dict(methods=methods, claims=claims, shortlist=shortlist,
-            holdout=dict(state='unused', message=HOLD_MESSAGE),
+            holdout=holdout_status(store),
             comparison_note='差＝方法 − majority；各列與 majority 使用相同日期。jev_ind 僅用共同 576 天抽樣，其餘為完整開發段交集。20 交易日區塊 bootstrap 2,000 次、固定種子。',
             multiplicity='每個天期測了 11 個指標，預期約 11×2.5%＝0.275 個因運氣看起來較好；開發段勝出只是值得再驗證。')
         self.report_cache = {k:v for k,v in self.report_cache.items() if k[0] != H}

@@ -36,6 +36,18 @@ test('daily default seven days registers before ready and sends only reads after
   assert.equal(h.container.querySelector('.tc-daily-holdout button'),null);
 });
 
+test('daily holdout used status is permanent and ignores unadmitted result packets',t=>{
+  const h=setup(t);h.up();
+  h.answer('daily_status',{split:'holdout',holdout:{state:'used'},private_score:987.123});
+  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+  [...h.container.querySelectorAll('button')].find(b=>b.textContent==='重新整理').click();
+  h.answer('daily_status',{dev_start:'2010-04-01',dev_end:'2021-12-31',threshold:.02,days,holdout:{state:'used'}});
+  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/已使用（一次性保留段考試已揭露）/);
+  report(h,{holdout:{state:'unused'}});
+  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/已使用/);
+  assert.doesNotMatch(h.container.textContent,/987\.123/);
+});
+
 test('news status absent publisher remains usable and timestamp refresh is text only',t=>{
   const h=setup(t);ready(h);chart(h);
   assert.ok(h.latest('news_status'));

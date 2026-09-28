@@ -18,7 +18,7 @@ MUTATIONS=[
  ('small_sample_guard_removed',P,[("small_sample=n<30", "small_sample=False")],T+'test_eighteen_methods_comparison_matches_existing_report_and_small_samples'),
  ('all_indicators_not_rendered',P,[("for name in INDICATORS:\n            state", "for name in INDICATORS[:-1]:\n            state")],T+'test_indicator_all_eleven_lagged_chips_and_maturity_bias'),
  ('cache_ignores_prediction_content',P,[("hashlib.sha256(canonical([outcomes, rows]).encode()).hexdigest()", "'constant'")],T+'test_cache_rechecks_source_digest_and_prediction_changes'),
- ('unused_holdout_lost',P,[("HOLD_MESSAGE = '未使用（沒有入圍者，保留給未來）'", "HOLD_MESSAGE = '已使用'")],T+'test_all_exits_bounded_readonly_no_network_no_config_leak'),
+ ('unused_holdout_lost','back/daily_reveal.py',[("message='未使用（沒有入圍者，保留給未來）'", "message='已使用'")],T+'test_all_exits_bounded_readonly_no_network_no_config_leak'),
 ]
 if __name__=='__main__':
     mutation_check.MUTATIONS=MUTATIONS

@@ -1,0 +1,73 @@
+{
+  "primary_checks": [
+    {
+      "H": 3,
+      "method": "ens_avg",
+      "n": 616,
+      "difference": -7.713747490739626e-05,
+      "ci95": [
+        -0.002523971425673895,
+        0.0024207942909131555
+      ],
+      "match": true
+    },
+    {
+      "H": 3,
+      "method": "mkt_logit",
+      "n": 616,
+      "difference": 0.005917197075854286,
+      "ci95": [
+        -0.002109220710313637,
+        0.014534747722407006
+      ],
+      "match": true
+    },
+    {
+      "H": 7,
+      "method": "ens_avg",
+      "n": 612,
+      "difference": -0.00405397049480414,
+      "ci95": [
+        -0.00877372804825334,
+        0.001002476715190043
+      ],
+      "match": true
+    }
+  ],
+  "last_fit_checks": {
+    "3/ind_logit": {
+      "day": "2021-12-13",
+      "train_n": 2878,
+      "match": true
+    },
+    "3/mkt_logit": {
+      "day": "2021-12-13",
+      "train_n": 2878,
+      "match": true
+    },
+    "7/ind_logit": {
+      "day": "2021-12-13",
+      "train_n": 2874,
+      "match": true
+    },
+    "7/mkt_logit": {
+      "day": "2021-12-13",
+      "train_n": 2874,
+      "match": true
+    },
+    "14/ind_logit": {
+      "day": "2021-12-13",
+      "train_n": 2867,
+      "match": true
+    },
+    "14/mkt_logit": {
+      "day": "2021-12-13",
+      "train_n": 2867,
+      "match": true
+    }
+  },
+  "development_tables_unchanged": true,
+  "original_digests_unchanged": true,
+  "market_digest_unchanged": true,
+  "foreign_key_violations": []
+}

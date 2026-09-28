@@ -68,7 +68,7 @@ export default function mountDaily(ctx) {
   for (const [k,v] of [['all','全部指標'],...Object.entries(NAMES)]) { const n=el('option',v); n.value=k; claimSelect.append(n); }
   claimSelect.value='kd'; const claimTable=el('div'); claimsCard.append(claimSelect,claimTable);
   const hold = card('多日保留段', 'tc-daily-holdout');
-  hold.append(el('p','未使用（沒有入圍者，保留給未來）','tc-note'));
+  const holdText=el('p','未使用（沒有入圍者，保留給未來）','tc-note'); hold.append(holdText);
   const forward = prospective(doc,H);
   root.append(head,status,news,error,forward.root,chartCard,indicatorsCard,reportCard,claimsCard,hold);
   function controls() {
@@ -149,6 +149,7 @@ export default function mountDaily(ctx) {
       error.textContent=ERRORS[body.code]||'多日資料讀取失敗，請重新整理。';error.hidden=false;return;
     }
     if(body.H!==H||body.experiment_id!==4||body.split!=='dev'||body.status!=='ok'||body.request_id!==requests[body.op])return;
+    if(['daily_status','daily_report'].includes(body.op)&&body.holdout?.state==='used')holdText.textContent='已使用（一次性保留段考試已揭露）';
     if(body.op==='daily_status') {
       if(!allowedDay(body.dev_start)||!allowedDay(body.dev_end))return;
       days=Array.isArray(body.days)?body.days.filter(allowedDay):[];

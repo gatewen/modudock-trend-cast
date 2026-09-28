@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-09-28T17:59:29.096645+00:00",
+  "experiment": 4,
+  "first_day": "2022-01-03",
+  "last_day": "2024-07-25",
+  "derived_rows": {
+    "d_features": 0,
+    "d_fits": 0,
+    "d_forward_days": 0,
+    "d_forward_outcomes": 0,
+    "d_forward_predictions": 0,
+    "d_jev_requests": 0,
+    "d_outcomes": 0,
+    "d_predictions": 0,
+    "market_features": 0,
+    "market_fits": 0,
+    "market_predictions": 0,
+    "move_answers": 0,
+    "outcomes": 0,
+    "predictions": 0
+  },
+  "reveals": [],
+  "holdout_runs": [],
+  "prior_exposures": [],
+  "other_score_or_holdout_tables": [],
+  "pristine": true
+}

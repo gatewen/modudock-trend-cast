@@ -1,0 +1,41 @@
+{
+  "url": "http://127.0.0.1:58983",
+  "states": [
+    "loading",
+    "running"
+  ],
+  "requests": [
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_forward",
+    "news_status",
+    "daily_forward",
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_forward",
+    "news_status",
+    "daily_forward",
+    "daily_indicators",
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_forward",
+    "news_status",
+    "daily_indicators",
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_forward",
+    "news_status",
+    "daily_indicators"
+  ],
+  "page_errors": [],
+  "horizons": {
+    "3": "多日保留段\n\n已使用（一次性保留段考試已揭露）",
+    "7": "多日保留段\n\n已使用（一次性保留段考試已揭露）",
+    "14": "多日保留段\n\n已使用（一次性保留段考試已揭露）"
+  },
+  "private_routes": "404"
+}
