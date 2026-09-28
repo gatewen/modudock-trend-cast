@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/scripts/sync_market.py", line 37, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ^^^^^^
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/scripts/sync_market.py", line 30, in main
+    b=client.fetch(series);batches.append(b)
+      ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/back/market_sources.py", line 70, in fetch
+    response=self.http.get('/api/v4/data',dict(dataset=dataset,data_id=symbol,start_date=start,end_date=end))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/back/http_client.py", line 123, in get
+    response = self._request(url, headers or {})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gatewenlee/Code/modudock-modules/trend-cast/back/http_client.py", line 189, in _request
+    raise error
+back.http_client.ClientError: network_error

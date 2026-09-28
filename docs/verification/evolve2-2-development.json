@@ -1,0 +1,2775 @@
+{
+  "experiment": 4,
+  "split": "dev",
+  "dev_start": "2010-04-01",
+  "dev_end": "2021-12-31",
+  "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "dev_digest": "dc2d71d42d9890c7677aeca6a1bc0a7345da0969b9bf0a2dab555509d01b44c1",
+  "market_digest": "643dc062e57e2c901d83541f82aa2ecee632adb9431625d3ac89967d98fc70c8",
+  "sources": {
+    "taiex": {
+      "rows": 3205,
+      "first": "2009-01-05",
+      "last": "2021-12-30",
+      "sha256": "ecf3cfa37f03defe26b41e7af9b5a5fdaf7630633c8df5633bd692eddac63a3e",
+      "payload_hash": "5afaecc46704e24b23546d866b299441ecdca20e6ed38392cc91f12c18f14929"
+    },
+    "tsm": {
+      "rows": 3273,
+      "first": "2009-01-02",
+      "last": "2021-12-31",
+      "sha256": "32b71c2ffc03bb96cc5eece58ce8dc1a7f6474f5311c58fbefb7f8c633b34888",
+      "payload_hash": "617ed08655d69d4eb1202c7e1a64a0eb54ddefa83d81499b3161b9b21f9c5207"
+    },
+    "sox": {
+      "rows": 3273,
+      "first": "2009-01-02",
+      "last": "2021-12-31",
+      "sha256": "49c23655bd9b75d01cd9a747245fd99c39239b7bd559960ebab3d3fb6d686ea6",
+      "payload_hash": "11fde031a59312a0a31785518651cbe7bb5db56e194f880d78ccd0aa9ff4133e"
+    },
+    "usd_twd": {
+      "rows": 3244,
+      "first": "2009-01-05",
+      "last": "2021-12-30",
+      "sha256": "5f28191630bdcc4f7612c253730143b9b50ea870bf5bb6c538412462b5582193",
+      "payload_hash": "120ac83b297a2eafb693dd7f88a8b0ad418cebe3bbebb298d56934bcf40ca2ea"
+    }
+  },
+  "feature_quality": {
+    "mkt_trend": {
+      "missing": 0,
+      "total": 2894
+    },
+    "mkt_ret5": {
+      "missing": 0,
+      "total": 2894
+    },
+    "adr_premium": {
+      "missing": 13,
+      "total": 2894
+    },
+    "sox_ret1": {
+      "missing": 0,
+      "total": 2894
+    },
+    "sox_trend": {
+      "missing": 0,
+      "total": 2894
+    }
+  },
+  "comparisons": 18,
+  "expected_lucky": 0.45,
+  "http_calls": 0,
+  "horizons": {
+    "3": {
+      "ind_mkt_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1885,
+          "bear": 1009
+        },
+        "forecast_digest": "9a33cbb608187e044264030378487e7719621fbd7490404a7703e08d36086a26",
+        "candidate": {
+          "n": 2891,
+          "correct": 1142,
+          "accuracy": 0.39501902455897614,
+          "accuracy_wilson95": [
+            0.37734977246700785,
+            0.4129668964647407
+          ],
+          "brier": 0.6628195612854032,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 925,
+              "correct": 388,
+              "precision": 0.41945945945945945,
+              "recall": 0.36777251184834125
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1947,
+              "correct": 749,
+              "precision": 0.3846944016435542,
+              "recall": 0.734313725490196
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 19,
+              "correct": 5,
+              "precision": 0.2631578947368421,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 388,
+              "flat": 660,
+              "down": 7
+            },
+            "flat": {
+              "up": 264,
+              "flat": 749,
+              "down": 7
+            },
+            "down": {
+              "up": 273,
+              "flat": 538,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": -0.0024328441291577166,
+          "ci95": [
+            -0.005758675376675252,
+            0.000829811493950092
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_mkt_ret5": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 3,
+          "low": 876,
+          "middle": 1020,
+          "high": 995
+        },
+        "forecast_digest": "47b514281576149dac05d457fc62893522bd16b78bdbe04b87e195f43812263c",
+        "candidate": {
+          "n": 2891,
+          "correct": 1109,
+          "accuracy": 0.3836042891732964,
+          "accuracy_wilson95": [
+            0.36604445686299036,
+            0.4014730360382728
+          ],
+          "brier": 0.6648383968604598,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 791,
+              "correct": 336,
+              "precision": 0.4247787610619469,
+              "recall": 0.3184834123222749
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 2036,
+              "correct": 758,
+              "precision": 0.37229862475442044,
+              "recall": 0.7431372549019608
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 64,
+              "correct": 15,
+              "precision": 0.234375,
+              "recall": 0.01838235294117647
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 336,
+              "flat": 696,
+              "down": 23
+            },
+            "flat": {
+              "up": 236,
+              "flat": 758,
+              "down": 26
+            },
+            "down": {
+              "up": 219,
+              "flat": 582,
+              "down": 15
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": -0.0004140085541012246,
+          "ci95": [
+            -0.00331312409475421,
+            0.002460109732365399
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_adr_premium": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 16,
+          "low": 896,
+          "high": 1071,
+          "middle": 911
+        },
+        "forecast_digest": "bdc070f18e1bee6a0d088c6f659f5ed124ade69d8248b360a9e28468b168820e",
+        "candidate": {
+          "n": 2891,
+          "correct": 1026,
+          "accuracy": 0.35489450017295054,
+          "accuracy_wilson95": [
+            0.33765585861330927,
+            0.3725182521506726
+          ],
+          "brier": 0.6659377097980181,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1445,
+              "correct": 524,
+              "precision": 0.36262975778546713,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1317,
+              "correct": 475,
+              "precision": 0.360668185269552,
+              "recall": 0.46568627450980393
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 129,
+              "correct": 27,
+              "precision": 0.20930232558139536,
+              "recall": 0.03308823529411765
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 468,
+              "down": 63
+            },
+            "flat": {
+              "up": 506,
+              "flat": 475,
+              "down": 39
+            },
+            "down": {
+              "up": 415,
+              "flat": 374,
+              "down": 27
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": 0.0006853043834571696,
+          "ci95": [
+            -0.0018065556575352594,
+            0.0032442180646466514
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_ret1": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 3,
+          "high": 1004,
+          "middle": 987,
+          "low": 900
+        },
+        "forecast_digest": "9ca07f0015585fce6eb9ec97f51f9240655fa0eaa3af70c973e9abe153bf5962",
+        "candidate": {
+          "n": 2891,
+          "correct": 1063,
+          "accuracy": 0.36769283984780354,
+          "accuracy_wilson95": [
+            0.3503027695194738,
+            0.3854340537635371
+          ],
+          "brier": 0.6646713516768036,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1032,
+              "correct": 383,
+              "precision": 0.37112403100775193,
+              "recall": 0.3630331753554502
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1817,
+              "correct": 671,
+              "precision": 0.3692900385250413,
+              "recall": 0.657843137254902
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 42,
+              "correct": 9,
+              "precision": 0.21428571428571427,
+              "recall": 0.011029411764705883
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 383,
+              "flat": 657,
+              "down": 15
+            },
+            "flat": {
+              "up": 331,
+              "flat": 671,
+              "down": 18
+            },
+            "down": {
+              "up": 318,
+              "flat": 489,
+              "down": 9
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": -0.0005810537377573806,
+          "ci95": [
+            -0.0022668802146481553,
+            0.0012004106415889984
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1846,
+          "bear": 1048
+        },
+        "forecast_digest": "1db3d32afe39d9eee0b67e22911945132dca001b5285a2d6b593bf768773e49e",
+        "candidate": {
+          "n": 2891,
+          "correct": 1099,
+          "accuracy": 0.3801452784503632,
+          "accuracy_wilson95": [
+            0.3626206305640248,
+            0.39798802111587916
+          ],
+          "brier": 0.664834901644238,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 901,
+              "correct": 364,
+              "precision": 0.4039955604883463,
+              "recall": 0.34502369668246446
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1949,
+              "correct": 728,
+              "precision": 0.37352488455618266,
+              "recall": 0.7137254901960784
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 41,
+              "correct": 7,
+              "precision": 0.17073170731707318,
+              "recall": 0.00857843137254902
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 364,
+              "flat": 672,
+              "down": 19
+            },
+            "flat": {
+              "up": 277,
+              "flat": 728,
+              "down": 15
+            },
+            "down": {
+              "up": 260,
+              "flat": 549,
+              "down": 7
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": -0.0004175037703230215,
+          "ci95": [
+            -0.0023108022628089437,
+            0.0015692809268440697
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "mkt_logit": {
+        "predictable": 2894,
+        "expected_scorable": 2891,
+        "n": 2891,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {},
+        "forecast_digest": "6475e736c7656db9f95d68ba9d89fccb2b8aac31fbb794649302ca24b2a964b8",
+        "candidate": {
+          "n": 2891,
+          "correct": 1154,
+          "accuracy": 0.39916983742649603,
+          "accuracy_wilson95": [
+            0.3814633193696229,
+            0.41714395902775664
+          ],
+          "brier": 0.6608677550888102,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1174,
+              "correct": 489,
+              "precision": 0.41652470187393525,
+              "recall": 0.46350710900473935
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1649,
+              "correct": 649,
+              "precision": 0.39357186173438446,
+              "recall": 0.6362745098039215
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 68,
+              "correct": 16,
+              "precision": 0.23529411764705882,
+              "recall": 0.0196078431372549
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 489,
+              "flat": 538,
+              "down": 28
+            },
+            "flat": {
+              "up": 347,
+              "flat": 649,
+              "down": 24
+            },
+            "down": {
+              "up": 338,
+              "flat": 462,
+              "down": 16
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2891,
+          "correct": 1002,
+          "accuracy": 0.34659287443791076,
+          "accuracy_wilson95": [
+            0.32945970778245454,
+            0.36413318405026524
+          ],
+          "brier": 0.665252405414561,
+          "per_class": {
+            "up": {
+              "true_count": 1055,
+              "predicted_count": 1472,
+              "correct": 524,
+              "precision": 0.35597826086956524,
+              "recall": 0.4966824644549763
+            },
+            "flat": {
+              "true_count": 1020,
+              "predicted_count": 1394,
+              "correct": 473,
+              "precision": 0.33931133428981347,
+              "recall": 0.46372549019607845
+            },
+            "down": {
+              "true_count": 816,
+              "predicted_count": 25,
+              "correct": 5,
+              "precision": 0.2,
+              "recall": 0.006127450980392157
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 524,
+              "flat": 520,
+              "down": 11
+            },
+            "flat": {
+              "up": 538,
+              "flat": 473,
+              "down": 9
+            },
+            "down": {
+              "up": 410,
+              "flat": 401,
+              "down": 5
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2891,
+          "difference": -0.004384650325750728,
+          "ci95": [
+            -0.008505174571050345,
+            -0.0002906276533842582
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": true,
+        "verdict": "入圍：值得再驗證，尚非證明有效"
+      }
+    },
+    "7": {
+      "ind_mkt_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1885,
+          "bear": 1009
+        },
+        "forecast_digest": "c0fb06e8a51141d7559e0fc2a37e903a41cbf7531e6c7142503be74a4739ce8c",
+        "candidate": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6278162321244081,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": -0.0035945477974971066,
+          "ci95": [
+            -0.008891786799166362,
+            0.001429394043643328
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_mkt_ret5": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 7,
+          "low": 874,
+          "high": 991,
+          "middle": 1022
+        },
+        "forecast_digest": "15b7f8353d9b4139055850b42ef11d54f3edb1c048d240c889250c0d71444d7b",
+        "candidate": {
+          "n": 2887,
+          "correct": 1368,
+          "accuracy": 0.47384828541738827,
+          "accuracy_wilson95": [
+            0.45568133910408054,
+            0.4920847344938815
+          ],
+          "brier": 0.6311282989308992,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 73,
+              "correct": 26,
+              "precision": 0.3561643835616438,
+              "recall": 0.027659574468085105
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2814,
+              "correct": 1342,
+              "precision": 0.47690120824449184,
+              "recall": 0.9738751814223512
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 26,
+              "flat": 914,
+              "down": 0
+            },
+            "flat": {
+              "up": 36,
+              "flat": 1342,
+              "down": 0
+            },
+            "down": {
+              "up": 11,
+              "flat": 558,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": -0.0002824809910060051,
+          "ci95": [
+            -0.005577678086138958,
+            0.004455254061232842
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_adr_premium": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 20,
+          "high": 1069,
+          "middle": 913,
+          "low": 892
+        },
+        "forecast_digest": "04407d3508926fe62783daaf4639c7e4cef722357dec75cc9289a1e627340c5b",
+        "candidate": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6335633286798267,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": 0.0021525487579214454,
+          "ci95": [
+            -0.0007457365734933885,
+            0.005176486266739196
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_ret1": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 7,
+          "high": 1002,
+          "low": 902,
+          "middle": 983
+        },
+        "forecast_digest": "2cbe504231a3aa02979691d1548c6c6f60c21a174bdb8dcfca850c9023fea7f4",
+        "candidate": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6318467413225656,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": 0.00043596140066031456,
+          "ci95": [
+            -0.0016411612061489429,
+            0.002489207551152383
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1846,
+          "bear": 1048
+        },
+        "forecast_digest": "0c2c57f2253bbfa0a7b11dfd93acc3b076df244e0db919da20c2cc4790be0e18",
+        "candidate": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6309571162109571,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": -0.000453663710948127,
+          "ci95": [
+            -0.005284169534155331,
+            0.004256696937853041
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "mkt_logit": {
+        "predictable": 2894,
+        "expected_scorable": 2887,
+        "n": 2887,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {},
+        "forecast_digest": "8e8bd9c4ea7603c2f4700d323ef7fb771ba5d8d2ad881db2a02904e37032d8cc",
+        "candidate": {
+          "n": 2887,
+          "correct": 1386,
+          "accuracy": 0.4800831312781434,
+          "accuracy_wilson95": [
+            0.4618974319992208,
+            0.498321763125055
+          ],
+          "brier": 0.6256124720809934,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 270,
+              "correct": 110,
+              "precision": 0.4074074074074074,
+              "recall": 0.11702127659574468
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2617,
+              "correct": 1276,
+              "precision": 0.4875811998471532,
+              "recall": 0.9259796806966618
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 110,
+              "flat": 830,
+              "down": 0
+            },
+            "flat": {
+              "up": 102,
+              "flat": 1276,
+              "down": 0
+            },
+            "down": {
+              "up": 58,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2887,
+          "correct": 1378,
+          "accuracy": 0.47731208867336333,
+          "accuracy_wilson95": [
+            0.45913437351394326,
+            0.4955501009319708
+          ],
+          "brier": 0.6314107799219053,
+          "per_class": {
+            "up": {
+              "true_count": 940,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            },
+            "flat": {
+              "true_count": 1378,
+              "predicted_count": 2887,
+              "correct": 1378,
+              "precision": 0.47731208867336333,
+              "recall": 1.0
+            },
+            "down": {
+              "true_count": 569,
+              "predicted_count": 0,
+              "correct": 0,
+              "precision": null,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 0,
+              "flat": 940,
+              "down": 0
+            },
+            "flat": {
+              "up": 0,
+              "flat": 1378,
+              "down": 0
+            },
+            "down": {
+              "up": 0,
+              "flat": 569,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2887,
+          "difference": -0.005798307840911914,
+          "ci95": [
+            -0.011897521332655807,
+            0.0005886787122495156
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      }
+    },
+    "14": {
+      "ind_mkt_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1885,
+          "bear": 1009
+        },
+        "forecast_digest": "901ce40fdcff87631fbb16d96a1de62ac5cf2348f82c9407d096ba98af7309a1",
+        "candidate": {
+          "n": 2880,
+          "correct": 1244,
+          "accuracy": 0.43194444444444446,
+          "accuracy_wilson95": [
+            0.41395598185972365,
+            0.4501142156190579
+          ],
+          "brier": 0.6492125571655686,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 524,
+              "correct": 253,
+              "precision": 0.48282442748091603,
+              "recall": 0.2194275802254987
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2306,
+              "correct": 989,
+              "precision": 0.42888117953165655,
+              "recall": 0.8353040540540541
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 50,
+              "correct": 2,
+              "precision": 0.04,
+              "recall": 0.003683241252302026
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 253,
+              "flat": 885,
+              "down": 15
+            },
+            "flat": {
+              "up": 162,
+              "flat": 989,
+              "down": 33
+            },
+            "down": {
+              "up": 109,
+              "flat": 432,
+              "down": 2
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.0042136340827166555,
+          "ci95": [
+            -0.0035881460265822815,
+            0.012888965284162956
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_mkt_ret5": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 14,
+          "high": 994,
+          "low": 872,
+          "middle": 1014
+        },
+        "forecast_digest": "d7022b6abf870a857399fa92200f93591c7ac06323e4073f86bedaeaa66f7d87",
+        "candidate": {
+          "n": 2880,
+          "correct": 1165,
+          "accuracy": 0.4045138888888889,
+          "accuracy_wilson95": [
+            0.38672777059432273,
+            0.42255439423560026
+          ],
+          "brier": 0.648441404175811,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 850,
+              "correct": 344,
+              "precision": 0.4047058823529412,
+              "recall": 0.2983521248915872
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2018,
+              "correct": 821,
+              "precision": 0.4068384539147671,
+              "recall": 0.6934121621621622
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 344,
+              "flat": 802,
+              "down": 7
+            },
+            "flat": {
+              "up": 358,
+              "flat": 821,
+              "down": 5
+            },
+            "down": {
+              "up": 148,
+              "flat": 395,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.0034424810929591094,
+          "ci95": [
+            -0.0010632367641623265,
+            0.007886471587539709
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_adr_premium": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 27,
+          "high": 1062,
+          "low": 898,
+          "middle": 907
+        },
+        "forecast_digest": "133241ba9136de0b8f5ccffc721221dc67895e9c7f259a0fe6cbb2f3eef46285",
+        "candidate": {
+          "n": 2880,
+          "correct": 1153,
+          "accuracy": 0.40034722222222224,
+          "accuracy_wilson95": [
+            0.38259687033523215,
+            0.4183630616872692
+          ],
+          "brier": 0.6500165590452854,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 676,
+              "correct": 266,
+              "precision": 0.39349112426035504,
+              "recall": 0.23070251517779705
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2192,
+              "correct": 887,
+              "precision": 0.40465328467153283,
+              "recall": 0.7491554054054054
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 266,
+              "flat": 880,
+              "down": 7
+            },
+            "flat": {
+              "up": 292,
+              "flat": 887,
+              "down": 5
+            },
+            "down": {
+              "up": 118,
+              "flat": 425,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.005017635962433517,
+          "ci95": [
+            0.001040936712763724,
+            0.009240411130185646
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_ret1": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "missing": 14,
+          "high": 1000,
+          "low": 898,
+          "middle": 982
+        },
+        "forecast_digest": "841becdb1e98941e43e1d01fec8a9a17ff47fe8b490099def59f1898ab2cc0d5",
+        "candidate": {
+          "n": 2880,
+          "correct": 1178,
+          "accuracy": 0.40902777777777777,
+          "accuracy_wilson95": [
+            0.3912044222806792,
+            0.42709349475728375
+          ],
+          "brier": 0.6461717496508576,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 271,
+              "correct": 108,
+              "precision": 0.3985239852398524,
+              "recall": 0.09366869037294015
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2597,
+              "correct": 1070,
+              "precision": 0.41201386214863306,
+              "recall": 0.9037162162162162
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 108,
+              "flat": 1038,
+              "down": 7
+            },
+            "flat": {
+              "up": 109,
+              "flat": 1070,
+              "down": 5
+            },
+            "down": {
+              "up": 54,
+              "flat": 489,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.001172826568005581,
+          "ci95": [
+            -0.0006256272134946854,
+            0.003014869939193472
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "ind_sox_trend": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {
+          "bull": 1846,
+          "bear": 1048
+        },
+        "forecast_digest": "61122afa701faf6b1cf02a6d1ddbe1e9ec8bce5981bc20a96a97fc279efc1612",
+        "candidate": {
+          "n": 2880,
+          "correct": 1272,
+          "accuracy": 0.44166666666666665,
+          "accuracy_wilson95": [
+            0.4236201020740381,
+            0.4598686386220603
+          ],
+          "brier": 0.6462981587176546,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 812,
+              "correct": 374,
+              "precision": 0.4605911330049261,
+              "recall": 0.32437120555073723
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2056,
+              "correct": 898,
+              "precision": 0.4367704280155642,
+              "recall": 0.7584459459459459
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 374,
+              "flat": 772,
+              "down": 7
+            },
+            "flat": {
+              "up": 281,
+              "flat": 898,
+              "down": 5
+            },
+            "down": {
+              "up": 157,
+              "flat": 386,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.001299235634802701,
+          "ci95": [
+            -0.005833147424554188,
+            0.008622234401239139
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      },
+      "mkt_logit": {
+        "predictable": 2894,
+        "expected_scorable": 2880,
+        "n": 2880,
+        "complete": true,
+        "coverage": 1.0,
+        "missing_predictions": 0,
+        "missing_reference": 0,
+        "missing_outcomes": 0,
+        "states": {},
+        "forecast_digest": "ff4a7f314b8566acf5b5b9b12e338cc9b06ec1346de37da185d5fbda010e9244",
+        "candidate": {
+          "n": 2880,
+          "correct": 1208,
+          "accuracy": 0.41944444444444445,
+          "accuracy_wilson95": [
+            0.401541106255627,
+            0.4375623928008898
+          ],
+          "brier": 0.645445369983588,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 1020,
+              "correct": 418,
+              "precision": 0.40980392156862744,
+              "recall": 0.36253252385082396
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 1848,
+              "correct": 790,
+              "precision": 0.4274891774891775,
+              "recall": 0.6672297297297297
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 418,
+              "flat": 728,
+              "down": 7
+            },
+            "flat": {
+              "up": 389,
+              "flat": 790,
+              "down": 5
+            },
+            "down": {
+              "up": 213,
+              "flat": 330,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "majority": {
+          "n": 2880,
+          "correct": 1162,
+          "accuracy": 0.40347222222222223,
+          "accuracy_wilson95": [
+            0.38569491982860077,
+            0.42150668679946685
+          ],
+          "brier": 0.6449989230828519,
+          "per_class": {
+            "up": {
+              "true_count": 1153,
+              "predicted_count": 125,
+              "correct": 38,
+              "precision": 0.304,
+              "recall": 0.03295750216825672
+            },
+            "flat": {
+              "true_count": 1184,
+              "predicted_count": 2743,
+              "correct": 1124,
+              "precision": 0.4097703244622676,
+              "recall": 0.9493243243243243
+            },
+            "down": {
+              "true_count": 543,
+              "predicted_count": 12,
+              "correct": 0,
+              "precision": 0.0,
+              "recall": 0.0
+            }
+          },
+          "confusion_matrix": {
+            "up": {
+              "up": 38,
+              "flat": 1108,
+              "down": 7
+            },
+            "flat": {
+              "up": 55,
+              "flat": 1124,
+              "down": 5
+            },
+            "down": {
+              "up": 32,
+              "flat": 511,
+              "down": 0
+            }
+          },
+          "confusion_axes": {
+            "rows": "truth",
+            "columns": "choice",
+            "order": [
+              "up",
+              "flat",
+              "down"
+            ]
+          }
+        },
+        "brier_vs_majority": {
+          "n": 2880,
+          "difference": 0.0004464469007361118,
+          "ci95": [
+            -0.007305758002291053,
+            0.008907734883641407
+          ],
+          "blocks": 145,
+          "block_sessions": 20,
+          "repetitions": 2000,
+          "seed": 20260927,
+          "layout": "nonoverlapping_keep_tail"
+        },
+        "shortlisted": false,
+        "verdict": "未入圍"
+      }
+    }
+  },
+  "execution": [
+    {
+      "H": 3,
+      "points": 2894,
+      "scorable": 2891,
+      "new_predictions": 17364,
+      "refits": 132,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 7,
+      "points": 2894,
+      "scorable": 2887,
+      "new_predictions": 17364,
+      "refits": 132,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 14,
+      "points": 2894,
+      "scorable": 2880,
+      "new_predictions": 17364,
+      "refits": 131,
+      "http_calls": 0,
+      "network_attempts": 0
+    }
+  ],
+  "network_attempts": 0
+}

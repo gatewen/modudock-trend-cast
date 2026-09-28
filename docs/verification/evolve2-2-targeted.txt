@@ -1,0 +1,23 @@
+test_adr_midpoint_one_to_five_raw_close (tests.test_market.MarketFeatureTests.test_adr_midpoint_one_to_five_raw_close) ... ok
+test_age_anchored_at_prediction_day_five_included_six_missing (tests.test_market.MarketFeatureTests.test_age_anchored_at_prediction_day_five_included_six_missing) ... ok
+test_future_us_and_same_day_fx_invariant_past_changes (tests.test_market.MarketFeatureTests.test_future_us_and_same_day_fx_invariant_past_changes) ... ok
+test_missing_latest_never_backfills (tests.test_market.MarketFeatureTests.test_missing_latest_never_backfills) ... ok
+test_trend_windows_include_latest_and_equality_neutral (tests.test_market.MarketFeatureTests.test_trend_windows_include_latest_and_equality_neutral) ... ok
+test_all_horizon_maturity_and_single_minimum_thirty (tests.test_market.MarketModelTests.test_all_horizon_maturity_and_single_minimum_thirty) ... ok
+test_future_labels_features_do_not_change_fitted_model (tests.test_market.MarketModelTests.test_future_labels_features_do_not_change_fitted_model) ... ok
+test_optimizer_exactly_matches_original_with_original_columns (tests.test_market.MarketModelTests.test_optimizer_exactly_matches_original_with_original_columns) ... ok
+test_refit_clock_minimum_training_and_order_guards (tests.test_market.MarketModelTests.test_refit_clock_minimum_training_and_order_guards) ... ok
+test_train_only_terciles_lower_ties_and_missing_design (tests.test_market.MarketModelTests.test_train_only_terciles_lower_ties_and_missing_design) ... ok
+test_atomic_four_sources_and_no_holdout_rows (tests.test_market.MarketPersistenceTests.test_atomic_four_sources_and_no_holdout_rows) ... ok
+test_freeze_preserves_original_and_rejects_source_or_policy_mutations (tests.test_market.MarketPersistenceTests.test_freeze_preserves_original_and_rejects_source_or_policy_mutations) ... ok
+test_interval_strict_negative_and_tampering_rejected (tests.test_market.MarketPersistenceTests.test_interval_strict_negative_and_tampering_rejected) ... ok
+test_missing_forecast_reference_outcome_never_qualifies (tests.test_market.MarketPersistenceTests.test_missing_forecast_reference_outcome_never_qualifies) ... ok
+test_offline_roundtrip_idempotence_old_results_unchanged_and_dev_guards (tests.test_market.MarketPersistenceTests.test_offline_roundtrip_idempotence_old_results_unchanged_and_dev_guards) ... ok
+test_cli_preview_has_no_side_effects (tests.test_market.MarketSourceTests.test_cli_preview_has_no_side_effects) ... ok
+test_missing_codes_and_close_not_adjusted_close (tests.test_market.MarketSourceTests.test_missing_codes_and_close_not_adjusted_close) ... ok
+test_reject_invalid_response_and_holdout_before_network (tests.test_market.MarketSourceTests.test_reject_invalid_response_and_holdout_before_network) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 2.167s
+
+OK

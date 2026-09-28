@@ -1,0 +1,94 @@
+{
+  "original_data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "original_dev_digest": "dc2d71d42d9890c7677aeca6a1bc0a7345da0969b9bf0a2dab555509d01b44c1",
+  "original_development_tables": {
+    "d_features": {
+      "rows": 2894,
+      "sha256": "7f98899f1a695c14351d949a417e7884906fcb6f974a183e2a30dbaf1ef5695e"
+    },
+    "d_predictions": {
+      "rows": 149322,
+      "sha256": "403b39a94fd6c2b746cc59474a0937b9cdca187439b16f7e052024ca89d1747b"
+    },
+    "d_outcomes": {
+      "rows": 8658,
+      "sha256": "0d0a1aad97a101de3ac45e4dc88f539e555e79be9528283b2e3ec83f0c460125"
+    },
+    "d_fits": {
+      "rows": 395,
+      "sha256": "76ec53b06106b64e882d9d12daee45b39d4368f6df982e7fb2a50ab6a426cfcf"
+    }
+  },
+  "sources": {
+    "taiex": {
+      "rows": 3205,
+      "first": "2009-01-05",
+      "last": "2021-12-30",
+      "sha256": "ecf3cfa37f03defe26b41e7af9b5a5fdaf7630633c8df5633bd692eddac63a3e",
+      "payload_hash": "5afaecc46704e24b23546d866b299441ecdca20e6ed38392cc91f12c18f14929"
+    },
+    "tsm": {
+      "rows": 3273,
+      "first": "2009-01-02",
+      "last": "2021-12-31",
+      "sha256": "32b71c2ffc03bb96cc5eece58ce8dc1a7f6474f5311c58fbefb7f8c633b34888",
+      "payload_hash": "617ed08655d69d4eb1202c7e1a64a0eb54ddefa83d81499b3161b9b21f9c5207"
+    },
+    "sox": {
+      "rows": 3273,
+      "first": "2009-01-02",
+      "last": "2021-12-31",
+      "sha256": "49c23655bd9b75d01cd9a747245fd99c39239b7bd559960ebab3d3fb6d686ea6",
+      "payload_hash": "11fde031a59312a0a31785518651cbe7bb5db56e194f880d78ccd0aa9ff4133e"
+    },
+    "usd_twd": {
+      "rows": 3244,
+      "first": "2009-01-05",
+      "last": "2021-12-30",
+      "sha256": "5f28191630bdcc4f7612c253730143b9b50ea870bf5bb6c538412462b5582193",
+      "payload_hash": "120ac83b297a2eafb693dd7f88a8b0ad418cebe3bbebb298d56934bcf40ca2ea"
+    }
+  },
+  "predictable": 2894,
+  "feature_missing": {
+    "mkt_trend": 0,
+    "mkt_ret5": 0,
+    "adr_premium": 13,
+    "sox_ret1": 0,
+    "sox_trend": 0
+  },
+  "source_missing_rows": {
+    "usd_twd": 1
+  },
+  "source_ages": {
+    "taiex": {
+      "0": 2894
+    },
+    "tsm": {
+      "1": 2247,
+      "3": 548,
+      "4": 70,
+      "2": 28,
+      "5": 1
+    },
+    "sox": {
+      "1": 2247,
+      "3": 548,
+      "4": 70,
+      "2": 28,
+      "5": 1
+    },
+    "usd_twd": {
+      "1": 2272,
+      "3": 514,
+      "2": 39,
+      "7": 5,
+      "4": 34,
+      "5": 23,
+      "10": 4,
+      "6": 1,
+      "8": 2
+    }
+  },
+  "budget_used": 1222
+}

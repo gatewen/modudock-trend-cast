@@ -1,0 +1,42 @@
+{
+  "report_identical_on_resume": true,
+  "resume_execution": [
+    {
+      "H": 3,
+      "points": 2894,
+      "scorable": 2891,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 7,
+      "points": 2894,
+      "scorable": 2887,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    },
+    {
+      "H": 14,
+      "points": 2894,
+      "scorable": 2880,
+      "new_predictions": 0,
+      "refits": 0,
+      "http_calls": 0,
+      "network_attempts": 0
+    }
+  ],
+  "frozen_sync": "frozen",
+  "frozen_sync_network_attempts": 0,
+  "market_digest": "643dc062e57e2c901d83541f82aa2ecee632adb9431625d3ac89967d98fc70c8",
+  "counts": {
+    "market_features": 2894,
+    "market_predictions": 52092,
+    "market_fits": 395
+  },
+  "budget_used": 1222,
+  "budget_limit": 2222
+}
