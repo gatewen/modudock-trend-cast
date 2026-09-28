@@ -14,9 +14,9 @@ MUTATIONS=[
  ('logit_points_hidden','daily.js',[("!['jev_ind','ind_logit'].includes(p.method)", "!['jev_ind'].includes(p.method)")],'daily chart shape'),
  ('n29_warning_lost','daily.js',[("r.n<30?'樣本太少'", "r.n<29?'樣本太少'")],'daily all methods'),
  ('brier_shown_as_difference','daily.js',[("number(r.difference,6)", "number(r.brier,6)")],'daily all methods'),
- ('jev_row_dropped','daily.js',[("METHODS.includes(r.method)", "METHODS.includes(r.method)&&r.method!=='jev_ind'")],'daily all methods'),
+ ('jev_row_dropped','daily.js',[("body.methods.filter(r=>METHODS.includes(r.method))", "body.methods.filter(r=>METHODS.includes(r.method)&&r.method!=='jev_ind')")],'daily all methods'),
  ('markup_injected','daily.js',[("n.textContent = text;", "n.innerHTML = text;")],'daily strings stay text'),
- ('holdout_status_lost','daily.js',[("未使用（沒有入圍者，保留給未來）", "已使用")],'daily default seven'),
+ ('holdout_status_lost','daily.js',[("正在讀取保留段狀態…", "已使用")],'daily default seven'),
  ('daily_legacy_not_cleared','front.js',[("child?.unmount(); epoch++;", "epoch++;")],'thirty minute mode keeps'),
 ]
 def main():

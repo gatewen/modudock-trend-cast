@@ -320,6 +320,32 @@ class MarketPersistenceTests(unittest.TestCase):
             for p in results.values():
                 self.assertEqual(p['n'],44);self.assertFalse(p['complete']);self.assertFalse(p['shortlisted'])
 
+    def test_daily_view_market_projection_matches_report_and_cache_rechecks_content(self):
+        from back.daily_view import DailyViews
+        self.run_all();expected=development_report(self.s)
+        view=DailyViews();view.history=frames(self.s,end=DEV_END)
+        row=dict(self.original,config=dict(self.original['config'],first_prediction=self.points[0].day))
+        changes=self.s.db.total_changes
+        with ForbiddenClient().guard():
+            for H in (3,7,14):
+                actual=view.report(self.s,row,H)
+                self.assertEqual({m['method'] for m in actual['methods']} & set(METHODS),set(METHODS))
+                for m in actual['methods']:
+                    if m['method'] not in METHODS:continue
+                    e=expected['horizons'][str(H)][m['method']]
+                    self.assertEqual(m['brier'],e['candidate']['brier'])
+                    self.assertEqual(m['difference'],e['brier_vs_majority']['difference'])
+                    self.assertEqual(m['ci95'],e['brier_vs_majority']['ci95'])
+                    self.assertFalse(m['shortlisted'])  # 45-row UI fixture is incomplete.
+        self.assertEqual(changes,self.s.db.total_changes)
+        before=view.report(self.s,row,3)
+        self.s.db.execute("UPDATE market_predictions SET probabilities_json='{\"up\":0.9,\"flat\":0.05,\"down\":0.05}',choice='up' WHERE H=3 AND method='mkt_logit'")
+        self.s.db.commit();after=view.report(self.s,row,3)
+        score=lambda report:next(r['brier'] for r in report['methods'] if r['method']=='mkt_logit')
+        self.assertNotEqual(score(before),score(after))
+        self.s.db.execute("UPDATE market_features SET alignment_json='{}'");self.s.db.commit()
+        with self.assertRaisesRegex(DataError,'feature_mismatch'):view.report(self.s,row,3)
+
     def test_interval_strict_negative_and_tampering_rejected(self):
         self.run_all()
         for ci,yes in (([-.2,-.1],True),([-.2,0.],False),([-.2,.1],False)):

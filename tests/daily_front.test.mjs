@@ -21,7 +21,8 @@ function chart(h, extra={}){h.answer('daily_chart',{range:'6m',prices:days.map((
   points:[{day:days[0],method:'jev_ind',choice:'up',correct:true},{day:days[0],method:'ind_logit',choice:'flat',correct:false},
     {day:days[1],method:'jev_ind',choice:'down',correct:'true'}],...extra});}
 const names=['ma_cross','ma_trend','rsi14','kd','macd','bollinger','bias20','vol_price','foreign_net','trust_net','margin_chg'];
-const methods=['always_flat','majority','momentum_H','reversal_H','vol_prior_d',...names.map(n=>`ind_${n}`),'ind_logit','jev_ind'];
+const methods=['always_flat','majority','momentum_H','reversal_H','vol_prior_d',...names.map(n=>`ind_${n}`),'ind_logit','jev_ind',
+  'ens_avg','ind_mkt_trend','ind_mkt_ret5','ind_adr_premium','ind_sox_ret1','ind_sox_trend','mkt_logit'];
 function report(h,extra={}) {h.answer('daily_report',{methods:methods.map(method=>({method,n:method==='jev_ind'?576:2890,accuracy:.4,brier:.65,difference:.01,ci95:[-.02,.03],verdict:'未入圍'})),
   comparison_note:'各列與 majority 同日期比較；jev_ind 僅 576 天。',multiplicity:'11×2.5%＝0.275',
   claims:[{indicator:'kd',description:'低檔黃金交叉',claim:'偏多',n:29,frequencies:{up:.5,flat:.3,down:.2}},
@@ -30,22 +31,72 @@ function report(h,extra={}) {h.answer('daily_report',{methods:methods.map(method
 test('daily default seven days registers before ready and sends only reads after up',t=>{
   const h=setup(t);assert.deepEqual(h.reports,['ready']);assert.equal(h.find('預測天期').value,'7');
   assert.equal(h.sent.length,0);h.up();h.up();
-  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report','daily_forward','news_status']);
+  assert.deepEqual(h.sent.map(b=>b.op),['daily_status','daily_chart','daily_report','daily_holdout','daily_forward','news_status']);
   assert.ok(h.sent.every(b=>b.H===7));assert.equal(h.container.querySelectorAll('.tc-forward').length,0);
-  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用（沒有入圍者，保留給未來）/);
+  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
   assert.equal(h.container.querySelector('.tc-daily-holdout button'),null);
 });
 
 test('daily holdout used status is permanent and ignores unadmitted result packets',t=>{
   const h=setup(t);h.up();
   h.answer('daily_status',{split:'holdout',holdout:{state:'used'},private_score:987.123});
-  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
   [...h.container.querySelectorAll('button')].find(b=>b.textContent==='重新整理').click();
   h.answer('daily_status',{dev_start:'2010-04-01',dev_end:'2021-12-31',threshold:.02,days,holdout:{state:'used'}});
   assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/已使用（一次性保留段考試已揭露）/);
   report(h,{holdout:{state:'unused'}});
   assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/已使用/);
   assert.doesNotMatch(h.container.textContent,/987\.123/);
+});
+
+function held(H=7){return {split:'holdout',state:'used',first_day:'2022-01-03',last_day:'2024-07-25',
+ primary_comparisons:[[3,'ens_avg',-.0000771374749074,[-.00252397142567,.00242079429091]],
+   [7,'ens_avg',-.0040539704948,[-.00877372804825,.00100247671519]],
+   [3,'mkt_logit',.00591719707585,[-.00210922071031,.0145347477224]]].map(([H,method,difference,ci95])=>
+     ({H,method,n:619-H,difference,ci95,verdict:`沒有證據顯示 ${method} 比簡單方法好`})),
+ descriptive:methods.filter(m=>m!=='jev_ind').map(method=>({method,n:619-H,accuracy:.4567,brier:.654321,coverage:1,missing:0})),
+ multiplicity:'3 個事先指定比較，預期約 0.075 個因運氣顯著較好；名目估算，未作多重比較校正。'};}
+
+test('revealed holdout shows all three comparisons exact signs and expandable descriptive horizon',t=>{
+ const h=setup(t);ready(h);
+ for(const H of [7,3,14]){
+   if(H!==7)h.change('預測天期',String(H));
+   h.answer('daily_holdout',held(H));
+   const hold=h.container.querySelector('.tc-daily-holdout'),tables=hold.querySelectorAll('table');
+   assert.equal(tables[0].querySelectorAll('tbody tr').length,3);
+   const rows=[...tables[0].querySelectorAll('tbody tr')].map(r=>r.textContent);
+   assert.match(rows[0],/ens_avg 3 日.*616.*−0.00008.*−0.00252 ～ \+0.00242.*沒有證據/);
+   assert.match(rows[1],/ens_avg 7 日.*612.*−0.00405.*−0.00877 ～ \+0.00100.*沒有證據/);
+   assert.match(rows[2],/mkt_logit 3 日.*616.*\+0.00592.*−0.00211 ～ \+0.01453.*沒有證據/);
+   assert.equal(hold.querySelector('details').open,false);
+   assert.match(hold.querySelector('summary').textContent,new RegExp(`${H} 日全部方法`));
+   assert.equal(tables[1].querySelectorAll('tbody tr').length,24);
+   assert.ok([...tables[1].querySelectorAll('tbody tr')].every(r=>r.textContent.includes(String(619-H))));
+   assert.match(hold.textContent,/只描述歷史成績，不作優劣結論/);assert.match(hold.textContent,/0.075/);
+   assert.match(h.container.querySelector('.tc-daily-research').textContent,/只能用一次、已使用.*沒有證據比「猜最常見答案」好/);
+ }
+});
+
+test('holdout results require revealed scoped reply and never leak locked supplied numbers',t=>{
+ for(const invalid of [{state:'locked'},{state:'unused'},{split:'dev'},{experiment_id:1},{H:3},{status:'error'},
+     {first_day:'2021-12-31'},{last_day:'2024-07-26'},{primary_comparisons:[]}]){
+   const h=setup(t);ready(h);h.answer('daily_holdout',{...held(),...invalid});
+   assert.equal(h.container.querySelectorAll('.tc-daily-holdout table').length,0);
+   assert.doesNotMatch(h.container.querySelector('.tc-daily-research').textContent,/三者都沒有證據/);
+   assert.doesNotMatch(h.container.textContent,/0.654321|0.00592|0.075/);
+ }
+});
+
+test('holdout late reply cannot cross mount and revealed results do not relax development guards',t=>{
+ const h=setup(t);ready(h);const old=h.latest('daily_holdout');
+ h.change('預測天期','3');h.change('預測天期','7');
+ h.message({op:'daily_holdout',H:7,experiment_id:4,status:'ok',request_id:old.request_id,...held()});
+ assert.equal(h.container.querySelectorAll('.tc-daily-holdout table').length,0);
+ h.answer('daily_holdout',held());
+ chart(h,{prices:[{day:'2022-01-03',close:12345}]});
+ assert.equal(h.container.querySelectorAll('.tc-price').length,0);
+ report(h,{split:'holdout',methods:[{method:'ens_avg',verdict:'PRIVATE'}]});
+ assert.doesNotMatch(h.container.querySelector('.tc-daily-scores').textContent,/PRIVATE/);
 });
 
 test('news status absent publisher remains usable and timestamp refresh is text only',t=>{
@@ -101,7 +152,8 @@ test('daily bounded date controls eleven plain states and invalid dates never re
 
 test('daily all methods sample sizes comparison intervals and n under thirty warning',t=>{
   const h=setup(t);ready(h);report(h);
-  assert.equal(h.container.querySelectorAll('.tc-daily-scores tbody tr').length,18);
+  assert.equal(h.container.querySelectorAll('.tc-daily-scores tbody tr').length,25);
+  for(const name of methods)assert.ok(h.container.querySelector(`.tc-daily-scores tr[data-method=${name}]`));
   assert.match(h.container.querySelector('tr[data-method=jev_ind]').textContent,/576.*40.00%.*0.650000.*0.010000.*-0.020000 ～ 0.030000.*未入圍/);
   const rows=h.container.querySelectorAll('.tc-daily-claims tbody tr');assert.equal(rows.length,2);
   assert.match(rows[0].textContent,/樣本太少/);assert.doesNotMatch(rows[1].textContent,/樣本太少/);
@@ -173,7 +225,7 @@ test('forward empty latest comes before historical chart and keeps disclaimer',t
  assert.match(latest.textContent,/尚無前瞻預測，下一個交易日收盤後自動產生/);
  assert.match(latest.textContent,/這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法/);
  const cards=[...h.container.querySelectorAll('.tc-card')];assert.ok(cards.indexOf(latest)<cards.indexOf(h.container.querySelector('.tc-daily-chart')));
- assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+ assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
  assert.equal(h.container.querySelector('.tc-prospective button'),null);
 });
 test('forward displays all three horizons five methods probabilities timing pending and cohorts',t=>{
@@ -184,7 +236,7 @@ test('forward displays all three horizons five methods probabilities timing pend
  assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['準時','補記','準時待確認']);
  assert.match(h.container.querySelector('.tc-forward-scores').textContent,/結果不完整，不下結論；樣本太少/);
 });
-function forwardDataText(h){const copy=h.container.cloneNode(true);copy.querySelectorAll('.tc-forward-origin').forEach(n=>n.remove());return copy.textContent;}
+function forwardDataText(h){const copy=h.container.querySelector('.tc-prospective').cloneNode(true);copy.querySelectorAll('.tc-forward-origin').forEach(n=>n.remove());return copy.textContent;}
 test('forward rejects historical injection and wrong frozen origin without weakening dev exits',t=>{
  const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),latest:{day:'2024-07-26',predictions:[]}});
  assert.doesNotMatch(forwardDataText(h),/2024-07-26/);
@@ -207,9 +259,12 @@ test('forward unsolicited refresh is read only and stale replies cannot cross ho
 
 test('daily release copy distinguishes development findings and prospective origin',t=>{
  const h=setup(t);ready(h);forwardReady(h);
- assert.match(h.container.querySelector('.tc-daily-scores').textContent,/沒有方法顯著勝過 majority；jev_ind 三天期 Brier 顯著較差/);
+ assert.match(h.container.querySelector('.tc-daily-scores').textContent,/開發段入圍只代表值得再驗證.*jev_ind（jev 讀指標）三天期 Brier 顯著較差/);
+ const research=h.container.querySelector('.tc-daily-research');
+ assert.equal(h.container.querySelector('.tc-card'),research);
+ for(const copy of ['11 個技術／籌碼指標','5 個大環境指標','2 個組合模型','ens_avg','jev 讀指標','jev 讀新聞（前瞻中）','3 組小幅入圍','邊緣','2026-09-29','這不是投資建議'])assert.ok(research.textContent.includes(copy));
  assert.match(h.container.querySelector('.tc-forward-origin').textContent,/2026-09-29.*實際交易日/);
- assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/未使用/);
+ assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
 });
 
 

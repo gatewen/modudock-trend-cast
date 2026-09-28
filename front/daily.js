@@ -7,10 +7,13 @@ const numeric = v => typeof v === 'number' && Number.isFinite(v);
 const number = (v, n = 4) => numeric(v) ? v.toFixed(n) : '—';
 const percent = v => numeric(v) ? `${(v * 100).toFixed(2)}%` : '—';
 const count = v => Number.isSafeInteger(v) && v >= 0 ? v.toLocaleString('en-US') : '—';
+const signed = v => numeric(v) ? `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(5)}` : '—';
 const LABELS = {up: '漲', flat: '盤整', down: '跌'};
 const NAMES = {ma_cross:'5／20 日均線', ma_trend:'60 日均線', rsi14:'RSI', kd:'KD', macd:'MACD', bollinger:'布林通道',
   bias20:'20 日乖離', vol_price:'價量', foreign_net:'外資近 3 日', trust_net:'投信近 3 日', margin_chg:'融資 5 日變化'};
-const METHODS = ['always_flat', 'majority', 'momentum_H', 'reversal_H', 'vol_prior_d', ...Object.keys(NAMES).map(n => `ind_${n}`), 'ind_logit', 'jev_ind'];
+const METHODS = ['always_flat', 'majority', 'momentum_H', 'reversal_H', 'vol_prior_d', ...Object.keys(NAMES).map(n => `ind_${n}`), 'ind_logit', 'jev_ind',
+  'ens_avg', 'ind_mkt_trend', 'ind_mkt_ret5', 'ind_adr_premium', 'ind_sox_ret1', 'ind_sox_trend', 'mkt_logit'];
+const PRIMARY = [[3,'ens_avg'],[7,'ens_avg'],[3,'mkt_logit']];
 const ERRORS = {daily_experiment_missing:'尚未建立多日實驗。', daily_view_dev_only:'只開放開發段資料。',
   daily_view_invalid_date:'請選擇開發段的交易日期。', daily_view_incomplete:'開發段資料不完整。',
   busy:'讀取工作進行中，請稍後重新整理。', packet_too_large:'資料超出訊息上限。'};
@@ -37,6 +40,12 @@ export default function mountDaily(ctx) {
   const news = el('p', '新聞廣播：未收到', 'tc-news tc-sub'); news.setAttribute('role', 'status');
   const error = el('p', '', 'tc-error'); error.hidden = true;
   const card = (heading, cls) => { const n = el('section', '', `tc-card ${cls}`); n.append(el('h2', heading)); return n; };
+  const research = card('研究結論', 'tc-daily-research');
+  const researchHold = el('p','保留段結論讀取中…');
+  research.append(el('p','開發段有 3 組小幅入圍：ens_avg 3／7 日、mkt_logit 3 日；ens_avg 3 日屬邊緣。'),researchHold,
+    el('p','jev 讀指標在開發段顯著較差。前瞻紀錄自 2026-09-29 起累積；jev 讀新聞仍在前瞻中。'),
+    el('p','已測：11 個技術／籌碼指標、5 個大環境指標、2 個組合模型、ens_avg、jev 讀指標；另有 jev 讀新聞（前瞻中）。','tc-note'),
+    el('p','這不是投資建議','tc-note'));
   const chartCard = card('日線走勢與抽樣預測', 'tc-daily-chart');
   const chartToolbar = el('div', '', 'tc-chart-head');
   const span = el('select'); span.setAttribute('aria-label', '走勢範圍'); span.disabled = true;
@@ -60,7 +69,7 @@ export default function mountDaily(ctx) {
   const indicators = el('div', '', 'tc-indicator-grid');
   indicatorsCard.append(dateNav, indicators, el('p','指標是當時可見的訊號，並非預測結論。籌碼只用前一交易日以前。','tc-note'));
   const reportCard = card(`${H} 日開發段成績`, 'tc-daily-scores'), report = el('div');
-  const reportNote = el('p','開發段沒有方法顯著勝過 majority；jev_ind 三天期 Brier 顯著較差。既有方法為完整開發段；jev_ind 為共同 576 日抽樣，樣本數與比較範圍分列。','tc-note');
+  const reportNote = el('p','開發段入圍只代表值得再驗證，不代表未來有效。jev_ind（jev 讀指標）三天期 Brier 顯著較差；共同 576 日抽樣，與其他方法的完整開發段分列。','tc-note');
   reportCard.append(reportNote, report);
   const claimsCard = card('網路說法 vs 實際', 'tc-daily-claims');
   claimsCard.append(el('p','常見說法是待驗假說；下列為開發段實際頻率，未平滑，不代表未來勝率。','tc-note'));
@@ -68,9 +77,10 @@ export default function mountDaily(ctx) {
   for (const [k,v] of [['all','全部指標'],...Object.entries(NAMES)]) { const n=el('option',v); n.value=k; claimSelect.append(n); }
   claimSelect.value='kd'; const claimTable=el('div'); claimsCard.append(claimSelect,claimTable);
   const hold = card('多日保留段', 'tc-daily-holdout');
-  const holdText=el('p','未使用（沒有入圍者，保留給未來）','tc-note'); hold.append(holdText);
+  const holdText=el('p','正在讀取保留段狀態…','tc-note'); hold.append(holdText);
+  const holdResults=el('div'); hold.append(holdResults);
   const forward = prospective(doc,H);
-  root.append(head,status,news,error,forward.root,chartCard,indicatorsCard,reportCard,claimsCard,hold);
+  root.append(head,status,news,error,research,hold,forward.root,chartCard,indicatorsCard,reportCard,claimsCard);
   function controls() {
     refresh.disabled = !live; span.disabled = !live;
     date.disabled = !live || !days.length; previous.disabled = !live || days.indexOf(selected)<=0;
@@ -84,7 +94,7 @@ export default function mountDaily(ctx) {
   }
   function load() {
     error.hidden=true; clearChart(); report.replaceChildren(el('p','正在計算開發段成績與區間…','tc-note'));
-    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report'); send('daily_forward'); send('news_status');
+    send('daily_status'); send('daily_chart',{range:span.value}); send('daily_report'); send('daily_holdout'); send('daily_forward'); send('news_status');
   }
   on(date,'change',()=>choose(date.value));
   on(span,'change',()=>{clearChart();send('daily_chart',{range:span.value});});
@@ -130,6 +140,33 @@ export default function mountDaily(ctx) {
     claimTable.replaceChildren(table(['指標／訊號','常見說法','樣本','實際漲','盤整','跌','提醒'],chosen.map(r=>[
       `${NAMES[r.indicator]} · ${safe(r.description)}`,safe(r.claim),count(r.n),percent(r.frequencies?.up),percent(r.frequencies?.flat),percent(r.frequencies?.down),r.n<30?'樣本太少':'描述性頻率'])));
   }
+  function renderHoldout(body) {
+    if(body.H!==H||body.experiment_id!==4||body.split!=='holdout'||body.status!=='ok'||body.request_id!==requests.daily_holdout)return;
+    if(body.state==='locked') {
+      if(!holdResults.children.length) {
+        holdText.textContent='尚未揭露（不顯示保留段成績）';
+        researchHold.textContent='保留段尚未揭露，暫不顯示結論。';
+      }
+      return;
+    }
+    if(body.state!=='used'||body.first_day!=='2022-01-03'||body.last_day!=='2024-07-25')return;
+    const rows=PRIMARY.map(([h,m])=>body.primary_comparisons?.find(r=>r.H===h&&r.method===m));
+    if(rows.some(r=>!r)||body.primary_comparisons.length!==3)return;
+    holdText.textContent='已使用（一次性保留段考試已揭露）';
+    researchHold.textContent='保留段（2022-01～2024-07）只能用一次、已使用：三者都沒有證據比「猜最常見答案」好。';
+    holdResults.replaceChildren(el('p','2022-01～2024-07 · 所有方法固定使用開發段最後狀態。以下 3 個主要比較跨天期同時列出。','tc-note'),
+      table(['主要比較','樣本','Brier 差','95% 區間','結論'],rows.map(r=>[
+        `${r.method} ${r.H} 日 − majority`,count(r.n),signed(r.difference),
+        Array.isArray(r.ci95)?r.ci95.map(signed).join(' ～ '):'—',safe(r.verdict)])));
+    holdResults.append(el('p','majority＝猜最常見答案。差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。','tc-note'),
+      el('p',safe(body.multiplicity),'tc-note'));
+    const details=el('details'),description=el('summary',`展開 ${H} 日全部方法的描述性成績`);
+    const descriptive=Array.isArray(body.descriptive)?body.descriptive.filter(r=>METHODS.includes(r.method)&&r.method!=='jev_ind'):[];
+    details.append(description,el('p','只描述歷史成績，不作優劣結論，不從此表再篩選方法。','tc-note'),
+      table(['方法','樣本','準確率','Brier（越低越好）','覆蓋率','缺答'],descriptive.map(r=>[
+        r.method,count(r.n),percent(r.accuracy),number(r.brier,6),percent(r.coverage),count(r.missing)])));
+    holdResults.append(details);
+  }
   ctx.channel.onMessage(body=>{
     if(disposed||!body||typeof body!=='object')return;
     if(body.op==='news_changed'){send('news_status');return;}
@@ -143,6 +180,7 @@ export default function mountDaily(ctx) {
     }
     if(body.op==='daily_forward_changed'){send('daily_forward');return;}
     if(body.op==='daily_forward'){if(body.request_id===requests.daily_forward)forward.render(body);return;}
+    if(body.op==='daily_holdout'){renderHoldout(body);return;}
     if(forbiddenDate(body))return;
     if(body.op==='error') {
       if(!Object.values(requests).includes(body.request_id))return;

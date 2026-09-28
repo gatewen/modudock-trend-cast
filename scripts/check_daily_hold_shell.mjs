@@ -11,7 +11,7 @@ try {
   page.on('websocket',s=>{
     s.on('framereceived',f=>{const p=JSON.parse(f.payload.toString());if(p.mod==='trend-cast'&&p.t==='state')evidence.states.push(p.state);});
     s.on('framesent',f=>{const p=JSON.parse(f.payload.toString());if(p.mod==='trend-cast'&&p.t==='msg'){
-      assert.ok(['daily_status','daily_chart','daily_report','daily_indicators','daily_forward','news_status'].includes(p.body.op));
+      assert.ok(['daily_status','daily_chart','daily_report','daily_holdout','daily_indicators','daily_forward','news_status'].includes(p.body.op));
       evidence.requests.push(p.body.op);
     }});
   });

@@ -1,7 +1,7 @@
-"""Read-only daily UI projections. Every query/export is capped at development.
+"""Read-only daily UI projections; development and revealed holdout stay separate.
 
-The shell never invokes a predictor, transport, outcome writer or reveal here.
-Persisted outcomes must also END inside development before any scoring/coloring.
+The shell never fits models, invokes transport, writes outcomes or reveals here.
+Development outcomes must also END inside development before scoring/coloring.
 """
 from collections import Counter
 from datetime import date
@@ -11,18 +11,23 @@ import json
 import math
 
 from .daily_config import METHODS, INDICATORS, LABELS, CLAIMS, STATES
+from .daily_ensemble import COMPONENTS, average_current, current_predictions
+from .daily_hold_run import report as holdout_report
 from .daily_experiment import load_experiment
 from .daily_indicators import frames
 from .daily_models import prediction
 from .daily_prompt import bias_states, STATE_TEXT, BUCKET_TEXT, chip_percentages, sample_dates
 from .daily_replay import DEV_START, DEV_END, DailyReplay, horizon
 from .daily_score import paired_blocks
-from .daily_reveal import holdout_status
+from .daily_reveal import holdout_status, revealed, table_exists
+from .market_config import METHODS as MARKET_METHODS
+from .market_run import inputs as market_inputs, saved_candidates
 from .data import DataError, day_value
 from .experiment import canonical
 from .score import ScoredPoint, metrics
 
-OPS = ('daily_status', 'daily_chart', 'daily_indicators', 'daily_report')
+OPS = ('daily_status', 'daily_chart', 'daily_indicators', 'daily_report', 'daily_holdout')
+EXTRA_METHODS = ('ens_avg', *MARKET_METHODS)
 HOLD_MESSAGE = '未使用（沒有入圍者，保留給未來）'
 NAMES = dict(ma_cross='5／20 日均線', ma_trend='60 日均線', rsi14='RSI', kd='KD',
     macd='MACD', bollinger='布林通道', bias20='20 日乖離', vol_price='價量',
@@ -89,6 +94,16 @@ class DailyViews:
         if set(body) - allowed or type(body.get('experiment_id', 4)) is not int or body.get('experiment_id', 4) != 4:
             raise DataError('daily_view_dev_only')
         H = horizon(body.get('H', 7))
+        if op == 'daily_holdout':
+            # Do not even read result tables until the experiment's reveal is valid.
+            if not revealed(store):
+                return dict(status='ok', experiment_id=4, H=H, split='holdout', state='locked')
+            result = holdout_report(store)  # Rechecks the gate and sealed result digests.
+            return dict(status='ok', experiment_id=4, H=H, split='holdout', state='used',
+                first_day=result['first_day'], last_day=result['last_day'],
+                primary_comparisons=result['primary_comparisons'],
+                descriptive=[dict(method=m, **r) for m,r in result['descriptive'][str(H)].items()],
+                multiplicity=result['multiplicity']['note'])
         row = self.config(store); c = row['config']
         if op == 'daily_indicators': bounded_day(body.get('date'), c['dev_start'], c['dev_end'])
         self.prefix(store, row)
@@ -167,27 +182,59 @@ class DailyViews:
         return dict(range=span, prices=prices, points=markers,
             note='調整收盤指數：開發段首日＝100；依參考價向前連乘。圓點 J＝jev_ind，方點 L＝ind_logit；只標共同抽樣日。')
 
+    def extra_points(self, store, c, H, outcomes):
+        """Project the registered extensions from saved development forecasts only."""
+        extra = {m:{} for m in EXTRA_METHODS}
+        counts = {m:0 for m in (*EXTRA_METHODS, 'majority')}
+        for point in self.history:
+            if not point.predictable or not c['dev_start'] <= point.day <= c['dev_end']: continue
+            current = current_predictions(store, 4, H, point)
+            counts['majority'] += int('majority' in current)
+            if set(current) != set(COMPONENTS): continue
+            counts['ens_avg'] += 1
+            if point.day not in outcomes: continue
+            p = average_current(current)
+            extra['ens_avg'][point.day] = ScoredPoint(point.day, outcomes[point.day]['label'], p.answer, p.probabilities)
+        if table_exists(store, 'market_experiments') and store.db.execute(
+                'SELECT 1 FROM market_experiments WHERE experiment_id=4').fetchone():
+            _, original, points, alignment = market_inputs(store)
+            saved, _ = saved_candidates(store, H, points, original, alignment)
+            for method, forecasts in saved.items():
+                counts[method] = len(forecasts)
+                extra[method] = {d:ScoredPoint(d, outcomes[d]['label'], p.answer, p.probabilities)
+                    for d,p in forecasts.items() if d in outcomes}
+        return extra, counts
+
     def report(self, store, row, H):
         c = row['config']; outcomes, points, states, rows = self.saved(store, c, H)
-        key = (H, row['dev_digest'], hashlib.sha256(canonical([outcomes, rows]).encode()).hexdigest())
+        extra, forecast_counts = self.extra_points(store, c, H, outcomes)
+        extra_hash = hashlib.sha256(canonical([forecast_counts,{m:[(d,p.choice,p.probabilities) for d,p in sorted(ps.items())]
+            for m,ps in extra.items()}]).encode()).hexdigest()
+        key = (H, row['dev_digest'], hashlib.sha256(canonical([outcomes, rows]).encode()).hexdigest(), extra_hash)
         if key in self.report_cache: return dict(self.report_cache[key],holdout=holdout_status(store))
         calendar = tuple(r[0] for r in store.db.execute('SELECT day FROM d_calendar WHERE day BETWEEN ? AND ? ORDER BY day', (c['dev_start'], c['dev_end'])))
         common = set(outcomes).intersection(*(set(points[m]) for m in METHODS))
+        points.update(extra)
         sample = set(sample_dates(store, c)['days'])
         methods = []; shortlist = []
-        for method in (*METHODS, 'jev_ind'):
-            keys = common if method != 'jev_ind' else sample & set(points[method]) & set(points['majority'])
+        for method in (*METHODS, 'jev_ind', *EXTRA_METHODS):
+            keys = (set(points[method]) & set(points['majority']) if method in EXTRA_METHODS else
+                common if method != 'jev_ind' else sample & set(points[method]) & set(points['majority']))
             candidate = {d:points[method][d] for d in sorted(keys)}
             reference = {d:points['majority'][d] for d in sorted(keys)}
             comp = paired_blocks(candidate, reference, calendar)
             expected = sum(f.predictable and c['dev_start'] <= f.day <= c['dev_end'] and f.index + H < len(self.history) for f in self.history) if method != 'jev_ind' else len(sample)
             complete = bool(expected) and len(keys) == expected
+            if method in EXTRA_METHODS:
+                complete = complete and forecast_counts[method] == forecast_counts['majority'] == sum(
+                    f.predictable and c['dev_start'] <= f.day <= c['dev_end'] for f in self.history)
             selected = bool(complete and method != 'majority' and comp['ci95'] and comp['ci95'][1] < 0)
             if selected: shortlist.append(method)
             m = metrics(candidate.values())
             methods.append(dict(method=method, n=m['n'], accuracy=m['accuracy'], brier=m['brier'],
                 difference=comp['difference'], ci95=comp['ci95'], shortlisted=selected,
-                verdict='入圍：值得再驗證' if selected else '未入圍' if complete else '結果不完整',
+                verdict=('入圍（邊緣）：值得再驗證' if method == 'ens_avg' and H == 3 else '入圍：值得再驗證')
+                    if selected else '未入圍' if complete else '結果不完整',
                 sample='每 5 日抽樣' if method == 'jev_ind' else '完整開發段'))
         claims = []
         for name in INDICATORS:
@@ -199,8 +246,8 @@ class DailyViews:
                     frequencies={k:counts[k]/n if n else None for k in LABELS}, small_sample=n<30))
         result = dict(methods=methods, claims=claims, shortlist=shortlist,
             holdout=holdout_status(store),
-            comparison_note='差＝方法 − majority；各列與 majority 使用相同日期。jev_ind 僅用共同 576 天抽樣，其餘為完整開發段交集。20 交易日區塊 bootstrap 2,000 次、固定種子。',
-            multiplicity='每個天期測了 11 個指標，預期約 11×2.5%＝0.275 個因運氣看起來較好；開發段勝出只是值得再驗證。')
+            comparison_note='差＝方法 − majority（猜最常見答案）；負值較好。各列使用相同日期配對，jev_ind 每 5 日抽樣，其餘用開發段可評分日。20 交易日區塊 bootstrap 2,000 次，種子 20260927。ens_avg 3 日為邊緣入圍：換種子後區間上界略跨 0。',
+            multiplicity='原 11 指標每個天期預期約 0.275 個因運氣較好；ens_avg 共 3 個比較，預期約 0.075 個；大環境 6×3＝18 個比較，預期約 0.45 個。以上為名目估算、未作多重比較校正；開發段入圍只代表值得再驗證。')
         self.report_cache = {k:v for k,v in self.report_cache.items() if k[0] != H}
         self.report_cache[key] = result
         return result

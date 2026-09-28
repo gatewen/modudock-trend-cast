@@ -1,0 +1,14 @@
+legacy_status_ack_dropped: KILLED -> legacy action status acknowledgement
+default_horizon_wrong: KILLED -> daily default seven
+late_epoch_replies_allowed: KILLED -> daily horizon and range switching
+future_text_guard_removed: KILLED -> daily rejects future
+date_controls_guard_removed: KILLED -> daily bounded date
+correct_colors_swapped: KILLED -> daily chart shape
+logit_points_hidden: KILLED -> daily chart shape
+n29_warning_lost: KILLED -> daily all methods
+brier_shown_as_difference: KILLED -> daily all methods
+jev_row_dropped: KILLED -> daily all methods
+markup_injected: KILLED -> daily strings stay text
+holdout_status_lost: KILLED -> daily default seven
+daily_legacy_not_cleared: KILLED -> thirty minute mode keeps
+13/13 front behavior mutations killed

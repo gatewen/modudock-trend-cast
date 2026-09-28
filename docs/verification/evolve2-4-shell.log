@@ -1,0 +1,6 @@
+2026/09/29 03:01:07.449559 settings: /Users/gatewenlee/Code/modudock/shell/modudock.settings.toml
+2026/09/29 03:01:07.449639 settings: 檔案不存在，使用預設 system
+2026/09/29 03:01:07.450209 modudock: listening on 127.0.0.1:54765, modules from /var/folders/fc/mhqhl4r17g9bjkdhzx_2tr940000gn/T/trendcast-hold-shell-hgtkitch/modules
+2026/09/29 03:01:07.450224 modudock: module trend-cast (0.4.0)
+2026/09/29 03:01:23.444055 ws: read: failed to get reader: received close frame: status = StatusGoingAway and reason = ""
+2026/09/29 03:01:23.478294 modudock: shutting down

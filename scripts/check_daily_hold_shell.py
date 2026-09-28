@@ -25,7 +25,7 @@ raise SystemExit(main())
 '''
 
 
-def main():
+def main(*,stem='evolve2-3',browser_script='check_daily_hold_shell.mjs'):
     out=ROOT/'docs/verification';env=os.environ.copy()
     for key in ('FUGLE_API_KEY','TYPESAFE_API_KEY','FINMIND_API_KEY','SSL_CERT_FILE'):env.pop(key,None)
     env['PYTHONDONTWRITEBYTECODE']='1'
@@ -41,7 +41,7 @@ def main():
         with sqlite3.connect((ROOT/'data/trendcast.sqlite3').as_uri()+'?mode=ro',uri=True) as src,sqlite3.connect(receiver/'data/trendcast.sqlite3') as dst:src.backup(dst)
         binary=scratch/'modudock'
         subprocess.run(['go','build','-o',str(binary),'./cmd/modudock'],cwd=shell,env=env,check=True)
-        log=out/'evolve2-3-shell.log'
+        log=out/(stem+'-shell.log')
         with log.open('w') as stream:
             proc=subprocess.Popen([str(binary),'-modules',str(scratch/'modules'),'-addr','127.0.0.1:0'],cwd=shell,env=env,stdout=stream,stderr=subprocess.STDOUT)
             try:
@@ -51,7 +51,7 @@ def main():
                     if match:break
                     time.sleep(.05)
                 assert match;address=match[1];assert not address.endswith(':8731')
-                subprocess.run(['node',str(ROOT/'scripts/check_daily_hold_shell.mjs'),'http://'+address,str(out/'evolve2-3-shell-browser.json')],cwd=ROOT,env=env,check=True,timeout=60)
+                subprocess.run(['node',str(ROOT/'scripts'/browser_script),'http://'+address,str(out/(stem+'-shell-browser.json'))],cwd=ROOT,env=env,check=True,timeout=120)
                 assert not (receiver/'network-attempt.txt').exists()
                 evidence=dict(address=address,network_attempts=0,scratch_outside_modules=True,real_db_untouched=True)
             finally:
@@ -63,7 +63,7 @@ def main():
         host,port=address.split(':')
         with socket.socket() as check:assert check.connect_ex((host,int(port)))!=0
     evidence['scratch_removed']=not scratch.exists()
-    (out/'evolve2-3-shell-evidence.json').write_text(json.dumps(evidence,indent=2)+'\n')
+    (out/(stem+'-shell-evidence.json')).write_text(json.dumps(evidence,indent=2)+'\n')
     print(json.dumps(evidence));return 0
 
 

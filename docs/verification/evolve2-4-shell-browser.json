@@ -1,0 +1,199 @@
+{
+  "url": "http://127.0.0.1:54765",
+  "states": [
+    "loading",
+    "running"
+  ],
+  "requests": [
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_holdout",
+    "daily_forward",
+    "news_status",
+    "daily_forward",
+    "daily_forward",
+    "daily_indicators",
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_holdout",
+    "daily_forward",
+    "news_status",
+    "daily_indicators",
+    "daily_status",
+    "daily_chart",
+    "daily_report",
+    "daily_holdout",
+    "daily_forward",
+    "news_status",
+    "daily_indicators"
+  ],
+  "responses": [
+    {
+      "op": "status",
+      "status": "loading"
+    },
+    {
+      "op": "daily_forward_changed"
+    },
+    {
+      "op": "daily_forward_changed"
+    },
+    {
+      "op": "status",
+      "status": "ok"
+    },
+    {
+      "op": "daily_status",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_chart",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_report",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_holdout",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_forward",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "news_status",
+      "status": "ok"
+    },
+    {
+      "op": "daily_forward",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_forward",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_indicators",
+      "status": "ok",
+      "H": 7
+    },
+    {
+      "op": "daily_status",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "daily_chart",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "daily_report",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "daily_holdout",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "daily_forward",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "news_status",
+      "status": "ok"
+    },
+    {
+      "op": "daily_indicators",
+      "status": "ok",
+      "H": 14
+    },
+    {
+      "op": "daily_status",
+      "status": "ok",
+      "H": 3
+    },
+    {
+      "op": "daily_chart",
+      "status": "ok",
+      "H": 3
+    },
+    {
+      "op": "daily_report",
+      "status": "ok",
+      "H": 3
+    },
+    {
+      "op": "daily_holdout",
+      "status": "ok",
+      "H": 3
+    },
+    {
+      "op": "daily_forward",
+      "status": "ok",
+      "H": 3
+    },
+    {
+      "op": "news_status",
+      "status": "ok"
+    },
+    {
+      "op": "daily_indicators",
+      "status": "ok",
+      "H": 3
+    }
+  ],
+  "page_errors": [],
+  "horizons": {
+    "3": {
+      "shortlisted": [
+        "ens_avg",
+        "mkt_logit"
+      ],
+      "holdout": "多日保留段\n\n已使用（一次性保留段考試已揭露）\n\n2022-01～2024-07 · 所有方法固定使用開發段最後狀態。以下 3 個主要比較跨天期同時列出。\n\n主要比較\t樣本\tBrier 差\t95% 區間\t結論\nens_avg 3 日 − majority\t616\t−0.00008\t−0.00252 ～ +0.00242\t沒有證據顯示 ens_avg 比簡單方法好\nens_avg 7 日 − majority\t612\t−0.00405\t−0.00877 ～ +0.00100\t沒有證據顯示 ens_avg 比簡單方法好\nmkt_logit 3 日 − majority\t616\t+0.00592\t−0.00211 ～ +0.01453\t沒有證據顯示 mkt_logit 比簡單方法好\n\nmajority＝猜最常見答案。差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。\n\n3 個事先指定比較，預期約 0.075 個因運氣顯著較好；名目估算，未作多重比較校正。其餘成績只描述，不增列比較。\n\n展開 3 日全部方法的描述性成績",
+      "development_rows": 25,
+      "descriptive_rows": 24
+    },
+    "7": {
+      "shortlisted": [
+        "ens_avg"
+      ],
+      "holdout": "多日保留段\n\n已使用（一次性保留段考試已揭露）\n\n2022-01～2024-07 · 所有方法固定使用開發段最後狀態。以下 3 個主要比較跨天期同時列出。\n\n主要比較\t樣本\tBrier 差\t95% 區間\t結論\nens_avg 3 日 − majority\t616\t−0.00008\t−0.00252 ～ +0.00242\t沒有證據顯示 ens_avg 比簡單方法好\nens_avg 7 日 − majority\t612\t−0.00405\t−0.00877 ～ +0.00100\t沒有證據顯示 ens_avg 比簡單方法好\nmkt_logit 3 日 − majority\t616\t+0.00592\t−0.00211 ～ +0.01453\t沒有證據顯示 mkt_logit 比簡單方法好\n\nmajority＝猜最常見答案。差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。\n\n3 個事先指定比較，預期約 0.075 個因運氣顯著較好；名目估算，未作多重比較校正。其餘成績只描述，不增列比較。\n\n展開 7 日全部方法的描述性成績",
+      "development_rows": 25,
+      "descriptive_rows": 24
+    },
+    "14": {
+      "shortlisted": [],
+      "holdout": "多日保留段\n\n已使用（一次性保留段考試已揭露）\n\n2022-01～2024-07 · 所有方法固定使用開發段最後狀態。以下 3 個主要比較跨天期同時列出。\n\n主要比較\t樣本\tBrier 差\t95% 區間\t結論\nens_avg 3 日 − majority\t616\t−0.00008\t−0.00252 ～ +0.00242\t沒有證據顯示 ens_avg 比簡單方法好\nens_avg 7 日 − majority\t612\t−0.00405\t−0.00877 ～ +0.00100\t沒有證據顯示 ens_avg 比簡單方法好\nmkt_logit 3 日 − majority\t616\t+0.00592\t−0.00211 ～ +0.01453\t沒有證據顯示 mkt_logit 比簡單方法好\n\nmajority＝猜最常見答案。差為考生 − majority，負值較好；20 交易日區塊 bootstrap 2,000 次、固定種子。\n\n3 個事先指定比較，預期約 0.075 個因運氣顯著較好；名目估算，未作多重比較校正。其餘成績只描述，不增列比較。\n\n展開 14 日全部方法的描述性成績",
+      "development_rows": 25,
+      "descriptive_rows": 24
+    }
+  },
+  "themes": {
+    "light": {
+      "color": "rgb(36, 36, 36)",
+      "background": "rgb(243, 243, 243)",
+      "colorScheme": "light"
+    },
+    "dark": {
+      "color": "rgb(222, 222, 222)",
+      "background": "rgb(37, 37, 38)",
+      "colorScheme": "dark"
+    }
+  },
+  "private_routes": "404"
+}

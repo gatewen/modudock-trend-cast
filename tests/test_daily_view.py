@@ -14,7 +14,7 @@ from back.daily_run import run_horizon
 from back.daily_prompt import sample_dates
 from back.daily_score import development_report
 from back.daily_store import DailyStore
-from back.daily_view import DailyViews, OPS, HOLD_MESSAGE
+from back.daily_view import DailyViews, OPS, HOLD_MESSAGE, EXTRA_METHODS
 from back.daily_replay import DailyReplay, DEV_END
 from back.data import DataError
 from back.evolution_run import ForbiddenClient
@@ -105,7 +105,7 @@ class DailyViewTests(unittest.TestCase):
         self.store.db.commit()
         before=self.get('daily_report');chart=self.get('daily_chart',range='all')
         self.assertTrue(all(p['day']!=self.points[0].day for p in chart['points']))
-        self.assertTrue(all(m['n']==3 for m in before['methods']))
+        self.assertTrue(all(m['n']==(0 if m['method'] in EXTRA_METHODS[1:] else 3) for m in before['methods']))
         for table in ('d_predictions','d_outcomes'):
             self.store.db.execute(f'DROP TRIGGER {table}_dev_insert')
         for day in ('2022-01-03','2024-07-26'):
@@ -122,8 +122,8 @@ class DailyViewTests(unittest.TestCase):
         with patch('back.daily_score.prepare_development',return_value=self.points):
             expected=development_report(self.store)['horizons']['7']
         actual=self.get('daily_report')
-        self.assertEqual([r['method'] for r in actual['methods']],[*METHODS,'jev_ind'])
-        for r in actual['methods'][:-1]:
+        self.assertEqual([r['method'] for r in actual['methods']],[*METHODS,'jev_ind',*EXTRA_METHODS])
+        for r in actual['methods'][:len(METHODS)]:
             old=expected['methods'][r['method']]
             self.assertEqual(r['accuracy'],old['accuracy']);self.assertEqual(r['brier'],old['brier'])
             self.assertEqual(r['difference'],old['brier_vs_majority']['difference'])
@@ -142,10 +142,32 @@ class DailyViewTests(unittest.TestCase):
         before=self.get('daily_report')
         self.store.db.execute("UPDATE d_predictions SET probabilities_json='{\"up\":0.333,\"flat\":0.334,\"down\":0.333}',choice='flat' WHERE method='jev_ind'")
         self.store.db.commit();after=self.get('daily_report')
-        self.assertNotEqual(before['methods'][-1]['brier'],after['methods'][-1]['brier'])
+        self.assertNotEqual(next(r['brier'] for r in before['methods'] if r['method']=='jev_ind'),
+                            next(r['brier'] for r in after['methods'] if r['method']=='jev_ind'))
         self.store.db.execute('DROP TRIGGER d_bars_freeze_update')
         self.store.db.execute("UPDATE d_bars SET close='99' WHERE day=?",(self.days[0],));self.store.db.commit()
         with self.assertRaises(DataError):self.get('daily_status')
+
+    def test_extension_ensemble_matches_saved_current_probabilities_and_partial_not_shortlisted(self):
+        from back.daily_ensemble import development_report as ensemble_report
+        with patch('back.daily_ensemble.prepare_development',return_value=self.points):
+            expected=ensemble_report(self.store)['horizons']['7']
+        actual=next(r for r in self.get('daily_report')['methods'] if r['method']=='ens_avg')
+        self.assertEqual(actual['brier'],expected['ens_avg']['brier'])
+        self.assertEqual(actual['difference'],expected['brier_vs_majority']['difference'])
+        self.assertEqual(actual['ci95'],expected['brier_vs_majority']['ci95'])
+        self.assertFalse(actual['shortlisted'])
+        self.assertEqual(actual['verdict'],'結果不完整')
+        self.store.db.execute("UPDATE d_predictions SET probabilities_json='{\"up\":0.05,\"flat\":0.05,\"down\":0.9}',choice='down' WHERE method='vol_prior_d' AND H=7")
+        self.store.db.commit()
+        changed=next(r for r in self.get('daily_report')['methods'] if r['method']=='ens_avg')
+        self.assertNotEqual(actual['brier'],changed['brier'])
+
+    def test_holdout_locked_projection_has_no_results_and_never_invokes_report(self):
+        with patch('back.daily_view.holdout_report',side_effect=AssertionError('must not read results')):
+            self.assertEqual(self.get('daily_holdout'),dict(status='ok',experiment_id=4,H=7,split='holdout',state='locked'))
+        for fields in (dict(H=True),dict(experiment_id=1),dict(split='holdout'),dict(confirmed=True)):
+            with self.assertRaises(DataError):self.get('daily_holdout',**fields)
 
 
 class DailyRuntimeTests(unittest.TestCase):

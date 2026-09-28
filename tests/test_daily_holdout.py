@@ -147,6 +147,8 @@ class HoldoutTests(unittest.TestCase):
         self.s.db.set_authorizer(deny)
         with self.assertRaisesRegex(DataError,'daily_holdout_locked'):report(self.s)
         views=DailyViews()
+        self.assertEqual(views.handle(self.s,dict(op='daily_holdout',H=3)),
+            dict(status='ok',experiment_id=4,H=3,split='holdout',state='locked'))
         for op,kw in (('daily_status',{}),('daily_chart',{'range':'all'}),('daily_report',{}),('daily_indicators',{'date':self.dev_points[-1].day})):
             result=views.handle(self.s,dict(op=op,H=3,**kw));self.assertEqual(result.get('split'),'dev')
             self.assertNotIn('holdout_prediction',canonical(result))
@@ -218,6 +220,21 @@ class HoldoutTests(unittest.TestCase):
                 self.assertEqual(r['n'],result['n_days']-H);self.assertEqual(r['coverage'],1.)
                 self.assertNotIn('verdict',r);self.assertNotIn('brier_vs_majority',r)
         views=DailyViews();self.assertEqual(views.handle(self.s,dict(op='daily_status',H=3))['holdout']['state'],'used')
+        changes=self.s.db.total_changes
+        for H in HORIZONS:
+            projected=views.handle(self.s,dict(op='daily_holdout',H=H))
+            self.assertEqual(projected['state'],'used');self.assertEqual(projected['split'],'holdout')
+            self.assertEqual(projected['primary_comparisons'],result['primary_comparisons'])
+            self.assertEqual({r['method']: {k:v for k,v in r.items() if k!='method'} for r in projected['descriptive']},result['descriptive'][str(H)])
+        self.assertEqual(changes,self.s.db.total_changes)
+        # A warmed UI must revalidate the seal and reveal, not serve a cached score.
+        self.s.db.execute('DROP TRIGGER d_hold_outcomes_no_update')
+        self.s.db.execute("UPDATE d_hold_outcomes SET label='up'");self.s.db.commit()
+        with self.assertRaisesRegex(DataError,'sealed_results_changed'):
+            views.handle(self.s,dict(op='daily_holdout',H=3))
+        self.s.db.execute('DROP TRIGGER reveals_daily_no_delete')
+        self.s.db.execute("DELETE FROM reveals WHERE namespace='daily'");self.s.db.commit()
+        self.assertEqual(views.handle(self.s,dict(op='daily_holdout',H=3))['state'],'locked')
 
     def test_real_bounded_input_reads_exclude_exposed_suffix(self):
         # Unpatched entry point, complete synthetic holdout prefix; no outcomes are touched.

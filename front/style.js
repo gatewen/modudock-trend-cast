@@ -80,6 +80,12 @@ export default `
 .tc .tc-daily-claims select { margin: 12px 0; }
 .tc tr[data-method="jev_ind"], .tc tr[data-method="ind_logit"] { background: var(--tc-surface); }
 .tc .tc-daily-holdout { border-left: 4px solid var(--tc-accent); }
+.tc .tc-daily-research { background: var(--tc-surface); }
+.tc .tc-daily-research p { margin-top: 8px; }
+.tc .tc-daily-holdout details { margin-top: 16px; }
+.tc .tc-daily-holdout summary { cursor: pointer; color: var(--tc-accent); }
+.tc .tc-daily-holdout summary:focus-visible { outline: 2px solid var(--tc-accent); outline-offset: 3px; }
+.tc .tc-daily-holdout > div > .tc-scroll td:last-child { white-space: normal; min-width: 200px; text-align: left; }
 @media (max-width: 650px) {
   .tc { padding: 14px 12px; }
   .tc .tc-card { padding: 13px 10px; }
