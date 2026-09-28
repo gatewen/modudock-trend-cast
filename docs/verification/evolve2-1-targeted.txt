@@ -1,0 +1,15 @@
+test_new_cap_keeps_existing_used_and_shared_forward_budget (tests.test_daily_ensemble.CampaignBudgetTests.test_new_cap_keeps_existing_used_and_shared_forward_budget) ... ok
+test_exact_day_horizon_experiment_no_outcome_access_or_future_rows (tests.test_daily_ensemble.EnsembleReportTests.test_exact_day_horizon_experiment_no_outcome_access_or_future_rows) ... ok
+test_missing_component_or_outcome_stays_incomplete (tests.test_daily_ensemble.EnsembleReportTests.test_missing_component_or_outcome_stays_incomplete) ... ok
+test_readonly_cli_does_not_create_db_or_call_http (tests.test_daily_ensemble.EnsembleReportTests.test_readonly_cli_does_not_create_db_or_call_http) ... ok
+test_report_offline_same_intersection_and_no_writes (tests.test_daily_ensemble.EnsembleReportTests.test_report_offline_same_intersection_and_no_writes) ... ok
+test_strict_negative_ci_and_metadata_validation (tests.test_daily_ensemble.EnsembleReportTests.test_strict_negative_ci_and_metadata_validation) ... ok
+test_tampered_choice_and_outcome_rejected (tests.test_daily_ensemble.EnsembleReportTests.test_tampered_choice_and_outcome_rejected) ... ok
+test_equal_probability_average_not_vote_or_renormalized_weights (tests.test_daily_ensemble.EnsembleTests.test_equal_probability_average_not_vote_or_renormalized_weights) ... ok
+test_future_labels_and_features_do_not_change_walk_forward_ensemble (tests.test_daily_ensemble.EnsembleTests.test_future_labels_and_features_do_not_change_walk_forward_ensemble) ... ok
+test_ties_flat_then_up_then_down_and_invalid_probabilities (tests.test_daily_ensemble.EnsembleTests.test_ties_flat_then_up_then_down_and_invalid_probabilities) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 19.322s
+
+OK

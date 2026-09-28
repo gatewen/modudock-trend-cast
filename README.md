@@ -4,7 +4,7 @@ v0.3.0 以 **多日預測（3／7／14 個交易日）** 為主：用 2330 台�
 
 ## 多日目前結論
 
-- **開發段沒有方法顯著勝過 majority**：依事先宣告的 Brier 差與 20 交易日區塊 bootstrap 95% 區間判定，三個天期均無入圍者；這不表示各方法的原始分數完全相同。
+- **第一場（§15）原有考生沒有顯著勝過 majority**：依事先宣告的 Brier 差與 20 交易日區塊 bootstrap 95% 區間判定，原有考生三個天期均無入圍者；這不表示各方法的原始分數完全相同。第二場 §16.1A 新增 `ens_avg` 的開發段研究：3／7 日入圍、14 日未入圍；入圍只代表值得再驗證，尚未加入前瞻考生。見 [第二場第 1 輪交件](docs/HANDOFF-EVOLVE2-1.md)。
 - **jev_ind 顯著較差**：在共同 576 個抽樣日上，三個天期的 Brier 都顯著差於 majority 與 ind_logit。
 - **多日保留段未使用**：2022-01-03～2024-07-25 不跑、不解鎖，留給未來有開發段證據的方法。
 - **前瞻紀錄自 2026-09-29 起累積**：majority、ind_logit、vol_prior_d、jev_ind 四個凍結考生，另依 §15.13 在有合格快照時加入 jev_news；當日資料可取得後產生，準時／補記分列，待 3／7／14 個交易日期滿計分。尚未到起日或沒有資料時不會製造紀錄。這是方法的機率判斷，不是投資建議。
@@ -50,7 +50,7 @@ go run ./cmd/modudock -modules <模組目錄>
 /usr/local/bin/python3 scripts/forward_dates.py --db data/trendcast.sqlite3
 ```
 
-自主進化所有真正的 jev HTTP（含既有 CLI 與 429／529 重試）共用 `data/evolve-2026-09-27-budget.sqlite3` 的 **3,000 次**硬上限。額度帳本獨立於實驗 DB，跨程序／重啟累積，複製實驗 DB 不會重置額度；不要刪除或重設該檔。假服務測試使用各自的暫存帳本。每次真 HTTP 前原子扣額度；單純讀取摘要不會建立或重設帳本。
+自主進化所有真正的 jev HTTP（含既有 CLI 與 429／529 重試）共用 `data/evolve-2026-09-27-budget.sqlite3`。2026-09-29 第二場把累計硬上限改為 **2,222 次**＝已用 1,222＋本場 1,000；原帳本與已用計數保留。額度帳本獨立於實驗 DB，跨程序／重啟累積，複製實驗 DB 不會重置額度；不要刪除或重設該檔。假服務測試使用各自的暫存帳本。每次真 HTTP 前原子扣額度；單純讀取摘要不會建立或重設帳本。
 
 第一輪實作、日期清單及驗證輸出見 [前瞻段交件](docs/HANDOFF-EVOLVE-1.md)。
 
@@ -131,7 +131,7 @@ cd /Users/gatewenlee/Code/modudock-modules/trend-cast
 
 兩個入口共用 `data/trendcast.sqlite3.daily-forward.lock`，整段流程只允許一個持有者；撞鎖回 `status=busy`、本次 0 次 jev，等下個排程。鎖路徑依實際 DB 路徑決定（符號連結會解析）；程序退出時核心自動釋放，**不要刪除鎖檔**。鎖涵蓋每日前瞻流程；其他既有 30 分鐘資料表仍由 SQLite 交易序列化。更新程式後，請先把正在運行的 trend-cast 模組卸載再載入一次，使殼內後半也使用新版鎖。
 
-stdout 只有一行 JSON：`new_predictions` 是新提交的預測資料列數（一天四方法 × 三天期＝12 筆）；`scored_outcomes` 是新計分起點／天期數（一天三天期＝3 筆）；`jev_http_calls` 包含重試；`ledger_used` 是共用 3,000 次帳本的累計。另列 `missing_jev_days`。既有答案會跳過，完成後重跑為 0 次 jev。錯誤、缺答或未建實驗會回非零退出碼；`busy` 與 `missing_keys` 是可恢復的略過，退出碼為 0。
+stdout 只有一行 JSON：`new_predictions` 是新提交的預測資料列數（一天四方法 × 三天期＝12 筆）；`scored_outcomes` 是新計分起點／天期數（一天三天期＝3 筆）；`jev_http_calls` 包含重試；`ledger_used` 是共用帳本的累計（目前上限 2,222）。另列 `missing_jev_days`。既有答案會跳過，完成後重跑為 0 次 jev。錯誤、缺答或未建實驗會回非零退出碼；`busy` 與 `missing_keys` 是可恢復的略過，退出碼為 0。
 
 兩把金鑰優先從 `FUGLE_API_KEY`、`TYPESAFE_API_KEY` 環境變數讀；缺少時，macOS 以 `/usr/bin/security` 讀登入使用者（`$USER`）的 `trendcast-fugle`／`trendcast-typesafe` 鑰匙圈項目。每筆最多等 5 秒；非 macOS、鑰匙圈鎖定或讀取失敗就略過。備援金鑰只在本次程序記憶體中使用，結束即移除。腳本不讀 `.zshrc`、不接收金鑰命令列參數；缺任一把時列出缺少的**變數名稱**後結束，不開 writer、不同步、不發 jev。摘要不包含金鑰或原始例外。
 

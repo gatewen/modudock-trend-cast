@@ -1,4 +1,4 @@
-"""One durable, process-safe 3000 HTTP-attempt budget for the evolution campaign.
+"""One durable, process-safe HTTP-attempt budget shared across campaigns.
 
 The ledger is separate from experiment databases, so copying/reopening a DB
 does not reset it. Every real JevClient transport, including retries and the
@@ -9,7 +9,8 @@ import sqlite3
 
 from .http_client import ClientError
 
-LIMIT = 3000
+# 2026-09-29: 1,222 already used + 1,000 newly authorized; never reset used.
+LIMIT = 2222
 LEDGER = Path(__file__).resolve().parents[1] / 'data' / 'evolve-2026-09-27-budget.sqlite3'
 
 

@@ -1,0 +1,471 @@
+{
+  "experiment": 4,
+  "split": "dev",
+  "method": "ens_avg",
+  "components": [
+    "majority",
+    "vol_prior_d",
+    "ind_logit"
+  ],
+  "data_digest": "ed155f4a27d2e526a90353e74b0b2b6af035a5cd229fb9d5445fc6486fab660f",
+  "dev_digest": "dc2d71d42d9890c7677aeca6a1bc0a7345da0969b9bf0a2dab555509d01b44c1",
+  "dev_start": "2010-04-01",
+  "dev_end": "2021-12-31",
+  "http_calls": 0,
+  "horizons": {
+    "3": {
+      "threshold": {
+        "denominator": 100,
+        "numerator": 1
+      },
+      "predictable": 2894,
+      "expected_scorable": 2891,
+      "n": 2891,
+      "complete": true,
+      "coverage": 1.0,
+      "missing_components": {
+        "majority": 0,
+        "vol_prior_d": 0,
+        "ind_logit": 0
+      },
+      "missing_outcomes": 0,
+      "forecast_digest": "7264d5c3a8a9c0ee7c3610f855858ffc6b6d68dd998c1ba1fb36100fdd35e923",
+      "ens_avg": {
+        "n": 2891,
+        "correct": 1111,
+        "accuracy": 0.38429609131788306,
+        "accuracy_wilson95": [
+          0.3667293358373914,
+          0.40216992530814355
+        ],
+        "brier": 0.6635869987192493,
+        "per_class": {
+          "up": {
+            "true_count": 1055,
+            "predicted_count": 1207,
+            "correct": 483,
+            "precision": 0.40016570008285,
+            "recall": 0.45781990521327015
+          },
+          "flat": {
+            "true_count": 1020,
+            "predicted_count": 1653,
+            "correct": 622,
+            "precision": 0.3762855414398064,
+            "recall": 0.6098039215686275
+          },
+          "down": {
+            "true_count": 816,
+            "predicted_count": 31,
+            "correct": 6,
+            "precision": 0.1935483870967742,
+            "recall": 0.007352941176470588
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 483,
+            "flat": 558,
+            "down": 14
+          },
+          "flat": {
+            "up": 387,
+            "flat": 622,
+            "down": 11
+          },
+          "down": {
+            "up": 337,
+            "flat": 473,
+            "down": 6
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "majority": {
+        "n": 2891,
+        "correct": 1002,
+        "accuracy": 0.34659287443791076,
+        "accuracy_wilson95": [
+          0.32945970778245454,
+          0.36413318405026524
+        ],
+        "brier": 0.665252405414561,
+        "per_class": {
+          "up": {
+            "true_count": 1055,
+            "predicted_count": 1472,
+            "correct": 524,
+            "precision": 0.35597826086956524,
+            "recall": 0.4966824644549763
+          },
+          "flat": {
+            "true_count": 1020,
+            "predicted_count": 1394,
+            "correct": 473,
+            "precision": 0.33931133428981347,
+            "recall": 0.46372549019607845
+          },
+          "down": {
+            "true_count": 816,
+            "predicted_count": 25,
+            "correct": 5,
+            "precision": 0.2,
+            "recall": 0.006127450980392157
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 524,
+            "flat": 520,
+            "down": 11
+          },
+          "flat": {
+            "up": 538,
+            "flat": 473,
+            "down": 9
+          },
+          "down": {
+            "up": 410,
+            "flat": 401,
+            "down": 5
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "brier_vs_majority": {
+        "n": 2891,
+        "difference": -0.0016654066953116962,
+        "ci95": [
+          -0.003325832585512012,
+          -1.9820197502714084e-05
+        ],
+        "blocks": 145,
+        "block_sessions": 20,
+        "repetitions": 2000,
+        "seed": 20260927,
+        "layout": "nonoverlapping_keep_tail"
+      },
+      "shortlisted": true,
+      "verdict": "入圍：值得再驗證，尚非證明有效"
+    },
+    "7": {
+      "threshold": {
+        "denominator": 50,
+        "numerator": 1
+      },
+      "predictable": 2894,
+      "expected_scorable": 2887,
+      "n": 2887,
+      "complete": true,
+      "coverage": 1.0,
+      "missing_components": {
+        "majority": 0,
+        "vol_prior_d": 0,
+        "ind_logit": 0
+      },
+      "missing_outcomes": 0,
+      "forecast_digest": "6ab6b93606a9272a902f32ebffc64ca0048b7e256176bb9cd4aa4d978576e87b",
+      "ens_avg": {
+        "n": 2887,
+        "correct": 1379,
+        "accuracy": 0.47765846899896086,
+        "accuracy_wilson95": [
+          0.4594797251637171,
+          0.49589658936699227
+        ],
+        "brier": 0.627728993204218,
+        "per_class": {
+          "up": {
+            "true_count": 940,
+            "predicted_count": 1,
+            "correct": 1,
+            "precision": 1.0,
+            "recall": 0.0010638297872340426
+          },
+          "flat": {
+            "true_count": 1378,
+            "predicted_count": 2886,
+            "correct": 1378,
+            "precision": 0.4774774774774775,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 569,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 1,
+            "flat": 939,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 1378,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 569,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "majority": {
+        "n": 2887,
+        "correct": 1378,
+        "accuracy": 0.47731208867336333,
+        "accuracy_wilson95": [
+          0.45913437351394326,
+          0.4955501009319708
+        ],
+        "brier": 0.6314107799219053,
+        "per_class": {
+          "up": {
+            "true_count": 940,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          },
+          "flat": {
+            "true_count": 1378,
+            "predicted_count": 2887,
+            "correct": 1378,
+            "precision": 0.47731208867336333,
+            "recall": 1.0
+          },
+          "down": {
+            "true_count": 569,
+            "predicted_count": 0,
+            "correct": 0,
+            "precision": null,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 0,
+            "flat": 940,
+            "down": 0
+          },
+          "flat": {
+            "up": 0,
+            "flat": 1378,
+            "down": 0
+          },
+          "down": {
+            "up": 0,
+            "flat": 569,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "brier_vs_majority": {
+        "n": 2887,
+        "difference": -0.0036817867176871487,
+        "ci95": [
+          -0.0063642542167120075,
+          -0.0010634934089706997
+        ],
+        "blocks": 145,
+        "block_sessions": 20,
+        "repetitions": 2000,
+        "seed": 20260927,
+        "layout": "nonoverlapping_keep_tail"
+      },
+      "shortlisted": true,
+      "verdict": "入圍：值得再驗證，尚非證明有效"
+    },
+    "14": {
+      "threshold": {
+        "denominator": 40,
+        "numerator": 1
+      },
+      "predictable": 2894,
+      "expected_scorable": 2880,
+      "n": 2880,
+      "complete": true,
+      "coverage": 1.0,
+      "missing_components": {
+        "majority": 0,
+        "vol_prior_d": 0,
+        "ind_logit": 0
+      },
+      "missing_outcomes": 0,
+      "forecast_digest": "a3b0ff3cfb08dafae70806781e83fbbf19f37609d9e623092ffd0c0764504a62",
+      "ens_avg": {
+        "n": 2880,
+        "correct": 1165,
+        "accuracy": 0.4045138888888889,
+        "accuracy_wilson95": [
+          0.38672777059432273,
+          0.42255439423560026
+        ],
+        "brier": 0.6448669625621987,
+        "per_class": {
+          "up": {
+            "true_count": 1153,
+            "predicted_count": 506,
+            "correct": 209,
+            "precision": 0.41304347826086957,
+            "recall": 0.18126626192541198
+          },
+          "flat": {
+            "true_count": 1184,
+            "predicted_count": 2355,
+            "correct": 956,
+            "precision": 0.4059447983014862,
+            "recall": 0.8074324324324325
+          },
+          "down": {
+            "true_count": 543,
+            "predicted_count": 19,
+            "correct": 0,
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 209,
+            "flat": 933,
+            "down": 11
+          },
+          "flat": {
+            "up": 220,
+            "flat": 956,
+            "down": 8
+          },
+          "down": {
+            "up": 77,
+            "flat": 466,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "majority": {
+        "n": 2880,
+        "correct": 1162,
+        "accuracy": 0.40347222222222223,
+        "accuracy_wilson95": [
+          0.38569491982860077,
+          0.42150668679946685
+        ],
+        "brier": 0.6449989230828519,
+        "per_class": {
+          "up": {
+            "true_count": 1153,
+            "predicted_count": 125,
+            "correct": 38,
+            "precision": 0.304,
+            "recall": 0.03295750216825672
+          },
+          "flat": {
+            "true_count": 1184,
+            "predicted_count": 2743,
+            "correct": 1124,
+            "precision": 0.4097703244622676,
+            "recall": 0.9493243243243243
+          },
+          "down": {
+            "true_count": 543,
+            "predicted_count": 12,
+            "correct": 0,
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        "confusion_matrix": {
+          "up": {
+            "up": 38,
+            "flat": 1108,
+            "down": 7
+          },
+          "flat": {
+            "up": 55,
+            "flat": 1124,
+            "down": 5
+          },
+          "down": {
+            "up": 32,
+            "flat": 511,
+            "down": 0
+          }
+        },
+        "confusion_axes": {
+          "rows": "truth",
+          "columns": "choice",
+          "order": [
+            "up",
+            "flat",
+            "down"
+          ]
+        }
+      },
+      "brier_vs_majority": {
+        "n": 2880,
+        "difference": -0.0001319605206532786,
+        "ci95": [
+          -0.0034466504247003247,
+          0.003228150309002085
+        ],
+        "blocks": 145,
+        "block_sessions": 20,
+        "repetitions": 2000,
+        "seed": 20260927,
+        "layout": "nonoverlapping_keep_tail"
+      },
+      "shortlisted": false,
+      "verdict": "未入圍"
+    }
+  },
+  "network_attempts": 0
+}
