@@ -230,8 +230,8 @@ function forwardPopulated(){return {...forwardEmpty,recorded_days:1,latest:{day:
 test('forward empty latest comes before historical chart and keeps disclaimer',t=>{
  const h=setup(t);ready(h);forwardReady(h);
  const latest=h.container.querySelector('.tc-forward-latest');
- assert.match(latest.textContent,/尚無前瞻預測，下一個交易日收盤後自動產生/);
- assert.match(latest.textContent,/這是方法的機率判斷，不是投資建議；過去在開發段沒有勝過簡單方法/);
+ assert.match(latest.textContent,/還沒有預測紀錄。每天收盤後，行情和籌碼都到齊就會自動記錄一筆。/);
+ assert.match(latest.textContent,/這是方法的機率判斷，不是投資建議；入圍方法在最終考試中沒有足夠證據勝過簡單方法/);
  const cards=[...h.container.querySelectorAll('.tc-card')];assert.ok(cards.indexOf(latest)<cards.indexOf(h.container.querySelector('.tc-daily-chart')));
  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
  assert.equal(h.container.querySelector('.tc-prospective button'),null);
@@ -241,7 +241,7 @@ test('forward displays all three horizons five methods probabilities timing pend
  assert.equal(h.container.querySelectorAll('.tc-forward-latest tbody tr').length,15);
  assert.match(h.container.querySelector('.tc-forward-latest').textContent,/20.00%60.00%20.00%準時待確認/);
  assert.match(h.container.querySelector('.tc-forward-pending').textContent,/2026-09-297 日尚待 7 個交易日資料/);
- assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['準時','補記','準時待確認']);
+ assert.deepEqual([...h.container.querySelectorAll('.tc-forward-scores h3')].map(n=>n.textContent),['事先記錄（準時）','事後補記（另計）','記錄是否準時尚待確認']);
  assert.match(h.container.querySelector('.tc-forward-scores').textContent,/結果不完整，不下結論；樣本太少/);
 });
 function forwardDataText(h){const copy=h.container.querySelector('.tc-prospective').cloneNode(true);copy.querySelectorAll('.tc-forward-origin').forEach(n=>n.remove());return copy.textContent;}
@@ -261,16 +261,17 @@ test('forward unsolicited refresh is read only and stale replies cannot cross ho
  h.change('預測天期','3');h.message({op:'daily_forward',H:7,experiment_id:4,status:'ok',request_id:old.request_id,...forwardPopulated()});
  assert.doesNotMatch(forwardDataText(h),/2026-09-29/);
  h.drainRetired();
- forwardReady(h);assert.match(h.container.textContent,/尚無前瞻預測/);
+ forwardReady(h);assert.match(h.container.textContent,/還沒有預測紀錄/);
  h.change('預測天期','30m');const n=h.sent.length;h.message({op:'daily_forward_changed'});assert.equal(h.sent.length,n);
 });
 
 test('daily release copy distinguishes development findings and prospective origin',t=>{
  const h=setup(t);ready(h);forwardReady(h);
- assert.match(h.container.querySelector('.tc-daily-scores').textContent,/開發段入圍只代表值得再驗證.*jev 讀指標（jev_ind） 在 3／7／14 日的 Brier 顯著較差/);
+ assert.match(h.container.querySelector('.tc-daily-scores').textContent,/入圍只代表值得再驗證.*jev 讀指標（jev_ind） 在 3／7／14 日的機率誤差顯著較差/);
  const research=h.container.querySelector('.tc-daily-research');
  assert.equal(h.container.querySelector('.tc-card'),research);
- for(const copy of ['11 個技術／籌碼指標','5 個大環境指標','2 個組合模型','ens_avg','jev 讀指標','jev 讀新聞（jev_news）（前瞻中）','3 組小幅入圍','邊緣','2026-09-29','這不是投資建議'])assert.ok(research.textContent.includes(copy));
+ for(const copy of ['11 個技術／籌碼指標','5 個大環境指標','2 個組合模型','ens_avg','jev 讀指標','jev 讀新聞（jev_news）（前瞻中）','3 組小幅入圍','邊緣','2026-09-29','沒有足夠證據'])assert.ok(research.textContent.includes(copy),copy);
+ assert.match(h.container.querySelector('.tc-footer').textContent,/這不是投資建議/);
  assert.match(h.container.querySelector('.tc-forward-origin').textContent,/2026-09-29.*實際交易日/);
  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/正在讀取保留段狀態/);
 });
@@ -282,7 +283,7 @@ test('news enabled reception and missing snapshot render separately',t=>{
  assert.match(h.container.querySelector('.tc-news').textContent,/已啟用（需當日快照）/);
  const value=forwardPopulated();value.latest.news_state='no_news';forwardReady(h,value);
  const rows=[...h.container.querySelectorAll('.tc-forward-latest tbody tr')].filter(r=>r.querySelector('[data-method=jev_news]'));
- assert.equal(rows.length,3);rows.forEach(r=>assert.match(r.textContent,/今日無新聞資料.*未發請求/));
+ assert.equal(rows.length,3);rows.forEach(r=>assert.match(r.textContent,/該日無新聞資料.*未發請求/));
 });
 test('news predictions show three horizons and both preregistered comparisons',t=>{
  const h=setup(t);ready(h);const value=forwardPopulated();value.latest.news_state='done';
@@ -320,7 +321,7 @@ test('rapid horizons 3 7 14 3 bound reads discard retired queues and show correc
  assert.match(h.container.querySelector('h1').textContent,/3 個交易日後/);
  assert.match(h.container.querySelector('.tc-daily-scores').textContent,/2,891.*0.660868/);
  assert.match(h.container.querySelector('.tc-daily-indicators').textContent,/3 日資料/);
- assert.match(h.container.querySelector('.tc-forward-latest').textContent,/尚無前瞻預測/);
+ assert.match(h.container.querySelector('.tc-forward-latest').textContent,/還沒有預測紀錄/);
  assert.match(h.container.querySelector('.tc-daily-holdout summary').textContent,/3 日/);
  assert.ok(h.container.querySelector('.tc-price'));assert.doesNotMatch(h.container.querySelector('.tc-daily-scores').textContent,/99.000000/);
  // Late duplicates cannot release a new request slot or overwrite the current view.
@@ -353,4 +354,70 @@ test('all daily methods have plain names with small codes and unchanged identifi
  assert.match(h.container.querySelector('.tc-daily-research').textContent,/組合預測（ens_avg）.*大環境組合模型（mkt_logit）/);
  assert.match(h.container.querySelector('.tc-daily-holdout').textContent,/猜最常見答案（majority）/);
  assert.ok(h.sent.every(r=>!('method' in r))); // Rendering never changes wire method identifiers.
+});
+
+test('read errors replace the forward and chart loading placeholders',t=>{
+ const h=setup(t);h.up();
+ for(const op of ['daily_chart','daily_forward'])h.message({op:'error',code:'daily_experiment_missing',request_id:h.latest(op).request_id});
+ assert.doesNotMatch(h.container.textContent,/正在讀取前瞻紀錄|正在載入走勢/);
+ assert.match(h.container.querySelector('.tc-forward-latest').textContent,/尚未建立多日實驗/);
+ assert.match(h.container.querySelector('.tc-daily-chart').textContent,/尚未建立多日實驗/);
+});
+
+test('redesign: plain rule sentence, verdict first, research folded closed',t=>{
+ const h=setup(t);ready(h);
+ assert.match(h.container.querySelector('.tc-rule').textContent,/7 個交易日後的漲跌幅（已調整除權息）：漲 2% 以上算漲，跌 2% 以上算跌，其餘算盤整/);
+ assert.doesNotMatch(h.container.textContent,/唯讀檢視|實驗 4 ·/);
+ const verdict=h.container.querySelector('.tc-verdict h2');assert.match(verdict.textContent,/正在讀取結論/);
+ h.answer('daily_holdout',held());
+ assert.match(verdict.textContent,/最終考試中，3 組入圍方法都沒有足夠證據/);
+ const folds=[...h.container.querySelectorAll('.tc-daily-details > details.tc-fold')];
+ assert.equal(folds.length,6);assert.ok(folds.every(d=>!d.open));
+ for(const cls of ['tc-daily-holdout','tc-daily-chart','tc-daily-indicators','tc-daily-scores','tc-daily-claims'])
+   assert.ok(h.container.querySelector(`.tc-daily-details .${cls}`),cls);
+ const order=[...h.container.querySelectorAll('.tc-verdict,.tc-forward-latest,.tc-forward-scores,.tc-daily-details')].map(n=>n.className.split(' ').at(-1));
+ assert.deepEqual(order,['tc-verdict','tc-forward-latest','tc-forward-scores','tc-daily-details']);
+});
+
+test('redesign: locked holdout keeps a cautious verdict without holdout results',t=>{
+ const h=setup(t);ready(h);
+ h.answer('daily_holdout',{split:'holdout',state:'locked'});
+ assert.match(h.container.querySelector('.tc-verdict h2').textContent,/還沒通過最終考試/);
+ assert.doesNotMatch(h.container.querySelector('.tc-verdict').textContent,/目前沒有任何方法/);
+});
+
+test('redesign: selected horizon first, others folded, baseline marked, reveal and progress shown',t=>{
+ const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),data_through:'2026-09-30',pending_counts:{'3':0,'7':1,'14':0}});
+ const latest=h.container.querySelector('.tc-forward-latest');
+ const direct=[...latest.querySelectorAll('tbody tr')].filter(r=>!r.closest('.tc-forward-others'));
+ assert.equal(direct.length,5);assert.equal(latest.querySelectorAll('.tc-forward-others tbody tr').length,10);
+ assert.ok(direct[0].classList.contains('tc-base'));assert.equal(direct[0].querySelectorAll('.tc-prob i').length,3);
+ assert.match(latest.textContent,/預測起點 2026-09-29（只用當天收盤以前的資料） · 還要 7 個交易日才揭曉/);
+ assert.match(latest.querySelector('.tc-forward-others summary').textContent,/3／14 日/);
+ const stats=[...h.container.querySelectorAll('.tc-forward-scores .tc-stat-value')].map(n=>n.textContent);
+ assert.deepEqual(stats,['0','1','結果不完整，不下結論']);
+ assert.ok(h.container.querySelector('.tc-forward-cohorts').textContent.includes('事先記錄（準時）'));
+ assert.match(h.container.querySelector('.tc-head').textContent,/行情更新到 2026-09-30/);
+});
+
+test('redesign: data_through before the freeze is rejected with the whole packet',t=>{
+ const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),data_through:'2021-12-30'});
+ assert.doesNotMatch(h.container.textContent,/行情更新到|2021-12-30/);
+ assert.match(h.container.querySelector('.tc-forward-latest').textContent,/正在讀取前瞻紀錄/);
+});
+
+test('redesign: every loading line is replaced when its read fails',t=>{
+ const h=setup(t);h.up();
+ for(const op of ['daily_status','daily_holdout','daily_report'])h.message({op:'error',code:'daily_experiment_missing',request_id:h.latest(op).request_id});
+ assert.doesNotMatch(h.container.textContent,/正在讀取預測設定|正在讀取結論|正在讀取保留段狀態|正在計算開發段成績/);
+ assert.match(h.container.querySelector('.tc-rule').textContent,/無法讀取預測設定：尚未建立多日實驗/);
+ assert.match(h.container.querySelector('.tc-verdict').textContent,/無法讀取結論.*尚未建立多日實驗/);
+});
+
+test('redesign: empty forward names the known service state and a null data day resets the header',t=>{
+ const h=setup(t);ready(h);forwardReady(h,{...forwardPopulated(),data_through:'2026-09-30'});
+ assert.match(h.container.querySelector('.tc-head').textContent,/行情更新到 2026-09-30/);
+ h.message({op:'daily_forward_changed'});forwardReady(h,{data_through:null,service:{state:'idle'}});
+ assert.doesNotMatch(h.container.querySelector('.tc-head').textContent,/行情更新到/);
+ assert.match(h.container.querySelector('.tc-forward-latest').textContent,/還沒有預測紀錄.*更新狀態：等待下一次更新/);
 });

@@ -58,8 +58,6 @@ class DailyViews:
         self.report_cache = {}
 
     def config(self, store):
-        if not store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='d_experiments'").fetchone():
-            raise DataError('daily_experiment_missing')
         row = load_experiment(store)
         c = row['config']
         bounded_day(c['dev_start']); bounded_day(c['dev_end'])

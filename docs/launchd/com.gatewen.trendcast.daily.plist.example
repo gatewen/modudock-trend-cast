@@ -7,12 +7,12 @@
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/python3</string>
-		<string>/Users/gatewenlee/Code/modudock-modules/trend-cast/scripts/daily_forward.py</string>
+		<string>/Users/gatewenlee/Code/modudock/modules/trend-cast/scripts/daily_forward.py</string>
 		<string>--db</string>
-		<string>/Users/gatewenlee/Code/modudock-modules/trend-cast/data/trendcast.sqlite3</string>
+		<string>/Users/gatewenlee/Code/modudock/modules/trend-cast/data/trendcast.sqlite3</string>
 	</array>
 	<key>WorkingDirectory</key>
-	<string>/Users/gatewenlee/Code/modudock-modules/trend-cast</string>
+	<string>/Users/gatewenlee/Code/modudock/modules/trend-cast</string>
 	<key>StartCalendarInterval</key>
 	<array>
 		<dict>
@@ -142,9 +142,9 @@
 		<string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
 	</dict>
 	<key>StandardOutPath</key>
-	<string>/Users/gatewenlee/Code/modudock-modules/trend-cast/data/daily-forward.log</string>
+	<string>/Users/gatewenlee/Code/modudock/modules/trend-cast/data/daily-forward.log</string>
 	<key>StandardErrorPath</key>
-	<string>/Users/gatewenlee/Code/modudock-modules/trend-cast/data/daily-forward-error.log</string>
+	<string>/Users/gatewenlee/Code/modudock/modules/trend-cast/data/daily-forward-error.log</string>
 	<key>KeepAlive</key>
 	<false/>
 	<key>ProcessType</key>

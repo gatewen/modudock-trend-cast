@@ -99,4 +99,38 @@ export default `
 }
 
 .tc-prospective { display: grid; gap: 18px; }
+.tc .tc-rule { display: block; background: var(--tc-surface); color: var(--tc-fg); border-radius: 7px; padding: 9px 12px; font-size: 13px; }
+.tc .tc-verdict { border: 2px solid var(--tc-accent); background: var(--tc-bg); }
+.tc .tc-verdict h2 { font-size: 18px; text-wrap: balance; }
+.tc .tc-verdict .tc-sub { font-size: 13px; margin-top: 6px; }
+.tc details > summary { cursor: pointer; color: var(--tc-accent); }
+.tc details > summary:focus-visible { outline: 2px solid var(--tc-accent); outline-offset: 3px; }
+.tc .tc-why { margin-top: 10px; border-top: 1px solid var(--tc-grid); padding-top: 8px; }
+.tc .tc-why p { margin-top: 8px; }
+.tc .tc-prob { display: flex; width: 150px; height: 11px; border-radius: 3px; overflow: hidden; background: var(--tc-grid); }
+.tc .tc-prob i { display: block; height: 100%; }
+.tc .tc-prob-up { background: var(--tc-good); } .tc .tc-prob-flat { background: var(--tc-muted); } .tc .tc-prob-down { background: var(--tc-bad); }
+.tc tr.tc-base td { background: var(--tc-surface); }
+.tc .tc-forward-latest h3, .tc .tc-forward-scores h3 { margin-top: 14px; }
+.tc .tc-forward-others, .tc .tc-forward-cohorts, .tc .tc-forward-pending { margin-top: 12px; }
+.tc .tc-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.tc .tc-stat { background: var(--tc-surface); border-radius: 8px; padding: 10px 12px; }
+.tc .tc-stat-value { font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.tc .tc-stat-label { color: var(--tc-muted); font-size: 12px; }
+.tc .tc-stat-text .tc-stat-value { font-size: 14px; font-weight: 600; }
+.tc .tc-empty-compact { padding: 24px 12px; }
+.tc .tc-fold { border-top: 1px solid var(--tc-grid); padding: 10px 0; }
+.tc .tc-fold > summary { color: var(--tc-fg); font-weight: 600; }
+.tc .tc-fold-hint { color: var(--tc-muted); font-weight: normal; margin-left: 8px; }
+.tc .tc-fold > .tc-card { border: 0; border-radius: 0; padding: 10px 0 0; margin: 0; }
+.tc .tc-fold > .tc-card > h2 { display: none; }
+.tc .tc-glossary { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin: 10px 0 0; font-size: 13px; }
+.tc .tc-glossary dt { font-weight: 600; } .tc .tc-glossary dd { margin: 0; color: var(--tc-muted); }
+.tc .tc-footer { border-top: 1px solid var(--tc-border); padding-top: 4px; }
+@media (max-width: 650px) {
+  .tc .tc-stats { gap: 6px; }
+  .tc .tc-stat { padding: 8px; }
+  .tc .tc-stat-value { font-size: 18px; }
+  .tc .tc-glossary { grid-template-columns: 1fr; }
+}
 `;

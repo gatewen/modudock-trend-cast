@@ -130,6 +130,9 @@ def create_experiment(store, *, experiment_id=4, start='2010-01-04'):
 
 def load_experiment(store, experiment_id=4, *, verify=True):
     if type(experiment_id) is not int or experiment_id!=4: raise DataError('daily_experiment_4_only')
+    # A fresh install has no daily schema yet; report it as missing, not as a SQLite error.
+    if not store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='d_experiments'").fetchone():
+        raise DataError('daily_experiment_missing')
     row=store.db.execute('SELECT * FROM d_experiments WHERE id=?',(experiment_id,)).fetchone()
     if row is None: raise DataError('daily_experiment_missing')
     config=json.loads(row['config_json'])

@@ -33,6 +33,9 @@ def forward_view(store,body):
     floor=parsed(row['created_at']).date().isoformat()
     result=dict(status='ok',experiment_id=4,H=H,split='forward',frozen_day=floor,
         message=EMPTY,disclaimer=DISCLAIMER,latest=None,cohorts=[],pending=[],missing=[],recorded_days=0)
+    # Only post-freeze dates may reach the forward view; older data stays unnamed.
+    last=store.db.execute('SELECT max(day) FROM d_bars WHERE symbol=?',(row['config']['symbol'],)).fetchone()[0]
+    result['data_through']=last if last and last>floor else None
     if not exists(store):return result
     load_model(store)  # Changed config/models cannot silently produce a report.
     days=[dict(r) for r in store.db.execute('SELECT day,jev_state,error FROM d_forward_days WHERE day>? ORDER BY day',(floor,))]
@@ -84,5 +87,7 @@ def forward_view(store,body):
                 result['pending'].append(dict(day=d['day'],H=h,end_day=future[h-1] if len(future)>=h else None,
                     remaining=max(0,h-len(future))))
     result['pending_total']=len(result['pending']);result['missing_total']=len(result['missing'])
+    # Per-horizon totals are counted before the list is truncated for transport.
+    result['pending_counts']={str(h):sum(p['H']==h for p in result['pending']) for h in (3,7,14)}
     result['pending']=result['pending'][-120:];result['missing']=result['missing'][-40:]
     return result

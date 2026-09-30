@@ -165,8 +165,15 @@ class ForwardCoreTests(ForwardFixture):
             with self.assertRaises(DataError):forward_view(self.s,dict(op='daily_forward',**params))
         self.save();result=forward_view(self.s,dict(op='daily_forward'))
         self.assertEqual(result['pending_total'],3);self.assertEqual(result['missing_total'],1)
+        self.assertEqual(result['pending_counts'],{'3':1,'7':1,'14':1})
         jev=result['cohorts'][0]['methods'][-1];self.assertEqual(jev['missing'],1);self.assertEqual(jev['coverage'],0)
         self.assertEqual(result['disclaimer'],DISCLAIMER)
+    def test_view_reports_latest_post_freeze_bar_day_only(self):
+        result=forward_view(self.s,dict(op='daily_forward'))
+        last=self.s.db.execute("SELECT max(day) FROM d_bars WHERE symbol='2330'").fetchone()[0]
+        self.assertEqual(result['data_through'],last if last>result['frozen_day'] else None)
+        self.s.db.execute("DELETE FROM d_bars WHERE day>?",(result['frozen_day'],))
+        self.assertIsNone(forward_view(self.s,dict(op='daily_forward'))['data_through'])
     def test_incremental_append_keeps_frozen_digest_and_rejects_revision(self):
         floor='2024-07-26';before=load_experiment(self.s)['dev_digest']
         jobs=windows(self.s,self.row['config'],'2026-11-03');self.assertTrue(all(a>=floor for _,a,b in jobs))
